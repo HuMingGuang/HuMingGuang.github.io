@@ -424,84 +424,90 @@ height:50vh;
 </ul>
 </blockquote>
 <hr>
-<h4 id="无约束的优化"><a href="#无约束的优化" class="headerlink" title="无约束的优化"></a>无约束的优化</h4><ul>
-<li><p><font color="Red">优化目标</font>：$\min f(x), $其中  $x=(x_1,x_2)$</p>
-<p><img src="/2019/03/22/Meachine-Learning-Lagrange-duality/Non-contraint.jpg" alt="Non-contraint"></p>
+<h4 id="无约束的优化"><a href="#无约束的优化" class="headerlink" title="无约束的优化"></a><font color="Blue">无约束的优化</font></h4><ul>
+<li><font color="Red">优化目标</font>
+
+<script type="math/tex; mode=display">\min f(x)</script><p>where </p>
+<script type="math/tex; mode=display">x=(x_1,x_2)</script><p><img src="/2019/03/22/Meachine-Learning-Lagrange-duality/Non-contraint.jpg" alt="Non-contraint"></p>
 </li>
 <li><p>$f(x)$在局部红色点处取得局部极小值，所以红色点处的梯度必然为0，可以用来求解该优化方程的局部极小值。</p>
 </li>
 </ul>
-<h4 id="带等式约束的优化"><a href="#带等式约束的优化" class="headerlink" title="带等式约束的优化"></a>带等式约束的优化</h4><ul>
-<li><p><font color="red">优化目标</font>：$\min f(x) ​$   s.t  $h(x)=0​$</p>
-<p><img src="/2019/03/22/Meachine-Learning-Lagrange-duality/equation-contraint.jpg" alt="equation-contraint"></p>
+<hr>
+<h4 id="带等式约束的优化"><a href="#带等式约束的优化" class="headerlink" title="带等式约束的优化"></a><font color="Blue">带等式约束的优化</font></h4><ul>
+<li><font color="red">优化目标</font>
+
+<script type="math/tex; mode=display">\min f(x)</script><p> s.t</p>
+<script type="math/tex; mode=display">h(x)=0</script><p><img src="/2019/03/22/Meachine-Learning-Lagrange-duality/equation-contraint.jpg" alt="equation-contraint"></p>
 </li>
 <li><p>与无约束的问题不同，此时的极小值点被约束在曲线$h(x)=0$上。上述左上方的黑色实曲线为$h(x)=0$，我们将右下方的$f(x)$不断扩大，直到$f(x)$与$h(x)$相切，切点即为原目标问题的局部极小值。</p>
 </li>
-<li><p>设曲线在<font color="Red">红色点</font>（$x^{<em>}:​$极小值点）沿切线方向的函数为$x(t),x^{</em>}=x(t^{*})​$.则有</p>
-<p>​                                        $\nabla f\left( x^{\ast }\right) \cdot x’\left( t^{\ast }\right) =0$</p>
+<li><p>设曲线在<font color="Red">红色点</font>（$x^*$:极小值点），沿切线方向的函数为 $ x(t)$,则有</p>
+<p>​                    <script type="math/tex">\nabla f\left( x^{\ast }\right) \cdot x'\left( t^{\ast }\right) =0</script>    </p>
+<p>​                         其中<script type="math/tex">x^{*} = x(t^*)</script></p>
 <p>由于$h(x)=0​$为常数，所以$h(x)​$在任何一点处的导数都为0.即</p>
-<p>​                                        $\nabla h\left( x\right) \cdot x’\left( t\right) =0$ </p>
-<p>所以                               $\nabla h\left( x^{<em>}\right) \cdot x’\left( t^{</em>}\right) =0$</p>
-<p>由上述公式可知，$\nabla f\left( x^{\ast }\right) $和$\nabla h\left( x^{<em>}\right) $分别和$\left( t^{</em>}\right) $垂直，所以$\nabla f\left( x^{\ast }\right) $和$\nabla h\left( x^{*}\right) $共线，有</p>
-<p>​                    $\nabla f\left( x^{\ast }\right) +\lambda \nabla h\left( x^{\ast }\right) =0​$.</p>
-<p>$x^{<em>}$为最小值点就必须满足上式$\nabla f\left( x^{\ast }\right) +\lambda \nabla h\left( x^{\ast }\right) =0$和约束条件$h(x^{</em>})=0​$，这个必要条件叫<font color="Red">拉格朗日条件</font>.</p>
+<p>​                                        $\nabla h\left( x\right) \cdot x’\left( t\right) =0​$ </p>
+<p>所以                               <script type="math/tex">\nabla h\left( x^{*}\right) \cdot x'\left( t^{*}\right) =0​</script></p>
+<p>由上述公式可知，$\nabla f\left( x^{\ast }\right) $和<script type="math/tex">\nabla h\left( x^{*}\right)</script>分别和<script type="math/tex">\left( t^{*}\right)</script>垂直，所以<script type="math/tex">\nabla f\left( x^{\ast }\right)</script>和<script type="math/tex">\nabla h\left( x^{*}\right)</script>共线，有</p>
+<p>​                    <script type="math/tex">\nabla f\left( x^{\ast }\right) +\lambda \nabla h\left( x^{\ast }\right) =0​</script>.</p>
+<p><script type="math/tex">x^{*}</script>为最小值点就必须满足上式<script type="math/tex">\nabla f\left( x^{\ast }\right) +\lambda \nabla h\left( x^{\ast }\right) =0</script>和约束条件<script type="math/tex">h(x^{*})=0</script>，这个必要条件叫<font color="Red">拉格朗日条件</font>.</p>
 <p>为了好记，定义<font color="Red">拉格朗日函数</font>为$L\left( x,\lambda \right) =f\left( x\right) +\lambda h\left( x\right) ​$,令其偏导为0，就为上述的拉格朗日条件。</p>
 </li>
 <li><p>从上述推导过程可知，可以将带等式约束的优化问题转化为无约束的优化问题，只需要对拉格朗日条件解方程，其中$\lambda$为拉格朗日乘子，有几个等式就有几个拉格朗日乘子。</p>
 </li>
 </ul>
-<h4 id="带不等式约束的优化"><a href="#带不等式约束的优化" class="headerlink" title="带不等式约束的优化"></a>带不等式约束的优化</h4><ul>
-<li><p><font color="red">优化目标(一)</font>：$\min f(x)$  s.t  $h(x)\leq 0$</p>
+<hr>
+<h4 id="带不等式约束的优化"><a href="#带不等式约束的优化" class="headerlink" title="带不等式约束的优化"></a><font color="Blue">带不等式约束的优化</font></h4><ul>
+<li><font color="red">优化目标(一)</font>
+
+<script type="math/tex; mode=display">\min f(x)</script><p> s.t </p>
+<script type="math/tex; mode=display">h(x)\leq 0​</script><p><img src="/2019/03/22/Meachine-Learning-Lagrange-duality/inequation-contraint.jpg" alt="inequation-contraint"></p>
 <ul>
-<li><img src="/2019/03/22/Meachine-Learning-Lagrange-duality/inequation-contraint.jpg" alt="inequation-contraint"></li>
-<li>图中左上方阴影区域为$h(x)\leq 0​$ 的可行域，可以把$h(x)\leq 0​$ 改写为$h(x)=0​$，利用上述等式约束的优化方法，所以右下方$f(x)​$与$h(x)=0​$的切点即为局部极小值。</li>
+<li>图中左上方阴影区域为$h(x)\leq 0$ 的可行域，可以把$h(x)\leq 0$ 改写为$h(x)=0$，利用上述等式约束的优化方法，所以右下方$f(x)$与$h(x)=0$的切点即为局部极小值。</li>
 </ul>
 </li>
-<li><font color="red">优化目标（二）</font>：$\min f(x)​$  s.t  $g_1(x)\leq 0​$，  $g_2 (x)\leq 0​$
-
-- ![two-inequation-contraint](Meachine-Learning-Lagrange-duality/two-inequation-contraint.jpg)
-
-- 由上图可知$f(x)$与上述两条曲线形成的可行域的相遇点是一个顶点（<font color="red">红色点</font>），此时与任何一条曲线都不相切。
-
-- 上述问题的解 $x^{*}​$，应该满足<font color="red">KTT条件</font>
-
+<li><p><font color="red">优化目标（二）</font>：</p>
+<script type="math/tex; mode=display">\min f(x)</script><p> s.t </p>
+<script type="math/tex; mode=display">g_1(x)\leq 0, g_2 (x)\leq 0</script></li>
+</ul>
+<p>  <img src="/2019/03/22/Meachine-Learning-Lagrange-duality/two-inequation-contraint.jpg" alt="two-inequation-contraint"></p>
 <ul>
-<li>$\mu <em>{1}\geq 0,\mu </em>{2}\geq 0​$</li>
-<li>$\nabla f\left( x^{\ast }\right) +\mu <em>{1}\nabla g_1\left( x^{\ast }\right) +\mu </em>{2}\nabla g_{2}\left( x^{\ast }\right) =0​$</li>
-<li><p>$\mu <em>{1}\nabla g_1\left( x^{\ast }\right) +\mu </em>{2}\nabla g_{2}\left( x^{\ast }\right) =0​$</p>
-<p>其中$\mu​$为KTT乘子，有多少个不等式约束就有多少个乘子。</p>
+<li><p>由上图可知$f(x)$与上述两条曲线形成的可行域的相遇点是一个顶点（<font color="red">红色点</font>），此时与任何一条曲线都不相切。</p>
 </li>
-<li><p><font color="red">KKT解释</font>：上述图中<font color="green">两条绿色箭头</font>，为 $g<em>1(x)\leq 0$，  $g_2 (x)\leq 0$两条约束曲线的负梯度方向$-\nabla g_1\left( x\right) $和$-\nabla g_2\left( x\right) $（即$g_1(x)$，$g_2(x )$一直减小的方向）。如果红色顶点满足约束的最小值，那么该红点在$f(x)$上的梯度$\nabla f\left( x^{<em>}\right) $一定在<font color="green">两条绿色箭头</font>之间，即$\nabla f\left( x^{</em>}\right) $可以被$-\nabla g_1\left( x \right) $和$-\nabla g_2 \left( x \right) $线性表出$\nabla f\left( x^{\ast }\right) =-\mu </em>{1}\nabla g<em>1 \left( x^{\ast }\right) -\mu </em>{2}\nabla g<em>{2}\left( x^{\ast }\right) $，且系数非负（$\mu </em>{1}\geq 0,\mu _{2}\geq 0$），即上述KTT条件的1，2条件。</p>
+<li><p>上述问题的解 $x^{*}​$，应该满足<font color="red">KTT条件</font></p>
+<script type="math/tex; mode=display">\mu _{1}\geq 0,\mu _{2}\geq 0</script><script type="math/tex; mode=display">\nabla f\left( x^{\ast }\right) +\mu _{1}\nabla g_1\left( x^{\ast }\right) +\mu _{2}\nabla g_{2}\left( x^{\ast }\right) =0</script><script type="math/tex; mode=display">\mu _{1}\nabla g_1\left( x^{\ast }\right) +\mu _{2}\nabla g_{2}\left( x^{\ast }\right) =0</script><p>其中$\mu​$为KTT乘子，有多少个不等式约束就有多少个乘子。</p>
+<ul>
+<li><p><font color="red">KKT解释</font>：上述图中<font color="green">两条绿色箭头</font>，为 <script type="math/tex">g_1(x)\leq 0 ,g_2 (x)\leq 0</script>两条约束曲线的负梯度方向<script type="math/tex">-\nabla g_1\left( x\right)</script>和<script type="math/tex">-\nabla g_2\left( x\right)</script>（即​<script type="math/tex">g_1(x),g_2(x )</script>一直减小的方向）。</p>
+<p>如果红色顶点满足约束的最小值，那么该红点在$f(x)$上的梯度<script type="math/tex">\nabla f\left( x^{*}\right)</script>一定在<font color="green">两条绿色箭头</font>之间，</p>
+<p>即$\nabla f\left( x^{*}\right) ​$可以被<script type="math/tex">-\nabla g_1\left( x \right) ​</script>和​<script type="math/tex">$-\nabla g_2 \left( x \right) ​</script>线性表出<script type="math/tex">\nabla f\left( x^{\ast }\right) =-\mu _{1}\nabla g_1 \left( x^{\ast }\right) -\mu _{2}\nabla g_{2}\left( x^{\ast }\right) ​</script>，且系数非负（<script type="math/tex">\mu _{1}\geq 0,\mu _{2}\geq 0​</script>），即上述KTT条件的1，2条件。</p>
 </li>
 </ul>
 </li>
+</ul>
+<ul>
 <li><p>有的时候约束不起作用，如下优化问题</p>
 <ul>
-<li><p><font color="red">优化目标（三）</font>：$\min f(x)​$  s.t  $g_1(x)\leq 0,   g_2(x)\leq 0,      g_3(x)\leq 0​$ </p>
-</li>
-<li><p><img src="/2019/03/22/Meachine-Learning-Lagrange-duality/three-inequtaion-contraint.jpg" alt="three-inequtaion-contraint"></p>
+<li><font color="red">优化目标（三）</font>
+
+<script type="math/tex; mode=display">\min f(x)</script><p>s.t  </p>
+<script type="math/tex; mode=display">g_1(x)\leq 0,   g_2(x)\leq 0,      g_3(x)\leq 0</script><p><img src="/2019/03/22/Meachine-Learning-Lagrange-duality/three-inequtaion-contraint.jpg" alt="three-inequtaion-contraint"></p>
 <ul>
 <li><p>其中$g_3(x)\leq 0$并不起作用，最小值点不在$g_3(x)= 0$上。</p>
 </li>
 <li><p>此时KTT条件为：</p>
-<ul>
-<li>$\mu <em>{1}\geq 0,\mu </em>{2}\geq 0，\mu _{3}\geq 0$</li>
-<li><p>$\nabla f\left( x^{\ast }\right) +\mu <em>{1}\nabla g_1\left( x^{\ast }\right) +\mu </em>{2}\nabla g<em>{2}\left( x^{\ast }\right) +\mu </em>{3}\nabla g_{3}\left( x^{\ast }\right) =0​$</p>
-</li>
-<li><p>其中条件2中$\mu <em>{3}\nabla g</em>{3}\left( x^{\ast }\right)$与优化问题无关，最好可以令其为0.所以我们加上第3条：</p>
-<p>​            $\mu <em>{1}\nabla g_1\left( x^{\ast }\right) +\mu </em>{2}\nabla g<em>{2}\left( x^{\ast }\right) +\mu </em>{3}\nabla g_{3}\left( x^{\ast }\right)=0$</p>
-<p>因为最优解与$g<em>1 (x)$和$g_2 (x)$有关，与$g_3 (x)$无关，所以$g_1 (x^{<em>})=0,g_2(x^{</em>})=0$.又因为$g_3 (x^{*})\leq 0$，所以$\mu </em>{3}=0$.</p>
+<script type="math/tex; mode=display">\mu _{1}\geq 0,\mu _{2}\geq 0，\mu _{3}\geq 0</script><script type="math/tex; mode=display">\nabla f\left( x^{\ast }\right) +\mu _{1}\nabla g_1\left( x^{\ast }\right) +\mu _{2}\nabla g_{2}\left( x^{\ast }\right) +\mu _{3}\nabla g_{3}\left( x^{\ast }\right) =0</script><p>其中条件2中<script type="math/tex">\mu _{3}\nabla g_{3}\left( x^{\ast }\right)</script>与优化问题无关，最好可以令其为0.所以我们加上第3条：</p>
+<p>​            <script type="math/tex">\mu _{1}\nabla g_1\left( x^{\ast }\right) +\mu _{2}\nabla g_{2}\left( x^{\ast }\right) +\mu _{3}\nabla g_{3}\left( x^{\ast }\right)=0</script></p>
+<p>因为最优解与$g_1 (x)$和$g_2 (x)$有关，与$g_3 (x)$无关，所以<script type="math/tex">g_1 (x^{*})=0,g_2(x^{*})=0</script>.</p>
+<p>又因为<script type="math/tex">g_3 (x^{*})\leq 0</script>，所以 $\mu _{3}=0​$.</p>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-</ul>
-</li>
-<li><p>注意：上述三种优化问题，都是局部极小值点的必要条件，所以不一定是局部极小值点，更不必说全局了。</p>
+<li><p><font color="red">注意</font>：上述三种优化问题，都是局部极小值点的必要条件，所以不一定是局部极小值点，更不必说全局了。</p>
 </li>
 </ul>
-<h4 id="拉格朗日对偶性"><a href="#拉格朗日对偶性" class="headerlink" title="拉格朗日对偶性"></a>拉格朗日对偶性</h4><hr>
+<h4 id="拉格朗日对偶性"><a href="#拉格朗日对偶性" class="headerlink" title="拉格朗日对偶性"></a><font color="Blue">拉格朗日对偶性</font></h4><hr>
 <font color="blue">声明</font>
 
 <ul>
