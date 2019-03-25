@@ -416,14 +416,15 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h3 id="C-语言基础"><a href="#C-语言基础" class="headerlink" title="C++语言基础"></a>C++语言基础</h3><h4 id="C-文件结构"><a href="#C-文件结构" class="headerlink" title="C++文件结构"></a>C++文件结构</h4><ul>
+        <hr>
+<h3 id="C-语言基础"><a href="#C-语言基础" class="headerlink" title="C++语言基础"></a><font color="Red">C++语言基础</font></h3><h4 id="C-文件结构"><a href="#C-文件结构" class="headerlink" title="C++文件结构"></a><font color="blue">C++文件结构</font></h4><ul>
 <li><strong>头文件</strong><ul>
 <li>使用&lt;&gt;格式引用系统头文件，编译器会在系统库文件目录下搜索头文件</li>
 <li>使用””格式引用自定义头文件，编译器会现在当前工程目录下搜索头文件，再搜索系统库文件的目录</li>
 </ul>
 </li>
 </ul>
-<h4 id="C-语言基本要素"><a href="#C-语言基本要素" class="headerlink" title="C++语言基本要素"></a>C++语言基本要素</h4><ul>
+<h4 id="C-语言基本要素"><a href="#C-语言基本要素" class="headerlink" title="C++语言基本要素"></a><font color="blue">C++语言基本要素</font></h4><ul>
 <li><p><strong>标识符</strong>：标识符的首字符必须是字母或下划线，而不能是数字</p>
 </li>
 <li><p><code>int min=10,max=min+50</code>是合法的</p>
@@ -457,7 +458,7 @@ height:50vh;
 </ul>
 </li>
 </ul>
-<h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><ul>
+<h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a><font color="blue">数据类型</font></h4><ul>
 <li><p><img src="/2019/03/22/Coding-1/Type for character.png" alt="Type for character"></p>
 </li>
 <li><p>实数相加有效数字有限，float有效位是6～7，如果86041238.78与5相加，输出结果是86041245.00而不是86041243.78，个位四舍五入，小数位忽略。</p>
@@ -527,7 +528,7 @@ height:50vh;
 </ul>
 </li>
 </ul>
-<h4 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h4><ul>
+<h4 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a><font color="blue">运算符</font></h4><ul>
 <li><p><strong>算术运算符</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">float</span> i=<span class="number">11</span>/<span class="number">4</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%f\n"</span>,i);<span class="comment">//输出结果：2.000000,两整数整除结果为整数</span></span><br><span class="line">flost j=<span class="number">11</span>/<span class="number">4.0</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%f\n"</span>,j);<span class="comment">//输出结果：2.750000</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -573,7 +574,7 @@ height:50vh;
 </ul>
 </li>
 </ul>
-<h4 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h4><ul>
+<h4 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a><font color="blue">表达式</font></h4><ul>
 <li><p><strong>逗号表达式</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i=<span class="number">2</span>;</span><br><span class="line">i=<span class="number">3</span>*<span class="number">5</span>,i*<span class="number">2</span>;<span class="comment">//结果为15，因为赋值运算符优先级高于逗号运算符</span></span><br><span class="line"><span class="keyword">int</span> j=<span class="number">3</span>;</span><br><span class="line"><span class="keyword">int</span> a=(j=<span class="number">3</span>*<span class="number">5</span>,j*<span class="number">4</span>);<span class="comment">//结果为60，初始化为逗号表达式</span></span><br><span class="line"><span class="comment">//如果几个式子由逗号连接，则结果为最右边的表达式,不过赋值的优先级高于逗号</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -581,7 +582,7 @@ height:50vh;
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">max=(x&gt;y)?x:y;</span><br><span class="line"><span class="comment">//等价于</span></span><br><span class="line"><span class="keyword">if</span>(x&gt;y)&#123;</span><br><span class="line">  max=x;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">  max=y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h3><ul>
+<h3 id="语句"><a href="#语句" class="headerlink" title="语句"></a><font color="Red">语句</font></h3><ul>
 <li><p><strong>do while</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">do</span>&#123;</span><br><span class="line">  sum+=i;</span><br><span class="line">  i++;</span><br><span class="line">&#125;<span class="keyword">while</span>(i&lt;=<span class="number">100</span>);<span class="comment">//记得末尾加分号</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -593,8 +594,7 @@ height:50vh;
 <li><p><strong>exit语句</strong>：终止当前调用的进程，结束应用程序；return 则退出当前调用进程的函数。</p>
 </li>
 </ul>
-<h3 id="面向过程程序设计"><a href="#面向过程程序设计" class="headerlink" title="面向过程程序设计"></a>面向过程程序设计</h3><ul>
-<li><h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><ul>
+<h3 id="面向过程程序设计"><a href="#面向过程程序设计" class="headerlink" title="面向过程程序设计"></a><font color="Red">面向过程程序设计</font></h3><h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a><font color="blue">函数</font></h4><ul>
 <li><strong>前置声明</strong></li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>;<span class="comment">//前置声明</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> ret;</span><br><span class="line">  res=sum(<span class="number">10</span>,<span class="number">20</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d"</span>,res);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x+y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -631,30 +631,26 @@ height:50vh;
 </ul>
 </li>
 </ul>
+<ul>
+<li><p><strong>指针类型或引用类型，const可以作为重载的一部分</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> *x,<span class="keyword">const</span> <span class="keyword">int</span> *y)</span></span>&#123;</span><br><span class="line">  retunt x+y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x+y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用typedef自定义类型不作为重载的标识</strong></p>
+</li>
+<li><p><strong>局部域中声明的函数不是重载函数全局域中的函数</strong></p>
 </li>
 </ul>
-<pre><code>- **指针类型或引用类型，const可以作为重载的一部分**
-
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> *x,<span class="keyword">const</span> <span class="keyword">int</span> *y)</span></span>&#123;</span><br><span class="line">  retunt x+y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x+y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-- **使用typedef自定义类型不作为重载的标识**
-
-- **局部域中声明的函数不是重载函数全局域中的函数**
-</code></pre>  <div style="page-break-after: always;"></div>
-
 <ul>
 <li><p><strong>函数指针-增加程序的灵活性</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*p)(<span class="keyword">int</span>,<span class="keyword">int</span>);<span class="comment">//定义一个指向两个整型参数的函数指针</span></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span> <span class="params">(*pfun)</span><span class="params">(<span class="keyword">int</span>,<span class="keyword">int</span>)</span></span>;<span class="comment">//使用typedef定义函数指针</span></span><br><span class="line">pfun fun;<span class="comment">//定义该类型变量</span></span><br><span class="line"></span><br><span class="line">#######</span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span><span class="params">(*pfun)</span><span class="params">(<span class="keyword">int</span>,<span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">  retutrn x+y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  pfun fun;<span class="comment">//定义一个函数指针变量</span></span><br><span class="line">  fun=sum;</span><br><span class="line">  <span class="keyword">int</span> i=fun(<span class="number">10</span>,<span class="number">20</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d"</span>,i);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<ul>
-<li><h4 id="作用域和生命期"><a href="#作用域和生命期" class="headerlink" title="作用域和生命期"></a>作用域和生命期</h4><ul>
+<h4 id="作用域和生命期"><a href="#作用域和生命期" class="headerlink" title="作用域和生命期"></a><font color="blue">作用域和生命期</font></h4><ul>
 <li><p>全局变量，如果没有初始化，其值为0；但是对于局部变量，没有初始化，其值不可预期。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> Var=<span class="number">10</span>;<span class="comment">//全局变量</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> Var=<span class="number">5</span>;<span class="comment">//局部变量</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,Var);<span class="comment">//输出为5，访问局部变量</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d"</span>,::Var);<span class="comment">//输出为10，访问全局变量</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//如果访问其他文件中的全局变量，使用extern关键字声明</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-</li>
-<li><h4 id="函数模板"><a href="#函数模板" class="headerlink" title="函数模板"></a>函数模板</h4><ul>
+<h4 id="函数模板"><a href="#函数模板" class="headerlink" title="函数模板"></a><font color="blue">函数模板</font></h4><ul>
 <li><p>函数模板提供一种机制，使函数返回值、参数类型能够被参数化，而函数体保持不变。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义函数模板</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">type</span>,<span class="title">int</span> <span class="title">len</span>&gt;//定义一个模板类型</span></span><br><span class="line"><span class="class"><span class="title">type</span> <span class="title">Max</span>(<span class="title">type</span> <span class="title">array</span>[<span class="title">len</span>])&#123;</span><span class="comment">//定义函数模板</span></span><br><span class="line"> 	 type ret=<span class="built_in">array</span>[<span class="number">0</span>];</span><br><span class="line"> 	 <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">    ret=(ret&gt;<span class="built_in">array</span>[i]?ret:<span class="built_in">array</span>[i]);</span><br><span class="line"> 	 &#125;</span><br><span class="line">  	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> <span class="built_in">array</span>[<span class="number">5</span>]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">  <span class="keyword">int</span> iret=Max&lt;<span class="keyword">int</span>,len&gt;(<span class="built_in">array</span>);<span class="comment">//调用函数模板</span></span><br><span class="line">  <span class="keyword">float</span> dset[<span class="number">5</span>]=&#123;<span class="number">1.0</span>,<span class="number">2.3</span>,<span class="number">3.4</span>,<span class="number">5.0</span>,<span class="number">3.2</span>&#125;;</span><br><span class="line">  <span class="keyword">float</span> dret=Max&lt;<span class="keyword">float</span>,len&gt;(dset);<span class="comment">//调用函数模版</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
@@ -662,9 +658,7 @@ height:50vh;
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义函数模板</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">type</span>&gt;//定义一个模板类型</span></span><br><span class="line"><span class="class"><span class="title">type</span> <span class="title">Sum</span>(<span class="title">type</span> <span class="title">x</span>,<span class="title">type</span> <span class="title">y</span>)&#123;</span><span class="comment">//定义函数模板</span></span><br><span class="line"> 	 <span class="keyword">return</span> x+y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">type</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">type</span> <span class="title">Sum</span>(<span class="title">type</span> <span class="title">array</span>[],<span class="title">int</span> <span class="title">len</span>)&#123;</span></span><br><span class="line">	type ret=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">  	ret+=<span class="built_in">array</span>[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> iret=Sum(<span class="number">10</span>,<span class="number">20</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,iret);<span class="comment">//输出10+20的和</span></span><br><span class="line">	<span class="keyword">int</span> <span class="built_in">array</span>[<span class="number">5</span>]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> aret=Sum(<span class="built_in">array</span>,<span class="number">5</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>,aret);<span class="comment">//输出1+...+5的和</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-</li>
-</ul>
-<h3 id="面向对象的程序设计"><a href="#面向对象的程序设计" class="headerlink" title="面向对象的程序设计"></a>面向对象的程序设计</h3><h4 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h4><ul>
+<h3 id="面向对象的程序设计"><a href="#面向对象的程序设计" class="headerlink" title="面向对象的程序设计"></a><font color="Red">面向对象的程序设计</font></h3><h4 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a><font color="blue">类和对象</font></h4><ul>
 <li><p><strong>类成员的访问</strong></p>
 <ul>
 <li><strong>public：</strong>公有成员，在程序的任何地方都可以访问；</li>
@@ -774,6 +768,12 @@ height:50vh;
 </li>
 </ul>
 </li>
+</ul>
+<hr>
+<font color="blue">声明</font>
+
+<ul>
+<li>本博文为学习《Visual C++从入门到精通 第4版》整理出的，为原创总结，如有转载，请注明出处！</li>
 </ul>
 
     </article>
@@ -967,7 +967,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/25</span><a class="archive-post-title" href="/2019/03/25/recommend-system/">Recommend system</a>
+            <span class="archive-post-date">03/25</span><a class="archive-post-title" href="/2019/03/25/recommend-system/">推荐系统（一）</a>
         </li>
     
     
