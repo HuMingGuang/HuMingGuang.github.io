@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>recommend system · MingGuangHu&#39;s Studio.</title>
+    <title>Recommend system · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -232,7 +232,7 @@
                 <a href="/">MingGuangHu&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">recommend system</a>
+                <a href="#" class="post-name">Recommend system</a>
             </div>
     </div>
     
@@ -262,7 +262,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            recommend system
+            Recommend system
             <!-- 404 -->
             
         </h1>
@@ -283,11 +283,13 @@ height:50vh;
     
         <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
     
+        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
+    
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">646</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">718</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -416,43 +418,36 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h3 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h3><hr>
-<h4 id="1-推荐引擎-基础功能"><a href="#1-推荐引擎-基础功能" class="headerlink" title="1.推荐引擎-基础功能"></a>1.推荐引擎-基础功能</h4><ul>
-<li><p><strong>IMDB打分规则</strong>：$W=\dfrac {Rv+Cm}{C+m}$</p>
-<p>$W$:  加权计算公式</p>
-<p>$R$:   该电影的平均分（分数相加除以人数）</p>
+        <h3 id="推荐引擎-基础功能"><a href="#推荐引擎-基础功能" class="headerlink" title="推荐引擎-基础功能"></a><font color="Red">推荐引擎-基础功能</font></h3><hr>
+<h4 id="IMDB打分规则"><a href="#IMDB打分规则" class="headerlink" title="IMDB打分规则"></a><font color="blue">IMDB打分规则</font></h4><script type="math/tex; mode=display">W=\dfrac {Rv+Cm}{C+m}</script><p>$W​$:  加权计算公式</p>
+<p>$R​$:   该电影的平均分（分数相加除以人数）</p>
 <p>$v$:    投票人数，实际上是经常投票的人数，也即 IMDb 活跃用户投票数</p>
 <p>$m$:  进入 IMDb Top 250 榜单所需的最小票数</p>
-<p>$C$:   IMDb 数据库所有电影的平均分</p>
-<p><font color="red">注意</font>：<strong>这是IMDb 维护 Top 250 电影榜单所使用的，并不是每一部新电影打分都采用这个方法。</strong></p>
-</li>
-<li><p><strong>推荐引擎模块</strong>：接收请求、处理请求、返回结果</p>
-</li>
-<li><p><strong>推荐结果</strong></p>
+<p>$C​$:   IMDb 数据库所有电影的平均分</p>
+<font color="red">注意</font>：这是IMDb 维护 Top 250 电影榜单所使用的，并不是每一部新电影打分都采用这个方法。
+
+####<font color="blue">推荐引擎</font>
+
 <ul>
+<li><strong>主要模块：</strong>接收请求、处理请求、返回结果</li>
+</ul>
+<h4 id="推荐结果"><a href="#推荐结果" class="headerlink" title="推荐结果"></a><font color="blue">推荐结果</font></h4><ul>
 <li>UID: item_id 、item_id、item_id</li>
 <li>item: item_id、item_id（相关联商品）</li>
 </ul>
-</li>
-<li><p><strong>制造日志</strong></p>
-<ul>
-<li><p><strong>日志种类：</strong>点击、播放、点赞、收藏、付费观看、站外分享、评论（<font color="red">7个</font>）</p>
-</li>
-<li><p><strong>日志格式：</strong>cookie（本地缓存）、uid（注册ID）、user agent（浏览器、电脑配置）、ip（本地地址）、video_id（观看视频ID）、topic（观看视频名称）、order_id（付费订单号）、log_type（日志类型）（<font color="red">8个</font>）</p>
-</li>
-<li><p><strong>实现代码</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">produce_log</span><span class="params">()</span>:</span></span><br><span class="line">    albet=[<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>,<span class="string">"h"</span>]</span><br><span class="line">    albet_num=[<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>,<span class="string">"h"</span>,<span class="string">"1"</span>,<span class="string">"2"</span>,<span class="string">"3"</span>,<span class="string">"4"</span>,<span class="string">"5"</span>,<span class="string">"6"</span>,</span><br><span class="line">                <span class="string">"7"</span>,<span class="string">"8"</span>,<span class="string">"9"</span>,<span class="string">"0"</span>]</span><br><span class="line">    albet_Num=[<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>,<span class="string">"h"</span>,<span class="string">"1"</span>,<span class="string">"2"</span>,<span class="string">"3"</span>,<span class="string">"4"</span>,<span class="string">"5"</span>,<span class="string">"6"</span>,</span><br><span class="line">                <span class="string">"7"</span>,<span class="string">"8"</span>,<span class="string">"9"</span>,<span class="string">"0"</span>,<span class="string">"A"</span>,<span class="string">"H"</span>,<span class="string">"L"</span>,<span class="string">"K"</span>,<span class="string">"O"</span>]</span><br><span class="line">    file_object=open(<span class="string">'./log_file.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">100</span>):</span><br><span class="line">        cookie=<span class="string">""</span>.join(random.sample(albet_Num,<span class="number">8</span>))<span class="comment">#本地缓存</span></span><br><span class="line">        uid=<span class="string">""</span>.join(random.sample(albet_Num,<span class="number">8</span>))<span class="comment">#注册id</span></span><br><span class="line">        user_agent=<span class="string">"Macintosh Intel Mac OS Chrome"</span></span><br><span class="line">        ip=<span class="string">"1.1.1.0"</span></span><br><span class="line">        video_id=<span class="string">"394024"</span></span><br><span class="line">        topic=<span class="string">"晓说"</span></span><br><span class="line">        order_id=<span class="string">"0"</span><span class="comment">#订单号</span></span><br><span class="line">        log_type=<span class="string">"1"</span><span class="comment">#日志类型：点击、播放...</span></span><br><span class="line">        <span class="comment">#连接日志</span></span><br><span class="line">        final=cookie+<span class="string">"&amp;"</span>+uid+<span class="string">"&amp;"</span>+user_agent+<span class="string">"&amp;"</span>+ip+<span class="string">"&amp;"</span>+video_id\</span><br><span class="line">                +<span class="string">"&amp;"</span>+topic+<span class="string">"&amp;"</span>+order_id+<span class="string">"&amp;"</span>+log_type+<span class="string">"\r\n"</span></span><br><span class="line">        <span class="keyword">print</span> (final)</span><br><span class="line">        file_object.write(final)<span class="comment">#往文件中写日志</span></span><br><span class="line">    file_object.close()</span><br></pre></td></tr></table></figure>
-</li>
+<h4 id="制造日志"><a href="#制造日志" class="headerlink" title="制造日志"></a><font color="blue">制造日志</font></h4><ul>
+<li><strong>日志种类：</strong>点击、播放、点赞、收藏、付费观看、站外分享、评论（<font color="red">7个</font>）</li>
+<li><strong>日志格式：</strong>cookie（本地缓存）、uid（注册ID）、user agent（浏览器、电脑版本和型号）、ip（本地地址）、video_id（观看视频ID）、topic（观看视频名称）、order_id（付费订单号）、log_type（日志类型）（<font color="red">8个</font>）</li>
 </ul>
-</li>
-<li><p><strong>模拟请求</strong></p>
-<ul>
-<li><p>启动服务器，并在浏览器请求服务</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">produce_log</span><span class="params">()</span>:</span></span><br><span class="line">    albet_Num=[<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>,<span class="string">"h"</span>,<span class="string">"1"</span>,<span class="string">"2"</span>,<span class="string">"3"</span>,<span class="string">"4"</span>,<span class="string">"5"</span>,<span class="string">"6"</span>,</span><br><span class="line">                <span class="string">"7"</span>,<span class="string">"8"</span>,<span class="string">"9"</span>,<span class="string">"0"</span>,<span class="string">"A"</span>,<span class="string">"H"</span>,<span class="string">"L"</span>,<span class="string">"K"</span>,<span class="string">"O"</span>]</span><br><span class="line">    user_list=[<span class="string">"one"</span>,<span class="string">"two"</span>,<span class="string">"three"</span>,<span class="string">"four"</span>,<span class="string">"five"</span>]</span><br><span class="line">    nums=[<span class="string">"1"</span>,<span class="string">"2"</span>,<span class="string">"3"</span>,<span class="string">"4"</span>,<span class="string">"5"</span>,<span class="string">"6"</span>,<span class="string">"7"</span>,<span class="string">"8"</span>,<span class="string">"9"</span>,<span class="string">"0"</span>]</span><br><span class="line">    log_type_array=[<span class="string">"1"</span>,<span class="string">"2"</span>,<span class="string">"3"</span>,<span class="string">"4"</span>,<span class="string">"5"</span>,<span class="string">"6"</span>,<span class="string">"7"</span>]</span><br><span class="line">    file_object=open(<span class="string">'./log_file.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">100</span>):</span><br><span class="line">        cookie=<span class="string">""</span>.join(random.sample(albet_Num,<span class="number">6</span>))<span class="comment">#本地缓存</span></span><br><span class="line">        uid=<span class="string">""</span>.join(random.sample(user_list,<span class="number">1</span>))<span class="comment">#注册id</span></span><br><span class="line">        user_agent=<span class="string">"Macintosh Intel Mac OS Chrome"</span></span><br><span class="line">        ip=<span class="string">"192.168.110.79"</span></span><br><span class="line">        video_id=<span class="string">""</span>.join(random.sample(nums,<span class="number">7</span>)) <span class="comment">#视频编号</span></span><br><span class="line">        topic=<span class="string">"晓说"</span></span><br><span class="line">        order_id=<span class="string">"0"</span><span class="comment">#订单号</span></span><br><span class="line">        <span class="comment">#日志类型：点击、播放、点赞、收藏、付费观看、站外分享、评论</span></span><br><span class="line">        log_type=<span class="string">""</span>.join(random.sample(log_type_array,<span class="number">1</span>))</span><br><span class="line">        <span class="comment">#连接日志</span></span><br><span class="line">        final=cookie+<span class="string">"&amp;"</span>+uid+<span class="string">"&amp;"</span>+user_agent+<span class="string">"&amp;"</span>+ip+<span class="string">"&amp;"</span>+video_id\</span><br><span class="line">                +<span class="string">"&amp;"</span>+topic+<span class="string">"&amp;"</span>+order_id+<span class="string">"&amp;"</span>+log_type+<span class="string">"\r\n"</span></span><br><span class="line">        <span class="keyword">print</span> (final)</span><br><span class="line">        file_object.write(final)<span class="comment">#往文件中写日志</span></span><br><span class="line">    file_object.close()</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    produce_log()</span><br></pre></td></tr></table></figure>
+<h4 id="模拟请求"><a href="#模拟请求" class="headerlink" title="模拟请求"></a><font color="blue">模拟请求</font></h4><ul>
+<li>启动服务器，并在浏览器请求服务</li>
+</ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="comment">#拆分接收字符</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Processing</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="comment">#字符http://127.0.0.1:8080?key=hello，用"key=""作为分隔符拆分出第二部分，即hello</span></span><br><span class="line">    <span class="comment">#用" "作为分隔符，拆分出第一部分，即hello</span></span><br><span class="line">    uid=request.split(<span class="string">"key="</span>)[<span class="number">1</span>].split(<span class="string">" "</span>)[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">return</span> uid</span><br><span class="line"><span class="comment">#对处理后的接受字符，进行编码，处理请求</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rec</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process</span><span class="params">(self,request)</span>:</span></span><br><span class="line">        uid=request.split(<span class="string">"key="</span>)[<span class="number">1</span>].split(<span class="string">" "</span>)[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">return</span> self.rec(uid)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rec</span><span class="params">(self,uid)</span>:</span></span><br><span class="line">        rec=<span class="string">"1231,123112,21313"</span></span><br><span class="line">        <span class="keyword">return</span> rec</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    HOST,PORT=<span class="string">''</span>,<span class="number">8080</span></span><br><span class="line">    <span class="comment">#面向网络的套接字，TCP套接字：可靠、开销大</span></span><br><span class="line">    listen_socket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line">    listen_socket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,<span class="number">1</span>)</span><br><span class="line">    <span class="comment">#绑定端口号</span></span><br><span class="line">    listen_socket.bind((HOST,PORT))</span><br><span class="line">    listen_socket.listen(<span class="number">1</span>)</span><br><span class="line">    print(<span class="string">"Serving HTTP on port %s"</span>%PORT)</span><br><span class="line">    r=Rec()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        client_connection,client_address=listen_socket.accept()</span><br><span class="line">        <span class="comment">#每次最多接受1024个字节,把字节转化为字符</span></span><br><span class="line">        request=client_connection.recv(<span class="number">1024</span>).decode()</span><br><span class="line">        print(<span class="string">"*******"</span>)</span><br><span class="line">        print(Processing(request))</span><br><span class="line">        print(r.process(request))</span><br><span class="line">        print(<span class="string">"*******"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">#发送数据</span></span><br><span class="line">        http_response=<span class="string">"""</span></span><br><span class="line"><span class="string">        HTTP/1.1 200 OK</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Hello World</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        print(http_response)</span><br><span class="line">        client_connection.sendall(http_response.encode())</span><br><span class="line">        client_connection.close()</span><br></pre></td></tr></table></figure>
-</li>
+<h4 id="处理日志"><a href="#处理日志" class="headerlink" title="处理日志"></a><font color="blue">处理日志</font></h4><ul>
+<li>读文件；找到log类型为”1”（点击）的日志</li>
 </ul>
-</li>
-</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">file=open(<span class="string">'./log_file.txt'</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> file.readlines():</span><br><span class="line">    <span class="comment">#处理空格</span></span><br><span class="line">    line=line.strip()</span><br><span class="line">    ls=line.split(<span class="string">"&amp;"</span>)</span><br><span class="line">    <span class="keyword">if</span> ls[<span class="number">7</span>]!=<span class="string">"1"</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    print(ls)</span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure>
 
     </article>
     <!-- license  -->
@@ -585,7 +580,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#推荐系统"><span class="toc-number">1.</span> <span class="toc-text">推荐系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-推荐引擎-基础功能"><span class="toc-number">1.1.</span> <span class="toc-text">1.推荐引擎-基础功能</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#推荐引擎-基础功能"><span class="toc-number">1.</span> <span class="toc-text">推荐引擎-基础功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IMDB打分规则"><span class="toc-number">1.1.</span> <span class="toc-text">IMDB打分规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#推荐结果"><span class="toc-number">1.2.</span> <span class="toc-text">推荐结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#制造日志"><span class="toc-number">1.3.</span> <span class="toc-text">制造日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模拟请求"><span class="toc-number">1.4.</span> <span class="toc-text">模拟请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#处理日志"><span class="toc-number">1.5.</span> <span class="toc-text">处理日志</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -645,7 +640,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/25</span><a class="archive-post-title" href="/2019/03/25/recommend-system/">recommend system</a>
+            <span class="archive-post-date">03/25</span><a class="archive-post-title" href="/2019/03/25/recommend-system/">Recommend system</a>
         </li>
     
     
@@ -664,6 +659,8 @@ top:50vh;
     <div class="sidebar-tags-name">
     
         <span class="sidebar-tag-name" data-tags="推荐系统"><span class="iconfont-archer">&#xe606;</span>推荐系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习实战"><span class="iconfont-archer">&#xe606;</span>机器学习实战</span>
     
         <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
     
