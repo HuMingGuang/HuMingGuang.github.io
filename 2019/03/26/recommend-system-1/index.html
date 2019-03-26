@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>MingGuangHu&#39;s Studio.</title>
+    <title>推荐系统（二） · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -218,12 +218,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">推荐系统（二）</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">MingGuangHu's Studio.</a>
 </header>
@@ -235,24 +246,76 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            推荐系统（二）
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">362</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/03/26</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -353,39 +416,110 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/22/Coding-1/">
-            
-                <span>C++基础知识梳理</span>
-        </a>
-        <div class="abstract-content">
-            对已经学过C++的同学，可以帮助快速复习梳理
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="C++">C++</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <h3 id="推荐引擎-基本的实时处理"><a href="#推荐引擎-基本的实时处理" class="headerlink" title="推荐引擎-基本的实时处理"></a><font color="Red">推荐引擎-基本的实时处理</font></h3><hr>
+<h4 id="流式处理"><a href="#流式处理" class="headerlink" title="流式处理"></a><font color="blue">流式处理</font></h4><ul>
+<li><p><strong>概念：</strong>应对实时/近实时的数据，作出反应</p>
+</li>
+<li><p><strong>个性化推荐解决方案</strong></p>
+<p><img src="/2019/03/26/recommend-system-1/personal_rec.png" alt="personal_rec"></p>
+<p><strong>三次处理：从原始日志——处理日志——最终结果</strong></p>
+</li>
+<li><p><strong>流式处理系统流程</strong></p>
+<ul>
+<li><strong>设计场景和梳理需求</strong><ul>
+<li>例如说视频网站场景</li>
+<li>例如说在线阅读小说的场景</li>
+</ul>
+</li>
+<li><strong>制定流式处理规则</strong><ul>
+<li>点击流式处理规则</li>
+<li>收藏流式处理规则</li>
+</ul>
+</li>
+<li><strong>人工干预推荐结果</strong><ul>
+<li>编辑推荐</li>
+</ul>
+</li>
+</ul>
+<p><font color="red"><strong>注：</strong></font><font color="orange">相关推荐</font>是指根据物品推荐物品；<font color="orange">个性化推荐</font>是根据人的行为推荐物品。<font color="orange">在线</font>：个人短期兴趣；<font color="orange">离线</font>：长期兴趣。</p>
+</li>
+<li><p><strong>流式处理的优势</strong></p>
+<ul>
+<li>低相应时延</li>
+<li>动态效果丰富：具有实时的反应</li>
+<li>用户体验效果好</li>
+<li>转化率高</li>
+</ul>
+</li>
+<li><p><strong>流式处理的劣势</strong></p>
+<ul>
+<li>资源消耗严重 </li>
+<li>效果准确度有影响：从长期效果来看</li>
+<li>效果起伏大、分析原因难 </li>
+</ul>
+</li>
+</ul>
+<h4 id="实现流式处理"><a href="#实现流式处理" class="headerlink" title="实现流式处理"></a><font color="blue">实现流式处理</font></h4><ul>
+<li><strong>实现编码流程</strong><ul>
+<li>内存更新方式 </li>
+<li>一致性哈希算法</li>
+<li>更新缓存机制 </li>
+</ul>
+</li>
+<li><strong>内存更新方式</strong><ul>
+<li><code>map&lt;key1: value1, key2: value2, key3: value3&gt;</code></li>
+<li><code>list&lt;item1,item2,item3,...&gt;</code></li>
+</ul>
+</li>
+<li><strong>一致性哈希算法</strong>:参考文章</li>
+</ul>
+<hr>
+<font color="blue">声明</font>
+
+<ul>
+<li><strong>参考资料1</strong>：<a href="https://cloud.tencent.com/developer/article/1068749；" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1068749；</a></li>
+<li><strong>参考资料2</strong>：崔立明老师——推荐系统视频课程</li>
+<li>本博文为原创总结，如有转载，请注名出处！</li>
+</ul>
+
     </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/03/26/consistent-hashing/" title="consistent hashing">
+                    <div class="nextTitle">consistent hashing</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/03/25/recommend-system/" title="推荐系统（一）">
+                    <div class="prevTitle">推荐系统（一）</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -470,6 +604,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#推荐引擎-基本的实时处理"><span class="toc-number">1.</span> <span class="toc-text">推荐引擎-基本的实时处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#流式处理"><span class="toc-number">1.1.</span> <span class="toc-text">流式处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现流式处理"><span class="toc-number">1.2.</span> <span class="toc-text">实现流式处理</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -674,6 +826,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
