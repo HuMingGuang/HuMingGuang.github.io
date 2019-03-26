@@ -419,11 +419,11 @@ height:50vh;
             <main class="main post-page">
     <article class="article-entry">
         <h3 id="推荐引擎-基础功能"><a href="#推荐引擎-基础功能" class="headerlink" title="推荐引擎-基础功能"></a><font color="Red">推荐引擎-基础功能</font></h3><hr>
-<h4 id="IMDB打分规则"><a href="#IMDB打分规则" class="headerlink" title="IMDB打分规则"></a><font color="blue">IMDB打分规则</font></h4><script type="math/tex; mode=display">W=\dfrac {Rv+Cm}{C+m}</script><p>​    $W$:  加权计算公式</p>
+<h4 id="IMDB打分规则"><a href="#IMDB打分规则" class="headerlink" title="IMDB打分规则"></a><font color="blue">IMDB打分规则</font></h4><script type="math/tex; mode=display">W=\dfrac {Rv+Cm}{v+m}</script><p>​    $W​$:  加权计算公式</p>
 <p>​    $R$:   该电影的平均分（分数相加除以人数）</p>
 <p>​    $v$:    投票人数，实际上是经常投票的人数，也即 IMDb 活跃用户投票数</p>
 <p>​    $m$:  进入 IMDb Top 250 榜单所需的最小票数</p>
-<p>​    $C$:   IMDb 数据库所有电影的平均分</p>
+<p>​    $C​$:   IMDb 数据库所有电影的平均分</p>
 <p>​    <font color="red">注意</font>：这是IMDb 维护 Top 250 电影榜单所使用的，并不是每一部新电影打分都采用这个方法。</p>
 <h4 id="推荐引擎"><a href="#推荐引擎" class="headerlink" title="推荐引擎"></a><font color="blue">推荐引擎</font></h4><ul>
 <li><strong>主要模块：</strong>接收请求、处理请求、返回结果</li>
