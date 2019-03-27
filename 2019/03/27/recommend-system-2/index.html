@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="MingGuang HU">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="MingGuang HU">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>推荐系统（三） · MingGuangHu&#39;s Studio.</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/assets/bitbug_favicon.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+        <!-- algolia -->
+        <script>
+            
+            var hits = JSON.parse('{"per_page":10}')
+            var labels = JSON.parse('{"input_placeholder":"Search for Posts","hits_empty":"We did not find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}')
+
+            var algolia = {
+                applicationID: 'L4H8NR9HZK',
+                apiKey: 'dd0a87d811733fb786ed3807e9023178',
+                indexName: 'blog',
+                hits: hits,
+                labels: labels
+            }
+        </script>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">推荐系统（三）</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">MingGuangHu's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            推荐系统（三）
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.3k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/03/27</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="推荐引擎-实现简单的实时推荐算法"><a href="#推荐引擎-实现简单的实时推荐算法" class="headerlink" title="推荐引擎-实现简单的实时推荐算法"></a><font color="red">推荐引擎-实现简单的实时推荐算法</font></h2><blockquote>
+<p>主要内容</p>
+<ul>
+<li>同类目推荐：相同类目下，推荐不同的商品</li>
+<li>关联类目推荐：根据商品所属类目，推荐出其他品类的商品</li>
+<li>一致性哈希适应</li>
+<li>多线程内存更新</li>
+<li>人工干预推荐</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="同类目推荐"><a href="#同类目推荐" class="headerlink" title="同类目推荐"></a><font color="blue">同类目推荐</font></h3><ul>
+<li><p><strong>相同类目下，对其进行不同属性划分，然后进行不同物品的推荐</strong></p>
+</li>
+<li><p><strong>实现流程</strong></p>
+<p><img src="/2019/03/27/recommend-system-2/flowchart.png" width="75%" height="75%"></p>
+</li>
+<li><p><strong>根据log_file日志筛选出cat_log日志</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">produce_cate_log</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment">#打开log_file，筛选出goods_id和cate_topic;写入cate_its</span></span><br><span class="line">    file=open(<span class="string">'./log_file.txt'</span>)</span><br><span class="line">    cate_its=&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> file.readlines():</span><br><span class="line">        line.strip()</span><br><span class="line">        ls=line.split(<span class="string">"&amp;"</span>)</span><br><span class="line">        <span class="keyword">if</span> ls[<span class="number">5</span>] <span class="keyword">not</span> <span class="keyword">in</span> cate_its.keys():</span><br><span class="line">            cate_its[ls[<span class="number">5</span>]]=[]</span><br><span class="line">        cate_its[ls[<span class="number">5</span>]].append(ls[<span class="number">4</span>])</span><br><span class="line">    file.close()</span><br><span class="line">    file_object=open(<span class="string">'./cat_log.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">    <span class="comment">#将cate_its文件保存至cat.log文件中</span></span><br><span class="line">    <span class="keyword">for</span> k,v <span class="keyword">in</span> cate_its.items():</span><br><span class="line">        line=k+<span class="string">"\t"</span>+<span class="string">"&amp;"</span>.join(v)+<span class="string">"\r\n"</span></span><br><span class="line">        file_object.write(line)</span><br><span class="line">    file_object.close()</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    produce_cate_log()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>服务器代码</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line">cate_log=&#123;&#125;<span class="comment">#key:cate_topic value:goods_id </span></span><br><span class="line"><span class="comment">#提取出cate.log中的数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pre_process</span><span class="params">()</span>:</span></span><br><span class="line">    file=open(<span class="string">'./cat_log.txt'</span>)</span><br><span class="line">    <span class="comment">#同类目日志</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> file.readlines():</span><br><span class="line">        line=line.strip()</span><br><span class="line">        ls=line.split(<span class="string">"\t"</span>)</span><br><span class="line">        <span class="keyword">if</span> ls[<span class="number">0</span>] <span class="keyword">not</span> <span class="keyword">in</span> cate_log.keys():</span><br><span class="line">            cate_log[ls[<span class="number">0</span>]]=[]</span><br><span class="line">        cate_ls=ls[<span class="number">1</span>].split(<span class="string">"&amp;"</span>)</span><br><span class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> cate_ls:</span><br><span class="line">            cate_log[ls[<span class="number">0</span>]].append(v)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log_process</span><span class="params">(paprms,tag)</span>:</span></span><br><span class="line">    <span class="comment">#tag=1为文字，返回与文字匹配的商品</span></span><br><span class="line">    <span class="comment">#tag=2为数字，返回与货物ID同类目的商品</span></span><br><span class="line">    <span class="keyword">if</span> tag==<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> paprms <span class="keyword">in</span> cate_log.keys():<span class="comment">#根据类目，找到所有同类目商品</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">"&amp;"</span>.join(cate_log[paprms])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"wrong request, no literal"</span></span><br><span class="line">    <span class="keyword">elif</span> tag==<span class="number">0</span>:</span><br><span class="line">        <span class="keyword">for</span> k,v <span class="keyword">in</span> cate_log.items():<span class="comment">#找到所属类目，并返回所有相关的商品</span></span><br><span class="line">            <span class="keyword">if</span> paprms <span class="keyword">in</span> v:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"&amp;"</span>.join(v)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"wrong request, no number"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    HOST,PORT=<span class="string">''</span>,<span class="number">8080</span></span><br><span class="line">    <span class="comment">#面向网络的套接字，TCP套接字：可靠、开销大</span></span><br><span class="line">    listen_socket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line">    listen_socket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,<span class="number">1</span>)</span><br><span class="line">    <span class="comment">#绑定端口号</span></span><br><span class="line">    listen_socket.bind((HOST,PORT))</span><br><span class="line">    listen_socket.listen(<span class="number">1</span>)</span><br><span class="line">    print(<span class="string">"server port is %s"</span> % PORT)</span><br><span class="line">    <span class="comment">#将类目日志处理后加载进Server</span></span><br><span class="line">    pre_process()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        client_connection,client_address=listen_socket.accept()</span><br><span class="line">        <span class="comment">#每次最多接受1024个字节,把字节转化为字符</span></span><br><span class="line">        request=client_connection.recv(<span class="number">1024</span>).decode()</span><br><span class="line">        <span class="comment">#发送数据</span></span><br><span class="line">        paprms,tag=request.split(<span class="string">"&amp;"</span>)</span><br><span class="line">        <span class="comment">#服务器返回处理结果</span></span><br><span class="line">        http_response=log_process(paprms,int(tag.split(<span class="string">"EOF"</span>)[<span class="number">0</span>]))</span><br><span class="line">        client_connection.sendall(http_response.encode())</span><br><span class="line">        client_connection.close()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>客户端代码</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">ss=socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line"><span class="comment">#连接服务器</span></span><br><span class="line">ss.connect((<span class="string">'127.0.0.1'</span>,<span class="number">8080</span>))</span><br><span class="line"><span class="comment">#发送同类目推荐请求</span></span><br><span class="line">str=<span class="string">"篮球&amp;1"</span>.encode()</span><br><span class="line">ss.sendall(str)</span><br><span class="line">os.system(<span class="string">'sleep 1'</span>)</span><br><span class="line"><span class="comment">#发送结束</span></span><br><span class="line">ss.send(<span class="string">'EOF'</span>.encode())</span><br><span class="line"><span class="comment">#得到服务器数据</span></span><br><span class="line">data=ss.recv(<span class="number">1024</span>).decode()</span><br><span class="line">print(<span class="string">"server data:%s"</span>%data)</span><br><span class="line"><span class="comment">#关闭客户端连接</span></span><br><span class="line">ss.close()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="关联类目推荐"><a href="#关联类目推荐" class="headerlink" title="关联类目推荐"></a><font color="blue">关联类目推荐</font></h3><ul>
+<li><p><strong>实验要求：</strong>根据篮球，推荐出球鞋、足球的商品ID</p>
+</li>
+<li><p><strong>核心代码</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#整理关联类目</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">relation_cate</span><span class="params">(paprms)</span>:</span></span><br><span class="line">    str=<span class="string">"Relation goods:"</span>+<span class="string">"\t"</span></span><br><span class="line">    <span class="comment">#判断是否属于某个相关联的类目</span></span><br><span class="line">    <span class="keyword">if</span> paprms <span class="keyword">in</span> relation_log:</span><br><span class="line">        <span class="comment">#查找相关联类目中的其他品类商品</span></span><br><span class="line">        <span class="keyword">for</span> cate_paprms <span class="keyword">in</span> relation_log:</span><br><span class="line">            <span class="comment">#去除自己所属的品类</span></span><br><span class="line">            <span class="keyword">if</span> cate_paprms <span class="keyword">not</span> <span class="keyword">in</span> paprms:</span><br><span class="line">                <span class="keyword">if</span> cate_paprms <span class="keyword">in</span> cate_log.keys():</span><br><span class="line">                  	<span class="comment">#将相关联的商品打包到一起</span></span><br><span class="line">                    str+=cate_paprms+<span class="string">"\t"</span>.join(cate_log[cate_paprms])+<span class="string">"\r\n"</span></span><br><span class="line">        <span class="keyword">return</span> str</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"sorry,no relation goods"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log_process</span><span class="params">(paprms,tag)</span>:</span></span><br><span class="line">    <span class="comment">#tag=1为文字，返回与文字匹配的商品</span></span><br><span class="line">    <span class="comment">#tag=2为数字，返回与货物ID同类目的商品</span></span><br><span class="line">    <span class="keyword">if</span> tag==<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> paprms <span class="keyword">in</span> cate_log.keys():<span class="comment">#根据类目，找到所有同类目商品</span></span><br><span class="line">            <span class="keyword">return</span> relation_cate(paprms)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"wrong request, no literal"</span></span><br><span class="line">    <span class="keyword">elif</span> tag==<span class="number">0</span>:</span><br><span class="line">        <span class="keyword">for</span> k,v <span class="keyword">in</span> cate_log.items():<span class="comment">#找到所属类目，并返回所有相关的商品</span></span><br><span class="line">            <span class="keyword">if</span> paprms <span class="keyword">in</span> v:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"&amp;"</span>.join(v)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"wrong request, no number"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="一致性哈希适应"><a href="#一致性哈希适应" class="headerlink" title="一致性哈希适应"></a><font color="blue">一致性哈希适应</font></h3><ul>
+<li><p><strong>参考资料</strong>：<a href="https://humingguang.github.io/2019/03/26/consistent-hashing/" target="_blank" rel="noopener">https://humingguang.github.io/2019/03/26/consistent-hashing/</a></p>
+</li>
+<li><p><strong>实现代码</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> hash_ring <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> redis</span><br><span class="line"><span class="comment">#在环形hash不仅hash数据项，而且也将服务器hash进去</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#服务器列表</span></span><br><span class="line">memcache_servers=[<span class="string">'127.0.0.1:6379'</span>,<span class="string">'127.0.0.1:6380'</span>]</span><br><span class="line"><span class="comment">#将服务器放入环形hash中</span></span><br><span class="line">ring=HashRing(memcache_servers)</span><br><span class="line"></span><br><span class="line"><span class="comment">#my_key_1被hash之后，分配到最近的服务器</span></span><br><span class="line">server=ring.get_node(<span class="string">'my_key_1'</span>)</span><br><span class="line">print(<span class="string">"the my_key_1 in %s"</span> % server)</span><br><span class="line">r=redis.Redis(host=server.split(<span class="string">":"</span>)[<span class="number">0</span>],port=int(server.split(<span class="string">":"</span>)[<span class="number">1</span>]),db=<span class="number">0</span>)</span><br><span class="line"><span class="comment">#在my_key_1地址上存储数据</span></span><br><span class="line">r.set(<span class="string">"my_key_1"</span>,<span class="string">"data in my_key_1"</span>)</span><br><span class="line"><span class="comment">#打印在地址my_key_2231指向的存储信息，并打印出</span></span><br><span class="line">print(<span class="string">"data:"</span>)</span><br><span class="line">print(r.get(<span class="string">"my_key_1"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#my_key_2231被hash之后，分配到最近的服务器</span></span><br><span class="line">server=ring.get_node(<span class="string">'my_key_2231'</span>)</span><br><span class="line">print(<span class="string">"the my_key_2231 in %s"</span> % server)</span><br><span class="line">r=redis.Redis(host=server.split(<span class="string">":"</span>)[<span class="number">0</span>],port=int(server.split(<span class="string">":"</span>)[<span class="number">1</span>]),db=<span class="number">0</span>)</span><br><span class="line"><span class="comment">#在my_key_2231地址上存储数据</span></span><br><span class="line">r.set(<span class="string">"my_key_2231"</span>,<span class="string">"data in my_key_2231"</span>)</span><br><span class="line"><span class="comment">#打印在地址my_key_2231指向的存储信息，并打印出</span></span><br><span class="line">print(<span class="string">"data:"</span>)</span><br><span class="line">print(r.get(<span class="string">"my_key_2231"</span>))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="多内存更新"><a href="#多内存更新" class="headerlink" title="多内存更新"></a><font color="blue">多内存更新</font></h3><ul>
+<li><p><strong>使用多线程机制，同时注意锁机制</strong></p>
+</li>
+<li><p><strong>实现代码</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read</span><span class="params">()</span>:</span></span><br><span class="line">  	<span class="comment">#上锁</span></span><br><span class="line">    threadLock.acquire()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">        print(<span class="string">"I am reading: %d"</span>%i)</span><br><span class="line">        sleep(<span class="number">1</span>)</span><br><span class="line">    <span class="comment">#释放锁</span></span><br><span class="line">    threadLock.release() </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">()</span>:</span></span><br><span class="line">    threadLock.acquire()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">        print(<span class="string">"########### I am writing: %d"</span>%i)</span><br><span class="line">        sleep(<span class="number">1</span>)</span><br><span class="line">    threadLock.release()</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="comment">#创建锁</span></span><br><span class="line">    threadLock = threading.Lock()</span><br><span class="line">    <span class="comment">#添加线程read</span></span><br><span class="line">    threads=[]</span><br><span class="line">    t1=threading.Thread(target=read,args=())</span><br><span class="line">    threads.append(t1)</span><br><span class="line">    <span class="comment">#添加线程write</span></span><br><span class="line">    t2=threading.Thread(target=write,args=())</span><br><span class="line">    threads.append(t2)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#开启线程</span></span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> threads:</span><br><span class="line">        t.start()</span><br><span class="line">    <span class="comment">#join用法:等待所有线程结主线程的任务完成之后，主线程随之结束，子线程继续执行自己的任务，</span></span><br><span class="line">    <span class="comment">#直到全部的子线程的任务全部结束，程序结束；否则在主线程结束后，程序就直接结束</span></span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> threads:</span><br><span class="line">        t.join()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="人工干预推荐"><a href="#人工干预推荐" class="headerlink" title="人工干预推荐"></a><font color="blue">人工干预推荐</font></h3><ul>
+<li>在进行实时推荐的时候，人工干预推荐是必不可少的</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/03/26/consistent-hashing/" title="一致性哈希算法">
+                    <div class="prevTitle">一致性哈希算法</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:936068345@qq.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/HuMingGuang" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title="wechat">
+                  
+                  <img class="profile-qr" src="/assets/Wechat.jpeg">
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐引擎-实现简单的实时推荐算法"><span class="toc-number">1.</span> <span class="toc-text">推荐引擎-实现简单的实时推荐算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#同类目推荐"><span class="toc-number">1.1.</span> <span class="toc-text">同类目推荐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关联类目推荐"><span class="toc-number">1.2.</span> <span class="toc-text">关联类目推荐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一致性哈希适应"><span class="toc-number">1.3.</span> <span class="toc-text">一致性哈希适应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多内存更新"><span class="toc-number">1.4.</span> <span class="toc-text">多内存更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工干预推荐"><span class="toc-number">1.5.</span> <span class="toc-text">人工干预推荐</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 6
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/27</span><a class="archive-post-title" href="/2019/03/27/recommend-system-2/">推荐系统（三）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href="/2019/03/26/consistent-hashing/">一致性哈希算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href="/2019/03/26/recommend-system-1/">推荐系统（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/25</span><a class="archive-post-title" href="/2019/03/25/recommend-system/">推荐系统（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/23</span><a class="archive-post-title" href="/2019/03/23/Meachine-Learning-Lagrange-duality/">详解拉格朗日及其对偶问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href="/2019/03/22/Coding-1/">C++基础知识梳理</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="推荐系统"><span class="iconfont-archer">&#xe606;</span>推荐系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习实战"><span class="iconfont-archer">&#xe606;</span>机器学习实战</span>
+    
+        <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
+    
+        <span class="sidebar-tag-name" data-tags="C++"><span class="iconfont-archer">&#xe606;</span>C++</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="转载文章"><span class="iconfont-archer">&#xe60a;</span>转载文章</span>
+    
+        <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
+    
+        <span class="sidebar-category-name" data-categories="统计学习"><span class="iconfont-archer">&#xe60a;</span>统计学习</span>
+    
+        <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "MingGuang HU"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.8.0/dist/instantsearch.min.js" defer></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
+
+
