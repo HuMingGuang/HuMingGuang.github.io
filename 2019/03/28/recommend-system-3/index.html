@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>recommend-system-3 · MingGuangHu&#39;s Studio.</title>
+    <title>推荐系统（四） · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -232,7 +232,7 @@
                 <a href="/">MingGuangHu&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">recommend-system-3</a>
+                <a href="#" class="post-name">推荐系统（四）</a>
             </div>
     </div>
     
@@ -262,7 +262,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            recommend-system-3
+            推荐系统（四）
             <!-- 404 -->
             
         </h1>
@@ -279,9 +279,17 @@ height:50vh;
             <div class="post-intros">
                 <!-- 文章页标签  -->
                 
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
+    
+</div>
+                
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">0</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">572</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -410,7 +418,69 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        
+        <h2 id="推荐引擎-实现符合业务场景的推荐算法"><a href="#推荐引擎-实现符合业务场景的推荐算法" class="headerlink" title="推荐引擎 - 实现符合业务场景的推荐算法"></a><font color="red">推荐引擎 - 实现符合业务场景的推荐算法</font></h2><hr>
+<blockquote>
+<p>主要内容</p>
+<ul>
+<li>介绍业务场景</li>
+<li>介绍实时打分</li>
+<li>介绍文章推荐引擎设计过程</li>
+<li>实现文章的分词处理，打标签</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="业务场景"><a href="#业务场景" class="headerlink" title="业务场景"></a><font color="blue">业务场景</font></h3><ul>
+<li><strong>三大推荐引擎</strong>：电商推荐、内容推荐、社交推荐</li>
+<li><strong>内容推荐概述</strong><ul>
+<li><strong>场景：</strong>小说网站，缺乏运营</li>
+<li><strong>使用习惯：</strong>重度用户</li>
+<li><strong>搭建推荐引擎</strong><ul>
+<li>分词工具</li>
+<li>设计流程模块</li>
+<li>coding</li>
+<li>Real Time Ranking</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Real-Time-Ranking"><a href="#Real-Time-Ranking" class="headerlink" title="Real Time Ranking"></a><font color="blue">Real Time Ranking</font></h2><ul>
+<li><p><strong>实时打分：</strong>采用实时或者近实时的方式获取每一个元素的排序依据，实时排序的结果会主导用户的短期行为；关键问题是在库存和用户兴趣。</p>
+</li>
+<li><p><strong>实现实时打分排序</strong></p>
+<ul>
+<li><strong>制定规则</strong>——比如：付费&gt;评价&gt;点击/播放</li>
+<li><strong>搭建软件环境</strong>——python、redis</li>
+<li><strong>设计数据流向链条</strong></li>
+</ul>
+<p><img src="/2019/03/28/recommend-system-3/data_flow.png" width="70%" height="70%"></p>
+</li>
+<li><p><strong>混合算法推荐初试</strong></p>
+</li>
+</ul>
+<h3 id="文章推荐引擎"><a href="#文章推荐引擎" class="headerlink" title="文章推荐引擎"></a><font color="blue">文章推荐引擎</font></h3><ul>
+<li><p><strong>流程框架</strong></p>
+<p><img src="/2019/03/28/recommend-system-3/article_frame.png" width="70%" height="70%"></p>
+</li>
+<li><p><strong>结巴分词：</strong><a href="https://github.com/fxsjy/jieba" target="_blank" rel="noopener">https://github.com/fxsjy/jieba</a></p>
+</li>
+</ul>
+<h3 id="实现文章的分词和打标签"><a href="#实现文章的分词和打标签" class="headerlink" title="实现文章的分词和打标签"></a><font color="blue">实现文章的分词和打标签</font></h3><ul>
+<li><p><strong>实现流程</strong></p>
+<p><img src="/2019/03/28/recommend-system-3/pre_process.png" width="65%" height="65%"></p>
+</li>
+<li><p><strong>实现代码</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*-coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Prefile</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        file1=open(<span class="string">'./1.txt'</span>)</span><br><span class="line">        file2=open(<span class="string">'./2.txt'</span>) </span><br><span class="line">        file3=open(<span class="string">'./3.txt'</span>)</span><br><span class="line">        <span class="comment">#给文章打标签，3为筛选出出现次数大于3的单词</span></span><br><span class="line">        resu1=self.tag(file1,<span class="number">3</span>)</span><br><span class="line">        <span class="comment">#将文章标签存储到tag_log日志中</span></span><br><span class="line">        self.save(resu1,<span class="string">"file_1"</span>)</span><br><span class="line"></span><br><span class="line">        resu2=self.tag(file2,<span class="number">5</span>)</span><br><span class="line">        self.save(resu2,<span class="string">"file_2"</span>)</span><br><span class="line"></span><br><span class="line">        resu3=self.tag(file3,<span class="number">6</span>)</span><br><span class="line">        self.save(resu3,<span class="string">"file_3"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tag</span><span class="params">(self,file,threshold)</span>:</span></span><br><span class="line">        <span class="comment">#原始文章中单词集合</span></span><br><span class="line">        print(<span class="string">"-------------------"</span>)</span><br><span class="line">        print(file)</span><br><span class="line">        result=&#123;&#125;</span><br><span class="line">        <span class="comment">#筛选之后的单词集合</span></span><br><span class="line">        result_filter=&#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> file.readlines():</span><br><span class="line">            <span class="comment">#做分词处理</span></span><br><span class="line">            seg_list=jieba.cut(line.strip())</span><br><span class="line">            <span class="keyword">for</span> seg <span class="keyword">in</span> seg_list:</span><br><span class="line">                <span class="comment">#统计每个单词出现的次数</span></span><br><span class="line">                <span class="keyword">if</span> seg <span class="keyword">not</span> <span class="keyword">in</span> result.keys():</span><br><span class="line">                    result[seg]=<span class="number">1</span></span><br><span class="line">                <span class="keyword">elif</span> seg <span class="keyword">in</span> result.keys():</span><br><span class="line">                    result[seg]+=<span class="number">1</span></span><br><span class="line">        <span class="comment">#根据要求的阈值，筛选单词</span></span><br><span class="line">        <span class="keyword">for</span> k,v <span class="keyword">in</span> result.items():</span><br><span class="line">            <span class="keyword">if</span> v&lt;=threshold:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            result_filter[k]=v</span><br><span class="line">        <span class="comment">#打印筛选之后的单词及起频次</span></span><br><span class="line">        <span class="keyword">for</span> k,v <span class="keyword">in</span> result_filter.items():</span><br><span class="line">            line=k+<span class="string">"\t"</span>+str(v)</span><br><span class="line">            print(line)</span><br><span class="line">        <span class="keyword">return</span> result_filter</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">save</span><span class="params">(self,resu,filename)</span>:</span></span><br><span class="line">        <span class="comment">#保存标签索引，不覆盖的写</span></span><br><span class="line">        tag_log=open(<span class="string">'./tag_log.txt'</span>,<span class="string">'a'</span>,encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">        <span class="keyword">for</span> k,v <span class="keyword">in</span> resu.items():</span><br><span class="line">            line=<span class="string">"filename: "</span>+filename+<span class="string">"\t"</span>+k+<span class="string">"\t"</span>+str(v)+<span class="string">"\r\n"</span></span><br><span class="line">            tag_log.write(line)</span><br><span class="line">        tag_log.close()</span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</span><br><span class="line">    p=Prefile()</span><br><span class="line">    print(<span class="string">"filter successfully"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<font color="blue">声明</font>
+
+<ul>
+<li><strong>参考资料</strong>：崔立明老师——推荐系统视频课程</li>
+<li>本博文为原创总结，如有转载，请注名出处！</li>
+</ul>
+
     </article>
     <!-- license  -->
     
@@ -542,7 +612,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐引擎-实现符合业务场景的推荐算法"><span class="toc-number">1.</span> <span class="toc-text">推荐引擎 - 实现符合业务场景的推荐算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#业务场景"><span class="toc-number">1.1.</span> <span class="toc-text">业务场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Real-Time-Ranking"><span class="toc-number">2.</span> <span class="toc-text">Real Time Ranking</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文章推荐引擎"><span class="toc-number">2.1.</span> <span class="toc-text">文章推荐引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现文章的分词和打标签"><span class="toc-number">2.2.</span> <span class="toc-text">实现文章的分词和打标签</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -642,7 +712,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/28</span><a class="archive-post-title" href="/2019/03/28/recommend-system-3/">recommend-system-3</a>
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href="/2019/03/28/recommend-system-3/">推荐系统（四）</a>
         </li>
     
     
