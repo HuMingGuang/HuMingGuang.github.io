@@ -289,7 +289,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">710</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.1k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -418,25 +418,17 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="推荐算法"><a href="#推荐算法" class="headerlink" title="推荐算法"></a><font color="red">推荐算法</font></h2><hr>
+        <h1 id="推荐算法-关联规则的协同过滤"><a href="#推荐算法-关联规则的协同过滤" class="headerlink" title="推荐算法-关联规则的协同过滤"></a>推荐算法-关联规则的协同过滤</h1><hr>
 <blockquote>
 <p><strong>主要内容</strong></p>
 <ul>
 <li>介绍推荐算法基本概念</li>
-<li></li>
+<li>解释基于关联规则的协同过滤算法</li>
 </ul>
 </blockquote>
-<h3 id="推荐算法基础知识介绍"><a href="#推荐算法基础知识介绍" class="headerlink" title="推荐算法基础知识介绍"></a><font color="blue">推荐算法基础知识介绍</font></h3><ul>
-<li><strong>推荐算法脑图总结</strong></li>
-</ul>
-<p><img src="/2019/03/30/recommend-system-4/Recommend system.png" alt="Recommend system"></p>
-<h3 id="基于关联算法的系统过滤"><a href="#基于关联算法的系统过滤" class="headerlink" title="基于关联算法的系统过滤"></a><font color="blue">基于关联算法的系统过滤</font></h3><ul>
-<li><p><strong>Aprior算法</strong></p>
-<ul>
-<li><p><strong>背景介绍：</strong>Apriori算法是常⽤的⽤于挖掘出数据关联规则的算法，它⽤来<strong>找出数据值中频繁出现的数据集合</strong>，找出这些集合的模式有助于我们做⼀些决策。<strong>频繁集</strong>：出现次数多的数据集。</p>
-</li>
-<li><p><strong>频繁项集的评估规则</strong></p>
-<ul>
+<h2 id="1-推荐算法基础知识介绍"><a href="#1-推荐算法基础知识介绍" class="headerlink" title="1. 推荐算法基础知识介绍"></a>1. 推荐算法基础知识介绍</h2><h3 id="1-1-推荐算法脑图总结"><a href="#1-1-推荐算法脑图总结" class="headerlink" title="1.1 推荐算法脑图总结"></a>1.1 推荐算法脑图总结</h3><p><img src="/2019/03/30/recommend-system-4/Recommend system.png" alt="Recommend system"></p>
+<h2 id="2-基于关联规则的协同过滤算法"><a href="#2-基于关联规则的协同过滤算法" class="headerlink" title="2. 基于关联规则的协同过滤算法"></a>2. 基于关联规则的协同过滤算法</h2><h3 id="2-1-Aprior算法"><a href="#2-1-Aprior算法" class="headerlink" title="2.1 Aprior算法"></a>2.1 Aprior算法</h3><h4 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a><font color="blue">背景介绍</font></h4><p>​    Apriori算法是常⽤的⽤于挖掘出数据关联规则的算法，它⽤来<strong>找出数据值中频繁出现的数据集合</strong>，找出这些集合的模式有助于我们做⼀些决策。<strong>频繁集</strong>：出现次数多的数据集。</p>
+<h4 id="频繁项集的评估规则"><a href="#频繁项集的评估规则" class="headerlink" title="频繁项集的评估规则"></a><font color="blue">频繁项集的评估规则</font></h4><ul>
 <li><p><strong>支持度：</strong>几个关联的数据在数据集中出现的次数占总数据集的比重；<strong>联合概率</strong>。</p>
 <script type="math/tex; mode=display">Support(X,Y)=P(X,Y)=\frac{num(X,Y)}{num(AllExamples)}​</script><p><strong>例：</strong>用户中购买啤酒和尿布的占总体的比例。</p>
 <p><font color="red"><strong>注：</strong></font>支持度高的数据不一定构成频繁项集，但是支持度太低的数据肯定不构成频繁项集。</p>
@@ -447,28 +439,82 @@ height:50vh;
 <li><p><strong>提升度：</strong>含有Y的条件下，同时含有X的概率，与X总体发生的概率之比。</p>
 <script type="math/tex; mode=display">Lift(X \Leftarrow Y)=\frac{P(X|Y)}{P(X)}=\frac{Confidence(x \Leftarrow y)}{P(X)}</script></li>
 </ul>
-</li>
-<li><p><strong>算法思想</strong></p>
-<ul>
+<h4 id="算法思想"><a href="#算法思想" class="headerlink" title="算法思想"></a><font color="blue">算法思想</font></h4><ul>
 <li>对于Apriori算法，我们使⽤<strong>⽀持度来作为我们判断频繁项集</strong>的标准。Apriori算法的<strong>⽬标是找到最⼤的K项频繁集</strong>。</li>
 <li>找到<strong>符合⽀持度标准的频繁集</strong>，因为这样的频繁集可能有很多，所以我们要找<strong>到最⼤个数的频繁集</strong>。</li>
-<li><strong>采⽤了迭代的⽅法</strong>，先搜索出候选1项集及对应的⽀持度，<strong>剪枝去掉低于⽀持度的1项集</strong>，得到频繁1项。</li>
+<li><strong>采⽤了迭代的⽅法</strong>，先搜索出候选1项集及对应的⽀持度，<strong>剪枝去掉低于⽀持度的1项集</strong>，得到频繁1项；然后产生2项集，剪去低于支持度的2项….直至剩下的k项集只有一个为止，则返回结果。</li>
 </ul>
-<p><img src="/2019/03/30/recommend-system-4/Apriori.png" width="90%" height="90%"></p>
+<p><img src="/2019/03/30/recommend-system-4/Apriori.png" width="75%" height="75%"></p>
+<h4 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a><font color="blue">算法流程</font></h4><ul>
+<li><strong>输⼊：</strong>数据集合D，<strong>⽀持度</strong>阈值$\alpha$</li>
+<li><p><strong>输出：</strong>最⼤的频繁k项集　　</p>
 </li>
-<li><p><strong>算法流程</strong></p>
-<p>-</p>
-<p><font color="orange"><strong>输⼊：</strong></font>数据集合D，<strong>⽀持度</strong>阈值$\alpha$　　　　</p>
-<p><font color="orange"><strong>输出：</strong></font>最⼤的频繁k项集　　</p>
-<p><font color="orange"><strong>1）</strong></font>扫描整个数据集，得到所有出现过的数据，作为候选频繁1项集。k=1，频繁0项集为空集。</p>
-<p><font color="orange"><strong>2）</strong></font>挖掘频繁k项集　　　　　　</p>
-<p>​    <strong>a)</strong> 扫描数据计算候选频繁k项集的⽀持度</p>
-<p>​    <strong>b) 去除候选频繁k项集中⽀持度低于阈值的数据集,得到频繁k项集</strong>。如果得到的频繁k项集为空，则    直接返回频繁k-1项集的集合作为算法结果，算法结束。<strong>如果得到的频繁k项集只有⼀项，则直接返回    频繁k项集的集合作为算法结果</strong>，算法结束。<br>　　<strong>c)</strong> 基于频繁k项集，连接⽣成候选频繁k+1项集。<br><font color="orange"><strong>3）</strong></font> 令k=k+1，转⼊步骤2。</p>
-<p><strong>注：</strong>从算法的步骤可以看出，Aprior算法每轮迭代都要扫描数据集，因此在数据集很⼤，数据种类很多的时候，算法效率很低</p>
-<p>-</p>
+<li><p>扫描整个数据集，得到所有出现过的数据，作为候选频繁1项集。k=1，频繁0项集为空集。</p>
 </li>
+<li><p>挖掘频繁k项集</p>
+<ul>
+<li>扫描数据计算候选频繁k项集的⽀持度</li>
+<li>去除候选频繁k项集中⽀持度低于阈值的数据集,得到频繁k项集<strong>。如果得到的频繁k项集为空，则直接返回频繁k-1项集的集合作为算法结果，算法结束。</strong>如果得到的频繁k项集只有⼀项，则直接返回频繁k项集的集合作为算法结果<strong>，算法结束。</strong></li>
+<li>基于频繁k项集，连接⽣成候选频繁k+1项集。</li>
 </ul>
 </li>
+<li><p>令k=k+1，转⼊上一步。</p>
+</li>
+</ul>
+<p>​    <font color="red"><strong>注：</strong></font>从算法的步骤可以看出，Aprior算法<strong>每轮迭代都要扫描数据集</strong>，因此在数据集很⼤，数据种类很多的时候，算法效率很低</p>
+<h3 id="2-2-FP-Growth算法（别名：FP-Tree算法）"><a href="#2-2-FP-Growth算法（别名：FP-Tree算法）" class="headerlink" title="2.2 FP Growth算法（别名：FP Tree算法）"></a>2.2 FP Growth算法（别名：FP Tree算法）</h3><h4 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a><font color="blue">基本介绍</font></h4><p>​    相比于<strong>Apriori算法</strong>需要<strong>多次扫描数据</strong>，I/O是很大的瓶颈。为了解决这个问题，<strong>FP Growth算法</strong>采用了一些技巧，任何情况下<strong>仅需要扫描两次数据集</strong>，因此提高了算法运行的效率</p>
+<h4 id="FP-Tree-数据结构"><a href="#FP-Tree-数据结构" class="headerlink" title="FP Tree 数据结构"></a><font color="blue">FP Tree 数据结构</font></h4><p><img src="/2019/03/30/recommend-system-4/FP_Tree.png" width="75%" height="75%"></p>
+<p><strong>项头表：</strong>记录了所有的<strong>1项频繁集</strong>出现的次数，按照次数降序排列，比如B在原始数据中出现8次。</p>
+<p><strong>节点链表：</strong>所有项头表里的1项频繁集都是一个节点链表的头，它依次指向FP树中该1项频繁集出现的位置，这样方便项头表和FP Tree之间的联系查找和更新。</p>
+<p><strong>FP树：</strong>将原始数据映射到内存中的一颗FP树。</p>
+<h4 id="项头表的建立"><a href="#项头表的建立" class="headerlink" title="项头表的建立"></a><font color="blue">项头表的建立</font></h4><p><img src="/2019/03/30/recommend-system-4/item_table.png" width="80%" height="80%"></p>
+<p><strong>第一次扫描原始数据：</strong>得到所有<strong>1项频繁集</strong>的计数，删除支持度低于阈值（这里为20%）的项，<strong>将1项频繁集放入项头表</strong>，并按照支持度<strong>降序排列</strong>。<strong>目的：</strong>建立项头表</p>
+<p><strong>第二次扫描原始数据</strong>：将<strong>原始数据</strong>剔除支持度低于阈值的项，并按照支持度降序排列。<strong>目的：</strong>筛选原始数据</p>
+<p><strong>解释</strong></p>
+<ul>
+<li>上图中，第一次扫描原始数据，因为O，I，L，J，P，M, N都只出现一次，而支持度为2（$10 \times 20 \% = 2$），所以在建立项头表的时候，剔除上述字母，并将其他字母出现次数按照降序的方式排列；</li>
+<li>第二次扫描原始数据，将数据项中出现的上述被剔除的字母（O，I，L，J，P，M, N），在原始数据项中剔除。</li>
+</ul>
+<h4 id="FP-Tree的建立"><a href="#FP-Tree的建立" class="headerlink" title="FP Tree的建立"></a><font color="blue">FP Tree的建立</font></h4><ol>
+<li>将排序后的数据集按照顺序插入FP树，<strong>排序靠前的节点是祖先节点，而靠后的是子孙节点</strong>。</li>
+<li>如果有共用的祖先，则对应的<strong>公用祖先节点计数加1</strong>。</li>
+<li>如果有新节点出现，则<strong>项头表对应的节点会通过节点链表链接上新节点</strong>。</li>
+<li>直到所有的数据都插入到FP树后，FP树的建立完成。</li>
+</ol>
+<p><img src="/2019/03/30/recommend-system-4/build_tree.png" width="70%" height="70%"></p>
+<h4 id="FP-Tree的挖掘"><a href="#FP-Tree的挖掘" class="headerlink" title="FP Tree的挖掘"></a><font color="blue">FP Tree的挖掘</font></h4><ol>
+<li><p>首先要<strong>从项头表的底部项依次向上挖掘</strong>，对于项头表对应于FP树的每一项，我们要找到它的条件模式基。所谓<strong>条件模式基</strong>是以我们要<strong>挖掘的节点作为叶子节点所对应的FP子树；</strong></p>
+</li>
+<li><p>得到FP子树后，我们<strong>将子树中每个节点的的计数设置为叶子节点的计数</strong>，<strong>并删除计数低于支持度的节点；</strong></p>
+</li>
+<li><p>从这个条件模式基，我们就可以<strong>递归挖掘得到频繁项集；</strong></p>
+<p><strong>图1:</strong></p>
+<p><img src="/2019/03/30/recommend-system-4/frequently_set.png" width="70%" height="70%" optional title="图1"></p>
+<p><strong>举例</strong>（已知F的最大频繁项已经找到，我们这里举例D）</p>
+<ul>
+<li>从项头表的最底部开始，选取D，找到具有D叶子节点的FP子树；<strong>条件基</strong>分别为{A,C,D,D}和{A,C,E,G,D}。（如图2）</li>
+<li><strong>将所有的祖先节点计数设置为叶子节点的计数</strong>，即为<strong>{A:2, C:2,E:1 G:1,D:1, D:1}</strong>（A和C为两个D的祖先节点，所以计数为2）。此时<strong>E节点和G节点由于在条件模式基里面的支持度（这里为2）低于阈值，被我们删除</strong>，最终在去除低支持度节点并不包括叶子节点后<strong>D的条件模式基为{A:2, C:2}；</strong></li>
+<li>所以，<strong>D的频繁2项集为</strong>{A:2,D:2}, {C:2,D:2}；</li>
+<li><strong>递归合并二项集</strong>，得到<strong>频繁三项集为</strong>{A:2,C:2,D:2}。</li>
+<li>此例中D的最大频繁集为频繁三项集</li>
+</ul>
+</li>
+</ol>
+<h4 id="FP-Tree的算法流程"><a href="#FP-Tree的算法流程" class="headerlink" title="FP Tree的算法流程"></a><font color="blue">FP Tree的算法流程</font></h4><ol>
+<li>扫描数据，得到所有频繁一项集的的计数。然后删除支持度低于阈值的项，将<strong>1项频繁集放入项头表</strong>，并按照支持度降序排列。</li>
+<li>扫描数据，将<strong>读到的原始数据剔除非频繁1项集，并按照支持度降序排列</strong>。</li>
+<li><strong>读入排序后的数据集，插入FP树，</strong>插入时按照排序后的顺序，插入FP树中，排序靠前的节点是祖先节点，而靠后的是子孙节点。如果有共用的祖先，则对应的公用祖先节点计数加1。插入后，如果有新节点出现，则项头表对应的节点会通过节点链表链接上新节点。直到所有的数据都插入到FP树后，FP树的建立完成。</li>
+<li>从项头表的底部项依次向上找到项头表项对应的条件模式基。从条件模式基<strong>递归挖掘得到项头表项项的频繁项集。</strong></li>
+<li>如果不限制频繁项集的项数，则返回步骤4所有的频繁项集，否则<strong>只返回满足项数要求的频繁项集。</strong></li>
+</ol>
+<hr>
+<font color="blue">声明</font>
+
+<ul>
+<li><strong>参考资料1</strong>：崔立明老师——推荐系统视频课程</li>
+<li><strong>参考资料2</strong>：<a href="https://www.cnblogs.com/pinard/p/6307064.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6307064.html</a></li>
+<li><strong>参考资料3</strong>：<a href="https://www.cnblogs.com/pinard/p/6293298.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6293298.html</a></li>
+<li>本博文为原创总结，如有转载，请注名出处！</li>
 </ul>
 
     </article>
@@ -602,7 +648,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐算法"><span class="toc-number">1.</span> <span class="toc-text">推荐算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#推荐算法基础知识介绍"><span class="toc-number">1.1.</span> <span class="toc-text">推荐算法基础知识介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于关联算法的系统过滤"><span class="toc-number">1.2.</span> <span class="toc-text">基于关联算法的系统过滤</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#推荐算法-关联规则的协同过滤"><span class="toc-number">1.</span> <span class="toc-text">推荐算法-关联规则的协同过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-推荐算法基础知识介绍"><span class="toc-number">1.1.</span> <span class="toc-text">1. 推荐算法基础知识介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-推荐算法脑图总结"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 推荐算法脑图总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-基于关联规则的协同过滤算法"><span class="toc-number">1.2.</span> <span class="toc-text">2. 基于关联规则的协同过滤算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Aprior算法"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 Aprior算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#背景介绍"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">背景介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#频繁项集的评估规则"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">频繁项集的评估规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#算法思想"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">算法思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#算法流程"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">算法流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-FP-Growth算法（别名：FP-Tree算法）"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 FP Growth算法（别名：FP Tree算法）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本介绍"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree-数据结构"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">FP Tree 数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#项头表的建立"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">项头表的建立</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree的建立"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">FP Tree的建立</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree的挖掘"><span class="toc-number">1.2.2.5.</span> <span class="toc-text">FP Tree的挖掘</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree的算法流程"><span class="toc-number">1.2.2.6.</span> <span class="toc-text">FP Tree的算法流程</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
