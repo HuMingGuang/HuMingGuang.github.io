@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>推荐算法 · MingGuangHu&#39;s Studio.</title>
+    <title>推荐系统（五） · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -232,7 +232,7 @@
                 <a href="/">MingGuangHu&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">推荐算法</a>
+                <a href="#" class="post-name">推荐系统（五）</a>
             </div>
     </div>
     
@@ -262,7 +262,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            推荐算法
+            推荐系统（五）
             <!-- 404 -->
             
         </h1>
@@ -289,7 +289,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">36</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">710</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -430,6 +430,46 @@ height:50vh;
 <li><strong>推荐算法脑图总结</strong></li>
 </ul>
 <p><img src="/2019/03/30/recommend-system-4/Recommend system.png" alt="Recommend system"></p>
+<h3 id="基于关联算法的系统过滤"><a href="#基于关联算法的系统过滤" class="headerlink" title="基于关联算法的系统过滤"></a><font color="blue">基于关联算法的系统过滤</font></h3><ul>
+<li><p><strong>Aprior算法</strong></p>
+<ul>
+<li><p><strong>背景介绍：</strong>Apriori算法是常⽤的⽤于挖掘出数据关联规则的算法，它⽤来<strong>找出数据值中频繁出现的数据集合</strong>，找出这些集合的模式有助于我们做⼀些决策。<strong>频繁集</strong>：出现次数多的数据集。</p>
+</li>
+<li><p><strong>频繁项集的评估规则</strong></p>
+<ul>
+<li><p><strong>支持度：</strong>几个关联的数据在数据集中出现的次数占总数据集的比重；<strong>联合概率</strong>。</p>
+<script type="math/tex; mode=display">Support(X,Y)=P(X,Y)=\frac{num(X,Y)}{num(AllExamples)}​</script><p><strong>例：</strong>用户中购买啤酒和尿布的占总体的比例。</p>
+<p><font color="red"><strong>注：</strong></font>支持度高的数据不一定构成频繁项集，但是支持度太低的数据肯定不构成频繁项集。</p>
+</li>
+<li><p><strong>置信度：</strong>一个数据出现后，另一个数据出现的概率；<strong>条件概率</strong>。</p>
+<script type="math/tex; mode=display">Confidence(x \Leftarrow y)=P(X|Y)=\frac{P(X,Y)}{P(Y)}​</script><p><strong>例：</strong>在购买啤酒的用户中，购买了尿布的比例。</p>
+</li>
+<li><p><strong>提升度：</strong>含有Y的条件下，同时含有X的概率，与X总体发生的概率之比。</p>
+<script type="math/tex; mode=display">Lift(X \Leftarrow Y)=\frac{P(X|Y)}{P(X)}=\frac{Confidence(x \Leftarrow y)}{P(X)}</script></li>
+</ul>
+</li>
+<li><p><strong>算法思想</strong></p>
+<ul>
+<li>对于Apriori算法，我们使⽤<strong>⽀持度来作为我们判断频繁项集</strong>的标准。Apriori算法的<strong>⽬标是找到最⼤的K项频繁集</strong>。</li>
+<li>找到<strong>符合⽀持度标准的频繁集</strong>，因为这样的频繁集可能有很多，所以我们要找<strong>到最⼤个数的频繁集</strong>。</li>
+<li><strong>采⽤了迭代的⽅法</strong>，先搜索出候选1项集及对应的⽀持度，<strong>剪枝去掉低于⽀持度的1项集</strong>，得到频繁1项。</li>
+</ul>
+<p><img src="/2019/03/30/recommend-system-4/Apriori.png" width="90%" height="90%"></p>
+</li>
+<li><p><strong>算法流程</strong></p>
+<p>-</p>
+<p><font color="orange"><strong>输⼊：</strong></font>数据集合D，<strong>⽀持度</strong>阈值$\alpha$　　　　</p>
+<p><font color="orange"><strong>输出：</strong></font>最⼤的频繁k项集　　</p>
+<p><font color="orange"><strong>1）</strong></font>扫描整个数据集，得到所有出现过的数据，作为候选频繁1项集。k=1，频繁0项集为空集。</p>
+<p><font color="orange"><strong>2）</strong></font>挖掘频繁k项集　　　　　　</p>
+<p>​    <strong>a)</strong> 扫描数据计算候选频繁k项集的⽀持度</p>
+<p>​    <strong>b) 去除候选频繁k项集中⽀持度低于阈值的数据集,得到频繁k项集</strong>。如果得到的频繁k项集为空，则    直接返回频繁k-1项集的集合作为算法结果，算法结束。<strong>如果得到的频繁k项集只有⼀项，则直接返回    频繁k项集的集合作为算法结果</strong>，算法结束。<br>　　<strong>c)</strong> 基于频繁k项集，连接⽣成候选频繁k+1项集。<br><font color="orange"><strong>3）</strong></font> 令k=k+1，转⼊步骤2。</p>
+<p><strong>注：</strong>从算法的步骤可以看出，Aprior算法每轮迭代都要扫描数据集，因此在数据集很⼤，数据种类很多的时候，算法效率很低</p>
+<p>-</p>
+</li>
+</ul>
+</li>
+</ul>
 
     </article>
     <!-- license  -->
@@ -562,7 +602,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐算法"><span class="toc-number">1.</span> <span class="toc-text">推荐算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#推荐算法基础知识介绍"><span class="toc-number">1.1.</span> <span class="toc-text">推荐算法基础知识介绍</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐算法"><span class="toc-number">1.</span> <span class="toc-text">推荐算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#推荐算法基础知识介绍"><span class="toc-number">1.1.</span> <span class="toc-text">推荐算法基础知识介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于关联算法的系统过滤"><span class="toc-number">1.2.</span> <span class="toc-text">基于关联算法的系统过滤</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -675,7 +715,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/30</span><a class="archive-post-title" href="/2019/03/30/recommend-system-4/">推荐算法</a>
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href="/2019/03/30/recommend-system-4/">推荐系统（五）</a>
         </li>
     
     
