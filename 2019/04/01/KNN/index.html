@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>MingGuangHu&#39;s Studio.</title>
+    <title>KNN算法 · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -218,12 +218,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">KNN算法</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">MingGuangHu's Studio.</a>
 </header>
@@ -235,24 +246,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            KNN算法
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">908</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/04/01</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -353,254 +414,80 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/30/recommend-system-4/">
-            
-                <span>推荐系统（五）</span>
-        </a>
-        <div class="abstract-content">
-            介绍基本的推荐算法，解释基于关联规则的两种协同过滤算法： Aprior 和 FP Growth
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="统计学习-KNN算法"><a href="#统计学习-KNN算法" class="headerlink" title="统计学习-KNN算法"></a>统计学习-KNN算法</h1><hr>
+<blockquote>
+<p><strong>主要内容</strong></p>
+<ul>
+<li>k近邻的数学原理</li>
+<li></li>
+</ul>
+</blockquote>
+<h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>​    给定一个训练数据集，对新的输入实例，在训练数据集中找到与该实例最邻近的k个实例，这k个实例的多数属于某个类，就把该输入实例分为这个类（<strong>多数表决</strong>）。<font color="red">注意：KNN算法是一种lazy-learning 算法，不需要用数据集训练。</font></p>
+<h2 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h2><p>​    训练集$T=\lbrace (x_1,y_1),(x_2,y_2),⋯,(x_N,y_N)\rbrace$，其类别$y_i∈{c_1,c_2,⋯,c_K}$，训练集中样本点数为$N$，类别数为$K$。输入待预测数据$x$，则<strong>预测类别</strong></p>
+<p>​    <script type="math/tex">\begin{align} y=\arg \max_{c_j} ⁡∑_{x_i∈N_k(x)}I(y_i=c_j), \tag{1}\\\  i=1,2,⋯,N; j=1,2,⋯,K \end{align} ​</script></p>
+<p>​    其中，涵盖$x$的k邻域记作$N_k(x)$，当$y_i=c_j$时指示函数$I=1$，否则$I=0$。</p>
+<h2 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h2><p>（1）收集数据：确定训练样本集合和测试数据； </p>
+<p>（2）计算测试数据和训练样本集中每个样本数据的距离；</p>
+<p>​    <strong>常用的距离计算公式：</strong> </p>
+<p>​    欧式距离公式：<script type="math/tex">\left(\sum ^{n}_{i=1}| x_{i}-x_j|^2 \right)^{\frac{1}{2}}</script></p>
+<p>​    曼哈顿距离公式：<script type="math/tex">\sum ^{n}_{i=1}| x_{i}-x_j|</script></p>
+<p>（3）按照距离递增的顺序排序；</p>
+<p>（4）选取距离最近的k个点；</p>
+<p>（5）确定这k个点中分类信息的频率；</p>
+<p>  (6) 返回前k个点中出现频率最高的分类，作为当前测试数据的分类。</p>
+<h2 id="分类决策规则"><a href="#分类决策规则" class="headerlink" title="分类决策规则"></a>分类决策规则</h2><p>​    <strong>kNN学习模型</strong>：输入$X$，通过学习得到决策函数：输出类别$Y=f(X)$。假设分类损失函数为$0-1$损失函数，即分类正确时损失函数值为0，分类错误时则为1。假如给$x$预测类别为$c_j$，即$f(x)=c_j$;同时由式子<strong>(1)</strong>可知k邻域的样本点对学习模型的贡献度是均等的，则kNN学习模型误分类率为</p>
+<script type="math/tex; mode=display">\begin{align} \dfrac {1}{k}\sum _{x_i \in N_k(x)}I \left( y_{i} \neq c_{j}\right) =1-  \dfrac {1}{k}\sum _{x_i \in N_k(x)}I \left( y_{i} = c_{j}\right)   \tag{2}\\\ \end{align} ​</script><p>​    <strong>若要最小化误分类率</strong>，则应</p>
+<script type="math/tex; mode=display">\begin{align} \max _{c_{j}}\sum _{x_{i}\in N_{k}\left( x\right) } I \left( y_{i} = c_{j}\right)  \tag{3}\\\  \end{align}</script><p>​    所以，<strong>最大表决规则等价于经验风险最小化</strong>。</p>
+<h2 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h2><p><strong>k值得选取</strong></p>
+<ul>
+<li><p><strong>若k值过小</strong>，预测结果会<strong>对噪音样本点显得异常敏感</strong>,容易产生过拟合。特别地，当k等于1时，kNN退化成最近邻算法，没有了显式的学习过程。</p>
+</li>
+<li><p><strong>若k值过大</strong>，会有较大的邻域训练样本进行预测，<strong>可以减小噪音样本点的减少</strong>；但是距<strong>离较远的训练样本点对预测结果会有贡献</strong>，以至于造成预测结果错误。可以减少学习的<strong>估计误差(Estimation error)</strong>，但是会增大<strong>近似误差(Approximation error)</strong>。</p>
+</li>
+</ul>
+<p>下图给出k值的选取对于预测结果的影响</p>
+<p><img src="/2019/04/01/KNN/knn.png" alt="knn"></p>
+<ul>
+<li><strong>解决方案一：</strong>前面提到过，k邻域的样本点对预测结果的贡献度是相等的；但距离更近的样本点应有更大的相似度，其贡献度应比距离更远的样本点大。可以加上权值</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align}w_i=\frac{1}{‖xi−x‖} \tag{4}\\\ \end{align} ​</script><p>​    进行修正，则最大表决原则变成：</p>
+<script type="math/tex; mode=display">\begin{align} \max _{c_{j}}\sum _{x_{i}\in N_{k}\left( x\right) } w_{i} I \left( y_{i} = c_{j}\right)  \tag{5}\\\  \end{align}</script><ul>
+<li><strong>解决方案二：</strong>在一开始选取较小的k值，采用交叉验证的方法来选取最优的k值。</li>
+</ul>
+
     </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/28/recommend-system-3/">
-            
-                <span>推荐系统（四）</span>
-        </a>
-        <div class="abstract-content">
-            实现数据的预处理，给文章打标签；根据关键字推送文章
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/27/recommend-system-2/">
-            
-                <span>推荐系统（三）</span>
-        </a>
-        <div class="abstract-content">
-            实现简单的实时推荐算法
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/26/consistent-hashing/">
-            
-                <span>一致性哈希算法</span>
-        </a>
-        <div class="abstract-content">
-            深入理解一致性哈希算法
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/26/recommend-system-1/">
-            
-                <span>推荐系统（二）</span>
-        </a>
-        <div class="abstract-content">
-            理解流式处理概念，熟悉流式处理过程。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/25/recommend-system/">
-            
-                <span>推荐系统（一）</span>
-        </a>
-        <div class="abstract-content">
-            学习推荐系统，进行机器学习实战。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/23/Meachine-Learning-Lagrange-duality/">
-            
-                <span>详解拉格朗日及其对偶问题</span>
-        </a>
-        <div class="abstract-content">
-            介绍三种优化问题:无约束的优化、带等式约束的优化、带不等式约束的优化；解释拉格朗日对偶性
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/22/Coding-1/">
-            
-                <span>C++基础知识梳理</span>
-        </a>
-        <div class="abstract-content">
-            对已经学过C++的同学，可以帮助快速复习梳理
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="C++">C++</a>
-    
-</div>
-            
-        </div>
-    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/03/30/recommend-system-4/" title="推荐系统（五）">
+                    <div class="prevTitle">推荐系统（五）</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -685,6 +572,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#统计学习-KNN算法"><span class="toc-number">1.</span> <span class="toc-text">统计学习-KNN算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本介绍"><span class="toc-number">1.1.</span> <span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法描述"><span class="toc-number">1.2.</span> <span class="toc-text">算法描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法流程"><span class="toc-number">1.3.</span> <span class="toc-text">算法流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分类决策规则"><span class="toc-number">1.4.</span> <span class="toc-text">分类决策规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存在问题"><span class="toc-number">1.5.</span> <span class="toc-text">存在问题</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -959,6 +864,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
