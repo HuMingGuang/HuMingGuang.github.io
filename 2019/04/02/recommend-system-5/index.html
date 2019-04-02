@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>详解拉格朗日及其对偶问题 · MingGuangHu&#39;s Studio.</title>
+    <title>推荐系统（六） · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -232,7 +232,7 @@
                 <a href="/">MingGuangHu&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">详解拉格朗日及其对偶问题</a>
+                <a href="#" class="post-name">推荐系统（六）</a>
             </div>
     </div>
     
@@ -262,7 +262,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            详解拉格朗日及其对偶问题
+            推荐系统（六）
             <!-- 404 -->
             
         </h1>
@@ -281,18 +281,20 @@ height:50vh;
                 
                     <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">39</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/03/23</span>
+                    <span class="post-intro-time">2019/04/02</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -416,135 +418,14 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="详解拉格朗日及其对偶问题"><a href="#详解拉格朗日及其对偶问题" class="headerlink" title="详解拉格朗日及其对偶问题"></a>详解拉格朗日及其对偶问题</h1><blockquote>
+        <h1 id="基于邻域协同推荐算法——用户-UCF-和商品-ICF"><a href="#基于邻域协同推荐算法——用户-UCF-和商品-ICF" class="headerlink" title="基于邻域协同推荐算法——用户(UCF)和商品(ICF)"></a>基于邻域协同推荐算法——用户(UCF)和商品(ICF)</h1><hr>
+<blockquote>
 <p><strong>主要内容</strong></p>
 <ul>
-<li><strong>介绍三种优化问题</strong>：无约束的优化、带等式约束的优化、带不等式约束的优化</li>
-<li><strong>解释拉格朗日对偶性</strong></li>
+<li>基于用户的协同算法</li>
+<li>基于商品的协同算法</li>
 </ul>
 </blockquote>
-<hr>
-<h2 id="无约束的优化"><a href="#无约束的优化" class="headerlink" title="无约束的优化"></a><font color="Blue">无约束的优化</font></h2><ul>
-<li><font color="Red">优化目标</font>
-
-<script type="math/tex; mode=display">\min f(x)</script><p>where </p>
-<script type="math/tex; mode=display">x=(x_1,x_2)</script><p><img src="/2019/03/23/Meachine-Learning-Lagrange-duality/Non-contraint.jpg" alt="Non-contraint"></p>
-</li>
-<li><p>$f(x)$在局部红色点处取得局部极小值，所以红色点处的梯度必然为0，可以用来求解该优化方程的局部极小值。</p>
-</li>
-</ul>
-<hr>
-<h2 id="带等式约束的优化"><a href="#带等式约束的优化" class="headerlink" title="带等式约束的优化"></a><font color="Blue">带等式约束的优化</font></h2><ul>
-<li><font color="red">优化目标</font>
-
-<script type="math/tex; mode=display">\min f(x)</script><p> s.t</p>
-<script type="math/tex; mode=display">h(x)=0</script><p><img src="/2019/03/23/Meachine-Learning-Lagrange-duality/equation-contraint.jpg" alt="equation-contraint"></p>
-</li>
-<li><p>与无约束的问题不同，此时的极小值点被约束在曲线$h(x)=0$上。上述左上方的黑色实曲线为$h(x)=0$，我们将右下方的$f(x)$不断扩大，直到$f(x)$与$h(x)$相切，切点即为原目标问题的局部极小值。</p>
-</li>
-<li><p>设曲线在<font color="Red">红色点</font>（$x^*$:极小值点），沿切线方向的函数为 $ x(t)$,则有</p>
-<p>​                    <script type="math/tex">\nabla f\left( x^{\ast }\right) \cdot x'\left( t^{\ast }\right) =0</script>    </p>
-<p>​                         其中<script type="math/tex">x^{*} = x(t^*)</script></p>
-<p>由于$h(x)=0​$为常数，所以$h(x)​$在任何一点处的导数都为0.即</p>
-<p>​                                        $\nabla h\left( x\right) \cdot x’\left( t\right) =0​$ </p>
-<p>所以                               <script type="math/tex">\nabla h\left( x^{*}\right) \cdot x'\left( t^{*}\right) =0​</script></p>
-<p>由上述公式可知，$\nabla f\left( x^{\ast }\right) $和<script type="math/tex">\nabla h\left( x^{*}\right)</script>分别和<script type="math/tex">\left( t^{*}\right)</script>垂直，所以<script type="math/tex">\nabla f\left( x^{\ast }\right)</script>和<script type="math/tex">\nabla h\left( x^{*}\right)</script>共线，有</p>
-<p>​                    <script type="math/tex">\nabla f\left( x^{\ast }\right) +\lambda \nabla h\left( x^{\ast }\right) =0​</script>.</p>
-<p><script type="math/tex">x^{*}</script>为最小值点就必须满足上式<script type="math/tex">\nabla f\left( x^{\ast }\right) +\lambda \nabla h\left( x^{\ast }\right) =0</script>和约束条件<script type="math/tex">h(x^{*})=0</script>，这个必要条件叫<font color="Red">拉格朗日条件</font>.</p>
-<p>为了好记，定义<font color="Red">拉格朗日函数</font>为$L\left( x,\lambda \right) =f\left( x\right) +\lambda h\left( x\right) ​$,令其偏导为0，就为上述的拉格朗日条件。</p>
-</li>
-<li><p>从上述推导过程可知，可以将带等式约束的优化问题转化为无约束的优化问题，只需要对拉格朗日条件解方程，其中$\lambda$为拉格朗日乘子，有几个等式就有几个拉格朗日乘子。</p>
-</li>
-</ul>
-<hr>
-<h2 id="带不等式约束的优化"><a href="#带不等式约束的优化" class="headerlink" title="带不等式约束的优化"></a><font color="Blue">带不等式约束的优化</font></h2><ul>
-<li><font color="red">优化目标(一)</font>
-
-<script type="math/tex; mode=display">\min f(x)</script><p> s.t </p>
-<script type="math/tex; mode=display">h(x)\leq 0​</script><p><img src="/2019/03/23/Meachine-Learning-Lagrange-duality/inequation-contraint.jpg" alt="inequation-contraint"></p>
-<ul>
-<li>图中左上方阴影区域为$h(x)\leq 0$ 的可行域，可以把$h(x)\leq 0$ 改写为$h(x)=0$，利用上述等式约束的优化方法，所以右下方$f(x)$与$h(x)=0$的切点即为局部极小值。</li>
-</ul>
-</li>
-<li><p><font color="red">优化目标（二）</font>：</p>
-<script type="math/tex; mode=display">\min f(x)</script><p> s.t </p>
-<script type="math/tex; mode=display">g_1(x)\leq 0, g_2 (x)\leq 0</script></li>
-</ul>
-<p>  <img src="/2019/03/23/Meachine-Learning-Lagrange-duality/two-inequation-contraint.jpg" alt="two-inequation-contraint"></p>
-<ul>
-<li><p>由上图可知$f(x)$与上述两条曲线形成的可行域的相遇点是一个顶点（<font color="red">红色点</font>），此时与任何一条曲线都不相切。</p>
-</li>
-<li><p>上述问题的解 $x^{*}​$，应该满足<font color="red">KTT条件</font></p>
-<script type="math/tex; mode=display">\mu _{1}\geq 0,\mu _{2}\geq 0</script><script type="math/tex; mode=display">\nabla f\left( x^{\ast }\right) +\mu _{1}\nabla g_1\left( x^{\ast }\right) +\mu _{2}\nabla g_{2}\left( x^{\ast }\right) =0</script><script type="math/tex; mode=display">\mu _{1}\nabla g_1\left( x^{\ast }\right) +\mu _{2}\nabla g_{2}\left( x^{\ast }\right) =0</script><p>其中$\mu​$为KTT乘子，有多少个不等式约束就有多少个乘子。</p>
-</li>
-<li><p><font color="red">KKT解释</font>：上述图中<font color="green">两条绿色箭头</font>，为 <script type="math/tex">g_1(x)\leq 0 ,g_2 (x)\leq 0</script>两条约束曲线的负梯度方向<script type="math/tex">-\nabla g_1\left( x\right)</script>和<script type="math/tex">-\nabla g_2\left( x\right)</script>（即​<script type="math/tex">g_1(x),g_2(x )</script>一直减小的方向）。</p>
-<p>如果红色顶点满足约束的最小值，那么该红点在$f(x)$上的梯度<script type="math/tex">\nabla f\left( x^{*}\right)</script>一定在<font color="green">两条绿色箭头</font>之间，</p>
-<p>即$\nabla f\left( x^{*}\right) ​$可以被<script type="math/tex">-\nabla g_1\left( x \right) ​</script>和​<script type="math/tex">$-\nabla g_2 \left( x \right) ​</script>线性表出<script type="math/tex">\nabla f\left( x^{\ast }\right) =-\mu _{1}\nabla g_1 \left( x^{\ast }\right) -\mu _{2}\nabla g_{2}\left( x^{\ast }\right) ​</script>，且系数非负（<script type="math/tex">\mu _{1}\geq 0,\mu _{2}\geq 0​</script>），即上述KTT条件的1，2条件。</p>
-</li>
-</ul>
-<ul>
-<li><p>有的时候约束不起作用，如下优化问题</p>
-<ul>
-<li><font color="red">优化目标（三）</font>
-
-<script type="math/tex; mode=display">\min f(x)</script><p>s.t  </p>
-<script type="math/tex; mode=display">g_1(x)\leq 0,   g_2(x)\leq 0,      g_3(x)\leq 0</script><p><img src="/2019/03/23/Meachine-Learning-Lagrange-duality/three-inequtaion-contraint.jpg" alt="three-inequtaion-contraint"></p>
-<p>其中$g_3(x)\leq 0$并不起作用，最小值点不在$g_3(x)= 0$上。</p>
-<p>此时KTT条件为：</p>
-<script type="math/tex; mode=display">\mu _{1}\geq 0,\mu _{2}\geq 0，\mu _{3}\geq 0</script><script type="math/tex; mode=display">\nabla f\left( x^{\ast }\right) +\mu _{1}\nabla g_1\left( x^{\ast }\right) +\mu _{2}\nabla g_{2}\left( x^{\ast }\right) +\mu _{3}\nabla g_{3}\left( x^{\ast }\right) =0</script><p>其中条件2中<script type="math/tex">\mu _{3}\nabla g_{3}\left( x^{\ast }\right)</script>与优化问题无关，最好可以令其为0.所以我们加上第3条：</p>
-<p>​            <script type="math/tex">\mu _{1}\nabla g_1\left( x^{\ast }\right) +\mu _{2}\nabla g_{2}\left( x^{\ast }\right) +\mu _{3}\nabla g_{3}\left( x^{\ast }\right)=0</script></p>
-<p>因为最优解与$g_1 (x)$和$g_2 (x)$有关，与$g_3 (x)$无关，所以<script type="math/tex">g_1 (x^{*})=0,g_2(x^{*})=0</script>.</p>
-<p>又因为<script type="math/tex">g_3 (x^{*})\leq 0</script>，所以 $\mu _{3}=0​$.</p>
-</li>
-</ul>
-</li>
-<li><p><font color="red">注意</font>：上述三种优化问题，都是局部极小值点的必要条件，所以不一定是局部极小值点，更不必说全局了。</p>
-</li>
-</ul>
-<hr>
-<h2 id="拉格朗日对偶性"><a href="#拉格朗日对偶性" class="headerlink" title="拉格朗日对偶性"></a><font color="Blue">拉格朗日对偶性</font></h2><ul>
-<li><font color="red">原始问题</font>
-
-<script type="math/tex; mode=display">\min _{x\in R^{n}}f\left( x\right) ​</script><p> <strong>s.t.</strong> </p>
-<script type="math/tex; mode=display">c_{i}\left( x\right) \leq 0,i=1,2,\ldots ,k</script><script type="math/tex; mode=display">h_{i}\left( x\right) =0,j=1,2,\ldots ,l</script></li>
-<li><p><strong>引入广义拉格朗日函数</strong></p>
-<script type="math/tex; mode=display">L\left( x,\alpha ,\beta \right) =f\left( x\right) +\sum ^{k}_{i=1}\alpha _{i}c_{i}\left( x\right) +\sum ^{l}_{j=1}\beta _{j}h_{j}\left( x\right) ​</script><p>其中<script type="math/tex">x=(x^{(1)},(x^{(2)},…,(x^{(n)})\in R^n</script>，<script type="math/tex">\alpha_i ,\beta_j</script>是拉格朗日乘子，<script type="math/tex">\alpha_i  \geq 0</script>.</p>
-<p>考虑关于$x​$的函数：<script type="math/tex">\theta _{p}\left( x\right) =\max _{\alpha ,\beta :\alpha_{i}\geq 0}L\left( x,\alpha ,\beta \right) ​</script>，<strong>下标$p​$表示原始问题</strong>。</p>
-<p>得知：<script type="math/tex">\theta _{p}\left( x\right) \approx f\left( x\right) ​</script>且<script type="math/tex">\theta _{p}\left( x\right) \leq f\left( x\right) ​</script>.</p>
-</li>
-</ul>
-<p>  <strong>所以</strong>，<strong>原始问题</strong><script type="math/tex">\min _{x\in R^{n}}f\left( x\right) ​</script> <strong>变为</strong><script type="math/tex">\min _{x}\theta _{p}\left( x\right) =\min _{x}\max _{\alpha ,\beta :\alpha_{i}\geq 0}L\left( x,\alpha ,\beta \right)  ​</script>，</p>
-<p>  这样原始最优问题变为广义拉格朗日函数的<strong>极小极大问题</strong>。</p>
-<ul>
-<li><font color="red">对偶问题</font>
-
-<script type="math/tex; mode=display">\theta _{D}\left( \alpha ,\beta \right) =\min _{x}L\left( x,\alpha ,\beta \right) ​</script><p>考虑极大化<script type="math/tex">\theta _{D}\left( \alpha ,\beta \right) =\min _{x}L\left( x,\alpha ,\beta \right)</script>，<strong>下标$D​$表示对偶问题</strong>，即</p>
-<p><script type="math/tex">\max _{\alpha ,\beta :\alpha _{i\geq 0}}\theta _{D}( \alpha ,\beta )=\max _{\alpha ,\beta :\alpha i\geq 0}\min _{x}L\left( x,\alpha ,\beta \right) ​</script>,为广义拉格朗日的<strong>极大极小问题</strong>。</p>
-</li>
-<li><p><strong>梳理一下</strong><img src="/2019/03/23/Meachine-Learning-Lagrange-duality/big-small.png" alt="big-small"></p>
-<p><strong>原始问题：</strong><script type="math/tex">\min _{x\in R^{n}}f\left( x\right)</script> </p>
-<p><strong>极小极大问题：</strong><script type="math/tex">min _{x}\theta _{p}\left( x\right) =\min _{x}\max _{\alpha ,\beta :\alpha_{i}\geq 0}L\left( x,\alpha ,\beta \right)</script>，<strong>在原问题$p$上</strong></p>
-<p><strong>极大极小问题：</strong><script type="math/tex">\max _{\alpha ,\beta :\alpha _{i\geq 0}}\theta _{D}( \alpha ,\beta )=\max _{\alpha ,\beta :\alpha i\geq 0}\min _{x}L\left( x,\alpha ,\beta \right)</script>，<strong>在对偶问题$D$上</strong></p>
-</li>
-<li><p><strong>原始问题与对偶问题的关系</strong></p>
-<ul>
-<li><p>若原始问题和对偶问题都有最优解，则<script type="math/tex">d^{\ast }=\max _{\alpha ,\beta :\alpha i\geq 0}\min _{x}L\left( x,\alpha ,\beta \right)  \leq \min _{x}\max _{\alpha ,\beta :\alpha_{i}\geq 0}L\left( x,\alpha ,\beta \right) =p^{\ast }​</script></p>
-</li>
-<li><p>假设函数$f(x)$和$c_i(s)$是凸函数，$h_j(x)$是仿射函数，并且不等式约束$c_i(s)$严格可行；<strong>原始问题和对偶问题具有相同的最优解</strong><script type="math/tex">x^{\ast },\alpha ^{\ast },\beta ^{\ast }</script>的充分必要条件是</p>
-<p>回顾一下广义拉格朗日函数：<script type="math/tex">L\left( x,\alpha ,\beta \right) =f\left( x\right) +\sum ^{k}_{i=1}\alpha _{i}c_{i}\left( x\right) +\sum ^{l}_{j=1}\beta _{j}h_{j}\left( x\right)</script></p>
-<p><strong>满足以下KTT条件：</strong></p>
-<script type="math/tex; mode=display">\nabla_x L\left( x^{\ast },\alpha ^{\ast },\beta ^{\ast }\right) =0</script><script type="math/tex; mode=display">\nabla_{\alpha} L\left( x^{\ast },\alpha ^{\ast },\beta ^{\ast }\right) =0</script><script type="math/tex; mode=display">\nabla_{\beta} L\left( x^{\ast },\alpha ^{\ast },\beta ^{\ast }\right) =0</script><script type="math/tex; mode=display">\alpha ^{\ast }_{i}c_{i}\left( x^{\ast }\right) =0,i=1,2,\ldots ,k​</script><script type="math/tex; mode=display">c_{i}\left( x^{\ast }\right) \leq0, i=1,2,\ldots ,k​</script><script type="math/tex; mode=display">\alpha ^{\ast }_{i}\geq 0, i=1,2,\ldots ,k​</script><script type="math/tex; mode=display">h_{i}\left( x^{\ast }\right) =0, i=1,2,\ldots ,k</script></li>
-</ul>
-</li>
-</ul>
-<hr>
-<font color="blue">声明</font>
-
-<ul>
-<li><strong>参考资料1</strong>：<a href="https://www.zhihu.com/question/58584814/answer/159863739" target="_blank" rel="noopener">https://www.zhihu.com/question/58584814/answer/159863739</a>、</li>
-<li><strong>参考资料2</strong>：李航老师的《统计学习方法》</li>
-<li>本博文为原创总结，如有转载，请注名出处！</li>
-</ul>
 
     </article>
     <!-- license  -->
@@ -553,17 +434,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/03/25/recommend-system/" title="推荐系统（一）">
-                    <div class="nextTitle">推荐系统（一）</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/03/22/Coding-1/" title="C++基础知识梳理">
-                    <div class="prevTitle">C++基础知识梳理</div>
+                <a href="/2019/04/01/KNN/" title="KNN算法">
+                    <div class="prevTitle">KNN算法</div>
                 </a>
             
         </li>
@@ -682,7 +558,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#详解拉格朗日及其对偶问题"><span class="toc-number">1.</span> <span class="toc-text">详解拉格朗日及其对偶问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#无约束的优化"><span class="toc-number">1.1.</span> <span class="toc-text">无约束的优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#带等式约束的优化"><span class="toc-number">1.2.</span> <span class="toc-text">带等式约束的优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#带不等式约束的优化"><span class="toc-number">1.3.</span> <span class="toc-text">带不等式约束的优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉格朗日对偶性"><span class="toc-number">1.4.</span> <span class="toc-text">拉格朗日对偶性</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基于邻域协同推荐算法——用户-UCF-和商品-ICF"><span class="toc-number">1.</span> <span class="toc-text">基于邻域协同推荐算法——用户(UCF)和商品(ICF)</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
