@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="MingGuang HU">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="MingGuang HU">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>决策树算法 · MingGuangHu&#39;s Studio.</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/assets/bitbug_favicon.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+        <!-- algolia -->
+        <script>
+            
+            var hits = JSON.parse('{"per_page":10}')
+            var labels = JSON.parse('{"input_placeholder":"Search for Posts","hits_empty":"We did not find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}')
+
+            var algolia = {
+                applicationID: 'L4H8NR9HZK',
+                apiKey: 'dd0a87d811733fb786ed3807e9023178',
+                indexName: 'blog',
+                hits: hits,
+                labels: labels
+            }
+        </script>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">决策树算法</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">MingGuangHu's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            决策树算法
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.5k</span>阅读时长: <span class="post-count reading-time">10 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/04/08</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="统计学习-决策树算法"><a href="#统计学习-决策树算法" class="headerlink" title="统计学习-决策树算法"></a>统计学习-决策树算法</h1><blockquote>
+<p><strong>主要内容</strong></p>
+<ul>
+<li>介绍决策树算法基础知识</li>
+<li>几种常用的决策树算法</li>
+<li>决策树不同的剪枝方法</li>
+</ul>
+</blockquote>
+<h2 id="1-决策树基础知识"><a href="#1-决策树基础知识" class="headerlink" title="1. 决策树基础知识"></a><font color="bule">1. 决策树基础知识</font></h2><h3 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h3><p>决策树是一种自上而下，对样本数据进行树形分类的过程，由结点和有向边组成。结点分为内部结点和叶结点，其中内部结点表示一个特征或属性，叶结点表示类别。从顶部根结点开始，所有样本聚集在一起。经过根节点的划分，样本被分到不同的子结点中。再根据子结点的特征进一步划分，直至所有样本都被归到某一个类别（即叶结点）中。</p>
+<h3 id="1-2-信息论"><a href="#1-2-信息论" class="headerlink" title="1.2 信息论"></a>1.2 信息论</h3><h4 id="信息量函数"><a href="#信息量函数" class="headerlink" title="信息量函数"></a>信息量函数</h4><script type="math/tex; mode=display">\begin{align}  H(x)=-\log p(x) \tag{1}\\\ \end{align}</script><h4 id="熵"><a href="#熵" class="headerlink" title="熵"></a>熵</h4><p>熵越大，事情不确定性越大；熵为信息量函数的数学期望</p>
+<script type="math/tex; mode=display">\begin{align} H(p)=-\sum_{i=1}^{n}p_i \log p_i  \tag{2}\\\ \end{align}</script><h4 id="经验熵"><a href="#经验熵" class="headerlink" title="经验熵"></a>经验熵</h4><p>如果熵的概率有数据估计（特别是极大似然估计得到），所对应的熵称为<strong>经验熵</strong></p>
+<script type="math/tex; mode=display">\begin{align} H(D)=-\sum_{k=1}^{K}\frac{|C_k|}{|D|} \log_2 \frac{|C_k|}{|D|} \tag{3}\\\ \end{align}  ​</script><script type="math/tex; mode=display">D$$为样本集合，$$K$$为类别数，$$C_k$$是样本集合$$D$$中属于第$$k$$类的样本子集，$$|C_k|$$表示该子集的元素个数，$$|D|$$表示样本集合的元素个数
+
+#### 条件熵
+
+随机变量$$X​$$给定条件下，随机变量$$Y​$$ 的条件熵为$$H(Y|X)​</script><script type="math/tex; mode=display">\begin{align} H(Y|X)=\sum_{i=1}^{n} p_i H(Y|X=x_i) \tag{4}\\\ \end{align}</script><h4 id="经验条件熵"><a href="#经验条件熵" class="headerlink" title="经验条件熵"></a>经验条件熵</h4><p>如果条件熵的概率有数据估计（特别是极大似然估计得到），所对应的熵称为<strong>经验条件熵</strong></p>
+<script type="math/tex; mode=display">\begin{align} H(D|A)=\sum_{i=1}^{n}\frac{|D_i|}{|D|}H(D_i)=\sum_{i=1}^{n}\frac{|D_i|}{|D|}(-\sum_{k=1}^{K}\frac{|D_{ik}|}{|D_i|}\log_2 \frac{|D_{ik}|}{|D_i|}) \tag{5}\\\ \end{align} ​</script><p>其中<script type="math/tex">D_i</script>表示<script type="math/tex">D</script>中特征<script type="math/tex">A</script> 取第<script type="math/tex">i</script> 个值的样本子集，<script type="math/tex">D_{ik}</script>表示<script type="math/tex">D_i</script>中属于第<script type="math/tex">k</script>类的样本子集。</p>
+<h4 id="信息增益"><a href="#信息增益" class="headerlink" title="信息增益"></a>信息增益</h4><p>信息增益为<strong>经验熵与经验条件熵之差</strong></p>
+<script type="math/tex; mode=display">\begin{align} g(D,A)=H(D)-H(D|A) \\\\ = -\sum_{k=1}^{K}\frac{|C_k|}{|D|} \log_2 \frac{|C_k|}{|D|} +\sum_{i=1}^{n}\frac{|D_i|}{|D|}(-\sum_{k=1}^{K}\frac{|D_{ik}|}{|D_i|}\log_2 \frac{|D_{ik}|}{|D_i|}) \tag{6}\\\ \end{align}</script><h4 id="信息增益比"><a href="#信息增益比" class="headerlink" title="信息增益比"></a>信息增益比</h4><font color="red">以信息增益作为划分训练数据集的特征，存在偏向于选择取值较多的特征的问题，使用信息增益比可以对这个问题进行修正。</font>
+
+<p>特征<script type="math/tex">A</script>对训练数据集<script type="math/tex">D</script>的信息增益比<script type="math/tex">g_R(D,A)</script>定义为其信息增益<script type="math/tex">g(D,A)</script>与训练数据集<script type="math/tex">D</script> 关于<strong>特征<script type="math/tex">A</script> 的值的熵</strong><script type="math/tex">H_A(D)</script>之比：</p>
+<script type="math/tex; mode=display">\begin{align} g_R(D,A)=\frac{g(D,A)}{H_A(D)} \tag{7}\\\ \end{align} ​</script><p>其中，<script type="math/tex">H_A(D)=-\sum_{i=1}^{n}\frac{|D_i|}{|D|}\log_2 \frac{|D_i|}{|D|}</script>，<script type="math/tex">n</script>为特征<script type="math/tex">A​</script> 的取值个数。</p>
+<h2 id="2-几种常用的决策树算法"><a href="#2-几种常用的决策树算法" class="headerlink" title="2. 几种常用的决策树算法"></a><font color="bule">2. 几种常用的决策树算法</font></h2><h3 id="2-1-ID3-最大信息增益"><a href="#2-1-ID3-最大信息增益" class="headerlink" title="2.1 ID3-最大信息增益"></a>2.1 ID3-最大信息增益</h3><p><strong>ID3 算法的核心</strong>是在决策树各个结点上应用<strong>信息增益准则选择特征</strong>，递归地构建决策树。</p>
+<p><strong>具体方法</strong></p>
+<ul>
+<li>从根结点开始，对结点计算所有可能的特征的信息增益；</li>
+<li>选择信息增益最大的特征作为结点的特征，由该特征的不同取值建立子结点；</li>
+<li>再对子结点递归地调用以上方法，构建决策树；</li>
+<li>直到所有特征的信息增益均很小或没有特征可以选择为止，最后得到一个决策树。</li>
+</ul>
+<p>实现代码</p>
+<details>
+  <summary>CLICK ME</summary>
+
+ <pre> <code>
+import numpy as np
+import math
+from collections import Counter
+import matplotlib.pyplot as plt
+
+######1 计算给定数据集的经验熵  最后一列是数据的标签值######################################################
+def calcShannonEnt(dataSet):
+    m,n = dataSet.shape
+    shannonEnt = 0.00
+    labelSet = set(dataSet[:,-1].T.tolist()[0])
+    for label in labelSet:
+        num = len(dataSet[np.nonzero(dataSet[:,-1] == label),:][0].tolist()) #标签为label的样本数
+        shannonEnt  -= ((float(num)/float(m)) * math.log(float(num)/float(m),2))
+    return shannonEnt
+
+#创建一个简单的数据集
+def createDataSet():
+    dataSet = np.mat([[1, 1, 'yes'], [1, 1, 'yes'], [1, 0, 'no'], [0, 1, 'no'], [0, 1, 'no']])
+    labels = ['no surfacing','flippers']
+    return dataSet,labels
+
+##2 按照给定特征划分数据集 ############################################################################
+def splitDataSet(dataSet,feat_index,value):
+    resultData = dataSet[np.nonzero(dataSet[:,feat_index] == value),:][0]
+    delData = np.delete(resultData,feat_index,axis = 1)
+    return delData
+
+######3.选择最好的数据集划分方式#######################################################################
+def chooseBestFeatureToSplit(dataSet):
+    m,n = dataSet.shape
+    baseEntropy = calcShannonEnt(dataSet)
+    bestInfoGain = 0.00
+    bestFeature = -1
+    for i in range(n-1): #特征索引
+        newEntropy = 0.00
+        feat_value = set(dataSet[:,i].T.tolist()[0])
+        for value in feat_value:
+            delData = splitDataSet(dataSet,i,value) #返回的是特征i=value,并且去除特征i所在的列的数据
+            newEntropy += float(delData.shape[0])/float(m) * calcShannonEnt(delData)
+        if (baseEntropy - newEntropy) > bestInfoGain:
+            #信息增益
+            bestInfoGain = baseEntropy - newEntropy
+            bestFeature = i
+    return bestFeature
+
+################4.递归构建决策树####################################################################
+#返回出现次数最多的类标签
+def majorityCnt(dataSet):
+    most_label = Counter(dataSet[:,-1]).most_common(1)[0]
+    return most_label
+
+#创建决策树
+def createTree(dataSet,labels):
+    if len(set(dataSet[:,-1].T.tolist()[0])) == 1: #类别完全相同，停止划分
+        return dataSet[0,-1]
+    if dataSet.shape[1] == 1: #遍历完所有属性
+        return majorityCnt(dataSet)
+    bestFeat = chooseBestFeatureToSplit(dataSet) #找到最好划分
+    print(dataSet)
+    print(bestFeat)
+    bestFeatLabel = labels[bestFeat]
+    del labels[bestFeat]
+    myTree = {bestFeatLabel:{}}
+
+    feat_value = set(dataSet[:,bestFeat].T.tolist()[0])
+    for value in feat_value:
+        labels_bk = labels[:]
+        delData = splitDataSet(dataSet,bestFeat,value)
+        myTree[bestFeatLabel][value] = createTree(delData,labels_bk)
+    return myTree
+
+##############5. 使用文本注解绘制树结点##################################################################
+def plotNode(anno_text,xyPt,xyText,nodeType):
+    arrow_arg = dict(arrowstyle="<-") # 设置箭头格式 createplot.ax1.annotate(anno_text, xy="xyPt," xytext="xyText," xycoords="data" ,textcoords="data" , arrowprops="arrow_arg," va="center" ,ha="left" ,bbox="nodeType)" createplot2.ax1.annotate(anno_text, textcoords="data" def createplot(): fig="plt.figure(1,facecolor='white')" fig.clf() #清空绘图区 decisionnode="dict(boxstyle='sawtooth'," fc="0.8" ) 设置决策结点的文本框格式 leafnode="dict(boxstyle='round4'," 设置叶子结点的文本框格式 createplot.ax1="fig.add_subplot(111)" plotnode('decisionnode',(0.1,0.5),(0.5,0.1),decisionnode) #决策结点 plotnode('leafnode',(0.3,0.8),(0.8,0.3),leafnode) #叶子结点 plt.show() ########6. 获取叶子结点的数目和树的层次################################################################## #输出预先存储的树信息 retrievetree(i): listoftress="[" {'no surfacing':{0:'no',1:{'flippers':{0:'no',1:'yes'}}}}, surfacing':{0:'no',1:{'flippers':{0:{'head':{0:'no',1:'yes'}},1:'no'}}}} ] return listoftress[i] #获取叶子结点的数目 getnumleafs(mytree): numleaf="0" firstkey="list(myTree.keys())[0]" seconddict="myTree[firstKey]" for ele in seconddict.keys(): if type(seconddict[ele]).__name__="=" 'dict': #不是叶子结点 +="getNumLeafs(secondDict[ele])" else: #获取树的层数 gettreedepth(mytree): maxdepth="0" treedepth="0"> maxDepth:
+            maxDepth = treeDepth
+    return maxDepth
+
+##############7. 绘制决策树###########################################################################
+#在父子节点间添加文本信息
+def plotMidtext(parentPt,cntrPt,nodeTxt):
+    midX = (parentPt[0] + cntrPt[0]) / 2.0
+    midY = (parentPt[1] + cntrPt[1]) / 2.0
+    createPlot2.ax1.text(midX,midY,nodeTxt)
+
+
+def plotTree(myTree,parentPt,nodeTxt):
+    numLeaf = float(getNumLeafs(myTree))
+    depth = float(getTreedepth(myTree))
+    decisionNode = dict(boxstyle='sawtooth', fc='0.8')  # 设置决策结点的文本框格式
+    leafNode = dict(boxstyle='round4', fc='0.8')  # 设置叶子结点的文本框格式
+
+    firstKey = list(myTree.keys())[0]
+    secondDict = myTree[firstKey]
+
+    cntrPt = (plotTree.xOff + (1.0+numLeaf)/2.0/plotTree.totalW,plotTree.yOff) #当前结点坐标
+    plotNode(firstKey,parentPt,cntrPt,decisionNode) #画parentPt节点
+    plotMidtext(parentPt,cntrPt,nodeTxt) #添加parentPt,cntrPt之间的文本信息
+
+    plotTree.yOff -= 1.0/plotTree.totalD
+
+    for key in secondDict.keys():
+        if type(secondDict[key]).__name__ == 'dict':
+            plotTree(secondDict[key],cntrPt,key)
+        else:
+            plotTree.xOff += 1.0/plotTree.totalW
+            plotNode(secondDict[key], cntrPt, (plotTree.xOff,plotTree.yOff), leafNode)  # 画parentPt节点
+            plotMidtext((plotTree.xOff,plotTree.yOff), cntrPt, key)  # 添加parentPt,cntrPt之间的文本信息
+
+    plotTree.yOff += 1.0 / plotTree.totalD
+
+
+def createPlot2(myTree):
+    fig = plt.figure(1,facecolor='white')
+    fig.clf()
+    createPlot2.ax1 = fig.add_subplot(111)
+
+    plotTree.totalW = float(getNumLeafs(myTree))
+    plotTree.totalD = float(getTreedepth(myTree))
+    plotTree.xOff = -0.5/plotTree.totalW
+    plotTree.yOff = 1.0
+
+    plotTree(myTree,(0.5,1.0),"")
+    plt.show()
+
+##############8. 使用决策树执行分类#################################################################
+def classify(myTree,featLabel,testVec):
+    firstKey = list(myTree.keys())[0]
+    secondDict = myTree[firstKey]
+
+    featIndex = featLabel.index(firstKey)
+    for key in secondDict.keys():
+        if testVec[featIndex] == key:
+            if type(secondDict[key]).__name__ == 'dict':
+                return classify(secondDict[key],featLabel,testVec)
+            else:
+                return secondDict[key]
+
+########9. 使用pickle存储决策树###################################################################
+import pickle
+def storeTree(mytree,file):
+    fr = open(file,'wb')
+    pickle.dump(mytree,fr)
+    fr.close()
+
+def grabTree(file):
+    fr = open(file,'rb')
+    return pickle.load(fr)
+
+#######################10. 使用决策树预测隐形眼镜类型#######################################################
+def loadDataSet(file):
+    fr = open(file).readlines()
+    data = np.mat([list(line.strip("\n").split("\t")) for line in fr])
+    return data
+
+if __name__ == "__main__":
+    ##########1.  计算香农熵##########################################################################
+    # dataSet,labels = createDataSet()
+    # Ent = calcShannonEnt(dataSet)
+    # print(Ent)
+    ########2 按照给定特征划分数据集 ###################################################################
+    # print(splitDataSet(dataSet,0,'0'))
+    ###############3. 选择最好的数据集划分方式 ########################################################
+    # print(chooseBestFeatureToSplit(dataSet))
+    ################4.递归构建决策树####################################################################
+    # print(createTree(dataSet,labels))
+    ##############5. 使用文本注解绘制树结点##################################################################
+    # createPlot()
+    ########6. 获取叶子结点的数目和树的层次##################################################################
+    # myTree = retrieveTree(0)
+    # print(getNumLeafs(myTree))
+    # print(getTreedepth(myTree))
+    ##############7. 绘制树###########################################################################
+    # myTree = retrieveTree(0)
+    # createPlot2(myTree)
+    ##############8. 使用决策树执行分类#################################################################
+    # dataSet,labels = createDataSet()
+    # myTree = retrieveTree(0)
+    # print(classify(myTree,labels,[1,0]))
+    # print(classify(myTree, labels, [1, 1]))
+    ########9. 使用pickle存储决策树###################################################################
+    # myTree = retrieveTree(0)
+    # storeTree(myTree,"3.txt")
+    # print(grabTree("3.txt"))
+    ##################10. 使用决策树预测隐形眼镜类型#########################
+    data = loadDataSet("./lenses.txt")
+    labels = ['age','prescript','astigmatic','tearRate']
+    myTree = createTree(data,labels)
+    createPlot2(myTree)
+  </-")></code></pre>
+</details>
+
+
+
+<h3 id="2-2-C4-5-最大信息增益比"><a href="#2-2-C4-5-最大信息增益比" class="headerlink" title="2.2 C4.5-最大信息增益比"></a>2.2 C4.5-最大信息增益比</h3><p>C4.5算法与ID3算法相似，C4.5算法对ID3算法进行了改进。C4.5在生成的过程中，用<strong>信息增益比来选择特征</strong>。</p>
+<h3 id="2-3-CART-最小基尼指数-Gini"><a href="#2-3-CART-最小基尼指数-Gini" class="headerlink" title="2.3 CART-最小基尼指数(Gini)"></a>2.3 CART-最小基尼指数(Gini)</h3><ul>
+<li><p><strong>基尼指数</strong></p>
+<p><strong>Gini描述的是数据纯度，与信息熵含义类似</strong></p>
+<script type="math/tex; mode=display">\begin{align}  Gini(D)=\sum_{k=1}^{K} \frac{|C_k|}{|D|}\left(1-\frac{|C_k|}{|D|}\right)=1-\sum_{k=1}^{K}\left(\frac{|C_k|}{|D|} \right)^{2} \tag{8}\\\ \end{align} ​</script><p><script type="math/tex">C_k</script>表示<script type="math/tex">D</script>中属于第<script type="math/tex">k</script>类的样本子集，<script type="math/tex">K</script>是类的个数。</p>
+</li>
+<li><p><strong>在特征<script type="math/tex">A​</script> 下的Gini指数</strong></p>
+<script type="math/tex; mode=display">\begin{align}  Gini(D|A)=\sum_{i=1}^{2}\frac{|D_i|}{|D|} Gini(D_i)  \tag{9}\\\ \end{align} ​</script></li>
+<li><font color="red"> CART在每一次迭代中选择基尼指数最小的特征及其对应的切分点进行分类。但与ID3、C4.5不同的是，CART是一颗二叉树，采用二元切割，每一步将数据按特征A的取值切成两份，分别进入左右子树。</font>
+</li>
+<li><p>CART在构建二叉决策树的过程中，<strong>对回归树用平方误差最小化准则</strong>，<strong>对分类树用基尼指数最小化准则</strong>，进行特征选择，生成二叉树。</p>
+</li>
+<li><p><strong>分类树算法</strong></p>
+<p><strong>输入：</strong>训练数据集<script type="math/tex">D={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}</script>，停止条件</p>
+<p><strong>输出：</strong>分类树 <script type="math/tex">T​</script></p>
+<p>1）利用特征 <script type="math/tex">A​</script> 的取值 <script type="math/tex">a​</script> 将数据分为两部分，计算 <script type="math/tex">A=a​</script> 时的基尼系数：</p>
+<script type="math/tex; mode=display">\begin{align}   Gini(D,A) = \frac{|D_1|}{|D|}Gini(D_1) + \frac{|D_2|}{|D|}Gini(D_2) \tag{10}\\\ \end{align}</script><p>2）对整个数据集中所有的可能特征 <script type="math/tex">A</script> 以及其可能取值 <script type="math/tex">a</script> 选取<strong>基尼系数最小的特征</strong> <script type="math/tex">A^{*}</script> 与特征下的取值 <script type="math/tex">a^{*}</script>，来将数据集切分，将数据 <script type="math/tex">D_1</script>、<script type="math/tex">D_2​</script> 分到两个子节点中去。</p>
+<p>3）对子节点递归的调用 1)∼2) ，直至满足停止条件</p>
+<p>4）返回 CART 树<script type="math/tex">T​</script></p>
+</li>
+</ul>
+<h3 id="2-4-三种算法的比较"><a href="#2-4-三种算法的比较" class="headerlink" title="2.4 三种算法的比较"></a>2.4 三种算法的比较</h3><ul>
+<li><strong>从评价标准</strong>：ID3 分类的泛化能力较弱，C4.5实际是对ID3进行优化，引入信息增益比，一定程度上对取值比较多的特征进行惩罚，避免ID3出现过拟合的特性，提升决策树的泛化能力。</li>
+<li><strong>从样本类型</strong>：ID3只能处理离散型变量，而C4.5和CART都可以处理连续型变量。</li>
+<li><strong>从应用角度</strong>：ID3和C4.5只能用于分类任务，而CART（Classification and Regression Tree，分类回归树）不仅可以用于分类，还可以用于回归任务。</li>
+<li><p>ID3 和 C4.5可以在每个结点上产生多叉分支，且每个特征在层级之间不会复用；而CART每个结点只会产生来两个分支，且每个特征可以重复使用。</p>
+</li>
+<li><p>ID3 和C4.5通过剪枝来权衡树的准确性和泛化能力，而CART直接利用全部数据发现所有可能的树结构进行对比。</p>
+</li>
+</ul>
+<h2 id="3-决策树剪枝"><a href="#3-决策树剪枝" class="headerlink" title="3. 决策树剪枝"></a><font color="bule">3. 决策树剪枝</font></h2><p>一棵完全生长的决策树面临一个很严重的问题，即过拟合。我们需要对决策树进行剪枝，剪掉一些枝叶，<strong>提升模型的泛化能力。</strong></p>
+<h3 id="3-1-预剪枝-Pre-Pruning"><a href="#3-1-预剪枝-Pre-Pruning" class="headerlink" title="3.1 预剪枝(Pre-Pruning)"></a>3.1 预剪枝(Pre-Pruning)</h3><ul>
+<li><p><strong>在生成决策树的过程中，停止树的增长。</strong></p>
+</li>
+<li><p><strong>核心思想：</strong>在树中结点进行扩展之前，先计算当前的划分是否能带来模型泛化能力的提升，如果不能，则不再继续生长子树。此时可能存在不同类别的样本同时存于结点中，按照多数投票的原则判断该结点所属类别。</p>
+</li>
+<li><p><strong>何时停止决策树的生长</strong></p>
+<ul>
+<li>当树到达一定深度时，停止树的生长</li>
+<li>当到达当前结点的样本数量小于某个阈值时，停止树的生长</li>
+<li>计算每次分裂对测试集的准确度提升，当小于某个阈值时，不再继续扩展</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-2-后剪枝-Post-Pruning"><a href="#3-2-后剪枝-Post-Pruning" class="headerlink" title="3.2 后剪枝(Post-Pruning)"></a>3.2 后剪枝(Post-Pruning)</h3><ul>
+<li><strong>在已生成的过拟合决策树上进行剪枝，得到简化版的剪枝决策树。</strong></li>
+<li><strong>核心思想：</strong>让算法生成一棵完全生长的决策树，然后从底层向上计算是否剪枝。剪枝过程将子树删除，用一个叶子结点替代，该结点的类别同样按照多数投票的原则进行判断。剪枝过程，如果在测试集上的准确率有所提高，则进行剪枝。</li>
+<li><strong>相比于预剪枝，后剪枝通常得到的决策树泛化能力更强，但是时间开销会更大。</strong></li>
+</ul>
+<p><img src="/2019/04/08/decision-tree/pruneTree.png" alt="pruneTree"></p>
+<hr>
+<font color="blue">声明</font>
+
+<ul>
+<li><strong>参考资料1</strong>：<a href="https://blog.csdn.net/zhengzhenxian/article/details/79083643" target="_blank" rel="noopener">https://blog.csdn.net/zhengzhenxian/article/details/79083643</a></li>
+<li><strong>参考资料2</strong>：李航老师的《统计学习方法》</li>
+<li><strong>参考资料3</strong>：<a href="https://www.cnblogs.com/ooon/p/5647309.html" target="_blank" rel="noopener">https://www.cnblogs.com/ooon/p/5647309.html</a></li>
+<li>本博文为原创总结，如有转载，请注名出处！</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/04/08/Bayesian/" title="朴素贝叶斯">
+                    <div class="prevTitle">朴素贝叶斯</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:936068345@qq.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/HuMingGuang" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title="wechat">
+                  
+                  <img class="profile-qr" src="/assets/Wechat.jpeg">
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#统计学习-决策树算法"><span class="toc-number">1.</span> <span class="toc-text">统计学习-决策树算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-决策树基础知识"><span class="toc-number">1.1.</span> <span class="toc-text">1. 决策树基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-定义"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-信息论"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 信息论</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#信息量函数"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">信息量函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#熵"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#经验熵"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">经验熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#经验条件熵"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">经验条件熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信息增益"><span class="toc-number">1.1.2.5.</span> <span class="toc-text">信息增益</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信息增益比"><span class="toc-number">1.1.2.6.</span> <span class="toc-text">信息增益比</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-几种常用的决策树算法"><span class="toc-number">1.2.</span> <span class="toc-text">2. 几种常用的决策树算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-ID3-最大信息增益"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 ID3-最大信息增益</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-C4-5-最大信息增益比"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 C4.5-最大信息增益比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-CART-最小基尼指数-Gini"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 CART-最小基尼指数(Gini)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-三种算法的比较"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 三种算法的比较</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-决策树剪枝"><span class="toc-number">1.3.</span> <span class="toc-text">3. 决策树剪枝</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-预剪枝-Pre-Pruning"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 预剪枝(Pre-Pruning)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-后剪枝-Post-Pruning"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 后剪枝(Post-Pruning)</span></a></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 14
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href="/2019/04/08/decision-tree/">决策树算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href="/2019/04/08/Bayesian/">朴素贝叶斯</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href="/2019/04/07/recommend-system-6/">推荐系统（七）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href="/2019/04/02/meachine-learning-question/">机器学习问题的梳理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href="/2019/04/02/recommend-system-5/">推荐系统（六）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href="/2019/04/01/KNN/">KNN算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href="/2019/03/30/recommend-system-4/">推荐系统（五）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href="/2019/03/28/recommend-system-3/">推荐系统（四）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/27</span><a class="archive-post-title" href="/2019/03/27/recommend-system-2/">推荐系统（三）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href="/2019/03/26/consistent-hashing/">一致性哈希算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href="/2019/03/26/recommend-system-1/">推荐系统（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/25</span><a class="archive-post-title" href="/2019/03/25/recommend-system/">推荐系统（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/23</span><a class="archive-post-title" href="/2019/03/23/Meachine-Learning-Lagrange-duality/">详解拉格朗日及其对偶问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href="/2019/03/22/Coding-1/">C++基础知识梳理</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
+    
+        <span class="sidebar-tag-name" data-tags="推荐系统"><span class="iconfont-archer">&#xe606;</span>推荐系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习实战"><span class="iconfont-archer">&#xe606;</span>机器学习实战</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="C++"><span class="iconfont-archer">&#xe606;</span>C++</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="统计学习"><span class="iconfont-archer">&#xe60a;</span>统计学习</span>
+    
+        <span class="sidebar-category-name" data-categories="转载文章"><span class="iconfont-archer">&#xe60a;</span>转载文章</span>
+    
+        <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
+    
+        <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
+    
+        <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "MingGuang HU"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.8.0/dist/instantsearch.min.js" defer></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
+
+

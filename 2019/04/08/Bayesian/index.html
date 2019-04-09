@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.4k</span>阅读时长: <span class="post-count reading-time">6 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.4k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -423,7 +423,7 @@ height:50vh;
 <li>使用贝叶斯方法实现对垃圾邮件的分类</li>
 </ul>
 </blockquote>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="朴素贝叶斯的基本假设是条件独立性"><a href="#朴素贝叶斯的基本假设是条件独立性" class="headerlink" title="朴素贝叶斯的基本假设是条件独立性"></a>朴素贝叶斯的基本假设是条件独立性</h3><script type="math/tex; mode=display">\begin{align} P(X=x|Y=c_k) = P(X^{(1)}=x^{(1)},…,X^{(n)}=x^{(n)}|Y=C_k)= \prod ^{n}_{j=1} P(X^{(j)}=x^{(j)}|Y=c_k) \tag{1}\\\  \end{align}​</script><h3 id="贝叶斯定理"><a href="#贝叶斯定理" class="headerlink" title="贝叶斯定理"></a>贝叶斯定理</h3><script type="math/tex; mode=display">\begin{align} P(Y|X)=\frac{P(X,Y)}{P(X)}=\frac{P(Y)P(X|Y)}{\sum_{Y}P(Y)P(X|Y)}\tag{2}\ \\\ \end{align}</script><h3 id="朴素贝叶斯算法"><a href="#朴素贝叶斯算法" class="headerlink" title="朴素贝叶斯算法"></a>朴素贝叶斯算法</h3><ul>
+<h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念"></a><font color="bule">1. 基本概念</font></h2><h3 id="1-1-朴素贝叶斯的基本假设是条件独立性"><a href="#1-1-朴素贝叶斯的基本假设是条件独立性" class="headerlink" title="1.1 朴素贝叶斯的基本假设是条件独立性"></a>1.1 朴素贝叶斯的基本假设是条件独立性</h3><script type="math/tex; mode=display">\begin{align} P(X=x|Y=c_k) = P(X^{(1)}=x^{(1)},…,X^{(n)}=x^{(n)}|Y =C_k) \\\ = \prod ^{n}_{j=1} P(X^{(j)}=x^{(j)}|Y=c_k) \tag{1}\\\  \end{align}​</script><h3 id="1-2-贝叶斯定理"><a href="#1-2-贝叶斯定理" class="headerlink" title="1.2 贝叶斯定理"></a>1.2 贝叶斯定理</h3><script type="math/tex; mode=display">\begin{align} P(Y|X)=\frac{P(X,Y)}{P(X)}=\frac{P(Y)P(X|Y)}{\sum_{Y}P(Y)P(X|Y)}\tag{2}\ \\\ \end{align}</script><h3 id="1-3-朴素贝叶斯算法"><a href="#1-3-朴素贝叶斯算法" class="headerlink" title="1.3 朴素贝叶斯算法"></a>1.3 朴素贝叶斯算法</h3><ul>
 <li><p><strong>输入：</strong>训练数据<script type="math/tex">T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}​</script>，其中<script type="math/tex">x_i= (x_i^{(1)},x_i^{(2)},…,x_i^{(n)})^{T}​</script>，<script type="math/tex">x_i^{(j)}​</script>是第<script type="math/tex">i​</script>个样本的第<script type="math/tex">j​</script>个特征，<script type="math/tex">x_i^{j}\in {a_{j1},a_{j2},…,a_{jS_{j}}}​</script>，<script type="math/tex">a_{jl}​</script>是第<script type="math/tex">j​</script>个特征取的第<script type="math/tex">l​</script>个值，<script type="math/tex">j=1,2,…,n​</script>，<script type="math/tex">l=1,2,…,S_j​</script>，<script type="math/tex">y_i \in{c_1,c_2,…,c_K}​</script>；实例<script type="math/tex">x​</script>；</p>
 </li>
 <li><p><strong>计算先验概率及条件概率</strong><font color="red">(使用极大似然估计：见附录)</font></p>
@@ -433,8 +433,9 @@ height:50vh;
 <li><p><strong>确定实例<script type="math/tex">x​</script>的类</strong></p>
 <script type="math/tex; mode=display">\begin{align}y=\arg \max_{c_k} P(Y=c_k)\prod ^{n}_{j=1}P(X^{(j)}=x^{(j)}|Y=c_k) \tag{6}\\\  \end{align}</script></li>
 </ul>
-<h2 id="垃圾邮件过滤分类"><a href="#垃圾邮件过滤分类" class="headerlink" title="垃圾邮件过滤分类"></a>垃圾邮件过滤分类</h2><h3 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h3><p><img src="/2019/04/08/Bayesian/spamFilterClassify.png" width="60%" height="60%"></p>
-<h3 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h3><ul>
+<h2 id="2-垃圾邮件过滤分类"><a href="#2-垃圾邮件过滤分类" class="headerlink" title="2. 垃圾邮件过滤分类"></a><font color="bule">2. 垃圾邮件过滤分类</font></h2><h3 id="2-1-流程图"><a href="#2-1-流程图" class="headerlink" title="2.1 流程图"></a>2.1 流程图</h3><p><img src="/2019/04/08/Bayesian/spamFilterClassify.png" width="60%" height="60%"></p>
+<p><strong>注：</strong>计算每个文件影响最大的15个词，是根据normDict和spamDict去计算testDict中的每个词的概率</p>
+<h3 id="2-2-实现代码"><a href="#2-2-实现代码" class="headerlink" title="2.2 实现代码"></a>2.2 实现代码</h3><ul>
 <li><p><strong>spamEmail.py</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#encoding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">spamEmailBayes</span>:</span></span><br><span class="line">    <span class="comment">#获得停用词表</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getStopWords</span><span class="params">(self)</span>:</span></span><br><span class="line">        stopList=[]</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> open(os.path.join(os.path.dirname(__file__)+<span class="string">"/../../data/stopWordsList.txt"</span>),encoding=<span class="string">"gbk"</span>):</span><br><span class="line">            stopList.append(line[:len(line)<span class="number">-1</span>])</span><br><span class="line">        <span class="keyword">return</span> stopList</span><br><span class="line">    <span class="comment">#获得词典</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_word_list</span><span class="params">(self,content,wordsList,stopList)</span>:</span></span><br><span class="line">        <span class="comment">#分词结果放入res_list</span></span><br><span class="line">        res_list = list(jieba.cut(content))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> res_list:</span><br><span class="line">            <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> stopList <span class="keyword">and</span> i.strip()!=<span class="string">''</span> <span class="keyword">and</span> i!=<span class="literal">None</span>:</span><br><span class="line">                <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> wordsList:</span><br><span class="line">                    wordsList.append(i)</span><br><span class="line">                    </span><br><span class="line">    <span class="comment">#若列表中的词已在词典中，则加1，否则添加进去</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">addToDict</span><span class="params">(self,wordsList,wordsDict)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> wordsList:</span><br><span class="line">            <span class="keyword">if</span> item <span class="keyword">in</span> wordsDict.keys():</span><br><span class="line">                wordsDict[item]+=<span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                wordsDict.setdefault(item,<span class="number">1</span>)</span><br><span class="line">                            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_File_List</span><span class="params">(self,filePath)</span>:</span></span><br><span class="line">        filenames=os.listdir(filePath)</span><br><span class="line">        <span class="keyword">return</span> filenames</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#通过计算每个文件中p(s|w)来得到对分类影响最大的15个词</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getTestWords</span><span class="params">(self,testDict,spamDict,normDict,normFilelen,spamFilelen)</span>:</span></span><br><span class="line">        wordProbList=&#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> word,num  <span class="keyword">in</span> testDict.items():</span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">in</span> spamDict.keys() <span class="keyword">and</span> word <span class="keyword">in</span> normDict.keys():</span><br><span class="line">                <span class="comment">#该文件中包含词个数</span></span><br><span class="line">                pw_s=spamDict[word]/spamFilelen</span><br><span class="line">                pw_n=normDict[word]/normFilelen</span><br><span class="line">                <span class="comment">#该词为垃圾词的概率</span></span><br><span class="line">                ps_w=pw_s/(pw_s+pw_n) </span><br><span class="line">                wordProbList.setdefault(word,ps_w)</span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">in</span> spamDict.keys() <span class="keyword">and</span> word <span class="keyword">not</span> <span class="keyword">in</span> normDict.keys():</span><br><span class="line">                pw_s=spamDict[word]/spamFilelen</span><br><span class="line">                pw_n=<span class="number">0.01</span></span><br><span class="line">                ps_w=pw_s/(pw_s+pw_n) </span><br><span class="line">                wordProbList.setdefault(word,ps_w)</span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">not</span> <span class="keyword">in</span> spamDict.keys() <span class="keyword">and</span> word <span class="keyword">in</span> normDict.keys():</span><br><span class="line">                pw_s=<span class="number">0.01</span></span><br><span class="line">                pw_n=normDict[word]/normFilelen</span><br><span class="line">                ps_w=pw_s/(pw_s+pw_n) </span><br><span class="line">                wordProbList.setdefault(word,ps_w)</span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">not</span> <span class="keyword">in</span> spamDict.keys() <span class="keyword">and</span> word <span class="keyword">not</span> <span class="keyword">in</span> normDict.keys():</span><br><span class="line">                <span class="comment">#若该词不在脏词词典中，概率设为0.47</span></span><br><span class="line">                wordProbList.setdefault(word,<span class="number">0.47</span>)</span><br><span class="line">        sorted(wordProbList.items(),key=<span class="keyword">lambda</span> d:d[<span class="number">1</span>],reverse=<span class="literal">True</span>)[<span class="number">0</span>:<span class="number">15</span>]</span><br><span class="line">        <span class="keyword">return</span> (wordProbList)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#计算贝叶斯概率</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">calBayes</span><span class="params">(self,wordList,spamdict,normdict)</span>:</span></span><br><span class="line">        ps_w=<span class="number">1</span></span><br><span class="line">        ps_n=<span class="number">1</span></span><br><span class="line">         </span><br><span class="line">        <span class="keyword">for</span> word,prob <span class="keyword">in</span> wordList.items() :</span><br><span class="line">            <span class="comment">#print(word+"/"+str(prob))</span></span><br><span class="line">            ps_w*=(prob)</span><br><span class="line">            ps_n*=(<span class="number">1</span>-prob)</span><br><span class="line">        <span class="comment">#为垃圾邮件的概率</span></span><br><span class="line">        p=ps_w/(ps_w+ps_n)</span><br><span class="line"><span class="comment">#         print(str(ps_w)+"////"+str(ps_n))</span></span><br><span class="line">        <span class="keyword">return</span> p        </span><br><span class="line"></span><br><span class="line">    <span class="comment">#计算预测结果正确率</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">calAccuracy</span><span class="params">(self,testResult)</span>:</span></span><br><span class="line">        rightCount=<span class="number">0</span></span><br><span class="line">        errorCount=<span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> name ,catagory <span class="keyword">in</span> testResult.items():</span><br><span class="line">            <span class="keyword">if</span> (int(name)&lt;<span class="number">1000</span> <span class="keyword">and</span> catagory==<span class="number">0</span>) <span class="keyword">or</span>(int(name)&gt;<span class="number">1000</span> <span class="keyword">and</span> catagory==<span class="number">1</span>):</span><br><span class="line">                rightCount+=<span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                errorCount+=<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> rightCount/(rightCount+errorCount)</span><br></pre></td></tr></table></figure>
 </li>
@@ -458,6 +459,11 @@ height:50vh;
     <!-- paginator  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/04/08/decision-tree/" title="决策树算法">
+                    <div class="nextTitle">决策树算法</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -583,7 +589,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#统计学习-朴素贝叶斯"><span class="toc-number">1.</span> <span class="toc-text">统计学习-朴素贝叶斯</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-number">1.1.</span> <span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#朴素贝叶斯的基本假设是条件独立性"><span class="toc-number">1.1.1.</span> <span class="toc-text">朴素贝叶斯的基本假设是条件独立性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#贝叶斯定理"><span class="toc-number">1.1.2.</span> <span class="toc-text">贝叶斯定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#朴素贝叶斯算法"><span class="toc-number">1.1.3.</span> <span class="toc-text">朴素贝叶斯算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#垃圾邮件过滤分类"><span class="toc-number">1.2.</span> <span class="toc-text">垃圾邮件过滤分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#流程图"><span class="toc-number">1.2.1.</span> <span class="toc-text">流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现代码"><span class="toc-number">1.2.2.</span> <span class="toc-text">实现代码</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#统计学习-朴素贝叶斯"><span class="toc-number">1.</span> <span class="toc-text">统计学习-朴素贝叶斯</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-基本概念"><span class="toc-number">1.1.</span> <span class="toc-text">1. 基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-朴素贝叶斯的基本假设是条件独立性"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 朴素贝叶斯的基本假设是条件独立性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-贝叶斯定理"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 贝叶斯定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-朴素贝叶斯算法"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 朴素贝叶斯算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-垃圾邮件过滤分类"><span class="toc-number">1.2.</span> <span class="toc-text">2. 垃圾邮件过滤分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-流程图"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-实现代码"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 实现代码</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -731,9 +737,20 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 13
+        Total : 14
         </div>
         <!-- search  -->
         
@@ -750,6 +767,11 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href="/2019/04/08/decision-tree/">决策树算法</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -932,7 +954,22 @@ jsonContent:
     
         <script src="/scripts/share.js" async></script>    
      
-    </body>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
 </html>
 
 
