@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.8k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.1k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -423,7 +423,7 @@ height:50vh;
 <li></li>
 </ul>
 </blockquote>
-<h2 id="1-集成学习基础知识"><a href="#1-集成学习基础知识" class="headerlink" title="1. 集成学习基础知识"></a>1. 集成学习基础知识</h2><h3 id="1-1-集成学习的种类"><a href="#1-1-集成学习的种类" class="headerlink" title="1.1 集成学习的种类"></a>1.1 集成学习的种类</h3><div class="table-container">
+<h2 id="1-集成学习基础知识"><a href="#1-集成学习基础知识" class="headerlink" title="1. 集成学习基础知识"></a><font color="bule">1. 集成学习基础知识</font></h2><h3 id="1-1-集成学习的种类"><a href="#1-1-集成学习的种类" class="headerlink" title="1.1 集成学习的种类"></a><font color="blue">1.1 集成学习的种类</font></h3><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -453,7 +453,7 @@ height:50vh;
 <p><img src="/2019/04/10/esemble-learning/bagging.png" width="85%" height="85%"></p>
 <p><strong>Boosting算法原理</strong></p>
 <p><img src="/2019/04/10/esemble-learning/boosting.png" width="85%" height="85%"></p>
-<h3 id="1-2-集成学习基本步骤"><a href="#1-2-集成学习基本步骤" class="headerlink" title="1.2 集成学习基本步骤"></a>1.2 集成学习基本步骤</h3><ul>
+<h3 id="1-2-集成学习基本步骤"><a href="#1-2-集成学习基本步骤" class="headerlink" title="1.2 集成学习基本步骤"></a><font color="blue">1.2 集成学习基本步骤</font></h3><ul>
 <li>找到误差相互独立的弱分类器</li>
 <li>训练弱分类器</li>
 <li>合并弱分类器的结果</li>
@@ -463,21 +463,21 @@ height:50vh;
 <li><strong>voting</strong>：用投票的方式，将获得最多选票的结果作为最终结果；</li>
 <li><strong>stacking</strong>：用串行的方式，把前一个弱分类器的结果输出到下一个分类器，将所有弱分类器的结果相加作为最终结果输出。</li>
 </ul>
-<h3 id="1-3-最常用的弱分类器：决策树"><a href="#1-3-最常用的弱分类器：决策树" class="headerlink" title="1.3 最常用的弱分类器：决策树"></a>1.3 最常用的弱分类器：决策树</h3><ul>
+<h3 id="1-3-最常用的弱分类器：决策树"><a href="#1-3-最常用的弱分类器：决策树" class="headerlink" title="1.3 最常用的弱分类器：决策树"></a><font color="blue">1.3 最常用的弱分类器：决策树</font></h3><ul>
 <li>决策树可以较为方便地<strong>将样本的权重整合到训练过程中</strong>，而不需要使用过采样的方式来调整权重；</li>
 <li>决策树的表达能力和泛化能力，可以通过调整树的层数来折中；</li>
 <li>数据样本的扰动对决策树的影响较大，不同子样本集合生成的<strong>决策树弱分类器随机性较大</strong>。</li>
 </ul>
-<h2 id="2-偏差与方差"><a href="#2-偏差与方差" class="headerlink" title="2. 偏差与方差"></a>2. 偏差与方差</h2><p>模型的泛化误差来源两个方面：偏差(Bias)和方差(Variance)，我们可以使用偏差和方差描述模型的性能。</p>
-<h3 id="2-1-方差"><a href="#2-1-方差" class="headerlink" title="2.1 方差"></a>2.1 方差</h3><p>在一个训练集 <script type="math/tex">D</script>上模型<script type="math/tex">f</script> 对测试样本 <script type="math/tex">\mathbf{x}</script> 的预测输出为 <script type="math/tex">f(\mathbf{x};D)</script>, 那么学习算法<script type="math/tex">f</script> 对测试样本<script type="math/tex">\mathbf{x}</script>的 <strong>期望预测</strong> 为:</p>
+<h2 id="2-偏差与方差"><a href="#2-偏差与方差" class="headerlink" title="2. 偏差与方差"></a><font color="bule">2. 偏差与方差</font></h2><p>模型的泛化误差来源两个方面：偏差(Bias)和方差(Variance)，我们可以使用偏差和方差描述模型的性能。</p>
+<h3 id="2-1-方差"><a href="#2-1-方差" class="headerlink" title="2.1 方差"></a><font color="blue">2.1 方差</font></h3><p>在一个训练集 <script type="math/tex">D</script>上模型<script type="math/tex">f</script> 对测试样本 <script type="math/tex">\mathbf{x}</script> 的预测输出为 <script type="math/tex">f(\mathbf{x};D)</script>, 那么学习算法<script type="math/tex">f</script> 对测试样本<script type="math/tex">\mathbf{x}</script>的 <strong>期望预测</strong> 为:</p>
 <script type="math/tex; mode=display">\begin{align} \overline{f}(\mathbf{x}) = E_D\left[f\left(\mathbf{x}; D\right)\right]  \tag{1}\\\ \end{align}​</script><p>上面的期望预测也就是针对<strong>不同</strong>数据集<script type="math/tex">D</script>,<script type="math/tex">f</script>对<script type="math/tex">X</script> 的预测值取其期望, 也被叫做 average predicted.</p>
 <p>使用样本数相同的不同训练集产生的方差为:</p>
 <script type="math/tex; mode=display">\begin{align} var(\mathbf{x}) = E_D\left[\left( f(\mathbf{x}; D) - \overline{f}(\mathbf{x}) \right)^2\right]  \tag{2}\\\ \end{align} ​</script><p>方差度量了<strong>同样大小的训练集的变动所导致的学习性能的变化</strong>, 即<strong>刻画了数据扰动所造成的影响</strong> .</p>
-<h3 id="2-2-偏差"><a href="#2-2-偏差" class="headerlink" title="2.2 偏差"></a>2.2 偏差</h3><p>期望预测与真实标记的误差称为<strong>偏差(bias),</strong> 为了方便起见, 我们直接取偏差的平方:</p>
+<h3 id="2-2-偏差"><a href="#2-2-偏差" class="headerlink" title="2.2 偏差"></a><font color="blue">2.2 偏差</font></h3><p>期望预测与真实标记的误差称为<strong>偏差(bias),</strong> 为了方便起见, 我们直接取偏差的平方:</p>
 <script type="math/tex; mode=display">\begin{align} bias^2(\mathbf{x}) = \left( \overline{f}(\mathbf{x}) - y \right)^2 \tag{3}\\\ \end{align}​</script><p>偏差度量了<strong>学习算法的期望预测与真实结果的偏离程序,</strong> 即 <strong>刻画了学习算法本身的拟合能力</strong>。</p>
 <p><img src="/2019/04/10/esemble-learning/biasVariance.png" width="65%" height="65%"></p>
 <p><img src="/2019/04/10/esemble-learning/complexityModel.png" width="65%" height="65%"></p>
-<h2 id="3-AdaBoost算法"><a href="#3-AdaBoost算法" class="headerlink" title="3. AdaBoost算法"></a>3. AdaBoost算法</h2><hr>
+<h2 id="3-AdaBoost算法"><a href="#3-AdaBoost算法" class="headerlink" title="3. AdaBoost算法"></a><font color="bule">3. AdaBoost算法</font></h2><hr>
 <p><strong>输入：</strong>训练数据集<script type="math/tex">T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}​</script>，其中<script type="math/tex">x_i \in X \subseteq R^n​</script>，<script type="math/tex">y_i \in Y=\left\{ -1,1\right\} ​</script>；弱学习算法</p>
 <p><strong>输出：</strong>最终分类器<script type="math/tex">G(x)</script></p>
 <p><strong>(1) 初始化训练数据的权值分布</strong></p>
@@ -496,58 +496,37 @@ i=1,2,\ldots ,N  \tag{1} \end{align}​</script><p><strong>(2) 对轮数</strong
 <p><strong>(3) 构建基本分类器的线形组合</strong> </p>
 <p>​    <script type="math/tex">\begin{align}   f\left( x\right) =\sum ^{M}_{m=1}\alpha _{m}G_{m}\left( x\right)  \tag{8} \end{align} ​</script></p>
 <p>​    得到最终的分类器</p>
-<p>​    <script type="math/tex">\begin{align}  G(x)=\mathbf{sign} ( f\left( x\right)) =\mathbf{sign}\left(\sum ^{M}_{m=1}\alpha _{m}G_{m}\left( x\right)\right)  \tag{9} \end{align} ​</script></p>
-<font color="red">总结：</font>数据权重和弱分类器的权重，交替更新。对分类正确的样本降低权重，对分类错误的样本升高或者保持权重不变。在最终模型融合的时候，根据错误率对弱分类器进行加权融合，错误率低的分类器拥有更大的"话语权"。
-
----
-
-
-
-## 4. 梯度提升决策树(Gradient Boosting Decision Tree,GBDT)
-
-
-
-### 4.1 核心思想
-
-根据当前模型损失函数的负梯度信息来训练新加入的弱分类器，然后将训练好的弱分类器以累加的形式结合到现有模型中。
-
-
-
-### 4.2 GBDT回归算法
-
----
-
-**输入：**训练数据集$$T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$$，$$x_i \in X \subseteq R^n$$，$$y_i\in Y \subseteq R^n$$;损失函数$$L(y,f(x))​$$；
-
-**输出：**强学习器$$\widehat {f}\left( x\right) ​$$
-
-(1) 初始化弱分类器，使用CART树
-
-​    $$\begin{align} f_0(x)=\arg \min_{c} \sum_{i=1}^{N} L(y_i,c)\tag{1} \end{align} ​$$
-
-(2) 对迭代轮数$$m=1,2,…,M​$$
-
-​    (2.1) 对样本$$i=1,2,…,N​$$，计算负梯度
-
-​    $$\begin{align} r_{mi} = -\bigg[\frac{\partial L(y_i, f(x_i))}{\partial f(x_i)}\bigg]_{f(x) = f_{m-1}(x)}\tag{2} \end{align} ​$$
-
-​    (2.2) 利用$$(x_i,r_{mi})\;\; (i=1,2,..N)$$拟合一个CART树，得到第$$m$$ 棵树的叶结点区域$$R_{mj}$$，$$j=1,2,…,J$$,其中$$J$$为CART树$$m$$的叶子节点的个数。
-
-​    (2.3) 对叶子区域$$j=1,2,…,J$$，CART树拟合叶子结点最佳的输出值，即使损失函数最小
-
-​    $$\begin{align} c_{mj} = \arg \min_{c}\sum\limits_{x_i \in R_{mj}} L(y_i,f_{m-1}(x_i) +c)\tag{3} \end{align} ​$$
-
-​    (2.4) 更新强学习器
-
-$$\begin{align} f_m(x)=f_{m-1}(x)+\sum_{j=1}^{J} c_{mj} I(x\in R_{mj})\tag{4} \end{align} $$
-
-(3) 得到最终的强学习器
-
-$$\begin{align} \widehat {f}\left( x\right) =f_{M}(x)=\sum_{m=1}^{M} \sum_{j=1}^{J} c_{mj}I(x\in R_{mj}) \tag{5} \end{align} $$
-
-<font color="red">总结：</font>
-
+<p>​    <script type="math/tex">\begin{align}  G(x)=\mathbf{sign} ( f\left( x\right)) =\mathbf{sign}\left(\sum ^{M}_{m=1}\alpha _{m}G_{m}\left( x\right)\right)  \tag{9} \end{align}</script></p>
+<p><strong>总结</strong>：数据权重和弱分类器的权重，交替更新。对分类正确的样本降低权重，对分类错误的样本升高或者保持权重不变。在最终模型融合的时候，根据错误率对弱分类器进行加权融合，错误率低的分类器拥有更大的话语权。</p>
 <hr>
+<h2 id="4-梯度提升决策树-GBDT"><a href="#4-梯度提升决策树-GBDT" class="headerlink" title="4. 梯度提升决策树(GBDT)"></a><font color="bule">4. 梯度提升决策树(GBDT)</font></h2><h3 id="4-1-核心思想"><a href="#4-1-核心思想" class="headerlink" title="4.1 核心思想"></a><font color="blue">4.1 核心思想</font></h3><p>根据当前模型损失函数的负梯度信息来训练新加入的弱分类器，然后将训练好的弱分类器以累加的形式结合到现有模型中。</p>
+<h3 id="4-2-GBDT回归算法"><a href="#4-2-GBDT回归算法" class="headerlink" title="4.2 GBDT回归算法"></a><font color="blue">4.2 GBDT回归算法</font></h3><hr>
+<p><strong>输入：</strong>训练数据集<script type="math/tex">T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}</script>，<script type="math/tex">x_i \in X \subseteq R^n</script>，<script type="math/tex">y_i\in Y \subseteq R^n</script>;损失函数<script type="math/tex">L(y,f(x))​</script>；</p>
+<p><strong>输出：</strong>强学习器<script type="math/tex">\widehat {f}\left( x\right) ​</script></p>
+<p>(1) 初始化弱分类器，使用CART树</p>
+<p>​    <script type="math/tex">\begin{align} f_0(x)=\arg \min_{c} \sum_{i=1}^{N} L(y_i,c)\tag{1} \end{align} ​</script></p>
+<p>(2) 对迭代轮数<script type="math/tex">m=1,2,…,M​</script></p>
+<p>​    (2.1) 对样本<script type="math/tex">i=1,2,…,N​</script>，计算负梯度</p>
+<p>​    <script type="math/tex">\begin{align} r_{mi} = -\bigg[\frac{\partial L(y_i, f(x_i))}{\partial f(x_i)}\bigg]_{f(x) = f_{m-1}(x)}\tag{2} \end{align} ​</script></p>
+<p>​    (2.2) 利用<script type="math/tex">(x_i,r_{mi})\;\; (i=1,2,..N)</script>拟合一个CART树，得到第<script type="math/tex">m</script> 棵树的叶结点区域<script type="math/tex">R_{mj}</script>，<script type="math/tex">j=1,2,…,J</script>,其中<script type="math/tex">J</script>为CART树<script type="math/tex">m</script>的叶子节点的个数。</p>
+<p>​    (2.3) 对叶子区域<script type="math/tex">j=1,2,…,J</script>，CART树拟合叶子结点最佳的输出值，即使损失函数最小</p>
+<p>​    <script type="math/tex">\begin{align} c_{mj} = \arg \min_{c}\sum\limits_{x_i \in R_{mj}} L(y_i,f_{m-1}(x_i) +c)\tag{3} \end{align} ​</script></p>
+<p>​    (2.4) 更新强学习器</p>
+<script type="math/tex; mode=display">\begin{align} f_m(x)=f_{m-1}(x)+\sum_{j=1}^{J} c_{mj} I(x\in R_{mj})\tag{4} \end{align}</script><p>(3) 得到最终的强学习器</p>
+<script type="math/tex; mode=display">\begin{align} \widehat {f}\left( x\right) =f_{M}(x)=\sum_{m=1}^{M} \sum_{j=1}^{J} c_{mj}I(x\in R_{mj}) \tag{5} \end{align}</script><p><strong>总结：</strong>根据负梯度和最小化损失函数，用CART树拟合弱学习器得到最佳的输出点<script type="math/tex">c</script>,进行<script type="math/tex">M</script>迭代之后，得到最小损失函数对应的强学习器。</p>
+<h3 id="4-3-GBDT优点和局限性"><a href="#4-3-GBDT优点和局限性" class="headerlink" title="4.3 GBDT优点和局限性"></a>4.3 GBDT优点和局限性</h3><p><strong>优点</strong></p>
+<ul>
+<li>可以灵活处理各种类型的数据，包括连续值和离散值。</li>
+<li>在相对少的调参时间情况下，预测的准确率也可以比较高。这个是相对SVM来说的。</li>
+<li>使用一些健壮的损失函数，对异常值的鲁棒性非常强。比如 Huber损失函数和Quantile损失函数。</li>
+<li>在分布稠密的数据集上，泛化能力和表达能力都很好</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>在高维稀疏数据集上，表现不如支持向量机或者神经网络</li>
+<li>在处理文本分类特征上，相对于其他模型的优势不如在处理树枝特征时明显</li>
+<li>训练过程需要串行训练，只能在决策树内部采用一些局部并行的手段提高训练速度</li>
+</ul>
 <hr>
 <font color="blue">声明</font>
 
@@ -689,7 +668,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#集成学习"><span class="toc-number">1.</span> <span class="toc-text">集成学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-集成学习基础知识"><span class="toc-number">1.1.</span> <span class="toc-text">1. 集成学习基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-集成学习的种类"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 集成学习的种类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-集成学习基本步骤"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 集成学习基本步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-最常用的弱分类器：决策树"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 最常用的弱分类器：决策树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-偏差与方差"><span class="toc-number">1.2.</span> <span class="toc-text">2. 偏差与方差</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-方差"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 方差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-偏差"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 偏差</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-AdaBoost算法"><span class="toc-number">1.3.</span> <span class="toc-text">3. AdaBoost算法</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#集成学习"><span class="toc-number">1.</span> <span class="toc-text">集成学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-集成学习基础知识"><span class="toc-number">1.1.</span> <span class="toc-text">1. 集成学习基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-集成学习的种类"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 集成学习的种类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-集成学习基本步骤"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 集成学习基本步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-最常用的弱分类器：决策树"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 最常用的弱分类器：决策树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-偏差与方差"><span class="toc-number">1.2.</span> <span class="toc-text">2. 偏差与方差</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-方差"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 方差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-偏差"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 偏差</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-AdaBoost算法"><span class="toc-number">1.3.</span> <span class="toc-text">3. AdaBoost算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-梯度提升决策树-GBDT"><span class="toc-number">1.4.</span> <span class="toc-text">4. 梯度提升决策树(GBDT)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-核心思想"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 核心思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-GBDT回归算法"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 GBDT回归算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-GBDT优点和局限性"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 GBDT优点和局限性</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -702,6 +681,8 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
     
     
     
@@ -1008,9 +989,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="转载文章"><span class="iconfont-archer">&#xe60a;</span>转载文章</span>
     
-        <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
-    
         <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
+    
+        <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
     
         <span class="sidebar-category-name" data-categories="机器学习"><span class="iconfont-archer">&#xe60a;</span>机器学习</span>
     
