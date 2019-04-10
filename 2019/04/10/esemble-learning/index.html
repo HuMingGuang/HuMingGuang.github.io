@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>MingGuangHu&#39;s Studio.</title>
+    <title>集成学习 · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -218,12 +218,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">集成学习</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">MingGuangHu's Studio.</a>
 </header>
@@ -235,24 +246,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            集成学习
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.8k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/04/10</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -353,165 +414,181 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/26/consistent-hashing/">
-            
-                <span>一致性哈希算法</span>
-        </a>
-        <div class="abstract-content">
-            深入理解一致性哈希算法
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="集成学习"><a href="#集成学习" class="headerlink" title="集成学习"></a>集成学习</h1><blockquote>
+<p><strong>主要内容</strong></p>
+<ul>
+<li>Bagging、Boosting</li>
+<li></li>
+</ul>
+</blockquote>
+<h2 id="1-集成学习基础知识"><a href="#1-集成学习基础知识" class="headerlink" title="1. 集成学习基础知识"></a>1. 集成学习基础知识</h2><h3 id="1-1-集成学习的种类"><a href="#1-1-集成学习的种类" class="headerlink" title="1.1 集成学习的种类"></a>1.1 集成学习的种类</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">种类</th>
+<th style="text-align:center">训练方式</th>
+<th style="text-align:center">核心思想</th>
+<th style="text-align:center">典型算法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Bagging</strong></td>
+<td style="text-align:center">各个弱分类器无强依赖，可以<font color="red"><strong>并行训练</strong></font></td>
+<td style="text-align:center"><strong>多个弱分类器有放回地采样</strong>，单独学习。最终做决策的时候，进行集体投票，集体决策。<strong>各个弱分类器权重相同</strong>。采用分而治之的策略，通过训练样本多次采样，并分别训练出多个不同的模型，然后做综合，<font color="red"><strong>来减少弱分类器的方差。</strong></font></td>
+<td style="text-align:center">Random Forest</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Boosting</strong></td>
+<td style="text-align:center">弱分类器<font color="red"><strong>串行训练</strong></font></td>
+<td style="text-align:center">将弱分类器层层叠加，每一层在训练的时候，对前一层弱分类器分错的<strong>样本，给予更高的权重</strong>，并在本层分类器训练后，计算分类误差，更新本层<strong>分类器的权重</strong>。测试时，根据各层分类器的结果加权得到最终的结果。通过<strong>聚焦弱分类器的分错的样本</strong>，<font color="red"><strong>减小弱分类器的偏差</strong>。</font></td>
+<td style="text-align:center">Adaboosting、GBDT</td>
+</tr>
+</tbody>
+</table>
 </div>
-            
-        </div>
+<p><strong>Bagging算法原理</strong></p>
+<p><img src="/2019/04/10/esemble-learning/bagging.png" width="85%" height="85%"></p>
+<p><strong>Boosting算法原理</strong></p>
+<p><img src="/2019/04/10/esemble-learning/boosting.png" width="85%" height="85%"></p>
+<h3 id="1-2-集成学习基本步骤"><a href="#1-2-集成学习基本步骤" class="headerlink" title="1.2 集成学习基本步骤"></a>1.2 集成学习基本步骤</h3><ul>
+<li>找到误差相互独立的弱分类器</li>
+<li>训练弱分类器</li>
+<li>合并弱分类器的结果</li>
+</ul>
+<p><strong>合并分类器的方法有两种：</strong></p>
+<ul>
+<li><strong>voting</strong>：用投票的方式，将获得最多选票的结果作为最终结果；</li>
+<li><strong>stacking</strong>：用串行的方式，把前一个弱分类器的结果输出到下一个分类器，将所有弱分类器的结果相加作为最终结果输出。</li>
+</ul>
+<h3 id="1-3-最常用的弱分类器：决策树"><a href="#1-3-最常用的弱分类器：决策树" class="headerlink" title="1.3 最常用的弱分类器：决策树"></a>1.3 最常用的弱分类器：决策树</h3><ul>
+<li>决策树可以较为方便地<strong>将样本的权重整合到训练过程中</strong>，而不需要使用过采样的方式来调整权重；</li>
+<li>决策树的表达能力和泛化能力，可以通过调整树的层数来折中；</li>
+<li>数据样本的扰动对决策树的影响较大，不同子样本集合生成的<strong>决策树弱分类器随机性较大</strong>。</li>
+</ul>
+<h2 id="2-偏差与方差"><a href="#2-偏差与方差" class="headerlink" title="2. 偏差与方差"></a>2. 偏差与方差</h2><p>模型的泛化误差来源两个方面：偏差(Bias)和方差(Variance)，我们可以使用偏差和方差描述模型的性能。</p>
+<h3 id="2-1-方差"><a href="#2-1-方差" class="headerlink" title="2.1 方差"></a>2.1 方差</h3><p>在一个训练集 <script type="math/tex">D</script>上模型<script type="math/tex">f</script> 对测试样本 <script type="math/tex">\mathbf{x}</script> 的预测输出为 <script type="math/tex">f(\mathbf{x};D)</script>, 那么学习算法<script type="math/tex">f</script> 对测试样本<script type="math/tex">\mathbf{x}</script>的 <strong>期望预测</strong> 为:</p>
+<script type="math/tex; mode=display">\begin{align} \overline{f}(\mathbf{x}) = E_D\left[f\left(\mathbf{x}; D\right)\right]  \tag{1}\\\ \end{align}​</script><p>上面的期望预测也就是针对<strong>不同</strong>数据集<script type="math/tex">D</script>,<script type="math/tex">f</script>对<script type="math/tex">X</script> 的预测值取其期望, 也被叫做 average predicted.</p>
+<p>使用样本数相同的不同训练集产生的方差为:</p>
+<script type="math/tex; mode=display">\begin{align} var(\mathbf{x}) = E_D\left[\left( f(\mathbf{x}; D) - \overline{f}(\mathbf{x}) \right)^2\right]  \tag{2}\\\ \end{align} ​</script><p>方差度量了<strong>同样大小的训练集的变动所导致的学习性能的变化</strong>, 即<strong>刻画了数据扰动所造成的影响</strong> .</p>
+<h3 id="2-2-偏差"><a href="#2-2-偏差" class="headerlink" title="2.2 偏差"></a>2.2 偏差</h3><p>期望预测与真实标记的误差称为<strong>偏差(bias),</strong> 为了方便起见, 我们直接取偏差的平方:</p>
+<script type="math/tex; mode=display">\begin{align} bias^2(\mathbf{x}) = \left( \overline{f}(\mathbf{x}) - y \right)^2 \tag{3}\\\ \end{align}​</script><p>偏差度量了<strong>学习算法的期望预测与真实结果的偏离程序,</strong> 即 <strong>刻画了学习算法本身的拟合能力</strong>。</p>
+<p><img src="/2019/04/10/esemble-learning/biasVariance.png" width="65%" height="65%"></p>
+<p><img src="/2019/04/10/esemble-learning/complexityModel.png" width="65%" height="65%"></p>
+<h2 id="3-AdaBoost算法"><a href="#3-AdaBoost算法" class="headerlink" title="3. AdaBoost算法"></a>3. AdaBoost算法</h2><hr>
+<p><strong>输入：</strong>训练数据集<script type="math/tex">T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}​</script>，其中<script type="math/tex">x_i \in X \subseteq R^n​</script>，<script type="math/tex">y_i \in Y=\left\{ -1,1\right\} ​</script>；弱学习算法</p>
+<p><strong>输出：</strong>最终分类器<script type="math/tex">G(x)</script></p>
+<p><strong>(1) 初始化训练数据的权值分布</strong></p>
+<script type="math/tex; mode=display">\begin{align} D_{1}=\left( w_{11},\ldots ,w_{1i},\ldots ,w_{1N}\right), w_{1i}=\dfrac {1}{N},
+i=1,2,\ldots ,N  \tag{1} \end{align}​</script><p><strong>(2) 对轮数</strong><script type="math/tex">m=1,2,…,M</script></p>
+<p>​    (2.1) 使用具有权值分布<script type="math/tex">D_m</script>的训练数据集学习，得到基本分类器</p>
+<p>​    <script type="math/tex">\begin{align}  G_{m}\left( x\right) =x\rightarrow \left\{ -1,+1\right\}  \tag{2} \end{align} ​</script></p>
+<p>​    (2.2) 计算<script type="math/tex">G _m(x)</script>在训练数据集上的分类误差率</p>
+<p>​    <script type="math/tex">\begin{align}   e_{m}=P \left( G_{m}\left( x_{i}\right) \neq  y_{i} \right) =\sum ^{N}_{i=1}w_{mi} I\left( G_{m}\left( x_{i}\right) \neq  y_{i} \right) \tag{3} \end{align} ​</script></p>
+<p>​    (2.3)计算<script type="math/tex">G_m(x)​</script>的系数</p>
+<p>​    <script type="math/tex">\begin{align}   \alpha _{m}=\dfrac {1}{2}\log \dfrac {1-e_{m}}{e_m} \tag{4} \end{align} ​</script></p>
+<p>​    (2.4)更新训练数据集的权值分布</p>
+<script type="math/tex; mode=display">\begin{align} D_{m+1}=\left( w_{m+1,1},\ldots ,w_{m+1,i},\ldots ,w_{m+1,N}\right) \tag{5} \end{align}</script><script type="math/tex; mode=display">\begin{align}   w_{m+1,i}=\dfrac {w_{mi}}{Z_{m}}\exp \left( -\alpha _{m}y_{i}c_{im}\left( x_{i}\right) \right)  \tag{6} \end{align}</script><p>​        使得<script type="math/tex">D_{m+1}</script>成为一个概率分布。</p>
+<p>​        这里，<script type="math/tex">Z_m</script>是规范化因子</p>
+<p>​            <script type="math/tex">\begin{align}   Z_m = \sum_{i=1}^{N} w_{mi} \exp \left( -\alpha _{m}y_{i}c_{im}\left( x_{i}\right) \right) \tag{7} \end{align} ​</script></p>
+<p><strong>(3) 构建基本分类器的线形组合</strong> </p>
+<p>​    <script type="math/tex">\begin{align}   f\left( x\right) =\sum ^{M}_{m=1}\alpha _{m}G_{m}\left( x\right)  \tag{8} \end{align} ​</script></p>
+<p>​    得到最终的分类器</p>
+<p>​    <script type="math/tex">\begin{align}  G(x)=\mathbf{sign} ( f\left( x\right)) =\mathbf{sign}\left(\sum ^{M}_{m=1}\alpha _{m}G_{m}\left( x\right)\right)  \tag{9} \end{align} ​</script></p>
+<font color="red">总结：</font>数据权重和弱分类器的权重，交替更新。对分类正确的样本降低权重，对分类错误的样本升高或者保持权重不变。在最终模型融合的时候，根据错误率对弱分类器进行加权融合，错误率低的分类器拥有更大的"话语权"。
+
+---
+
+
+
+## 4. 梯度提升决策树(Gradient Boosting Decision Tree,GBDT)
+
+
+
+### 4.1 核心思想
+
+根据当前模型损失函数的负梯度信息来训练新加入的弱分类器，然后将训练好的弱分类器以累加的形式结合到现有模型中。
+
+
+
+### 4.2 GBDT回归算法
+
+---
+
+**输入：**训练数据集$$T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$$，$$x_i \in X \subseteq R^n$$，$$y_i\in Y \subseteq R^n$$;损失函数$$L(y,f(x))​$$；
+
+**输出：**强学习器$$\widehat {f}\left( x\right) ​$$
+
+(1) 初始化弱分类器，使用CART树
+
+​    $$\begin{align} f_0(x)=\arg \min_{c} \sum_{i=1}^{N} L(y_i,c)\tag{1} \end{align} ​$$
+
+(2) 对迭代轮数$$m=1,2,…,M​$$
+
+​    (2.1) 对样本$$i=1,2,…,N​$$，计算负梯度
+
+​    $$\begin{align} r_{mi} = -\bigg[\frac{\partial L(y_i, f(x_i))}{\partial f(x_i)}\bigg]_{f(x) = f_{m-1}(x)}\tag{2} \end{align} ​$$
+
+​    (2.2) 利用$$(x_i,r_{mi})\;\; (i=1,2,..N)$$拟合一个CART树，得到第$$m$$ 棵树的叶结点区域$$R_{mj}$$，$$j=1,2,…,J$$,其中$$J$$为CART树$$m$$的叶子节点的个数。
+
+​    (2.3) 对叶子区域$$j=1,2,…,J$$，CART树拟合叶子结点最佳的输出值，即使损失函数最小
+
+​    $$\begin{align} c_{mj} = \arg \min_{c}\sum\limits_{x_i \in R_{mj}} L(y_i,f_{m-1}(x_i) +c)\tag{3} \end{align} ​$$
+
+​    (2.4) 更新强学习器
+
+$$\begin{align} f_m(x)=f_{m-1}(x)+\sum_{j=1}^{J} c_{mj} I(x\in R_{mj})\tag{4} \end{align} $$
+
+(3) 得到最终的强学习器
+
+$$\begin{align} \widehat {f}\left( x\right) =f_{M}(x)=\sum_{m=1}^{M} \sum_{j=1}^{J} c_{mj}I(x\in R_{mj}) \tag{5} \end{align} $$
+
+<font color="red">总结：</font>
+
+<hr>
+<hr>
+<font color="blue">声明</font>
+
+<ul>
+<li><strong>参考资料1</strong>：方差与偏差 <a href="http://liuchengxu.org/blog-cn/posts/bias-variance/" target="_blank" rel="noopener">http://liuchengxu.org/blog-cn/posts/bias-variance/</a></li>
+<li><strong>参考资料2</strong>：李航老师的《统计学习方法》</li>
+<li><strong>参考资料3</strong>：<a href="http://www.cnblogs.com/pinard/p/6131423.html" target="_blank" rel="noopener">http://www.cnblogs.com/pinard/p/6131423.html</a></li>
+<li>本博文为原创总结，如有转载，请注名出处！</li>
+</ul>
+
     </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/26/recommend-system-1/">
-            
-                <span>推荐系统（二）</span>
-        </a>
-        <div class="abstract-content">
-            理解流式处理概念，熟悉流式处理过程。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/25/recommend-system/">
-            
-                <span>推荐系统（一）</span>
-        </a>
-        <div class="abstract-content">
-            学习推荐系统，进行机器学习实战。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/23/Meachine-Learning-Lagrange-duality/">
-            
-                <span>详解拉格朗日及其对偶问题</span>
-        </a>
-        <div class="abstract-content">
-            介绍三种优化问题:无约束的优化、带等式约束的优化、带不等式约束的优化；解释拉格朗日对偶性
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/22/Coding-1/">
-            
-                <span>C++基础知识梳理</span>
-        </a>
-        <div class="abstract-content">
-            对已经学过C++的同学，可以帮助快速复习梳理
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="C++">C++</a>
-    
-</div>
-            
-        </div>
-    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/04/08/decision-tree/" title="决策树算法">
+                    <div class="prevTitle">决策树算法</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-    </nav>
     
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -596,6 +673,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#集成学习"><span class="toc-number">1.</span> <span class="toc-text">集成学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-集成学习基础知识"><span class="toc-number">1.1.</span> <span class="toc-text">1. 集成学习基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-集成学习的种类"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 集成学习的种类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-集成学习基本步骤"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 集成学习基本步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-最常用的弱分类器：决策树"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 最常用的弱分类器：决策树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-偏差与方差"><span class="toc-number">1.2.</span> <span class="toc-text">2. 偏差与方差</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-方差"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 方差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-偏差"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 偏差</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-AdaBoost算法"><span class="toc-number">1.3.</span> <span class="toc-text">3. AdaBoost算法</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -976,6 +1071,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
