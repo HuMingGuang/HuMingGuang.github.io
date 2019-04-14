@@ -483,11 +483,11 @@ height:50vh;
 <ul>
 <li><p><strong>损失函数：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}</script></p>
 </li>
-<li><p><strong>目标：</strong> <script type="math/tex">\min_{\theta} J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}</script></p>
+<li><p><strong>目标：</strong> <script type="math/tex">\min_{\theta} J(\theta)=min_{\theta} \dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}</script></p>
 </li>
 <li><p><strong>求导过程：</strong><script type="math/tex">\dfrac {\partial J\left( \theta \right) }{\partial \theta_j }\\\ =\dfrac{\partial \left(\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}\right)}{\partial \theta_j}\\\ =\dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j</script></p>
 </li>
-<li><p><strong>更新过程：</strong><script type="math/tex">\theta_j \leftarrow \theta_j -\alpha\dfrac{ \partial J}{\partial \theta}\\\ = \theta_j -\alpha \left( \dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j \right)</script> </p>
+<li><p><strong>更新过程：</strong><script type="math/tex">\theta_j \leftarrow \theta_j -\alpha\dfrac{ \partial J}{\partial \theta_j}\\\ = \theta_j -\alpha \left( \dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j \right)​</script> </p>
 <p>,其中<script type="math/tex">\alpha</script>为学习速率</p>
 </li>
 </ul>
@@ -500,16 +500,16 @@ height:50vh;
 <ul>
 <li><p><strong>损失函数：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2} \lambda \sum_{j=1}^{m} \theta_j^{2}</script></p>
 </li>
-<li><p><strong>目标：</strong> <script type="math/tex">\min_{\theta} J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2}  \lambda \sum_{j=1}^{m} \theta_j^{2}</script></p>
+<li><p><strong>目标：</strong> <script type="math/tex">\min_{\theta} J(\theta)= min_{\theta} \dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2}  \lambda \sum_{j=1}^{m} \theta_j^{2}</script></p>
 </li>
-<li><p><strong>求导过程：</strong><script type="math/tex">\dfrac {\partial J\left( \theta \right) }{\partial \theta_j }\\\ =\dfrac{\partial \left(\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2} \lambda \sum_{j=1}^{m} \theta_j^{2}\right)}{\partial \theta_j}\\\ =\dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)}_)-y^{(i)}\right) \cdot x^{(i)}_j+\dfrac{1}{N} \lambda \theta_j</script></p>
+<li><p><strong>求导过程：</strong><script type="math/tex">\dfrac {\partial J\left( \theta \right) }{\partial \theta_j }\\\ =\dfrac{\partial \left(\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2} \lambda \sum_{j=1}^{m} \theta_j^{2}\right)}{\partial \theta_j}\\\ =\dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)}_)-y^{(i)}\right) \cdot x^{(i)}_j+\dfrac{1}{N} \lambda \theta_j​</script></p>
 </li>
-<li><p><strong>更新过程：</strong><script type="math/tex">\theta_j \leftarrow \theta_j -\alpha\dfrac{ \partial J}{\partial \theta}\\\ =\theta_j -\alpha \left(\dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j+\dfrac{1}{N} \lambda \theta_j \right) \\\ = \left(1-\dfrac{\alpha \lambda}{N}\right) \theta_j -\alpha \left(\dfrac{1}{N} \sum_{i=1}^{N}  \left(h_{\theta}(x^{(i)})-y^{(i)}\right) x_{j}^{(i)}\right)</script> </p>
+<li><p><strong>更新过程：</strong><script type="math/tex">\theta_j \leftarrow \theta_j -\alpha\dfrac{ \partial J}{\partial \theta_j}\\\ =\theta_j -\alpha \left(\dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j+\dfrac{1}{N} \lambda \theta_j \right) \\\ = \left(1-\dfrac{\alpha \lambda}{N}\right) \theta_j -\alpha \left(\dfrac{1}{N} \sum_{i=1}^{N}  \left(h_{\theta}(x^{(i)})-y^{(i)}\right) x_{j}^{(i)}\right)</script> </p>
 </li>
 </ul>
 <font color="red">正规方程法</font>
 
-<p>加入正则化后，使<script type="math/tex">\left(X^{T} X + \lambda I\right)^{-1}</script>有更大的可能可以求逆</p>
+<p>加入正则化后，使<script type="math/tex">\left(X^{T} X + \lambda I\right)^{-1}​</script>有更大的可能可以求逆</p>
 <script type="math/tex; mode=display">\theta = \left(X^{T} X + \lambda I\right)^{-1} X^{T} Y​</script><p>其中<script type="math/tex">I=\begin{pmatrix}
 0 & 0 \\
 0 & I_1
@@ -531,6 +531,11 @@ height:50vh;
     <!-- paginator  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/04/14/Meachine-Learning-Lagrange-duality/" title="详解拉格朗日及其对偶问题">
+                    <div class="nextTitle">详解拉格朗日及其对偶问题</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -869,6 +874,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 18
@@ -888,6 +895,11 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2019/04/14/Meachine-Learning-Lagrange-duality/">详解拉格朗日及其对偶问题</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -967,11 +979,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">03/25</span><a class="archive-post-title" href="/2019/03/25/recommend-system/">推荐系统（一）</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/23</span><a class="archive-post-title" href="/2019/03/23/Meachine-Learning-Lagrange-duality/">详解拉格朗日及其对偶问题</a>
         </li>
     
     
