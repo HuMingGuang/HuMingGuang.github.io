@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>推荐系统（二） · MingGuangHu&#39;s Studio.</title>
+    <title>遗传算法 · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -232,7 +232,7 @@
                 <a href="/">MingGuangHu&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">推荐系统（二）</a>
+                <a href="#" class="post-name">遗传算法</a>
             </div>
     </div>
     
@@ -262,7 +262,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            推荐系统（二）
+            遗传算法
             <!-- 404 -->
             
         </h1>
@@ -281,20 +281,18 @@ height:50vh;
                 
                     <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">699</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1k</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/03/26</span>
+                    <span class="post-intro-time">2019/04/16</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -418,84 +416,25 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="推荐引擎-基本的实时处理"><a href="#推荐引擎-基本的实时处理" class="headerlink" title="推荐引擎-基本的实时处理"></a>推荐引擎-基本的实时处理</h1><hr>
-<h2 id="流式处理"><a href="#流式处理" class="headerlink" title="流式处理"></a><font color="blue">流式处理</font></h2><ul>
-<li><p><strong>概念：</strong>应对实时/近实时的数据，作出反应</p>
-</li>
-<li><p><strong>个性化推荐解决方案</strong></p>
-<p><img src="/2019/03/26/recommend-system-1/personal_rec.png" alt="personal_rec"></p>
-<p><strong>三次处理：从原始日志——处理日志——最终结果</strong></p>
-</li>
-<li><p><strong>流式处理系统流程</strong></p>
-<ul>
-<li><strong>设计场景和梳理需求</strong><ul>
-<li>例如说视频网站场景</li>
-<li>例如说在线阅读小说的场景</li>
-</ul>
-</li>
-<li><strong>制定流式处理规则</strong><ul>
-<li>点击流式处理规则</li>
-<li>收藏流式处理规则</li>
-</ul>
-</li>
-<li><strong>人工干预推荐结果</strong><ul>
-<li>编辑推荐</li>
-</ul>
-</li>
-</ul>
-<p><font color="red"><strong>注：</strong></font><font color="orange">相关推荐</font>是指根据物品推荐物品；<font color="orange">个性化推荐</font>是根据人的行为推荐物品。<font color="orange">在线</font>：个人短期兴趣；<font color="orange">离线</font>：长期兴趣。</p>
-</li>
-<li><p><strong>流式处理的优势</strong></p>
-<ul>
-<li>低响应时延</li>
-<li>动态效果丰富：具有实时的反应</li>
-<li>用户体验效果好</li>
-<li>转化率高</li>
-</ul>
-</li>
-<li><p><strong>流式处理的劣势</strong></p>
-<ul>
-<li>资源消耗严重 </li>
-<li>效果准确度有影响：从长期效果来看</li>
-<li>效果起伏大、分析原因难 </li>
-</ul>
-</li>
-</ul>
-<h2 id="实现流式处理"><a href="#实现流式处理" class="headerlink" title="实现流式处理"></a><font color="blue">实现流式处理</font></h2><ul>
-<li><strong>实现编码流程</strong><ul>
-<li>内存更新方式 </li>
-<li>一致性哈希算法：<a href="https://humingguang.github.io/2019/03/26/consistent-hashing/" target="_blank" rel="noopener">https://humingguang.github.io/2019/03/26/consistent-hashing/</a></li>
-<li>更新缓存机制 </li>
-</ul>
-</li>
-<li><strong>内存更新方式</strong><ul>
-<li><code>map&lt;key1: value1, key2: value2, key3: value3&gt;</code></li>
-<li><code>list&lt;item1,item2,item3,...&gt;</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="流式处理的应用"><a href="#流式处理的应用" class="headerlink" title="流式处理的应用"></a><font color="blue">流式处理的应用</font></h2><ul>
-<li>重定向</li>
-<li>类别关联</li>
-<li>同类目推荐</li>
-<li>人工干预推荐结果</li>
-</ul>
-<h2 id="重定向代码实现"><a href="#重定向代码实现" class="headerlink" title="重定向代码实现"></a><font color="blue">重定向代码实现</font></h2><ul>
-<li><p><strong>步骤：</strong>客户端发送log日志，服务器端进行处理得到comment日志的视频ID</p>
-</li>
-<li><p><strong>客户端实现</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">ss=socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line"><span class="comment">#连接服务器</span></span><br><span class="line">ss.connect((<span class="string">'127.0.0.1'</span>,<span class="number">8080</span>))</span><br><span class="line"><span class="comment">#发送评论log日志信息</span></span><br><span class="line">str=<span class="string">"9fche3&amp;three&amp;Macintosh Intel Mac OS Chrome&amp;192.168.110.79&amp;0461897&amp;晓说&amp;0&amp;7"</span>.encode()</span><br><span class="line">ss.sendall(str)</span><br><span class="line">os.system(<span class="string">'sleep 1'</span>)</span><br><span class="line"><span class="comment">#发送结束</span></span><br><span class="line">ss.send(<span class="string">'EOF'</span>.encode())</span><br><span class="line"><span class="comment">#得到服务器数据</span></span><br><span class="line">data=ss.recv(<span class="number">1024</span>).decode()</span><br><span class="line">print(<span class="string">"server data:%s"</span>%data)</span><br><span class="line"><span class="comment">#关闭客户端连接</span></span><br><span class="line">ss.close()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>服务器端实现</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="comment">#对处理后的接受字符，进行编码，处理请求</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log_process</span><span class="params">(request)</span>:</span></span><br><span class="line">    request=request.strip()</span><br><span class="line">    ls=request.split(<span class="string">"&amp;"</span>)</span><br><span class="line">    <span class="comment">#评论日志</span></span><br><span class="line">    comment_log=&#123;&#125;<span class="comment">#key:uid  value:video_id</span></span><br><span class="line">    <span class="keyword">if</span> ls[<span class="number">1</span>] <span class="keyword">not</span> <span class="keyword">in</span> comment_log.keys():</span><br><span class="line">        comment_log[ls[<span class="number">1</span>]]=[]</span><br><span class="line">    comment_log[ls[<span class="number">1</span>]].append(ls[<span class="number">4</span>])</span><br><span class="line">    <span class="keyword">for</span> k,v <span class="keyword">in</span> comment_log.items():</span><br><span class="line">        print(k+<span class="string">"\t"</span>+str(len(v))+<span class="string">"\t"</span>+<span class="string">"&amp;&amp;"</span>.join(v))</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Yes I got it"</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    HOST,PORT=<span class="string">''</span>,<span class="number">8080</span></span><br><span class="line">    <span class="comment">#面向网络的套接字，TCP套接字：可靠、开销大</span></span><br><span class="line">    listen_socket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line">    listen_socket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,<span class="number">1</span>)</span><br><span class="line">    <span class="comment">#绑定端口号</span></span><br><span class="line">    listen_socket.bind((HOST,PORT))</span><br><span class="line">    listen_socket.listen(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        client_connection,client_address=listen_socket.accept()</span><br><span class="line">        <span class="comment">#每次最多接受1024个字节,把字节转化为字符</span></span><br><span class="line">        request=client_connection.recv(<span class="number">1024</span>).decode()</span><br><span class="line">        <span class="comment">#发送数据</span></span><br><span class="line">        http_response=(log_process(request)).encode()</span><br><span class="line">        client_connection.sendall(http_response)</span><br><span class="line">        client_connection.close()</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+        <h1 id="遗传算法"><a href="#遗传算法" class="headerlink" title="遗传算法"></a>遗传算法</h1><h2 id="1-维基百科介绍"><a href="#1-维基百科介绍" class="headerlink" title="1. 维基百科介绍"></a>1. 维基百科介绍</h2><p><strong>遗传算法</strong>（英语：genetic algorithm (GA) ）是<a href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%95%B0%E5%AD%A6" target="_blank" rel="noopener">计算数学</a>中用于解决<a href="https://zh.wikipedia.org/wiki/%E6%9C%80%E4%BD%B3%E5%8C%96" target="_blank" rel="noopener">最优化</a>的搜索<a href="https://zh.wikipedia.org/wiki/%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">算法</a>，是<a href="https://zh.wikipedia.org/wiki/%E8%BF%9B%E5%8C%96%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">进化算法</a>的一种。进化算法最初是借鉴了<a href="https://zh.wikipedia.org/wiki/%E8%BF%9B%E5%8C%96%E7%94%9F%E7%89%A9%E5%AD%A6" target="_blank" rel="noopener">进化生物学</a>中的一些现象而发展起来的，这些现象包括<a href="https://zh.wikipedia.org/wiki/%E9%81%97%E4%BC%A0" target="_blank" rel="noopener">遗传</a>、<a href="https://zh.wikipedia.org/wiki/%E7%AA%81%E5%8F%98" target="_blank" rel="noopener">突变</a>、<a href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%84%B6%E9%80%89%E6%8B%A9" target="_blank" rel="noopener">自然选择</a>以及<a href="https://zh.wikipedia.org/wiki/%E6%9D%82%E4%BA%A4" target="_blank" rel="noopener">杂交</a>等。</p>
+<p>遗传算法通常实现方式为一种<a href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%A8%A1%E6%8B%9F" target="_blank" rel="noopener">计算机模拟</a>。对于一个最优化问题，一定数量的<a href="https://zh.wikipedia.org/w/index.php?title=%E5%80%99%E9%80%89%E8%A7%A3&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener">候选解</a>（称为个体）可抽象表示为<a href="https://zh.wikipedia.org/wiki/%E6%9F%93%E8%89%B2%E9%AB%94_(%E9%81%BA%E5%82%B3%E6%BC%94%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">染色体</a>)，使<a href="https://zh.wikipedia.org/wiki/%E7%A7%8D%E7%BE%A4" target="_blank" rel="noopener">种群</a>向更好的解进化。传统上，解用<a href="https://zh.wikipedia.org/wiki/%E4%BA%8C%E8%BF%9B%E5%88%B6" target="_blank" rel="noopener">二进制</a>表示（即0和1的串），但也可以用其他表示方法。进化从完全<a href="https://zh.wikipedia.org/wiki/%E9%9A%8F%E6%9C%BA" target="_blank" rel="noopener">随机</a>个体的种群开始，之后一代一代发生。在每一代中评价整个种群的<a href="https://zh.wikipedia.org/wiki/%E9%80%82%E5%BA%94%E5%BA%A6" target="_blank" rel="noopener">适应度</a>，从当前种群中随机地选择多个个体（基于它们的适应度），通过自然选择和突变产生新的生命种群，该种群在算法的下一次迭代中成为当前种群。</p>
+<p><strong>其主要特点是</strong>直接<strong>对结构对象进行操作</strong>,不存在求导和函数连续性的限定;具有内在的隐并行性和更好的全局寻优能力;采用概率化的寻优方法,不需要确定的规则就能自动获取和指导优化的搜索空间,自适应地调整搜索方向。</p>
+<h2 id="2-算法过程"><a href="#2-算法过程" class="headerlink" title="2. 算法过程"></a>2. 算法过程</h2><p><img src="/2019/04/16/genetic-algorithm/geneticAlgorithm.png" width="70%" height="70%"></p>
+<p>a. 随机产生种群(Population)；</p>
+<p>b. 根据策略判断个体的适应度(fitness),是否符合优化准则,若符合,输出最佳个体及其最优解,结束。否则,进行下一步；</p>
+<p>c. 依据适应度选择父母,适应度高的个体被选中的概率高,适应度低的个体被淘汰；</p>
+<p>d. 用父母的染色体按照一定的方法进行交叉,生成子代(<strong>Recombination：重组</strong>)；</p>
+<p>f.  对子代染色体进行变异(<strong>Mutation：变异</strong>)；</p>
+<p>g. 由交叉和变异产生新一代种群,返回步骤b,直到最优解产生。</p>
+<h2 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3. 代码实现"></a>3. 代码实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Visualize Genetic Algorithm to find a maximum point in a function.</span></span><br><span class="line"><span class="string">Visit my tutorial website for more: https://morvanzhou.github.io/tutorials/</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">DNA_SIZE = <span class="number">10</span>            <span class="comment"># DNA length</span></span><br><span class="line">POP_SIZE = <span class="number">100</span>           <span class="comment"># population size</span></span><br><span class="line">CROSS_RATE = <span class="number">0.8</span>         <span class="comment"># mating probability (DNA crossover)</span></span><br><span class="line">MUTATION_RATE = <span class="number">0.003</span>    <span class="comment"># mutation probability</span></span><br><span class="line">N_GENERATIONS = <span class="number">200</span></span><br><span class="line">X_BOUND = [<span class="number">0</span>, <span class="number">5</span>]         <span class="comment"># x upper and lower bounds</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">F</span><span class="params">(x)</span>:</span> <span class="keyword">return</span> np.sin(<span class="number">10</span>*x)*x + np.cos(<span class="number">2</span>*x)*x     <span class="comment"># to find the maximum of this function</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># find non-zero fitness for selection</span></span><br><span class="line"><span class="comment"># 调整使预测值都大于0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_fitness</span><span class="params">(pred)</span>:</span> <span class="keyword">return</span> pred + <span class="number">1e-3</span> - np.min(pred)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># convert binary DNA to decimal and normalize it to a range(0, 5)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">translateDNA</span><span class="params">(pop)</span>:</span> </span><br><span class="line">        <span class="keyword">return</span> pop.dot(<span class="number">2</span> ** np.arange(DNA_SIZE)[::<span class="number">-1</span>]) / float(<span class="number">2</span>**DNA_SIZE<span class="number">-1</span>) * X_BOUND[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">select</span><span class="params">(pop, fitness)</span>:</span>    <span class="comment"># nature selection wrt pop's fitness</span></span><br><span class="line">    <span class="comment"># 按照概率p进行重复抽样，概率大有更大的可能被抽到,返回样本编号</span></span><br><span class="line">    idx = np.random.choice(np.arange(POP_SIZE), size=POP_SIZE, replace=<span class="literal">True</span>,</span><br><span class="line">                           p=fitness/fitness.sum())</span><br><span class="line">    <span class="keyword">return</span> pop[idx]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">crossover</span><span class="params">(parent, pop)</span>:</span>     <span class="comment"># mating process (genes crossover)</span></span><br><span class="line">    <span class="keyword">if</span> np.random.rand() &lt; CROSS_RATE:</span><br><span class="line">        <span class="comment"># 在种群中选择某个个体</span></span><br><span class="line">        i_ = np.random.randint(<span class="number">0</span>, POP_SIZE, size=<span class="number">1</span>)      <span class="comment"># select another individual from pop</span></span><br><span class="line">        <span class="comment"># 选择个体中的要摘取的位置</span></span><br><span class="line">        cross_points = np.random.randint(<span class="number">0</span>, <span class="number">2</span>, size=DNA_SIZE).astype(np.bool)   <span class="comment"># choose crossover points</span></span><br><span class="line">        <span class="comment"># 得到个体中摘取元素</span></span><br><span class="line">        <span class="comment"># [[1 0 0 0 1 1 0 1 0 1]]</span></span><br><span class="line">        <span class="comment"># [False False False  True  True False  True  True  True  True]</span></span><br><span class="line">        <span class="comment">#[0 1 0 1 0 1</span></span><br><span class="line">        parent[cross_points] = pop[i_, cross_points]                 <span class="comment"># mating and produce one child</span></span><br><span class="line">    <span class="keyword">return</span> parent</span><br><span class="line"></span><br><span class="line"><span class="comment">#产生变异</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mutate</span><span class="params">(child)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> point <span class="keyword">in</span> range(DNA_SIZE):</span><br><span class="line">        <span class="keyword">if</span> np.random.rand() &lt; MUTATION_RATE:</span><br><span class="line">            child[point] = <span class="number">1</span> <span class="keyword">if</span> child[point] == <span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> child</span><br><span class="line"></span><br><span class="line"><span class="comment">#产生种群</span></span><br><span class="line">pop = np.random.randint(<span class="number">2</span>, size=(POP_SIZE, DNA_SIZE))   <span class="comment"># initialize the pop DNA</span></span><br><span class="line"></span><br><span class="line">plt.ion()       <span class="comment"># something about plotting</span></span><br><span class="line">x = np.linspace(*X_BOUND, <span class="number">200</span>)</span><br><span class="line">plt.plot(x, F(x))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(N_GENERATIONS):</span><br><span class="line">    <span class="comment">#解码</span></span><br><span class="line">    F_values = F(translateDNA(pop))    <span class="comment"># compute function value by extracting DNA</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># something about plotting</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">'sca'</span> <span class="keyword">in</span> globals(): sca.remove()</span><br><span class="line">    sca = plt.scatter(translateDNA(pop), F_values, s=<span class="number">200</span>, lw=<span class="number">0</span>, c=<span class="string">'red'</span>, alpha=<span class="number">0.5</span>); plt.pause(<span class="number">0.05</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># GA part (evolution)</span></span><br><span class="line">    <span class="comment">#计算适应度</span></span><br><span class="line">    fitness = get_fitness(F_values)</span><br><span class="line">    print(<span class="string">"Most fitted DNA: "</span>, pop[np.argmax(fitness), :])</span><br><span class="line">    <span class="comment"># 筛选</span></span><br><span class="line">    pop = select(pop, fitness)</span><br><span class="line">    pop_copy = pop.copy()</span><br><span class="line">    <span class="keyword">for</span> parent <span class="keyword">in</span> pop:</span><br><span class="line">        <span class="comment"># 重组</span></span><br><span class="line">        child = crossover(parent, pop_copy)</span><br><span class="line">        <span class="comment"># 变异</span></span><br><span class="line">        child = mutate(child)</span><br><span class="line">        parent[:] = child       <span class="comment"># parent is replaced by its child</span></span><br><span class="line"></span><br><span class="line">plt.ioff(); plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/04/16/genetic-algorithm/picturePlot.png" width="70%" height="70%"></p>
 <hr>
 <font color="blue">声明</font>
 
 <ul>
-<li><strong>参考资料1</strong>：<a href="https://cloud.tencent.com/developer/article/1068749" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1068749</a></li>
-<li><strong>参考资料2</strong>：崔立明老师——推荐系统视频课程</li>
+<li><strong>参考资料1</strong>：维基百科</li>
+<li><strong>参考资料2</strong>：莫烦-遗传算法讲解</li>
+<li><strong>参考资料3</strong>：<a href="https://www.cnblogs.com/infroad/p/9245623.html" target="_blank" rel="noopener">https://www.cnblogs.com/infroad/p/9245623.html</a></li>
 <li>本博文为原创总结，如有转载，请注名出处！</li>
 </ul>
 
@@ -506,17 +445,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/03/26/consistent-hashing/" title="一致性哈希算法">
-                    <div class="nextTitle">一致性哈希算法</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/03/25/recommend-system/" title="推荐系统（一）">
-                    <div class="prevTitle">推荐系统（一）</div>
+                <a href="/2019/04/14/support-vector-machine/" title="支持向量机">
+                    <div class="prevTitle">支持向量机</div>
                 </a>
             
         </li>
@@ -635,7 +569,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#推荐引擎-基本的实时处理"><span class="toc-number">1.</span> <span class="toc-text">推荐引擎-基本的实时处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#流式处理"><span class="toc-number">1.1.</span> <span class="toc-text">流式处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现流式处理"><span class="toc-number">1.2.</span> <span class="toc-text">实现流式处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流式处理的应用"><span class="toc-number">1.3.</span> <span class="toc-text">流式处理的应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重定向代码实现"><span class="toc-number">1.4.</span> <span class="toc-text">重定向代码实现</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#遗传算法"><span class="toc-number">1.</span> <span class="toc-text">遗传算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-维基百科介绍"><span class="toc-number">1.1.</span> <span class="toc-text">1. 维基百科介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-算法过程"><span class="toc-number">1.2.</span> <span class="toc-text">2. 算法过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-代码实现"><span class="toc-number">1.3.</span> <span class="toc-text">3. 代码实现</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
