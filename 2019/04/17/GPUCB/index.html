@@ -483,31 +483,23 @@ $x_B|x_A \sim N(\mu_B+\Sigma_{BA} \Sigma_{AA}^{-1} (x_A-\mu_A),\Sigma_{BB}-\Sigm
 <p>从上述公式可知，在给定输入下，我们得到输出的后验分布（为高斯分布），从中刻画了$\epsilon$的随机性和选择$\theta$的不确定性。然而经典的概率线性回归直接从训练数据估计参数$\theta$，并没有给出学习出参数的可靠性分析。</p>
 </blockquote>
 <h1 id="3-高斯过程"><a href="#3-高斯过程" class="headerlink" title="3.  高斯过程"></a><font color="bule">3.  高斯过程</font></h1><p><strong>高斯过程</strong>（英语：<strong>Gaussian process</strong>）是观测值出现在一个连续域（例如时间或空间）的统计模型。在高斯过程中，连续输入空间中<strong>每个点都是与一个正态分布的随机变量相关联</strong>。此外，这些随机变量的<strong>每个有限集合都有一个多元正态分布</strong>。高斯过程的分布是时间域上所有随机变量的联合分布，且其<strong>联合分布为多元正态分布</strong>。</p>
+<p><strong>定义：</strong>随机变量的集合为随机过程<script type="math/tex">\left\{ f(x):x\in \chi \right\}</script>，高斯过程是​<script type="math/tex">\left\{ f(x):x\in \chi \right\}</script>满足多元高斯分布的特殊的随机过程。</p>
+<p><img src="/2019/04/17/GPUCB/4.png" width="50%" height="50%"></p>
 <p><strong>一个GP可以被mean和covariance function共同唯一决定</strong></p>
 <p><img src="/2019/04/17/GPUCB/gp1.jpg" width="70%" height="70%"></p>
-<p>上述图一共有5条不同颜色的线，每一条曲线代表了一个GP的样本。首先我们来看看其中的那个橘黄色的线，对应x轴上找一个点，比如$x=2​$大概对应的的y轴约为$2.6​$左右。可是这真的是一个确定点么？不，它所代表的是对应$x=2​$时的一个随机变量$X_{x=2}​$正好出现的点罢了，本质上对应$x=2​$的是一个随机变量而不是一个确定的点。另外对应于任一时刻的随机变量还需要服从一个确定的高斯分布（并不是说所有时刻对应的随机变量需要服从同一个高斯，只是服从的高斯分布的具体参数只跟时刻有关）。除此之外，若是GP的样本，还需要满足的是，任意个点（对应不同时刻的随机变量）联合需要服从多元高斯分布。</p>
-<font color="red">定义：</font>随机变量的集合为随机过程$\left\{ f(x):x\in \chi \right\}​$，高斯过程是​$\left\{ f(x):x\in \chi \right\}​$满足多元高斯分布的特殊的随机过程。
-
-<img src="/2019/04/17/GPUCB/4.png" width="50%" height="50%">
-
-其中均值函数为$m(\cdot)$，协方差函数为$k(\cdot,\cdot)$,所以上式可以简写为$f(\cdot)\sim GP(m(\cdot),k(\cdot,\cdot))$
-
-<br>
-
-# <font color="bule">4. 高斯回归</font>
-
-<p>若训练集<script type="math/tex">S=\left\{ (x^{(i)},y^{(i)})\right\}^{m}_{i=1}</script>满足独立同分布的未知分布，高斯过程回归模型为<script type="math/tex">y^{(i)}=f(x^{(i)})+\epsilon ^{(i)},i=1,…,m</script>，其中<script type="math/tex">\epsilon^{(i)}\sim N(0,\sigma^2)</script>即<script type="math/tex">y^{(i)}-f(x^{(i)}) \sim N(0,\sigma^2)</script>。不同于贝叶斯线性回归，我们假设先验$f(\cdot)$满足0均值的高斯过程先验</p>
-<script type="math/tex; mode=display">\begin{align}f(\cdot) \sim GP(0,k(\cdot,\cdot))\tag{4} \end{align}</script><p>现在令测试集<script type="math/tex">T=\left\{ (x_{\ast}^{(i)},y_{\ast}^{(i)})\right\}</script>与训练集有相同的分布。</p>
-<p>回顾多元高斯分布的性质，<strong>因为$f(\cdot)$满足0均值高斯分布，则其联合分布满足多元高斯分布</strong>，所以</p>
+<p>上述图一共有5条不同颜色的线，每一条曲线代表了一个GP的样本。首先我们来看看其中的那个橘黄色的线，对应x轴上找一个点，比如$x=2$大概对应的的y轴约为$2.6$左右。可是这真的是一个确定点么？不，它所代表的是对应$x=2$时的一个随机变量$X_{x=2}$正好出现的点罢了，本质上对应$x=2$的是一个随机变量而不是一个确定的点。另外对应于任一时刻的随机变量还需要服从一个确定的高斯分布（并不是说所有时刻对应的随机变量需要服从同一个高斯，只是服从的高斯分布的具体参数只跟时刻有关）。除此之外，若是GP的样本，还需要满足的是，任意个点（对应不同时刻的随机变量）联合需要服从多元高斯分布。</p>
+<h1 id="4-高斯过程回归"><a href="#4-高斯过程回归" class="headerlink" title="4. 高斯过程回归"></a><font color="bule">4. 高斯过程回归</font></h1><p>若训练集<script type="math/tex">S=\left\{ (x^{(i)},y^{(i)})\right\}^{m}_{i=1}</script>满足独立同分布的未知分布，高斯过程回归模型为​<script type="math/tex">y^{(i)}=f(x^{(i)})+\epsilon ^{(i)},i=1,…,m</script>，其中<script type="math/tex">\epsilon^{(i)}\sim N(0,\sigma^2)</script>即<script type="math/tex">y^{(i)}-f(x^{(i)}) \sim N(0,\sigma^2)</script>。不同于贝叶斯线性回归，我们假设先验$f(\cdot)$满足0均值的高斯过程先验</p>
+<script type="math/tex; mode=display">\begin{align}f(\cdot) \sim GP(0,k(\cdot,\cdot))\tag{5} \end{align} ​</script><p>现在令测试集<script type="math/tex">T=\left\{ (x_{\ast}^{(i)},y_{\ast}^{(i)})\right\}</script>与训练集有相同的分布。</p>
+<p>回顾多元高斯分布的性质，因为$f(\cdot)​$满足0均值高斯分布，则其联合分布满足多元高斯分布，所以</p>
 <p><img src="/2019/04/17/GPUCB/5.png" width="55%" height="55%"></p>
 <p>同理，从噪声的分布假设，我们有</p>
 <p><img src="/2019/04/17/GPUCB/6.png" width="35%" height="35%"></p>
-<p><strong>又因为独立高斯随机变量的总和还是高斯分布</strong>，所以</p>
+<p>又因为独立高斯随机变量的总和还是高斯分布，所以</p>
 <p><img src="/2019/04/17/GPUCB/7.png" width="80%" height="80%"></p>
 <p>现在，使用条件高斯的公式，则</p>
 <p><img src="/2019/04/17/GPUCB/8.png" width="80%" height="80%"></p>
 <p>值得注意的是，尽管高斯过程本身相当复杂，但在高斯过程回归模型中执行预测非常简单！</p>
-<p>与贝叶斯线性回归的不同之处在于，贝叶斯线性回归使用$\theta^{T}x$，需要先计算$\theta$的后验分布，再计算预测输出的分布；而高斯回归使用的是$f(\cdot)$，而且其满足某种正态分布，直接根据正态分布的性质计算。</p>
+<p>与贝叶斯线性回归的不同之处在于，贝叶斯线性回归使用$\theta^{T}x​$，需要先计算$\theta​$的后验分布，再计算预测输出的分布；而高斯回归使用的是$f(\cdot)​$，而且其满足某种正态分布，直接根据正态分布的性质计算。</p>
 <blockquote>
 <p><strong>现在我们讨论一下为什么高斯过程在面对回归问题上比较好</strong></p>
 <ul>
@@ -658,7 +650,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-高斯分布"><span class="toc-number">1.</span> <span class="toc-text">1. 高斯分布</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-一元正态分布（一元高斯分布）"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 一元正态分布（一元高斯分布）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2多元正态分布（多元高斯分布）"><span class="toc-number">1.2.</span> <span class="toc-text">1.2多元正态分布（多元高斯分布）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-贝叶斯线性回归"><span class="toc-number">2.</span> <span class="toc-text">2. 贝叶斯线性回归</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-高斯过程"><span class="toc-number">3.</span> <span class="toc-text">3.  高斯过程</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-高斯分布"><span class="toc-number">1.</span> <span class="toc-text">1. 高斯分布</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-一元正态分布（一元高斯分布）"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 一元正态分布（一元高斯分布）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2多元正态分布（多元高斯分布）"><span class="toc-number">1.2.</span> <span class="toc-text">1.2多元正态分布（多元高斯分布）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-贝叶斯线性回归"><span class="toc-number">2.</span> <span class="toc-text">2. 贝叶斯线性回归</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-高斯过程"><span class="toc-number">3.</span> <span class="toc-text">3.  高斯过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-高斯过程回归"><span class="toc-number">4.</span> <span class="toc-text">4. 高斯过程回归</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -671,6 +663,8 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
     
     
     
@@ -1087,8 +1081,6 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="统计学习"><span class="iconfont-archer">&#xe60a;</span>统计学习</span>
     
-        <span class="sidebar-category-name" data-categories="机器学习"><span class="iconfont-archer">&#xe60a;</span>机器学习</span>
-    
         <span class="sidebar-category-name" data-categories="转载文章"><span class="iconfont-archer">&#xe60a;</span>转载文章</span>
     
         <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
@@ -1096,6 +1088,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
     
         <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
+    
+        <span class="sidebar-category-name" data-categories="机器学习"><span class="iconfont-archer">&#xe60a;</span>机器学习</span>
     
         <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
     
