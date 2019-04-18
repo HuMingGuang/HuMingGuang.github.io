@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.1k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.9k</span>阅读时长: <span class="post-count reading-time">11 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -433,7 +433,23 @@ height:50vh;
 
 
 
-假设随机变量$x \in R^{n}$服从$x \sim N(\mu,\Sigma)$多元正态分布，将$x$分为两个集合$x_A=[x_1…x_r]\in R^{r}$、$x_B=[x_{x+1} … x_{n}]\in R^{n-r}$，所以$x=\begin{bmatrix}x_A    \\x_B \end{bmatrix}$、$\mu=\begin{bmatrix}\mu_A    \\ \mu_B \end{bmatrix}$、​$\Sigma= \begin{bmatrix}\Sigma_{AA} &   \Sigma_{AB}  \\\Sigma_{BA}  & \Sigma_{BB} \end{bmatrix}$，其中$\Sigma_{AB} =\Sigma_{BA}^{T}$以及​$\Sigma = E[(x-\mu)(x-\mu)^{T}]=\Sigma^{T}$。<br>
+如果随机变量$x \in R^{n}$服从$x \sim N(\mu,\Sigma)$多元正态分布，必须满足下面三个等价条件：<br>
+
+<font color="red">第一</font>，任何随机变量的线性组合$y=a_1 x_1+a_2 x_2 +…,+a_n x_n$都服从正态分布<br>
+
+<font color="red">第二</font>，存在随机变量$z=\left[z_1,z_2,…,z_m\right]^{T}$(其中每个元素都满足标准的正态分布)，向量$\mu=\left[\mu_1,\mu_2,…,\mu_n\right]^{T}$及$n \times m$矩阵$A$满足：$x=A z+\mu$ <br>
+
+<font color="red">第三</font>，存在$\mu$和一个对称半正定矩阵$\Sigma$满足$x$的特征函数:$\phi \left( x;\mu ,\Sigma \right) =\exp ( i\mu ^{T}x-\dfrac {1}{2}x^{T}\Sigma x)  $
+
+​    如果$\Sigma$是非奇异值矩阵，则概率密度函数为$f(x_1,x_2,…,x_n)=\dfrac {1}{\sqrt {\left( 2\pi \right) ^{n}}\left| \varepsilon \right| }\exp ( -\dfrac {1}{2}\left( x-\mu \right) ^{T}\Sigma ^{-1}\left( x-\mu 1\right) )$
+
+<br>
+
+<br>
+
+将$x$分为两个集合$x_A=[x_1…x_r]\in R^{r}$、$x_B=[x_{x+1} … x_{n}]\in R^{n-r}$，所以$x=\begin{bmatrix}x_A    \\x_B \end{bmatrix}$、$\mu=\begin{bmatrix}\mu_A    \\ \mu_B \end{bmatrix}$、​$\Sigma= \begin{bmatrix}\Sigma_{AA} &   \Sigma_{AB}  \\\Sigma_{BA}  & \Sigma_{BB} \end{bmatrix}$，其中$\Sigma_{AB} =\Sigma_{BA}^{T}$以及​$\Sigma = E[(x-\mu)(x-\mu)^{T}]=\Sigma^{T}$。<br>
+
+<br>
 
 
 
@@ -465,7 +481,7 @@ $x_B|x_A \sim N(\mu_B+\Sigma_{BA} \Sigma_{AA}^{-1} (x_A-\mu_A),\Sigma_{BB}-\Sigm
 
 <font color="blue">属性四：求和</font> <br>
 
-若$y \sim N(\mu,\Sigma)​$且​$z \sim N(\mu^\prime,\Sigma^\prime)​$，则​$y+z \sim N(\mu+\mu^\prime,\Sigma+\Sigma^\prime)​$
+若$y \sim N(\mu,\Sigma)$且​$z \sim N(\mu^\prime,\Sigma^\prime)$，则​$y+z \sim N(\mu+\mu^\prime,\Sigma+\Sigma^\prime)$
 
 </details>
 
@@ -495,7 +511,7 @@ $x_B|x_A \sim N(\mu_B+\Sigma_{BA} \Sigma_{AA}^{-1} (x_A-\mu_A),\Sigma_{BB}-\Sigm
 <p>同理，从噪声的分布假设，我们有</p>
 <p><img src="/2019/04/17/GPUCB/6.png" width="35%" height="35%"></p>
 <p>又因为独立高斯随机变量的总和还是高斯分布，所以</p>
-<p><img src="/2019/04/17/GPUCB/7.png" width="80%" height="80%"></p>
+<p><img src="/2019/04/17/GPUCB/7.png" width="65%" height="65%"></p>
 <p>现在，使用条件高斯的公式，则</p>
 <p><img src="/2019/04/17/GPUCB/8.png" width="80%" height="80%"></p>
 <p>值得注意的是，尽管高斯过程本身相当复杂，但在高斯过程回归模型中执行预测非常简单！</p>
@@ -509,6 +525,11 @@ $x_B|x_A \sim N(\mu_B+\Sigma_{BA} \Sigma_{AA}^{-1} (x_A-\mu_A),\Sigma_{BB}-\Sigm
 <li>第四，高斯过程回归模型虽然在概念上可能有点难以理解，但是实现操作起来比较简单。</li>
 </ul>
 </blockquote>
+<h1 id="5-GP-UCB优化算法"><a href="#5-GP-UCB优化算法" class="headerlink" title="5. GP-UCB优化算法"></a><font color="bule">5. GP-UCB优化算法</font></h1><p><strong>GP-UCB</strong>（Gaussian Process-Upper Confidence Bound）</p>
+<p>我们令<script type="math/tex">\mu_N (\theta)</script>和<script type="math/tex">k_N (\theta)</script>是给定输入空间上的均值和协方差，$\theta$为参数空间。在每次迭代过程中，我们都是想最大化后验均值<script type="math/tex">\mu^{\ast}=\arg \max_{\theta} [\mu_{N}(\theta)]</script>，这种方式会有可能陷入局部最优，我们现在想去权衡exploitation和exploration的问题。</p>
+<p>显然，如果有足够的计算能力，可以考虑对许多参数点进行采样，以便有足够的整个感兴趣区域的覆盖范围；然而，由于维度的诅咒，这种策略即使在适度的维度上也会失败。 通过考虑模拟函数的不确定性（也可以在GP回归中进行分析计算），可以获得比较好的解决方法(GP-UCB)：<strong>直观地说，应该探索最大可能合理的区域，即参数中的区域具有大量后验概率质量的空间，以使该函数具有较高的值</strong>。它还考虑了后验协方差$k_N(\theta)$，它研究可能隐藏全局最大值的新区域（远离当前输入点）; 这意味着它使分布的上分位数最大化（例如，95％分位数）。</p>
+<p> 选择要添加到输入空间的下一个输入点$\theta$应满足一下规则：</p>
+<script type="math/tex; mode=display">\begin{align} \theta_{N+1} = \arg \max_{\theta} \left( \mu_{N} (\theta) + \beta_{N} \sqrt {K_{N}\left( \theta \right) }\right)\tag{6} \end{align}</script><p>其中$\beta_N$是一个常数，它依赖于迭代，以确保收敛。 这使我们能够重新设计平衡有利区域（仿真所具有的区域）的优化问题和探索新区域（仿真非常不确定，因此可能隐藏高值）。 只要不能进一步改进（即，新输入的评估类似于包括当前观察组的那些），该算法就停止，或者我们达到预定的最大迭代次数。 算法与全局最优的收敛在理论上可以得到证实（<strong>参考资料4</strong>）。</p>
 <hr>
 <font color="blue">声明</font>
 
@@ -516,6 +537,8 @@ $x_B|x_A \sim N(\mu_B+\Sigma_{BA} \Sigma_{AA}^{-1} (x_A-\mu_A),\Sigma_{BB}-\Sigm
 <li><strong>参考资料1</strong>：<a href="https://zhuanlan.zhihu.com/p/27555501" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27555501</a></li>
 <li><strong>参考资料2</strong>：百度百科—多元正态分布</li>
 <li><strong>参考资料3</strong>：<a href="http://cs229.stanford.edu/section/cs229-gaussian_processes.pdf" target="_blank" rel="noopener">http://cs229.stanford.edu/section/cs229-gaussian_processes.pdf</a></li>
+<li><strong>参考资料4:</strong>N. Srinivas, A. Krause, Sham M. Kakade, and M. W. Seeger.Information-theoretic regret bounds for gaussian process optimiza- tion in the bandit setting. IEEE Transactions on Information Theory, 58(5):3250–3265, 2012. 8, 11, 47, 51, 52, 68, 69, 124</li>
+<li><strong>参考资料5:</strong> A Robust Genetic Algorithm for Learning Temporal Specifications from Data</li>
 <li>本博文为原创总结，如有转载，请注名出处！</li>
 </ul>
 
@@ -650,7 +673,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-高斯分布"><span class="toc-number">1.</span> <span class="toc-text">1. 高斯分布</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-一元正态分布（一元高斯分布）"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 一元正态分布（一元高斯分布）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2多元正态分布（多元高斯分布）"><span class="toc-number">1.2.</span> <span class="toc-text">1.2多元正态分布（多元高斯分布）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-贝叶斯线性回归"><span class="toc-number">2.</span> <span class="toc-text">2. 贝叶斯线性回归</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-高斯过程"><span class="toc-number">3.</span> <span class="toc-text">3.  高斯过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-高斯过程回归"><span class="toc-number">4.</span> <span class="toc-text">4. 高斯过程回归</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-高斯分布"><span class="toc-number">1.</span> <span class="toc-text">1. 高斯分布</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-一元正态分布（一元高斯分布）"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 一元正态分布（一元高斯分布）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2多元正态分布（多元高斯分布）"><span class="toc-number">1.2.</span> <span class="toc-text">1.2多元正态分布（多元高斯分布）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-贝叶斯线性回归"><span class="toc-number">2.</span> <span class="toc-text">2. 贝叶斯线性回归</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-高斯过程"><span class="toc-number">3.</span> <span class="toc-text">3.  高斯过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-高斯过程回归"><span class="toc-number">4.</span> <span class="toc-text">4. 高斯过程回归</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-GP-UCB优化算法"><span class="toc-number">5.</span> <span class="toc-text">5. GP-UCB优化算法</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -663,6 +686,8 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
     
     
     
