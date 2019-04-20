@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>机器学习问题的梳理 · MingGuangHu&#39;s Studio.</title>
+    <title>EM-algorithm · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -232,7 +232,7 @@
                 <a href="/">MingGuangHu&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">机器学习问题的梳理</a>
+                <a href="#" class="post-name">EM-algorithm</a>
             </div>
     </div>
     
@@ -262,7 +262,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            机器学习问题的梳理
+            EM-algorithm
             <!-- 404 -->
             
         </h1>
@@ -281,18 +281,18 @@ height:50vh;
                 
                     <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">162</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">4.2k</span>阅读时长: <span class="post-count reading-time">17 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/04/02</span>
+                    <span class="post-intro-time">2019/04/20</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -416,9 +416,98 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="机器学习问题的梳理"><a href="#机器学习问题的梳理" class="headerlink" title="机器学习问题的梳理"></a>机器学习问题的梳理</h1><h2 id="1-关于近似误差和估计误差"><a href="#1-关于近似误差和估计误差" class="headerlink" title="1. 关于近似误差和估计误差"></a>1. 关于近似误差和估计误差</h2><p><strong>近似误差：</strong>对现有训练集的训练误差</p>
-<p><strong>估计误差</strong>：对测试集的测试误差</p>
-<p>近似误差关注训练集，如果近似误差小了会出现过拟合的现象，对现有的训练集能有很好的预测，但是对未知的测试样本将会出现较大偏差的预测。模型本身不是最接近最佳模型。估计误差关注测试集，估计误差小了说明对未知数据的预测能力好。模型本身最接近最佳模型。</p>
+        <p><strong>期望最大值</strong>（Expectation Maximization，简称EM算法）是在概率模型中<strong>寻找参数最大似然估计或者最大后验估计的算法</strong>，其中概率模型依赖于无法观测的隐藏变量。其主要思想就是通过<strong>迭代来建立完整数据的对数似然函数的期望界限，然后最大化不完整数据的对数似然函数</strong>。本文将尽可能详尽地描述EM算法的原理。并结合高斯混合模型介绍EM算法是如何求解的。</p>
+<h2 id="一、定义"><a href="#一、定义" class="headerlink" title="一、定义"></a>一、定义</h2><p>EM算法是一种迭代算法，用于含有隐变量（hidden variable）的模型参数的极大似然估计或极大后验概率估计。EM算法的每次迭代由两步组成：<code>E步</code>-求期望（expectation）；<code>M步</code>-求极大（maximization）。故称为期望极大算法（expectation maximization），简称EM算法。</p>
+<h2 id="二、Jensen不等式"><a href="#二、Jensen不等式" class="headerlink" title="二、Jensen不等式"></a>二、Jensen不等式</h2><p>设$f$是定义域为实数的函数，如果对于所有的实数$x$，$f^\prime(x)≥0$，那么$f$是凸函数。当$x$是向量时，如果其hessian矩阵H是半正定的即$H≥0$，那么f是凸函数。如果$f^\prime(x)≥0$或$H&gt;0$，那么称$f$是严格凸函数。</p>
+<p>Jensen不等式表述如下：</p>
+<ul>
+<li>如果$f$是凸函数，$x$是随机变量，那么：$E[f(x)]≥f(E[x])$。特别地，如果$f$是严格凸函数，$E[f(x)]≥f(E[x])$，那么当且仅当$P(x=E[x])=1$(也就是说$x$是常量)，$E[f(x)]=f(E[x])$；</li>
+<li>如果$f$是凹函数，$x$是随机变量，则$f(E[x])≥E[f(x)]$，当$f$是（严格）凹函数当且仅当$−f$是（严格）凸函数。</li>
+</ul>
+<p>通过下面这张图，我们可以加深理解：</p>
+<p><img src="/2019/04/20/EM-algorithm/EM_1.jpg" width="55%" height="55%"></p>
+<p>上图中，函数$f$是凸函数，$X$是随机变量，有$0.5$的概率为$a$，有$0.5$的概率是$b$（就像抛硬币一样）。$x$的期望值就是$a$和$b$的中值了，图中可以看到$E[f(x)]≥f(E[x])$成立。</p>
+<h2 id="三、EM思想"><a href="#三、EM思想" class="headerlink" title="三、EM思想"></a>三、EM思想</h2><h3 id="3-1-极大似然估计"><a href="#3-1-极大似然估计" class="headerlink" title="3.1 极大似然估计"></a>3.1 极大似然估计</h3><p>EM算法推导过程中，会使用到极大似然估计参数。</p>
+<p>极大似然估计是一种概率论在统计学的应用。<strong>已知某个随机样本满足某种概率分布，但是其中具体的参数不清楚，参数估计就是通过若干次试验，观察结果，利用结果推出参数的大概值</strong>。极大似然估计建立在这样的思想上：<strong>已知某个参数能使这个样本出现的概率最大</strong>，我们当然不会再去选择其他小概率的样本，所以干脆就把这个参数作为估计的真实值。</p>
+<p>这里再给出求极大似然估计值的一般步骤：</p>
+<ul>
+<li>1）写出似然函数；</li>
+<li>2）对似然函数取对数，并整理；</li>
+<li>3）求导数，令导数为0，得到似然方程；</li>
+<li>4）解似然方程，得到的参数即为所求；</li>
+</ul>
+<h3 id="3-2-EM算法思想"><a href="#3-2-EM算法思想" class="headerlink" title="3.2 EM算法思想"></a>3.2 EM算法思想</h3><p>下面介绍EM算法的思想：</p>
+<p>给定的训练样本是$x(1)，x(2)，···，x(m)$，样例间相互独立，但每个样本对应的类别$z(i)$是未知的，也即隐含变量。我们想找到每个样例隐含的类别$z$，能使得$P(x,z)$最大。$P(x,z)$的最大似然估计如下：</p>
+<script type="math/tex; mode=display">\begin{align}  l\left(\theta\right)=\sum_{i=1}^m{\log p\left(x;\theta\right)}=\sum_{i=1}^m{\log\sum_z{}p\left(x,z;\theta\right)} \tag{1}\\\ \end{align}</script><p>第一步是对极大似然函数取对数，第二步是对每个样本实例的每个可能的类别$z$求联合分布概率之和。但是直接求$θ$一般比较困难，<strong>因为有隐藏变量$z$存在，如果$z$是一个已知的数，那么使用极大似然估计来估算会很容易。在这种$z$不确定的情形下，EM算法就派上用场了</strong>。</p>
+<p><strong>EM算法是一种解决存在隐变量优化问题的有效方法</strong>。对于上述情况，由于存在隐变量，不能直接最大化$l(θ)$，我们可以不断地建立$l$的下界（E步），然后优化下界（M步），依次迭代，直至算法收敛到局部最优。这就是EM算法的核心思想，简单的归纳一下：</p>
+<p>EM算法通过引入隐变量，使用MLE（极大似然估计）进行迭代求解参数。通常引入隐含变量后会有两个参数，EM算法首先会固定其中的第一个参数，然后使用MLE计算第二个变量值；接着通过固定第二个变量，再使用MLE估计第一个变量值，依次迭代，直至收敛到局部最优解。</p>
+<h2 id="四、EM推导"><a href="#四、EM推导" class="headerlink" title="四、EM推导"></a>四、EM推导</h2><p>下面来推导EM算法：</p>
+<p>对于每一个样例$i$，<strong>让$Q_i$表示该样例隐含变量$z$的某种分布</strong>，$Q_i$满足的条件是</p>
+<script type="math/tex; mode=display">\begin{align}  \sum_z{Q_i\left(z\right)=1\ \\ Q_i\left(z\right)\geqslant 0}  \tag{2}\\\ \end{align}</script><p>（如果$z$是连续的，那么$Q_i$是概率密度函数，需要将求和符号换做积分符号）。比如要将班上学生聚类，假设隐藏变量$z$是身高，那么就是连续的高斯分布。如果是按照隐藏变量是男女，那么就是伯努利分布。</p>
+<p>可以由前面阐述的内容得到下面的公式：</p>
+<script type="math/tex; mode=display">\begin{align} \sum_i{\log p\left(x^{\left(i\right)};\theta\right)=\sum_i{\log\sum_{z^{\left(i\right)}}{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}}}   \tag{3}\\\ \end{align}</script><script type="math/tex; mode=display">\begin{align}  =\sum_i{\log\sum_{z^{\left(i\right)}}{Q_i\left(z^{\left(i\right)}\right)\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}{Q_i\left(z^{\left(i\right)}\right)}}}  \tag{4}\\\ \end{align}</script><script type="math/tex; mode=display">\begin{align}  \geqslant\sum_i{\sum_{z^{\left(i\right)}}{Q_i\left(z^{\left(i\right)}\right)\log\left(\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}{Q_i\left(z^{\left(i\right)}\right)}\right)}} \tag{5}\\\ \end{align}</script><p>上面三个式子中，式（3）是根据联合概率密度下某个变量的边缘密度求解的（这里把$z$当做是随机变量）。对每一个样本$i$的所有可能类别求等式右边的联合概率密度函数和，也就是得到等式左边为随机变量$x$的边缘概率密度。由于对式（3）直接求导非常困难，我们可以做一个简单的变化，将其分子分母都乘以一个相等的函数$Q_i(Z^{(i)})$，得到式（4）。那么如何从式（4）推导出式（5）呢，这就需要用到之前提到的Jensen不等式。</p>
+<p>以下为具体的分析过程：</p>
+<p>首先，把（3）式中的$\log$函数看成是一个整体，即令$f(x)=\log(x)$，因为$(\log(x))^\prime=−\dfrac{1}{x\ln a}&lt;0$，根据定理可知其为凹函数。</p>
+<p>再根据凹函数的Jensen不等式：$f(E[X])&gt;=E[f(x)]$。</p>
+<p>到这里，我们可以观察到，在式（4）中，当把$\log(x)$看成$f(x)$时，后边的</p>
+<script type="math/tex; mode=display">\begin{align}    \sum_{z^{\left(i\right)}}{Q_i\left(z^{\left(i\right)}\right)\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}{Q_i\left(z^{\left(i\right)}\right)}} \tag{6}\\\ \end{align}</script><p>其实就是可以类比为离散型随机变量的期望公式。具体的求解可以参考一下知识：</p>
+<details>
+  <summary>  <font color="red">期望公式</font></summary>
+  设$Y$是随机变量$X$的函数，$Y=g(X)$($g$是连续函数),那么<br>
+  （1） $X$是离散型随机变量，它的分部律为$P(X=x_k)=p_k,k=1,2,...$。若$\sum_{k=1}^{\infty} g(x_k)p_k$绝对收敛，则有<br>
+  $E(Y)=E[g(X)]= \sum_{k=1}^{\infty} g(x_k)p_k$<br>
+   (2) $X$是连续型随机变量，它的概率密度函数为$f(x)$，若$\int_{-\infty}^{+\infty} f(x)\mathbf{d}x$绝对收敛，则有<br>
+    $E(Y)=E(g(X))=\int_{-\infty}^{+\infty}g(x)f(x)\mathbf{d}x$
+</details>
+
+<p>我们可以把$Q_i^{(z(i))}$看成是相应的概率$p_i$，把</p>
+<script type="math/tex; mode=display">\begin{align}   \frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}{Q_i\left(z^{\left(i\right)}\right)}  \tag{7}\\\ \end{align}</script><p>看作是$z(i)$的函数$g(z)$，根据期望公式$E\left[g\left(x\right)\right]=\sum_{i=1}^{\infty}{g\left(x_i\right)·p_i}$可以得到：</p>
+<script type="math/tex; mode=display">\begin{align}   E\left(\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}{Q_i\left(z\right)}\right)=\sum_{z^{\left(i\right)}}{Q_i\left(z\right)\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}{Q_i\left(z\right)}}  \tag{8}\\\ \end{align}</script><p>把上述根据Jensen不等式整合到一起得到：</p>
+<script type="math/tex; mode=display">\begin{align}   f\left[E\left(g\left(X\right)\right)\right]=\log\sum_{z^{\left(i\right)}}{Q_i\left(z^{\left(i\right)}\right)\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}{Q_i\left(z^{\left(i\right)}\right)}}  \tag{9}\\\ \end{align}</script><script type="math/tex; mode=display">\begin{align}   \geqslant E\left[f\left(g\left(X\right)\right)\right]=\sum_{z^{\left(i\right)}}{Q_i\left(z^{\left(i\right)}\right)\log\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}{Q_i\left(z^{\left(i\right)}\right)}}  \tag{10}\\\ \end{align}</script><p>这样我们就得到了式（5）</p>
+<p>现在我们由式（4）和式（5）的不等式得知：似然函数$L(θ)≥J(z,Q)$的形式，其中$z$为隐变量，那么我们可以通过不断地最大化$J$的下界，来使得$L(θ)$不断提高，最终达到它的最大值。借助下图来解释下这个过程：</p>
+<p><img src="/2019/04/20/EM-algorithm/EM_2.jpg" width="55%" height="55%"></p>
+<p>首先我们固定$θ$，调整$Q(z)$使下界（绿色曲线）$J(z,Q)$沿着绿色虚线上升至与$L(θ)$在此点$θ$处相等（绿色曲线至蓝色曲线），然后固定$Q(z)$，调整$θ$使下界$J(z,Q)$达到最大值($θ<em>t$至$θ</em>{t+1}$)，然后再固定$θ$，调整$Q(z)…….$直到收敛到似然函数$L(θ)$的最大值处的$θ^∗$</p>
+<p>这里有两个问题：</p>
+<ul>
+<li>什么时候下界$J(z,Q)$与$L(θ)$在此点$θ$处相等？</li>
+<li>为什么一定会收敛？</li>
+</ul>
+<p>首先来解释下第一个问题。在Jensen不等式中说到，当自变量$X=E(X)$时，即为常数的时候，等式成立。而在这里，为：</p>
+<script type="math/tex; mode=display">\begin{align}  \frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}{Q_i\left(z^{\left(i\right)}\right)}=c  \tag{10}\\\ \end{align}</script><p>对该式做个变换，将分母移到等号右边，并对所有的$z$求和，得到第一个等号；又因为前面提到的$ \sum_{z^{\left(i\right)}}{Q_i\left(z^{\left(i\right)}\right)=1}$得到第二个等号。</p>
+<script type="math/tex; mode=display">\begin{align}  \sum_{z^{\left(i\right)}}{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}=\sum_{z^{\left(i\right)}}{Q_i\left(z^{\left(i\right)}\right)c}=c  \tag{11}\\\ \end{align}</script><p>根据上面两个式子可以得到</p>
+<script type="math/tex; mode=display">\begin{align}   Q_i\left(z^{\left(i\right)}\right)=\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}{\sum_z{p\left(x^{\left(i\right)},z;\theta\right)}}  \\\\\ =\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}{p\left(x^{\left(i\right)};\theta\right)} \\\\ =p\left(z^{\left(i\right)}|x^{\left(i\right)};\theta\right)  \tag{12}\\\ \end{align}</script><p>到这里，我们推出了在固定参数$θ$后，使下界拉升的$Q(z)$的计算公式就是后验概率（条件概率），解决了$Q(z)$如何选择的问题。此步就是EM算法的E步，目的是建立$L(θ)$的下界。接下来的M步，目的是在给定$Q(z)$后，调整$θ$，从而极大化$L(θ)$的下界$J$（在固定$Q(z)$后，下界还可以调整的更大）。那么一般的<font color="red">EM算法</font>的步骤如下：</p>
+<blockquote>
+<p> 第一步：初始化分布参数$θ$；</p>
+<p>第二步：重复E步和M步直到收敛：</p>
+<ul>
+<li><p>E步：根据参数的初始值或上一次迭代的模型参数来计算出的因变量的后验概率（条件概率），其实就是隐变量的期望值，来作为隐变量的当前估计值：</p>
+<script type="math/tex; mode=display">\begin{align}  \\\\ Q_i\left(z^{\left(i\right)}\right)=p\left(z^{\left(i\right)}|x^{\left(i\right)};\theta\right)  \tag{13}\\\ \end{align}</script></li>
+<li><p>M步：最大化似然函数从而获得新的参数值：</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align}   \theta :=\arg\underset{\theta}{\max}\sum_i{\sum_{z^{\left(i\right)}}{Q_i\left(z^{\left(i\right)}\right)\log\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta\right)}{Q_i\left(z^{\left(i\right)}\right)}}} \tag{14}\\\ \end{align}</script></blockquote>
+<p>通过不断地迭代，然后就可以得到使似然函数$L(θ)$最大化的参数$θ$了。</p>
+<p>接下来我们看第二个问题。上面多次说到直到收敛，那为什么一定会收敛呢？证明如下：</p>
+<p>假定$θ^{(t)}$和$θ^{(t+1)}$是EM第t次和t+1次迭代后的结果。如果我们证明了$l(θ^{(t)})≤l(θ^{(t+1)})$，也就是说极大似然估计单调增加，那么最终我们就会得到极大似然估计的最大值。</p>
+<p>下面来证明，选定$θ^{(t)}$后，我们得到E步：</p>
+<script type="math/tex; mode=display">\begin{align}  \\\\ Q_i^{(t)}\left(z^{\left(i\right)}\right)=p\left(z^{\left(i\right)}|x^{\left(i\right)};\theta\right)  \tag{15}\\\ \end{align}</script><p>这一步保证了在给定$θ^{(t)}$时，Jensen不等式中的等式成立，也就是</p>
+<script type="math/tex; mode=display">\begin{align}   l\left(\theta^{\left(t\right)}\right)=\sum_i{\sum_{z^{\left(i\right)}}{Q_i\left(z^{\left(i\right)}\right)\log\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta^{\left(t\right)}\right)}{Q_i\left(z^{\left(i\right)}\right)}}}  \tag{16}\\\ \end{align}</script><p>然后进行M步，固定$Q_i^{(t)}(z^{(i)})$，并将$θ^{(t)}$视作变量，对上面的$l(\theta^{(t)})$求导后，得到<script type="math/tex">θ^{(t+1)}</script>这样经过一些推导会有以下式子成立：</p>
+<script type="math/tex; mode=display">\begin{align} l\left(\theta^{\left(t+1\right)}\right)\geqslant\sum_i{\sum_{z^{\left(i\right)}}{Q_i\left(z^{\left(i\right)}\right)\log\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta^{\left(t+1\right)}\right)}{Q_i\left(z^{\left(i\right)}\right)}}}  \\ \geqslant\sum_i{\sum_{z^{\left(i\right)}}{Q_i\left(z^{\left(i\right)}\right)\log\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta^{\left(t\right)}\right)}{Q_i\left(z^{\left(i\right)}\right)}}} \\=l\left(\theta^{\left(t\right)}\right)\tag{17}\\\ \end{align}</script><p>第一步：得到$θ^{(t+1)}$时，只是最大化$l(θ^{(t)})$，也就是$l(θ^{(t+1)})$的下界，而没有使等式成立，要想使等式成立只有在固定$θ$，并按E步得到$Q_i$时才能成立。<br>况且根据我们前面得到的下式，对于所有的$Q_i$和$θ$都成立</p>
+<script type="math/tex; mode=display">\begin{align}   l\left(\theta^{\left(t\right)}\right)\geqslant\sum_i{\sum_{z^{\left(i\right)}}{Q_i\left(z^{\left(i\right)}\right)\log\frac{p\left(x^{\left(i\right)},z^{\left(i\right)};\theta^{\left(t\right)}\right)}{Q_i\left(z^{\left(i\right)}\right)}}}\tag{18}\\\ \end{align}</script><p>第二步：利用的M步的定义，M步就是将$θ^{(t)}$调整到$θ^{(t+1)}$，使得下界最大化。这样公式（17）就都证明成立了。</p>
+<p>再结合之前那个图解释一下这几步推导：</p>
+<p><img src="/2019/04/20/EM-algorithm/EM_2.jpg" width="55%" height="55%"></p>
+<p>首先对所有的参数都满足，而其等式成立条件只是在固定$θ$，并调整好$Q$时成立，而第一步只是固定$Q$，调整$θ$，不能保证等式一定成立。对应到图上就是蓝色曲线的峰值与$l(θ^{(t+1)})$的关系，要使它们相等还必须要固定$θ$，调整好$Q$；从第一步到第二步就是M步的定义，也就是固定$Q$，调整$θ^{(t)}$至$θ^{(t+1)}$，对应到图上即为蓝色曲线与红色曲线交点处至蓝色曲线峰值。第二步到第三步是前面E步所保证等式成立条件。也就是说E步会将下界拉到与$l(θ)$一个特定值（这里为$θ^{(t)}$一样的高度，而此时发现下界仍然可以上升，因此经过M步后，下界又被拉升，但达不到与$l(\theta)$另外一个特定值（$θ^{(t+1)}$）一样的高度，之后E步又将下界拉到了与这个特定值一样的高度，循环往复，直到达到最大值。</p>
+<p>这样就证明了$l(θ)$会单调增加。如果要判断收敛情况，可以这样来做：一种收敛方法是$l(θ)$不再变化，还有一种就是变化幅度很小，即根据$l(θ^{(t+1)})=l(θ^{(t)})$的值来决定。</p>
+<p>从前面的推导中我们知道$l(θ)≥J(Q,θ)$，EM也可以看做是$J$的坐标上升法，如下图所示：</p>
+<p><img src="/2019/04/20/EM-algorithm/EM_3.jpg" width="55%" height="55%"></p>
+<p>图中的直线式迭代优化的路径，可以看到每一步都会向最优值前进一步，而且前进路线是平行于坐标轴的，因为每一步只优化一个变量。<br>这犹如在$X-Y$坐标系中找一个曲线的极值，然而曲线函数不能直接求导，因此什么梯度下降方法就不适用了。但固定一个变量后，另外一个可以通过求导得到，因此可以使用<strong>坐标上升法</strong>，一次固定一个变量，对另外的求极值，最后逐步逼近极值。对应到EM上，E步：固定θ，优化Q；M步：固定Q，优化θ；交替将极值推向最大。</p>
+<hr>
+<font color="blue">声明</font>
+
+<ul>
+<li><strong>参考资料1</strong>：<a href="https://plushunter.github.io/2017/03/15/机器学习算法系列（15）：EM算法/" target="_blank" rel="noopener">https://plushunter.github.io/2017/03/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%EF%BC%8815%EF%BC%89%EF%BC%9AEM%E7%AE%97%E6%B3%95/</a></li>
+<li>本博文为原创总结，如有转载，请注名出处！</li>
+</ul>
 
     </article>
     <!-- license  -->
@@ -427,17 +516,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/04/07/recommend-system-6/" title="推荐系统（七）">
-                    <div class="nextTitle">推荐系统（七）</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/04/02/recommend-system-5/" title="推荐系统（六）">
-                    <div class="prevTitle">推荐系统（六）</div>
+                <a href="/2019/04/17/GPUCB/" title="高斯过程">
+                    <div class="prevTitle">高斯过程</div>
                 </a>
             
         </li>
@@ -556,7 +640,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#机器学习问题的梳理"><span class="toc-number">1.</span> <span class="toc-text">机器学习问题的梳理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-关于近似误差和估计误差"><span class="toc-number">1.1.</span> <span class="toc-text">1. 关于近似误差和估计误差</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、定义"><span class="toc-number">1.</span> <span class="toc-text">一、定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、Jensen不等式"><span class="toc-number">2.</span> <span class="toc-text">二、Jensen不等式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、EM思想"><span class="toc-number">3.</span> <span class="toc-text">三、EM思想</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-极大似然估计"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 极大似然估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-EM算法思想"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 EM算法思想</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、EM推导"><span class="toc-number">4.</span> <span class="toc-text">四、EM推导</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
