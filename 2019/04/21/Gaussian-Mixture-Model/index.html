@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>MingGuangHu&#39;s Studio.</title>
+    <title>高斯混合模型 · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -218,12 +218,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">高斯混合模型</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">MingGuangHu's Studio.</a>
 </header>
@@ -235,24 +246,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            高斯混合模型
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.3k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/04/21</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -353,39 +414,78 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/02/meachine-learning-question/">
-            
-                <span>机器学习问题的梳理</span>
-        </a>
-        <div class="abstract-content">
-            机器学习的问题梳理
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="一、例子解释"><a href="#一、例子解释" class="headerlink" title="一、例子解释"></a>一、例子解释</h1><p>高斯混合模型（Gaussian Mixed Model）指的是多个高斯分布函数的线性组合，理论上GMM可以拟合出任意类型的分布，通常用于解决同一集合下的数据包含多个不同的分布的情况（或者是同一类分布但参数不一样，或者是不同类型的分布，比如正态分布和伯努利分布）。</p>
+<p>如图1，图中的点在我们看来明显分成两个聚类。这两个聚类中的点分别通过两个不同的正态分布随机生成而来。但是如果没有GMM，那么只能用一个的二维高斯分布来描述图1中的数据。图1中的椭圆即为二倍标准差的正态分布椭圆。这显然不太合理，毕竟肉眼一看就觉得应该把它们分成两类。</p>
+ <div align="center"><img src="/2019/04/21/Gaussian-Mixture-Model/1.png"> 图1</div>
+
+<p>这时候就可以使用GMM了！如图2，数据在平面上的空间分布和图1一样，这时使用两个二维高斯分布来描述图2中的数据，分别记为$N(\mu_1,\Sigma_1)$和$N(\mu_2,\Sigma_2)$图中的两个椭圆分别是这两个高斯分布的二倍标准差椭圆。可以看到使用两个二维高斯分布来描述图中的数据显然更合理。实际上图中的两个聚类的中的点是通过两个不同的正态分布随机生成而来。如果将两个二维高斯分布$N(\mu_1,\Sigma_1)$和$N(\mu_2,\Sigma_2)$合成一个二维的分布，那么就可以用合成后的分布来描述图2中的所有点。最直观的方法就是对这两个二维高斯分布做线性组合，用线性组合后的分布来描述整个集合中的数据。这就是高斯混合模型（GMM）。</p>
+ <div align="center"><img src="/2019/04/21/Gaussian-Mixture-Model/2.png"> 图2</div>
+
+<h1 id="二、高斯混合模型（GMM）"><a href="#二、高斯混合模型（GMM）" class="headerlink" title="二、高斯混合模型（GMM）"></a>二、高斯混合模型（GMM）</h1><p>设有随机变量$X$，则混合高斯模型可以用下式表示</p>
+<script type="math/tex; mode=display">\begin{align}  p( x) =\sum ^{K}_{k=1}\pi _{k}N(  x| \mu_k,\Sigma_k)  \tag{1} \end{align}</script><p>其中$N ( x| \mu_k,\Sigma_k)$称为混合模型中的<strong>第k个分量（component）</strong>。如前面图2中的例子，有两个聚类，可以用两个二维高斯分布来表示，那么分量数$K=2$,$\pi_k$是<strong>混合系数（mixture coefficient）</strong>，且满足</p>
+<script type="math/tex; mode=display">\begin{align} \sum ^{K}_{k=1}\pi _{k} =1 \\\ 0 \leq \pi _{k} \leq 1  \tag{2} \end{align}</script><p>实际上，可以认为$\pi_k$就是每个分量$N(  x| \mu_k,\Sigma_k)$ 的权重。</p>
+<h1 id="三、GMM的应用"><a href="#三、GMM的应用" class="headerlink" title="三、GMM的应用"></a>三、GMM的应用</h1><p>GMM常用于聚类。如果要从 GMM 的分布中随机地取一个点的话，实际上可以分为两步：<strong>首先随机地在这 $K$ 个 Component 之中选一个，每个 Component 被选中的概率实际上就是它的系数$\pi_k$。</strong>选中 Component 之后，再单独地考虑从这个 Component 的分布中选取一个点就可以了──这里已经回到了普通的 Gaussian 分布，转化为已知的问题。</p>
+<p>将GMM用于聚类时，假设数据服从混合高斯分布（Mixture Gaussian Distribution），那么只要根据数据推出 GMM 的概率分布来就可以了；然后 GMM 的 $K$ 个 Component 实际上对应$K$个 cluster 。根据数据来推算概率密度通常被称作 density estimation 。特别地，<strong>当我已知（或假定）概率密度函数的形式，而要估计其中的参数的过程被称作『参数估计』。</strong></p>
+<p>例如图2的例子，很明显有两个聚类，可以定义$K=2$. 那么对应的GMM形式如下：</p>
+<script type="math/tex; mode=display">\begin{align} p(x)=\pi_1 N(x|\mu_1,\Sigma_1)+\pi_2 N(x|\mu_2,\Sigma_2) \tag{3} \end{align}</script><p>上式中未知的参数有六个：$\pi_1 ,\mu_1,\Sigma_1,\pi_2, \mu_2,\Sigma_2$.之前提到GMM聚类时分为两步，第一步是随机地在这$K$个分量中选一个，每个分量被选中的概率即为混合系数$\pi_k$。可以设定$\pi_1=\pi_2=0.5$表示每个分量被选中的概率是0.5，即从中抽出一个点，这个点属于第一类的概率和第二类的概率各占一半。但实际应用中事先指定的值是很笨的做法，当问题一般化后，会出现一个问题：当从图2中的集合随机选取一个点，怎么知道这个点是来自$N(x|\mu_1,\Sigma_1)$还是$N(x|\mu_2,\Sigma_2) $呢？换言之怎么根据数据自动确定$\pi_1$和$\pi_2$的值？这就是GMM参数估计的问题。要解决这个问题，可以使用EM算法。通过EM算法，我们可以迭代计算出GMM中的参数$\pi_k,u_k,\Sigma_k$.</p>
+<h1 id="四、k-means和GMM的关系"><a href="#四、k-means和GMM的关系" class="headerlink" title="四、k-means和GMM的关系"></a>四、k-means和GMM的关系</h1><p>在特定条件下，k-means和GMM方法可以互相用对方的思想来表达。<strong>在k-means中根据距离每个点最接近的类中心来标记该点的类别，这里存在的假设是每个类簇的尺度接近且特征的分布不存在不均匀性</strong>。这也解释了为什么在使用k-means前对数据进行归一会有效果。<strong>高斯混合模型则不会受到这个约束</strong>，因为它对每个类簇分别考察特征的协方差模型。</p>
+<p><strong>K-means算法可以被视为高斯混合模型（GMM）的一种特殊形式。</strong>整体上看，高斯混合模型能提供更强的描述能力，因为<strong>聚类时数据点的从属关系不仅与近邻相关，还会依赖于类簇的形状</strong>。<strong>n维高斯分布的形状由每个类簇的协方差来决定</strong>。在协方差矩阵上添加特定的约束条件后，可能会通过GMM和k-means得到相同的结果。</p>
+<p><strong>整体来看，所有无监督机器学习算法都遵循一条简单的模式：给定一系列数据，训练出一个能描述这些数据规律的模型（并期望潜在过程能生成数据）。</strong>训练过程通常要反复迭代，直到无法再优化参数获得更贴合数据的模型为止。</p>
+<h1 id="五、GMM参数估计过程"><a href="#五、GMM参数估计过程" class="headerlink" title="五、GMM参数估计过程"></a>五、GMM参数估计过程</h1><p>现在假设我们有$N$个数据点，并假设它们服从某个分布（记作 $p(x)$ )，现在要确定里面的一些参数的值，例如，在 GMM 中，我们<strong>就需要确定 $\pi_k,u_k,\Sigma_k$这些参数</strong>。 我们的想法是，找到这样一组参数，它所确定的概率分布生成这些给定的数据点的概率最大，而这个概率实际上就等于$ \prod_{i=1}^N p(x_i)$ ，我们把这个乘积称作[似然函数 (Likelihood Function)。</p>
+<p>通常单个点的概率都很小，许多很小的数字相乘起来在计算机里很容易造成浮点数下溢，因此我们通常会对其取对数，把乘积变成加和 $\sum_{i=1}^N \log p(x_i)$，得到 <strong>log-likelihood function</strong> 。接下来我们只要<strong>将这个函数最大化（</strong>通常的做法是求导并令导数等于零，然后解方程），亦即找到这样一组参数值，它让似然函数取得最大值，我们就认为这是最合适的参数，这样就完成了参数估计的过程。</p>
+<p>下面让我们来看一看 <strong>GMM 的 log-likelihood function</strong> ：</p>
+<script type="math/tex; mode=display">\begin{align} \sum ^{N}_{i=1}\log \{ \sum ^{K}_{k=1} \pi_k N( x_{i}| \mu _{k},\Sigma _{k} \} \tag{4} \end{align}</script><p>由于在对数函数里面又有加和，<strong>我们没法直接用求导解方程的办法直接求得最大值</strong>。为了解决这个问题，我们采取EM算法。</p>
+<font color="red">E-step</font>
+
+<p>1.估计数据由每个 Component 生成的概率（并不是每个 Component 被选中的概率）：对于每个数据 $x_i$ 来说，它由第 $k$ 个 Component 生成的概率为</p>
+<script type="math/tex; mode=display">\begin{align}\gamma \left( i,k\right) =\dfrac {\pi_k N(x_i|\mu_k,\Sigma_k)}{\sum ^{K}_{j=1}\pi _{j}N( x_{i}|\mu_j,\Sigma_j)} \tag{5} \end{align}</script><p>由于式子里的 $\mu_k$ 和 $\Sigma_k$ 也是需要我们估计的值，我们采用迭代法，在计算$\gamma(i, k)$ 的时候我们假定 $\mu_k$ 和 $\Sigma_k$ 均已知，我们将取上一次迭代所得的值（或者初始值）。</p>
+<font color="red">M-step</font>
+
+<p>2.估计每个 Component 的参数：现在我们假设上一步中得到的 $\gamma(i, k)$ 就是正确的<strong>“数据$x_i$ 由 Component $k$ 生成的概率”</strong>，亦可以当做该 Component 在生成这个数据上所做的贡献，或者说，我们可以看作 $x_i$ 这个值其中有 $\gamma(i, k)x_i$ 这部分是由 Component $k$ 所生成的。集中考虑所有的数据点，现在实际上可以看作 Component 生成了 $\gamma(1, k)x_1, \ldots, \gamma(N, k)x_N$ 这些点。由于每个 Component 都是一个标准的 Gaussian 分布，可以很容易分布求出最大似然所对应的参数值：</p>
+<script type="math/tex; mode=display">\begin{align} \mu_k & = \frac{1}{N_k}\sum_{i=1}^N\gamma(i, k)x_i \\ \Sigma_k & = \frac{1}{N_k}\sum_{i=1}^N\gamma(i, k)(x_i-\mu_k)(x_i-\mu_k)^T \tag{6}   \end{align}</script><p>​        其中 <script type="math/tex">N_k = \sum_{i=1}^N \gamma(i, k)]</script>，并且 $\pi_k$ 也顺理成章地可以估计为 $N_k/N $。</p>
+<p>3.重复迭代前面两步，直到似然函数的值收敛为止。</p>
+<hr>
+<font color="blue">声明</font>
+
+<ul>
+<li><strong>参考资料1</strong>：<a href="https://zhuanlan.zhihu.com/p/31103654" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/31103654</a></li>
+<li><strong>参考资料2</strong>：<a href="https://blog.csdn.net/jinping_shi/article/details/59613054" target="_blank" rel="noopener">https://blog.csdn.net/jinping_shi/article/details/59613054</a></li>
+<li>本博文为原创总结，如有转载，请注名出处！</li>
+</ul>
+
     </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/04/20/EM-algorithm/" title="EM-algorithm">
+                    <div class="prevTitle">EM-algorithm</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -470,6 +570,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、例子解释"><span class="toc-number">1.</span> <span class="toc-text">一、例子解释</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、高斯混合模型（GMM）"><span class="toc-number">2.</span> <span class="toc-text">二、高斯混合模型（GMM）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、GMM的应用"><span class="toc-number">3.</span> <span class="toc-text">三、GMM的应用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、k-means和GMM的关系"><span class="toc-number">4.</span> <span class="toc-text">四、k-means和GMM的关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、GMM参数估计过程"><span class="toc-number">5.</span> <span class="toc-text">五、GMM参数估计过程</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1004,6 +1122,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
