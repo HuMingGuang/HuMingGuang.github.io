@@ -429,24 +429,24 @@ height:50vh;
 <p>线性回归函数：<script type="math/tex">h_{\theta}(\mathbf{x})=\sum_{i=0}^{m} \theta_{i} x_{i}=\Theta^{T}\mathbf{x}</script>.</p>
 <p>在度量回归函数的性能时，我们可以选择<strong>误差平方和最小</strong>：<script type="math/tex">J(\theta)=\frac{1}{2} \sum_{i}^{N}(h_{\theta}(x^{(i)})-y^{(i)})^{2}</script>.</p>
 <p>这样利用误差平方和最小来求解回归模型的方法称为<strong>最小二乘法（least square method）</strong>。</p>
-<h2 id="2-最小二乘法正规方程法"><a href="#2-最小二乘法正规方程法" class="headerlink" title="2. 最小二乘法正规方程法"></a>2. 最小二乘法正规方程法</h2><p>假设我们有<script type="math/tex">N​</script>个样本数据，每个样本具有<script type="math/tex">m​</script>个特征，现在使用线性回归的方法，去求解最优的线性回归函数<script type="math/tex">Y ​</script>。</p>
-<script type="math/tex; mode=display">\begin{align}  \begin{bmatrix}1 & x_1^{(1)}  & x^{(1)}_{2}&\ldots  & x^{\left(1\right) }_{m} \\1 & x_1^{(2)} &  x_2^{(2)}&\ldots &x_m^{2}  \\\vdots  &  &  &  \vdots & \vdots\\1 & x_1^{(N)} & x^{(N)}_{2}&\ldots  & x^{(N)}_{m}\end{bmatrix}\begin{bmatrix}\theta_0 \\\theta_1 \\\vdots\\\theta_m\end{bmatrix}=\begin{bmatrix}Y_2 \\ \vdots\\Y_N\end{bmatrix} \tag{1} \end{align}</script><p>令第一个矩阵为<script type="math/tex">A​</script>，第二个为<script type="math/tex">\Theta​</script>，第三个为<script type="math/tex">Y​</script>。</p>
-<p>则求解最优的线性函数的目标，可转化为最小化误差平方和，即<script type="math/tex">\min_{\Theta}||A\Theta-Y||_2^{2}​</script>公式。</p>
-<script type="math/tex; mode=display">\begin{align}  S=||A\Theta-Y||_2^{2}=(A\Theta-Y)^{T}(A\Theta-Y)\\\ =(\Theta^{T}A^{T}-Y^{T})(A\Theta-Y)\\\ =\Theta^{T}A^{T}A\Theta-\Theta^{T}A^{T}Y-Y^{T}A\Theta+Y^{T}Y\\\ =\Theta^{T}A^{T}A\Theta-2\Theta^{T}A^{T}Y+Y^{T}Y \tag{2} \end{align}​</script><p>对<script type="math/tex">S​</script>求导，<script type="math/tex">\begin{align} \dfrac {\partial S}{\partial \theta }=\dfrac{\partial(\Theta^{T}A^{T}A\Theta-2\Theta^{T}A^{T}Y+Y^{T}Y)}{\partial \Theta}\\\ =\dfrac{\partial(\Theta^{T}A^{T}A\Theta)}{\partial \Theta}-2A^{T}Y+0\\\ =2A^{T}A\Theta-2A^{T}Y \tag{3} \end{align}​</script></p>
-<p>令<script type="math/tex">\dfrac {\partial S}{\partial \theta }=0​</script>，则<script type="math/tex">2A^{T}A\Theta-2A^{T}Y=0​</script>，所以<script type="math/tex">\Theta=(A^{T}A)^{-1}A^{T}Y​</script>.</p>
+<h2 id="2-最小二乘法正规方程法"><a href="#2-最小二乘法正规方程法" class="headerlink" title="2. 最小二乘法正规方程法"></a>2. 最小二乘法正规方程法</h2><p>假设我们有<script type="math/tex">N</script>个样本数据，每个样本具有<script type="math/tex">m</script>个特征，现在使用线性回归的方法，去求解最优的线性回归函数<script type="math/tex">Y</script>。</p>
+<script type="math/tex; mode=display">\begin{align}  \begin{bmatrix}1 & x_1^{(1)}  & x^{(1)}_{2}&\ldots  & x^{\left(1\right) }_{m} \\1 & x_1^{(2)} &  x_2^{(2)}&\ldots &x_m^{2}  \\\vdots  &  &  &  \vdots & \vdots\\1 & x_1^{(N)} & x^{(N)}_{2}&\ldots  & x^{(N)}_{m}\end{bmatrix}\begin{bmatrix}\theta_0 \\\theta_1 \\\vdots\\\theta_m\end{bmatrix}=\begin{bmatrix}Y_2 \\ \vdots\\Y_N\end{bmatrix} \tag{1} \end{align}</script><p>令第一个矩阵为<script type="math/tex">A</script>，第二个为<script type="math/tex">\Theta</script>，第三个为<script type="math/tex">Y</script>。</p>
+<p>则求解最优的线性函数的目标，可转化为最小化误差平方和，即<script type="math/tex">\min_{\Theta}||A\Theta-Y||_2^{2}</script>公式。</p>
+<script type="math/tex; mode=display">\begin{align}  S=||A\Theta-Y||_2^{2}=(A\Theta-Y)^{T}(A\Theta-Y)\\\ =(\Theta^{T}A^{T}-Y^{T})(A\Theta-Y)\\\ =\Theta^{T}A^{T}A\Theta-\Theta^{T}A^{T}Y-Y^{T}A\Theta+Y^{T}Y\\\ =\Theta^{T}A^{T}A\Theta-2\Theta^{T}A^{T}Y+Y^{T}Y \tag{2} \end{align}</script><p>对<script type="math/tex">S</script>求导，<script type="math/tex">\begin{align} \dfrac {\partial S}{\partial \theta }=\dfrac{\partial(\Theta^{T}A^{T}A\Theta-2\Theta^{T}A^{T}Y+Y^{T}Y)}{\partial \Theta}\\\ =\dfrac{\partial(\Theta^{T}A^{T}A\Theta)}{\partial \Theta}-2A^{T}Y+0\\\ =2A^{T}A\Theta-2A^{T}Y \tag{3} \end{align}</script></p>
+<p>令<script type="math/tex">\dfrac {\partial S}{\partial \theta }=0</script>，则<script type="math/tex">2A^{T}A\Theta-2A^{T}Y=0</script>，所以<script type="math/tex">\Theta=(A^{T}A)^{-1}A^{T}Y</script>.</p>
 <h2 id="3-似然函数与最小二乘法的关系"><a href="#3-似然函数与最小二乘法的关系" class="headerlink" title="3. 似然函数与最小二乘法的关系"></a>3. 似然函数与最小二乘法的关系</h2><h3 id="3-1-推理过程"><a href="#3-1-推理过程" class="headerlink" title="3.1 推理过程"></a>3.1 推理过程</h3><p>(1) 令线性回归函数为<script type="math/tex">y^{(i)}=\theta^{T}x^{(i)}+\epsilon^{(i)}</script>；其中<script type="math/tex">\epsilon^{(i)}</script>表示误差，假设<script type="math/tex">\epsilon^{(i)}</script>独立同分布的，都服从正态分布；</p>
 <p>(2) 因为</p>
 <p><img src="/2019/04/11/Linear-model/4.png" width="80%" height="80%"></p>
 <p>则</p>
 <p><img src="/2019/04/11/Linear-model/5.png" width="80%" height="80%"></p>
-<p>可以理解为使预测值<script type="math/tex">y^{(i)}​</script>的越大就越接近真实值；</p>
+<p>可以理解为使预测值<script type="math/tex">y^{(i)}</script>的越大就越接近真实值；</p>
 <p>(3) 因为变量独立同分布，所以似然函数为</p>
 <p><img src="/2019/04/11/Linear-model/6.png" width="80%" height="80%"></p>
 <p>(4) 求解似然函数，取对数</p>
 <p><img src="/2019/04/11/Linear-model/7.png" width="80%" height="80%"></p>
 <p>要使<script type="math/tex">l(\theta)</script>最大，即要使平方误差<script type="math/tex">J(\theta)=\dfrac{1}{2}\sum_{i=1}^{m}{(y^{(i)}-\theta^{T}x^{(i)})}^{2}</script>最小。<strong>所以，极大似然函数的过程即在最小化平方误差。</strong></p>
 <h3 id="3-2-最小二乘与极大似然的区别"><a href="#3-2-最小二乘与极大似然的区别" class="headerlink" title="3.2 最小二乘与极大似然的区别"></a>3.2 最小二乘与极大似然的区别</h3><ul>
-<li><p><strong>最小二乘法：</strong>即观测值与实际数据误差平方和<script type="math/tex">J(\theta)=\dfrac{1}{2}\sum_{i=1}^{m}{(y^{(i)}-\theta^{T}x^{(i)})}^{2}​</script>最小，其没有假设，几何意义上就是距离最小；</p>
+<li><p><strong>最小二乘法：</strong>即观测值与实际数据误差平方和<script type="math/tex">J(\theta)=\dfrac{1}{2}\sum_{i=1}^{m}{(y^{(i)}-\theta^{T}x^{(i)})}^{2}</script>最小，其没有假设，几何意义上就是距离最小；</p>
 </li>
 <li><p><strong>极大似然估计：</strong>估计参数<script type="math/tex">\theta</script>可能值，使样本发生概率最大。</p>
 </li>
@@ -617,8 +617,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
     
     
     
@@ -1055,7 +1053,7 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="统计学习"><span class="iconfont-archer">&#xe60a;</span>统计学习</span>
+        <span class="sidebar-category-name" data-categories="机器学习"><span class="iconfont-archer">&#xe60a;</span>机器学习</span>
     
         <span class="sidebar-category-name" data-categories="转载文章"><span class="iconfont-archer">&#xe60a;</span>转载文章</span>
     
@@ -1064,8 +1062,6 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
     
         <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
-    
-        <span class="sidebar-category-name" data-categories="机器学习"><span class="iconfont-archer">&#xe60a;</span>机器学习</span>
     
         <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
     

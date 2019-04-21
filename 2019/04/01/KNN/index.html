@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">913</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">909</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -416,7 +416,7 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="统计学习-KNN算法"><a href="#统计学习-KNN算法" class="headerlink" title="统计学习-KNN算法"></a>统计学习-KNN算法</h1><hr>
+        <h1 id="KNN算法"><a href="#KNN算法" class="headerlink" title="KNN算法"></a>KNN算法</h1><hr>
 <blockquote>
 <p><strong>主要内容</strong></p>
 <ul>
@@ -429,7 +429,7 @@ height:50vh;
 </blockquote>
 <h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>​    给定一个训练数据集，对新的输入实例，在训练数据集中找到与该实例最邻近的k个实例，这k个实例的多数属于某个类，就把该输入实例分为这个类（<strong>多数表决</strong>）。<font color="red">注意：KNN算法是一种lazy-learning 算法，不需要用数据集训练。</font></p>
 <h2 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h2><p>​    训练集$T=\lbrace (x_1,y_1),(x_2,y_2),⋯,(x_N,y_N)\rbrace$，其类别$y_i∈{c_1,c_2,⋯,c_K}$，训练集中样本点数为$N$，类别数为$K$。输入待预测数据$x$，则<strong>预测类别</strong></p>
-<p>​    <script type="math/tex">\begin{align} y=\arg \max_{c_j} ⁡∑_{x_i∈N_k(x)}I(y_i=c_j), \tag{1}\\\  i=1,2,⋯,N; j=1,2,⋯,K \end{align} ​</script></p>
+<p>​    <script type="math/tex">\begin{align} y=\arg \max_{c_j} ⁡∑_{x_i∈N_k(x)}I(y_i=c_j), \tag{1}\\\  i=1,2,⋯,N; j=1,2,⋯,K \end{align}</script></p>
 <p>​    其中，涵盖$x$的k邻域记作$N_k(x)$，当$y_i=c_j$时指示函数$I=1$，否则$I=0$。</p>
 <h2 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h2><ul>
 <li><strong>输入：</strong>训练数据集和测试数据； </li>
@@ -450,7 +450,7 @@ height:50vh;
 <li><strong>输出</strong>返回前k个点中出现频率最高的分类，作为当前测试数据的分类。</li>
 </ul>
 <h2 id="分类决策规则"><a href="#分类决策规则" class="headerlink" title="分类决策规则"></a>分类决策规则</h2><p>​    假如给$x$预测类别为$c_j$，同时由式子<strong>(1)</strong>可知k邻域的样本点对学习模型的贡献度是均等的，则kNN学习模型<strong>误分类率为</strong></p>
-<script type="math/tex; mode=display">\begin{align} \dfrac {1}{k}\sum _{x_i \in N_k(x)}I \left( y_{i} \neq c_{j}\right) =1-  \dfrac {1}{k}\sum _{x_i \in N_k(x)}I \left( y_{i} = c_{j}\right)   \tag{2}\\\ \end{align} ​</script><p>​    <strong>若要最小化误分类率</strong>，则应</p>
+<script type="math/tex; mode=display">\begin{align} \dfrac {1}{k}\sum _{x_i \in N_k(x)}I \left( y_{i} \neq c_{j}\right) =1-  \dfrac {1}{k}\sum _{x_i \in N_k(x)}I \left( y_{i} = c_{j}\right)   \tag{2}\\\ \end{align}</script><p>​    <strong>若要最小化误分类率</strong>，则应</p>
 <script type="math/tex; mode=display">\begin{align} \max _{c_{j}}\sum _{x_{i}\in N_{k}\left( x\right) } I \left( y_{i} = c_{j}\right)  \tag{3}\\\  \end{align}</script><p>​    所以，<strong>多数表决规则等价于经验风险最小化</strong>。</p>
 <h2 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h2><ul>
 <li><p><strong>若k值过小</strong>，预测结果会<strong>对噪音样本点显得异常敏感</strong>,容易<strong>产生过拟合</strong>。特别地，当k等于1时，kNN退化成最近邻算法，没有了显式的学习过程。</p>
@@ -463,7 +463,7 @@ height:50vh;
 <ul>
 <li><strong>解决方案一：</strong>前面提到过，k邻域的样本点对预测结果的贡献度是相等的；但距离更近的样本点应有更大的相似度，其贡献度应比距离更远的样本点大。可以加上权值</li>
 </ul>
-<script type="math/tex; mode=display">\begin{align}w_i=\frac{1}{‖xi−x‖} \tag{4}\\\ \end{align} ​</script><p>​    进行修正，则最大表决原则变成：</p>
+<script type="math/tex; mode=display">\begin{align}w_i=\frac{1}{‖xi−x‖} \tag{4}\\\ \end{align}</script><p>​    进行修正，则最大表决原则变成：</p>
 <script type="math/tex; mode=display">\begin{align} \max _{c_{j}}\sum _{x_{i}\in N_{k}\left( x\right) } w_{i} I \left( y_{i} = c_{j}\right)  \tag{5}\\\  \end{align}</script><ul>
 <li><strong>解决方案二：</strong>在一开始选取较小的k值，采用交叉验证的方法来选取最优的k值。</li>
 </ul>
@@ -612,7 +612,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#统计学习-KNN算法"><span class="toc-number">1.</span> <span class="toc-text">统计学习-KNN算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本介绍"><span class="toc-number">1.1.</span> <span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法描述"><span class="toc-number">1.2.</span> <span class="toc-text">算法描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法流程"><span class="toc-number">1.3.</span> <span class="toc-text">算法流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分类决策规则"><span class="toc-number">1.4.</span> <span class="toc-text">分类决策规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存在问题"><span class="toc-number">1.5.</span> <span class="toc-text">存在问题</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#KNN算法"><span class="toc-number">1.</span> <span class="toc-text">KNN算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本介绍"><span class="toc-number">1.1.</span> <span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法描述"><span class="toc-number">1.2.</span> <span class="toc-text">算法描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法流程"><span class="toc-number">1.3.</span> <span class="toc-text">算法流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分类决策规则"><span class="toc-number">1.4.</span> <span class="toc-text">分类决策规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存在问题"><span class="toc-number">1.5.</span> <span class="toc-text">存在问题</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -625,8 +625,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
     
     
     
@@ -1063,7 +1061,7 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="统计学习"><span class="iconfont-archer">&#xe60a;</span>统计学习</span>
+        <span class="sidebar-category-name" data-categories="机器学习"><span class="iconfont-archer">&#xe60a;</span>机器学习</span>
     
         <span class="sidebar-category-name" data-categories="转载文章"><span class="iconfont-archer">&#xe60a;</span>转载文章</span>
     
@@ -1072,8 +1070,6 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
     
         <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
-    
-        <span class="sidebar-category-name" data-categories="机器学习"><span class="iconfont-archer">&#xe60a;</span>机器学习</span>
     
         <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
     
