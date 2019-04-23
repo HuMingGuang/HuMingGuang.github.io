@@ -281,7 +281,7 @@ height:50vh;
                 
                     <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
     
 </div>
                 
@@ -472,47 +472,47 @@ height:50vh;
 </ul>
 <h2 id="2-偏差与方差"><a href="#2-偏差与方差" class="headerlink" title="2. 偏差与方差"></a><font color="bule">2. 偏差与方差</font></h2><p>模型的泛化误差来源两个方面：偏差(Bias)和方差(Variance)，我们可以使用偏差和方差描述模型的性能。</p>
 <h3 id="2-1-方差"><a href="#2-1-方差" class="headerlink" title="2.1 方差"></a><font color="blue">2.1 方差</font></h3><p>在一个训练集 <script type="math/tex">D</script>上模型<script type="math/tex">f</script> 对测试样本 <script type="math/tex">\mathbf{x}</script> 的预测输出为 <script type="math/tex">f(\mathbf{x};D)</script>, 那么学习算法<script type="math/tex">f</script> 对测试样本<script type="math/tex">\mathbf{x}</script>的 <strong>期望预测</strong> 为:</p>
-<script type="math/tex; mode=display">\begin{align} \overline{f}(\mathbf{x}) = E_D\left[f\left(\mathbf{x}; D\right)\right]  \tag{1}\\\ \end{align}​</script><p>上面的期望预测也就是针对<strong>不同</strong>数据集<script type="math/tex">D</script>,<script type="math/tex">f</script>对<script type="math/tex">X</script> 的预测值取其期望, 也被叫做 average predicted.</p>
+<script type="math/tex; mode=display">\begin{align} \overline{f}(\mathbf{x}) = E_D\left[f\left(\mathbf{x}; D\right)\right]  \tag{1}\\\ \end{align}</script><p>上面的期望预测也就是针对<strong>不同</strong>数据集<script type="math/tex">D</script>,<script type="math/tex">f</script>对<script type="math/tex">X</script> 的预测值取其期望, 也被叫做 average predicted.</p>
 <p>使用样本数相同的不同训练集产生的方差为:</p>
-<script type="math/tex; mode=display">\begin{align} var(\mathbf{x}) = E_D\left[\left( f(\mathbf{x}; D) - \overline{f}(\mathbf{x}) \right)^2\right]  \tag{2}\\\ \end{align} ​</script><p>方差度量了<strong>同样大小的训练集的变动所导致的学习性能的变化</strong>, 即<strong>刻画了数据扰动所造成的影响</strong> .</p>
+<script type="math/tex; mode=display">\begin{align} var(\mathbf{x}) = E_D\left[\left( f(\mathbf{x}; D) - \overline{f}(\mathbf{x}) \right)^2\right]  \tag{2}\\\ \end{align}</script><p>方差度量了<strong>同样大小的训练集的变动所导致的学习性能的变化</strong>, 即<strong>刻画了数据扰动所造成的影响</strong> .</p>
 <h3 id="2-2-偏差"><a href="#2-2-偏差" class="headerlink" title="2.2 偏差"></a><font color="blue">2.2 偏差</font></h3><p>期望预测与真实标记的误差称为<strong>偏差(bias),</strong> 为了方便起见, 我们直接取偏差的平方:</p>
-<script type="math/tex; mode=display">\begin{align} bias^2(\mathbf{x}) = \left( \overline{f}(\mathbf{x}) - y \right)^2 \tag{3}\\\ \end{align}​</script><p>偏差度量了<strong>学习算法的期望预测与真实结果的偏离程序,</strong> 即 <strong>刻画了学习算法本身的拟合能力</strong>。</p>
+<script type="math/tex; mode=display">\begin{align} bias^2(\mathbf{x}) = \left( \overline{f}(\mathbf{x}) - y \right)^2 \tag{3}\\\ \end{align}</script><p>偏差度量了<strong>学习算法的期望预测与真实结果的偏离程序,</strong> 即 <strong>刻画了学习算法本身的拟合能力</strong>。</p>
 <p><img src="/2019/04/10/esemble-learning/biasVariance.png" width="65%" height="65%"></p>
 <p><img src="/2019/04/10/esemble-learning/complexityModel.png" width="65%" height="65%"></p>
 <h2 id="3-AdaBoost算法"><a href="#3-AdaBoost算法" class="headerlink" title="3. AdaBoost算法"></a><font color="bule">3. AdaBoost算法</font></h2><hr>
-<p><strong>输入：</strong>训练数据集<script type="math/tex">T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}​</script>，其中<script type="math/tex">x_i \in X \subseteq R^n​</script>，<script type="math/tex">y_i \in Y=\left\{ -1,1\right\} ​</script>；弱学习算法</p>
+<p><strong>输入：</strong>训练数据集<script type="math/tex">T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}</script>，其中<script type="math/tex">x_i \in X \subseteq R^n</script>，<script type="math/tex">y_i \in Y=\left\{ -1,1\right\}</script>；弱学习算法</p>
 <p><strong>输出：</strong>最终分类器<script type="math/tex">G(x)</script></p>
 <p><strong>(1) 初始化训练数据的权值分布</strong></p>
 <script type="math/tex; mode=display">\begin{align} D_{1}=\left( w_{11},\ldots ,w_{1i},\ldots ,w_{1N}\right), w_{1i}=\dfrac {1}{N},
-i=1,2,\ldots ,N  \tag{1} \end{align}​</script><p><strong>(2) 对轮数</strong><script type="math/tex">m=1,2,…,M</script></p>
+i=1,2,\ldots ,N  \tag{1} \end{align}</script><p><strong>(2) 对轮数</strong><script type="math/tex">m=1,2,…,M</script></p>
 <p>​    (2.1) 使用具有权值分布<script type="math/tex">D_m</script>的训练数据集学习，得到基本分类器</p>
-<p>​    <script type="math/tex">\begin{align}  G_{m}\left( x\right) =x\rightarrow \left\{ -1,+1\right\}  \tag{2} \end{align} ​</script></p>
+<p>​    <script type="math/tex">\begin{align}  G_{m}\left( x\right) =x\rightarrow \left\{ -1,+1\right\}  \tag{2} \end{align}</script></p>
 <p>​    (2.2) 计算<script type="math/tex">G _m(x)</script>在训练数据集上的分类误差率</p>
-<p>​    <script type="math/tex">\begin{align}   e_{m}=P \left( G_{m}\left( x_{i}\right) \neq  y_{i} \right) =\sum ^{N}_{i=1}w_{mi} I\left( G_{m}\left( x_{i}\right) \neq  y_{i} \right) \tag{3} \end{align} ​</script></p>
-<p>​    (2.3)计算<script type="math/tex">G_m(x)​</script>的系数</p>
-<p>​    <script type="math/tex">\begin{align}   \alpha _{m}=\dfrac {1}{2}\log \dfrac {1-e_{m}}{e_m} \tag{4} \end{align} ​</script></p>
+<p>​    <script type="math/tex">\begin{align}   e_{m}=P \left( G_{m}\left( x_{i}\right) \neq  y_{i} \right) =\sum ^{N}_{i=1}w_{mi} I\left( G_{m}\left( x_{i}\right) \neq  y_{i} \right) \tag{3} \end{align}</script></p>
+<p>​    (2.3)计算<script type="math/tex">G_m(x)</script>的系数</p>
+<p>​    <script type="math/tex">\begin{align}   \alpha _{m}=\dfrac {1}{2}\log \dfrac {1-e_{m}}{e_m} \tag{4} \end{align}</script></p>
 <p>​    (2.4)更新训练数据集的权值分布</p>
 <script type="math/tex; mode=display">\begin{align} D_{m+1}=\left( w_{m+1,1},\ldots ,w_{m+1,i},\ldots ,w_{m+1,N}\right) \tag{5} \end{align}</script><script type="math/tex; mode=display">\begin{align}   w_{m+1,i}=\dfrac {w_{mi}}{Z_{m}}\exp \left( -\alpha _{m}y_{i}c_{im}\left( x_{i}\right) \right)  \tag{6} \end{align}</script><p>​        使得<script type="math/tex">D_{m+1}</script>成为一个概率分布。</p>
 <p>​        这里，<script type="math/tex">Z_m</script>是规范化因子</p>
-<p>​            <script type="math/tex">\begin{align}   Z_m = \sum_{i=1}^{N} w_{mi} \exp \left( -\alpha _{m}y_{i}c_{im}\left( x_{i}\right) \right) \tag{7} \end{align} ​</script></p>
+<p>​            <script type="math/tex">\begin{align}   Z_m = \sum_{i=1}^{N} w_{mi} \exp \left( -\alpha _{m}y_{i}c_{im}\left( x_{i}\right) \right) \tag{7} \end{align}</script></p>
 <p><strong>(3) 构建基本分类器的线形组合</strong> </p>
-<p>​    <script type="math/tex">\begin{align}   f\left( x\right) =\sum ^{M}_{m=1}\alpha _{m}G_{m}\left( x\right)  \tag{8} \end{align} ​</script></p>
+<p>​    <script type="math/tex">\begin{align}   f\left( x\right) =\sum ^{M}_{m=1}\alpha _{m}G_{m}\left( x\right)  \tag{8} \end{align}</script></p>
 <p>​    得到最终的分类器</p>
 <p>​    <script type="math/tex">\begin{align}  G(x)=\mathbf{sign} ( f\left( x\right)) =\mathbf{sign}\left(\sum ^{M}_{m=1}\alpha _{m}G_{m}\left( x\right)\right)  \tag{9} \end{align}</script></p>
 <p><strong>总结</strong>：数据权重和弱分类器的权重，交替更新。对分类正确的样本降低权重，对分类错误的样本升高或者保持权重不变。在最终模型融合的时候，根据错误率对弱分类器进行加权融合，错误率低的分类器拥有更大的话语权。</p>
 <hr>
 <h2 id="4-梯度提升决策树-GBDT"><a href="#4-梯度提升决策树-GBDT" class="headerlink" title="4. 梯度提升决策树(GBDT)"></a><font color="bule">4. 梯度提升决策树(GBDT)</font></h2><h3 id="4-1-核心思想"><a href="#4-1-核心思想" class="headerlink" title="4.1 核心思想"></a><font color="blue">4.1 核心思想</font></h3><p>根据当前模型损失函数的负梯度信息来训练新加入的弱分类器，然后将训练好的弱分类器以累加的形式结合到现有模型中。</p>
 <h3 id="4-2-GBDT回归算法"><a href="#4-2-GBDT回归算法" class="headerlink" title="4.2 GBDT回归算法"></a><font color="blue">4.2 GBDT回归算法</font></h3><hr>
-<p><strong>输入：</strong>训练数据集<script type="math/tex">T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}</script>，<script type="math/tex">x_i \in X \subseteq R^n</script>，<script type="math/tex">y_i\in Y \subseteq R^n</script>;损失函数<script type="math/tex">L(y,f(x))​</script>；</p>
-<p><strong>输出：</strong>强学习器<script type="math/tex">\widehat {f}\left( x\right) ​</script></p>
+<p><strong>输入：</strong>训练数据集<script type="math/tex">T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}</script>，<script type="math/tex">x_i \in X \subseteq R^n</script>，<script type="math/tex">y_i\in Y \subseteq R^n</script>;损失函数<script type="math/tex">L(y,f(x))</script>；</p>
+<p><strong>输出：</strong>强学习器<script type="math/tex">\widehat {f}\left( x\right)</script></p>
 <p>(1) 初始化弱分类器，使用CART树</p>
-<p>​    <script type="math/tex">\begin{align} f_0(x)=\arg \min_{c} \sum_{i=1}^{N} L(y_i,c)\tag{1} \end{align} ​</script></p>
-<p>(2) 对迭代轮数<script type="math/tex">m=1,2,…,M​</script></p>
-<p>​    (2.1) 对样本<script type="math/tex">i=1,2,…,N​</script>，计算负梯度</p>
-<p>​    <script type="math/tex">\begin{align} r_{mi} = -\bigg[\frac{\partial L(y_i, f(x_i))}{\partial f(x_i)}\bigg]_{f(x) = f_{m-1}(x)}\tag{2} \end{align} ​</script></p>
+<p>​    <script type="math/tex">\begin{align} f_0(x)=\arg \min_{c} \sum_{i=1}^{N} L(y_i,c)\tag{1} \end{align}</script></p>
+<p>(2) 对迭代轮数<script type="math/tex">m=1,2,…,M</script></p>
+<p>​    (2.1) 对样本<script type="math/tex">i=1,2,…,N</script>，计算负梯度</p>
+<p>​    <script type="math/tex">\begin{align} r_{mi} = -\bigg[\frac{\partial L(y_i, f(x_i))}{\partial f(x_i)}\bigg]_{f(x) = f_{m-1}(x)}\tag{2} \end{align}</script></p>
 <p>​    (2.2) 利用<script type="math/tex">(x_i,r_{mi})\;\; (i=1,2,..N)</script>拟合一个CART树，得到第<script type="math/tex">m</script> 棵树的叶结点区域<script type="math/tex">R_{mj}</script>，<script type="math/tex">j=1,2,…,J</script>,其中<script type="math/tex">J</script>为CART树<script type="math/tex">m</script>的叶子节点的个数。</p>
 <p>​    (2.3) 对叶子区域<script type="math/tex">j=1,2,…,J</script>，CART树拟合叶子结点最佳的输出值，即使损失函数最小</p>
-<p>​    <script type="math/tex">\begin{align} c_{mj} = \arg \min_{c}\sum\limits_{x_i \in R_{mj}} L(y_i,f_{m-1}(x_i) +c)\tag{3} \end{align} ​</script></p>
+<p>​    <script type="math/tex">\begin{align} c_{mj} = \arg \min_{c}\sum\limits_{x_i \in R_{mj}} L(y_i,f_{m-1}(x_i) +c)\tag{3} \end{align}</script></p>
 <p>​    (2.4) 更新强学习器</p>
 <script type="math/tex; mode=display">\begin{align} f_m(x)=f_{m-1}(x)+\sum_{j=1}^{J} c_{mj} I(x\in R_{mj})\tag{4} \end{align}</script><p>(3) 得到最终的强学习器</p>
 <script type="math/tex; mode=display">\begin{align} \widehat {f}\left( x\right) =f_{M}(x)=\sum_{m=1}^{M} \sum_{j=1}^{J} c_{mj}I(x\in R_{mj}) \tag{5} \end{align}</script><p><strong>总结：</strong>根据负梯度和最小化损失函数，用CART树拟合弱学习器得到最佳的输出点<script type="math/tex">c</script>,进行<script type="math/tex">M</script>迭代之后，得到最小损失函数对应的强学习器。</p>
@@ -1179,13 +1179,13 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+    
         <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
     
         <span class="sidebar-tag-name" data-tags="推荐系统"><span class="iconfont-archer">&#xe606;</span>推荐系统</span>
     
         <span class="sidebar-tag-name" data-tags="机器学习实战"><span class="iconfont-archer">&#xe606;</span>机器学习实战</span>
-    
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
         <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
     
