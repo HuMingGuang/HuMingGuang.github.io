@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.3k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.5k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -430,9 +430,17 @@ height:50vh;
 <p>将GMM用于聚类时，假设数据服从混合高斯分布（Mixture Gaussian Distribution），那么只要根据数据推出 GMM 的概率分布来就可以了；然后 GMM 的 $K$ 个 Component 实际上对应$K$个 cluster 。根据数据来推算概率密度通常被称作 density estimation 。特别地，<strong>当我已知（或假定）概率密度函数的形式，而要估计其中的参数的过程被称作『参数估计』。</strong></p>
 <p>例如图2的例子，很明显有两个聚类，可以定义$K=2$. 那么对应的GMM形式如下：</p>
 <script type="math/tex; mode=display">\begin{align} p(x)=\pi_1 N(x|\mu_1,\Sigma_1)+\pi_2 N(x|\mu_2,\Sigma_2) \tag{3} \end{align}</script><p>上式中未知的参数有六个：$\pi_1 ,\mu_1,\Sigma_1,\pi_2, \mu_2,\Sigma_2$.之前提到GMM聚类时分为两步，第一步是随机地在这$K$个分量中选一个，每个分量被选中的概率即为混合系数$\pi_k$。可以设定$\pi_1=\pi_2=0.5$表示每个分量被选中的概率是0.5，即从中抽出一个点，这个点属于第一类的概率和第二类的概率各占一半。但实际应用中事先指定的值是很笨的做法，当问题一般化后，会出现一个问题：当从图2中的集合随机选取一个点，怎么知道这个点是来自$N(x|\mu_1,\Sigma_1)$还是$N(x|\mu_2,\Sigma_2) $呢？换言之怎么根据数据自动确定$\pi_1$和$\pi_2$的值？这就是GMM参数估计的问题。要解决这个问题，可以使用EM算法。通过EM算法，我们可以迭代计算出GMM中的参数$\pi_k,u_k,\Sigma_k$.</p>
-<h1 id="四、k-means和GMM的关系"><a href="#四、k-means和GMM的关系" class="headerlink" title="四、k-means和GMM的关系"></a>四、k-means和GMM的关系</h1><p>在特定条件下，k-means和GMM方法可以互相用对方的思想来表达。<strong>在k-means中根据距离每个点最接近的类中心来标记该点的类别，这里存在的假设是每个类簇的尺度接近且特征的分布不存在不均匀性</strong>。这也解释了为什么在使用k-means前对数据进行归一会有效果。<strong>高斯混合模型则不会受到这个约束</strong>，因为它对每个类簇分别考察特征的协方差模型。</p>
+<h1 id="四、k-means和GMM的关系"><a href="#四、k-means和GMM的关系" class="headerlink" title="四、k-means和GMM的关系"></a>四、k-means和GMM的关系</h1><p>在特定条件下，k-means和GMM方法可以互相用对方的思想来表达。<strong>在k-means中根据距离每个点最接近的簇中心来标记该点的类别，这里存在的假设是每个类簇的尺度接近且特征的分布不存在不均匀性</strong>。这也解释了为什么在使用k-means前对数据进行归一会有效果。<strong>高斯混合模型则不会受到这个约束</strong>，因为它对每个类簇分别考察特征的协方差模型。</p>
 <p><strong>K-means算法可以被视为高斯混合模型（GMM）的一种特殊形式。</strong>整体上看，高斯混合模型能提供更强的描述能力，因为<strong>聚类时数据点的从属关系不仅与近邻相关，还会依赖于类簇的形状</strong>。<strong>n维高斯分布的形状由每个类簇的协方差来决定</strong>。在协方差矩阵上添加特定的约束条件后，可能会通过GMM和k-means得到相同的结果。</p>
 <p><strong>整体来看，所有无监督机器学习算法都遵循一条简单的模式：给定一系列数据，训练出一个能描述这些数据规律的模型（并期望潜在过程能生成数据）。</strong>训练过程通常要反复迭代，直到无法再优化参数获得更贴合数据的模型为止。</p>
+<p><strong>k-means与高斯混合模型的相同点</strong></p>
+<ul>
+<li>都可用于聚类算法，都需要指定$K$值，都使用过$EM$算法，都往往收敛于局部最优</li>
+</ul>
+<p><strong>相比于k-means，高斯混合模型算法的优点</strong></p>
+<ul>
+<li>可以给出一个样本属于某一类的的概率是多少，不仅仅可以用于聚类，还可以用于概率密度的估计，并且可以用于生成新的样本点。</li>
+</ul>
 <h1 id="五、GMM参数估计过程"><a href="#五、GMM参数估计过程" class="headerlink" title="五、GMM参数估计过程"></a>五、GMM参数估计过程</h1><p>现在假设我们有$N$个数据点，并假设它们服从某个分布（记作 $p(x)$ )，现在要确定里面的一些参数的值，例如，在 GMM 中，我们<strong>就需要确定 $\pi_k,u_k,\Sigma_k$这些参数</strong>。 我们的想法是，找到这样一组参数，它所确定的概率分布生成这些给定的数据点的概率最大，而这个概率实际上就等于$ \prod_{i=1}^N p(x_i)$ ，我们把这个乘积称作[似然函数 (Likelihood Function)。</p>
 <p>通常单个点的概率都很小，许多很小的数字相乘起来在计算机里很容易造成浮点数下溢，因此我们通常会对其取对数，把乘积变成加和 $\sum_{i=1}^N \log p(x_i)$，得到 <strong>log-likelihood function</strong> 。接下来我们只要<strong>将这个函数最大化（</strong>通常的做法是求导并令导数等于零，然后解方程），亦即找到这样一组参数值，它让似然函数取得最大值，我们就认为这是最合适的参数，这样就完成了参数估计的过程。</p>
 <p>下面让我们来看一看 <strong>GMM 的 log-likelihood function</strong> ：</p>
@@ -452,6 +460,8 @@ height:50vh;
 <ul>
 <li><strong>参考资料1</strong>：<a href="https://zhuanlan.zhihu.com/p/31103654" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/31103654</a></li>
 <li><strong>参考资料2</strong>：<a href="https://blog.csdn.net/jinping_shi/article/details/59613054" target="_blank" rel="noopener">https://blog.csdn.net/jinping_shi/article/details/59613054</a></li>
+<li><strong>参考资料3</strong>：<a href="http://blog.pluskid.org/?p=39&amp;cpage=2#comments" target="_blank" rel="noopener">http://blog.pluskid.org/?p=39&amp;cpage=2#comments</a></li>
+<li><strong>参考资料4</strong>：《百面机器学习》</li>
 <li>本博文为原创总结，如有转载，请注名出处！</li>
 </ul>
 
@@ -462,12 +472,17 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/04/22/python-1/" title="Python系列(一)：Python基础">
+                    <div class="nextTitle">Python系列(一)：Python基础</div>
+                </a>
+            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/04/20/EM-algorithm/" title="EM-algorithm">
-                    <div class="prevTitle">EM-algorithm</div>
+                <a href="/2019/04/20/EM-algorithm/" title="EM算法">
+                    <div class="prevTitle">EM算法</div>
                 </a>
             
         </li>
@@ -872,9 +887,18 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 23
+        Total : 24
         </div>
         <!-- search  -->
         
@@ -894,12 +918,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href="/2019/04/22/python-1/">Python系列(一)：Python基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/21</span><a class="archive-post-title" href="/2019/04/21/Gaussian-Mixture-Model/">高斯混合模型</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/20</span><a class="archive-post-title" href="/2019/04/20/EM-algorithm/">EM-algorithm</a>
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href="/2019/04/20/EM-algorithm/">EM算法</a>
         </li>
     
     
@@ -1018,6 +1047,8 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="机器学习实战"><span class="iconfont-archer">&#xe606;</span>机器学习实战</span>
     
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
         <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
         <span class="sidebar-tag-name" data-tags="C++"><span class="iconfont-archer">&#xe606;</span>C++</span>
@@ -1061,11 +1092,11 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
     
-        <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
+        <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
     
         <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
     
-        <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
+        <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

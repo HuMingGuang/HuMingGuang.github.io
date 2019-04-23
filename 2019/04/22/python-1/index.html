@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>MingGuangHu&#39;s Studio.</title>
+    <title>Python系列(一)：Python基础 · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -218,12 +218,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Python系列(一)：Python基础</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">MingGuangHu's Studio.</a>
 </header>
@@ -235,24 +246,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            Python系列(一)：Python基础
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="python">python</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.5k</span>阅读时长: <span class="post-count reading-time">6 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/04/22</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -353,225 +414,89 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/30/recommend-system-4/">
-            
-                <span>推荐系统（五）</span>
-        </a>
-        <div class="abstract-content">
-            介绍基本的推荐算法，解释基于关联规则的两种协同过滤算法： Aprior 和 FP Growth
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="一、表达式和计算"><a href="#一、表达式和计算" class="headerlink" title="一、表达式和计算"></a><font color="bule">一、表达式和计算</font></h1><p><strong>1.算数运算符</strong>：<code>//</code>整除，<code>**</code>乘幂，<code>/</code>除</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">10.0</span>/<span class="number">3.0</span></span><br><span class="line"><span class="number">3.333333333333335</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">10</span>//<span class="number">3</span></span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p><strong>2.复数</strong>的虚部使用<code>j或者J</code>，复数类型为<code>complex</code>，得到复数的虚部<code>(2+3j).imag</code>，得到复数的实部<code>(2+3j).real</code></p>
+<p><strong>3.python的类型错误</strong>是运行时错误，与C和Java等语言不同，那里的类型错误由编译器检查</p>
+<p><strong>4.底数前的正负号，在乘幂之后作用</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;<span class="number">-3</span>**<span class="number">4</span></span><br><span class="line"><span class="number">-81</span></span><br></pre></td></tr></table></figure>
+<p><strong>5.续行符</strong>：在一行的最后字符是反斜线<code>\</code>，解释为下一行是本行的继续</p>
+<p><strong>6.处理数值的标准函数</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;max(<span class="number">2</span>,<span class="number">3</span>,<span class="number">2.3</span>)</span><br><span class="line"><span class="number">3</span></span><br><span class="line">&gt;&gt;&gt;min(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line"><span class="number">1</span></span><br><span class="line">&gt;&gt;&gt;round(<span class="number">1.27</span>**<span class="number">10</span>) <span class="comment">#求浮点数的近似值，银行家舍入得整数</span></span><br><span class="line"><span class="number">11</span></span><br><span class="line">&gt;&gt;&gt;round(<span class="number">1.27</span>**<span class="number">10</span>,<span class="number">4</span>)<span class="comment">#说明保留小数位数</span></span><br><span class="line"><span class="number">10.9153</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>pow(a,b) <span class="comment">#相当于a**b</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>pow(a,b,c) <span class="comment">#相当于a**b%c</span></span><br></pre></td></tr></table></figure>
+<p><strong>7.数学函数包</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> * <span class="comment">#导入math包所有的功能</span></span><br><span class="line"><span class="keyword">from</span> matn impport sin,cos <span class="comment">#导入math包，并使函数sin和cos可用</span></span><br><span class="line"><span class="keyword">import</span> math <span class="comment">#导入整个数学包，但是其中的功能只能通过math.sin的形式调用</span></span><br></pre></td></tr></table></figure>
+<p><strong>8.字符串字面量</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#一对单引号和一堆双引号作用相同，但是要匹配</span></span><br><span class="line"><span class="comment"># 用一对连续的三个单引号或者一对连续的三个双引号作为括号，可以实现字面量换行</span></span><br></pre></td></tr></table></figure>
+<font color="red">9.字符串操作</font>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>len(<span class="string">'I am'</span>) <span class="comment">#字符串长度</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'I am'</span>[<span class="number">2</span>]	<span class="comment">#字符串每个位置都可以通过下标访问</span></span><br><span class="line"><span class="string">'a'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'Student'</span>[<span class="number">-2</span>]	<span class="comment">#允许负数下标，-2表示从后往前数第二个位置</span></span><br><span class="line"><span class="string">'n'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'I am'</span>+<span class="string">' '</span>+<span class="string">'a student'</span> <span class="comment">#字符串的拼接</span></span><br><span class="line"><span class="string">'I am a student'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'Hello'</span> * <span class="number">3</span>  <span class="comment">#字符串的拷贝</span></span><br><span class="line"><span class="string">'HelloHelloHello'</span></span><br><span class="line"><span class="comment">#######################</span></span><br><span class="line"><span class="comment">#切片操作，下标范围采用左闭右开</span></span><br><span class="line">s[m:n]			<span class="comment">#得到包含s[m]到s[n-1]的串，m&gt;=n 得到空串</span></span><br><span class="line">s[m:n:d]		<span class="comment">#得到下标m到n-1范围里，按下标步进值d选出字符构造出的串</span></span><br><span class="line"><span class="comment">#上述m、n、d都可以忽略，但是冒号不能省，m省略表示0，n省略表示len(s)，d省略表示为1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'I am a student'</span>[<span class="number">3</span>:]</span><br><span class="line"><span class="string">'m a student'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'I am a student'</span>[:<span class="number">4</span>]</span><br><span class="line"><span class="string">'I am'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'I am a student'</span>[::<span class="number">2</span>]</span><br><span class="line"><span class="string">'Ia  tdn'</span></span><br></pre></td></tr></table></figure>
+<h1 id="二、变量和赋值"><a href="#二、变量和赋值" class="headerlink" title="二、变量和赋值"></a><font color="bule">二、变量和赋值</font></h1><p><strong>1.合法标识符</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#标识符为字符开头的字母数字串</span></span><br><span class="line">_____	<span class="comment">#下划线可以看为字母，所以该标识符合法</span></span><br></pre></td></tr></table></figure>
+<p><strong>2.输出函数Print</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = <span class="number">123455</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"a is "</span>,a)</span><br><span class="line">a <span class="keyword">is</span>  <span class="number">123455</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b=<span class="string">"a sutdent"</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"b is "</span>,b)</span><br><span class="line">b <span class="keyword">is</span>  a sutdent</span><br></pre></td></tr></table></figure>
+<p><strong>3.输入函数Input</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a= input(<span class="string">"please input value: "</span>)</span><br><span class="line">please input value: <span class="number">123</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"the value is "</span>,a)</span><br><span class="line">the value <span class="keyword">is</span>  <span class="number">123</span></span><br></pre></td></tr></table></figure>
+<p><strong>4.在一行中写多个语句</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在一行中写多个语句,需要在语句之间加分号</span></span><br><span class="line">x=len; y = x+<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h1 id="三、逻辑和控制"><a href="#三、逻辑和控制" class="headerlink" title="三、逻辑和控制"></a><font color="bule">三、逻辑和控制</font></h1><p><strong>1.条件判断和条件语句</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x&gt; <span class="number">1</span> <span class="keyword">and</span> x&lt;<span class="number">10</span> <span class="comment">#可简写为 1&lt;x&lt;10</span></span><br><span class="line">x&gt;<span class="number">10</span> <span class="keyword">and</span> x&gt;y**<span class="number">2</span> <span class="comment">#可简写为 10&lt; x &gt;y**2</span></span><br><span class="line"><span class="comment">#######################</span></span><br><span class="line"><span class="comment">#比较运算符的优先级低于算术运算符</span></span><br><span class="line">x + y &gt; x**<span class="number">2</span>	<span class="comment">#合法的，表示(x+y) &gt; (x**2)</span></span><br><span class="line"><span class="comment">#逻辑运算符中not的优先级最高，但是低于比较运算符，or优先级最低</span></span><br><span class="line"><span class="keyword">not</span> x**<span class="number">2</span> &gt; <span class="number">5</span> <span class="keyword">or</span> y &lt; <span class="number">6</span> <span class="keyword">and</span> x*y &gt;<span class="number">8</span>  <span class="comment">#相当于not(x**2&gt;5) or ((y&gt;6) and (x*y)&gt;8)</span></span><br></pre></td></tr></table></figure>
+<p><strong>2.if语句的拓展形式</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> 表达式：</span><br><span class="line">	语句<span class="number">1</span></span><br><span class="line"><span class="keyword">elif</span> 表达式：</span><br><span class="line">	语句<span class="number">2</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  语句<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p><strong>3.条件表达式</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 表达式1 if 条件 else 表达式2</span></span><br><span class="line"><span class="comment"># 先求条件部分，如果值为真则把表达式1的值返回，否则返回表达式2的值</span></span><br><span class="line">y=x <span class="keyword">if</span> x&gt;=<span class="number">0</span> <span class="keyword">else</span> -x</span><br></pre></td></tr></table></figure>
+<p><strong>4.程序控制</strong></p>
+<p>各种数值类型的0值都当作假，这些类型的所有非0都当作真，None也被当作假</p>
+<p><strong>5.短路求值规则</strong></p>
+<p><code>a and b</code>：先求值表达式a，如果a的值为假，就以这个值作为结果返回，否则判断表达式b，如果a不为假，则返回b为最终结果；</p>
+<p><code>a or b</code>：先求值表达式a，如果a的值为真，就以这个值作为结果返回，否则返回b的值为最终结果；</p>
+<p><code>and 和 or</code>的结果，不一定是<code>True</code>或<code>False</code>，比如:<code>3 and 0</code>结果为0；<code>0 or &#39;abc&#39;</code>结果为<code>abc</code></p>
+<p><strong>6.循环语句</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用逗号分隔列出表达式</span></span><br><span class="line">n=<span class="number">3</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">2</span>,n+<span class="number">5</span>,n**<span class="number">2</span>+<span class="number">12</span>:</span><br><span class="line">    print(i*<span class="number">3</span>)</span><br><span class="line"><span class="comment">#输出结果为</span></span><br><span class="line"><span class="comment">#6</span></span><br><span class="line"><span class="comment">#24</span></span><br><span class="line"><span class="comment">#63</span></span><br></pre></td></tr></table></figure>
+<font color="red">7.标准函数range描述整数的等差序列</font>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">range(n) <span class="comment">#表示序列0,1,2,...,n-1</span></span><br><span class="line">range(m,n)	<span class="comment">#表示序列m,m+1,...,n-1</span></span><br><span class="line">range(m,n,d)	<span class="comment">#表示序列m,m+d,...是等差值为d的序列直至最接近但不包括n的那个值</span></span><br><span class="line">range(<span class="number">10</span>,<span class="number">16</span>,<span class="number">2</span>) <span class="comment">#结果为10,12,14</span></span><br></pre></td></tr></table></figure>
+<p><strong>8.循环描述只在for语句开始求值一次</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">n=<span class="number">3</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">	print(i**<span class="number">2</span>)</span><br><span class="line">	n=n+<span class="number">3</span></span><br><span class="line"><span class="comment">#虽然循体中修改了n，但是并不影响循环体执行的次数</span></span><br></pre></td></tr></table></figure>
+<p>9.<code>break</code>导致当前循环语句结束，<code>continue</code>导致循环体的本次迭代结束；两个语句都在循环体里，<strong>控制包含它们的最内层的循环语句</strong></p>
+<h1 id="四、定义函数"><a href="#四、定义函数" class="headerlink" title="四、定义函数"></a><font color="bule">四、定义函数</font></h1><p>1.标准函数<code>isinstance(x,t)</code>用于检查<code>x</code>的类型是否为<code>t</code></p>
+<font color="red">2.断言语句</font>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assert</span> 条件				<span class="comment">#断言语句强制要求assert后的条件成立，否则就会报错,并返回出错的行号</span></span><br><span class="line"><span class="keyword">assert</span> 条件，表达式	<span class="comment">#断言要求assert后的条件成立，否则就会报错，返回出错的行号，并且计算出表达式的值返回</span></span><br></pre></td></tr></table></figure>
+<p>3.文档串</p>
+<h1 id="五、函数定义的若干问题"><a href="#五、函数定义的若干问题" class="headerlink" title="五、函数定义的若干问题"></a><font color="bule">五、函数定义的若干问题</font></h1><h1 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a><font color="bule">六、总结</font></h1>
     </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/28/recommend-system-3/">
-            
-                <span>推荐系统（四）</span>
-        </a>
-        <div class="abstract-content">
-            实现数据的预处理，给文章打标签；根据关键字推送文章
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/27/recommend-system-2/">
-            
-                <span>推荐系统（三）</span>
-        </a>
-        <div class="abstract-content">
-            实现简单的实时推荐算法
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/26/consistent-hashing/">
-            
-                <span>一致性哈希算法</span>
-        </a>
-        <div class="abstract-content">
-            深入理解一致性哈希算法
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/26/recommend-system-1/">
-            
-                <span>推荐系统（二）</span>
-        </a>
-        <div class="abstract-content">
-            理解流式处理概念，熟悉流式处理过程。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/25/recommend-system/">
-            
-                <span>推荐系统（一）</span>
-        </a>
-        <div class="abstract-content">
-            学习推荐系统，进行机器学习实战。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/22/Coding-1/">
-            
-                <span>C++基础知识梳理</span>
-        </a>
-        <div class="abstract-content">
-            对已经学过C++的同学，可以帮助快速复习梳理
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="C++">C++</a>
-    
-</div>
-            
-        </div>
-    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/04/21/Gaussian-Mixture-Model/" title="高斯混合模型">
+                    <div class="prevTitle">高斯混合模型</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -656,6 +581,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、表达式和计算"><span class="toc-number">1.</span> <span class="toc-text">一、表达式和计算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、变量和赋值"><span class="toc-number">2.</span> <span class="toc-text">二、变量和赋值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、逻辑和控制"><span class="toc-number">3.</span> <span class="toc-text">三、逻辑和控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、定义函数"><span class="toc-number">4.</span> <span class="toc-text">四、定义函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、函数定义的若干问题"><span class="toc-number">5.</span> <span class="toc-text">五、函数定义的若干问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、总结"><span class="toc-number">6.</span> <span class="toc-text">六、总结</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1206,6 +1149,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
