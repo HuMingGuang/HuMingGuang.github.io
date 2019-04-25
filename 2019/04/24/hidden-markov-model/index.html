@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>逻辑斯谛回归、岭回归及Lasso回归 · MingGuangHu&#39;s Studio.</title>
+    <title>隐马尔可夫模型 · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -232,7 +232,7 @@
                 <a href="/">MingGuangHu&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">逻辑斯谛回归、岭回归及Lasso回归</a>
+                <a href="#" class="post-name">隐马尔可夫模型</a>
             </div>
     </div>
     
@@ -262,7 +262,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            逻辑斯谛回归、岭回归及Lasso回归
+            隐马尔可夫模型
             <!-- 404 -->
             
         </h1>
@@ -287,12 +287,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.5k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.1k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/04/12</span>
+                    <span class="post-intro-time">2019/04/24</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -416,114 +416,76 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="逻辑斯谛回归、岭回归及Lasso回归"><a href="#逻辑斯谛回归、岭回归及Lasso回归" class="headerlink" title="逻辑斯谛回归、岭回归及Lasso回归"></a>逻辑斯谛回归、岭回归及Lasso回归</h1><blockquote>
-<p><strong>主要内容</strong></p>
+        <p><strong>隐马尔科夫模型（Hidden Markov Model，以下简称HMM）</strong>是比较经典的机器学习模型了，它在语言识别，自然语言处理，模式识别等领域得到广泛的应用。当然，随着目前深度学习的崛起，尤其是<a href="http://www.cnblogs.com/pinard/p/6509630.html" target="_blank" rel="noopener">RNN</a>，<a href="http://www.cnblogs.com/pinard/p/6519110.html" target="_blank" rel="noopener">LSTM</a>等神经网络序列模型的火热，HMM的地位有所下降。但是作为一个经典的模型，学习HMM的模型和对应算法，对我们解决问题建模的能力提高以及算法思路的拓展还是很好的。本文是HMM系列的第一篇，关注于HMM模型的基础。</p>
+<h1 id="一、什么样的问题需要HHM"><a href="#一、什么样的问题需要HHM" class="headerlink" title="一、什么样的问题需要HHM"></a><font color="bule">一、什么样的问题需要HHM</font></h1><p>首先我们来看看什么样的问题解决可以用HMM模型。<strong>使用HMM模型时我们的问题一般有这两个特征</strong>：１）我们的问题是<strong>基于序列的，比如时间序列，或者状态序列</strong>。２）我们的问题中有两类数据，一类序列数据是可以观测到的，即<strong>观测序列</strong>；而另一类数据是不能观察到的，即<strong>隐藏状态序列</strong>，简称状态序列。</p>
+<p>有了这两个特征，那么这个问题一般可以用HMM模型来尝试解决。这样的问题在实际生活中是很多的。比如：我现在在打字写博客，我在键盘上敲出来的一系列字符就是观测序列，而我实际想写的一段话就是隐藏序列，输入法的任务就是从敲入的一系列字符尽可能的猜测我要写的一段话，并把最可能的词语放在最前面让我选择，这就可以看做一个HMM模型了。再举一个，我在和你说话，我发出的一串连续的声音就是观测序列，而我实际要表达的一段话就是状态序列，你大脑的任务，就是从这一串连续的声音中判断出我最可能要表达的话的内容。</p>
+<p>从这些例子中，我们可以发现，HMM模型可以无处不在。但是上面的描述还不精确，下面我们用精确的数学符号来表述我们的HMM模型。</p>
+<h1 id="二、HMM模型的定义"><a href="#二、HMM模型的定义" class="headerlink" title="二、HMM模型的定义"></a><font color="bule">二、HMM模型的定义</font></h1><p>对于HMM模型，首先我们假设$Q$是所有可能的隐藏状态的集合，$V$是所有可能的观测状态的集合，即：</p>
+<script type="math/tex; mode=display">Q = \{q_1,q_2,...,q_N\}, \; V =\{v_1,v_2,...v_M\}</script><p>其中，$N$是可能的隐藏状态数，$M$是所有的可能的观察状态数。</p>
+<p>对于一个长度为$T$的序列，$I$对应的状态序列, $O$是对应的观察序列，即：</p>
+<script type="math/tex; mode=display">I = \{i_1,i_2,...,i_T\}, \; O =\{o_1,o_2,...o_T\}</script><p>其中，任意一个隐藏状态$i_t \in Q$，任意一个观察状态$o_t \in V$</p>
+<p><strong>HMM模型做了两个很重要的假设如下：</strong></p>
 <ul>
-<li>逻辑斯谛回归，并比较逻辑斯谛回归与线性回归的区别</li>
-<li>比较线性回归、逻辑斯谛回归、Lasso回归的异同</li>
+<li><p><strong>齐次马尔科夫链假设</strong>。即任意时刻的隐藏状态只依赖于它前一个隐藏状态，当然这样假设有点极端，因为很多时候我们的某一个隐藏状态不仅仅只依赖于前一个隐藏状态，可能是前两个或者是前三个。但是这样假设的好处就是模型简单，便于求解。如果在时刻$t$的隐藏状态是<script type="math/tex">i_t= q_i</script>在时刻<script type="math/tex">t+1</script>的隐藏状态是$i_{t+1} = q_j$，</p>
+<p> 则从时刻$t$到时刻$t+1$的HMM状态转移概率$a_{ij}$可以表示为：</p>
+<script type="math/tex; mode=display">a_{ij} = P(i_{t+1} = q_j | i_t= q_i)</script><p>这样$a_{ij}$可以组成马尔科夫链的状态转移矩阵$A$:</p>
+<script type="math/tex; mode=display">A=\Big [a_{ij}\Big ]_{N \times N}</script></li>
+<li><p><strong>观测独立性假设。</strong>即任意时刻的观察状态只仅仅依赖于当前时刻的隐藏状态，这也是一个为了简化模型的假设。如果在时刻$t$的隐藏状态是$i_t= q_j$， 而对应的观察状态为$o_t = v_k$， 则该时刻观察状态$v_k$在隐藏状态$q_j$下生成的概率为$b_j(k)$，满足：</p>
+<script type="math/tex; mode=display">b_j(k) = P(o_t = v_k | i_t= q_j)</script><p>这样$b_j(k)$可以组成观测状态生成的概率矩阵$B$:</p>
+<script type="math/tex; mode=display">B = \Big [b_j(k) \Big ]_{N \times M}</script><p>除此之外，我们需要一组在时刻$t=1$的隐藏状态概率分布$\Pi$:</p>
+<script type="math/tex; mode=display">\Pi = \Big [ \pi(i)\Big ]_N \; 其中 \;\pi(i) = P(i_1 = q_i)</script><p>一个HMM模型，可以由隐藏状态初始概率分布$\Pi$, 状态转移概率矩阵$A$和观测状态概率矩阵$B$决定。$\Pi$，$A$决定状态序列，$B$决定观测序列。因此，HMM模型可以由一个三元组$λ$表示如下：</p>
+<script type="math/tex; mode=display">\lambda = (A, B, \Pi)</script></li>
 </ul>
-</blockquote>
-<h2 id="1-逻辑斯谛回归"><a href="#1-逻辑斯谛回归" class="headerlink" title="1. 逻辑斯谛回归"></a><font color="bule">1. 逻辑斯谛回归</font></h2><h3 id="1-1-二项逻辑斯谛模型"><a href="#1-1-二项逻辑斯谛模型" class="headerlink" title="1.1 二项逻辑斯谛模型"></a><font color="blue">1.1 二项逻辑斯谛模型</font></h3><script type="math/tex; mode=display">\begin{align}  P(Y=1|x)=\frac{\exp(w\cdot x)}{1+\exp(w \cdot x)} \tag{1}\\ \end{align}</script><p>​    <script type="math/tex">\begin{align}  P(Y=0|x)=\frac{1}{1+\exp(w \cdot x)} \tag{2}\\ \end{align}</script></p>
-<p>比较上述两个条件概率值的大小，将实例<script type="math/tex">x</script> 分到概率值较大的那一类。</p>
-<p>损失函数为</p>
-<script type="math/tex; mode=display">\begin{align} J(\theta)=-\dfrac{1}{N} \left[ \sum_{i=1}^{N} \sum_{j=0}^{1} I(y^{(i)}=j) \log P(y^{(i)}=j|x^{(i)};\theta)\right] \tag{3}\\ \end{align}</script><p>其中使用了sigmoid函数<script type="math/tex">f(x)=\dfrac{1}{1+e^{-x}}</script></p>
-<p><img src="/2019/04/12/linear-model-1/sigmoid.png" width="60%" height="60%"></p>
-<h3 id="1-2几率-odds"><a href="#1-2几率-odds" class="headerlink" title="1.2几率(odds)"></a><font color="blue">1.2几率(odds)</font></h3><p><strong>一个事件的几率是指该事件发生的概率与该事件不发生的概率的比值</strong>，如果事件发生的概率是<script type="math/tex">p</script>，那么该事件的几率是<script type="math/tex">\dfrac{p}{1-p}</script>.</p>
-<p>该事件的<strong>对数几率(log odds)或者logit函数</strong>是</p>
-<script type="math/tex; mode=display">\begin{align}  \mathbf{logit}(p)=\log \dfrac{p}{1-p} \tag{3}\\ \end{align}</script><p>对于公式(1)、公式(2)而言，得到</p>
-<script type="math/tex; mode=display">\begin{align}  \mathbf{logit}\dfrac{P(Y=1|x)}{1-P(Y=1|x)}=w \cdot x \tag{4}\\ \end{align}</script><p>由上式(4)可知，在逻辑斯谛回归中，输出<script type="math/tex">Y=1</script> 的对数几率是输入<script type="math/tex">x</script> 的线性函数表示的模型，或者说<strong>是对于<script type="math/tex">"y=1|x"</script> 的对数几率的线性回归。</strong></p>
-<h3 id="1-3-多项逻辑斯谛回归-Softmax-Regression"><a href="#1-3-多项逻辑斯谛回归-Softmax-Regression" class="headerlink" title="1.3 多项逻辑斯谛回归(Softmax Regression)"></a><font color="blue">1.3 多项逻辑斯谛回归(Softmax Regression)</font></h3><p>上面介绍的是逻辑斯谛回归的二项式分类模型，现在将其推广到多项逻辑斯谛回归模型，用于多分类。</p>
-<p>假设离散型随机变量<script type="math/tex">Y</script>的取值集合是<script type="math/tex">{1,2,…,K}</script>，那么多项逻辑斯谛回归模型是</p>
-<script type="math/tex; mode=display">\begin{align}  P(Y=k|x)=\dfrac{\exp{(w_k \cdot x)}}{\sum_{k=1}^{K}\exp(w_k \cdot x)}\tag{5}\\ \end{align}</script><h3 id="1-4-Softmax-回归-vs-k-个二元逻辑斯谛回归"><a href="#1-4-Softmax-回归-vs-k-个二元逻辑斯谛回归" class="headerlink" title="1.4 Softmax 回归 vs  k 个二元逻辑斯谛回归"></a><font color="blue">1.4 Softmax 回归 vs  k 个二元逻辑斯谛回归</font></h3><ul>
-<li>如果你在做分类的时候，<strong>类别之间存在互斥关系</strong>，也就是你训练的每个样本只能打上一个标签，则应该选择使用<strong>softmax 回归</strong>；</li>
-<li>但是如果<strong>类别之间没有互斥关系</strong>，每个训练样本都可以有多个标签，则应该选择<strong>使用k个二元逻辑斯谛回归，</strong>在训练第<script type="math/tex">i</script>个分类器的时候，每个样本被判别是否属于第<script type="math/tex">i</script>类。</li>
-</ul>
-<h3 id="1-5-逻辑斯谛回归与线性回归的异同"><a href="#1-5-逻辑斯谛回归与线性回归的异同" class="headerlink" title="1.5 逻辑斯谛回归与线性回归的异同"></a><font color="blue">1.5 逻辑斯谛回归与线性回归的异同</font></h3><div class="table-container">
+<h1 id="三、一个HMM模型实例"><a href="#三、一个HMM模型实例" class="headerlink" title="三、一个HMM模型实例"></a><font color="bule">三、一个HMM模型实例</font></h1><p>假设我们有3个盒子，每个盒子里都有红色和白色两种球，这三个盒子里球的数量分别是：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th style="text-align:center">不同点\类别</th>
-<th style="text-align:center">逻辑斯谛回归</th>
-<th style="text-align:center">线性回归</th>
+<th style="text-align:center">盒子</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><font color="bule"><strong>异点1</strong></font></td>
-<td style="text-align:center">处理<strong>分类问题</strong></td>
-<td style="text-align:center">处理<strong>回归问题</strong></td>
+<td style="text-align:center">红球数</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">7</td>
 </tr>
 <tr>
-<td style="text-align:center"><font color="bule"><strong>异点2</strong></font></td>
-<td style="text-align:center">可看成广义线性模型在因变量<script type="math/tex">y</script>服从二项分布</td>
-<td style="text-align:center">使用最小二乘求解时，可认为因变量<script type="math/tex">y</script>服从正态分布</td>
-</tr>
-<tr>
-<td style="text-align:center"><font color="blue"><strong>相同点1</strong></font></td>
-<td style="text-align:center">都使用极大似然估计</td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center"><font color="blue"><strong>相同点2</strong></font></td>
-<td style="text-align:center">在求解超参数的时候，都可以使用梯度下降</td>
+<td style="text-align:center">白球数</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">3</td>
 </tr>
 </tbody>
 </table>
 </div>
-<h2 id="2-岭回归及Lasso回归"><a href="#2-岭回归及Lasso回归" class="headerlink" title="2. 岭回归及Lasso回归"></a><font color="bule">2. 岭回归及Lasso回归</font></h2><p><strong>岭回归与Lasso回归的出现</strong>是为了解决<strong>线性回归出现的过拟合以及在通过正规方程方法求解<script type="math/tex">X^{T}X</script>的不可逆</strong>这两类问题，这两种回归通过在<strong>损失函数中引入正则化项</strong>来解决这两个问题。</p>
-<h3 id="2-1-三种回归损失函数对比"><a href="#2-1-三种回归损失函数对比" class="headerlink" title="2.1 三种回归损失函数对比"></a><font color="blue">2.1 三种回归损失函数对比</font></h3><p><strong>线性回归：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}</script></p>
-<p><strong>岭回归：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2} \lambda \sum_{j=1}^{m} \theta_j^{2}</script>，<strong>加入L-2norm的惩罚项</strong>或者说<strong>正则化项</strong></p>
-<p><strong>Lasso回归：</strong><script type="math/tex">J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\lambda \sum_{j=1}^{m} |\theta_j|</script>，<strong>加入L-1norm的惩罚项</strong></p>
-<font color="red">注：</font>
+<p>按照下面的方法从盒子里抽球，开始的时候，从第一个盒子抽球的概率是0.2，从第二个盒子抽球的概率是0.4，从第三个盒子抽球的概率是0.4。以这个概率抽一次球后，将球放回。然后从当前盒子转移到下一个盒子进行抽球。规则是：如果当前抽球的盒子是第一个盒子，则以0.5的概率仍然留在第一个盒子继续抽球，以0.2的概率去第二个盒子抽球，以0.3的概率去第三个盒子抽球。如果当前抽球的盒子是第二个盒子，则以0.5的概率仍然留在第二个盒子继续抽球，以0.3的概率去第一个盒子抽球，以0.2的概率去第三个盒子抽球。如果当前抽球的盒子是第三个盒子，则以0.5的概率仍然留在第三个盒子继续抽球，以0.2的概率去第一个盒子抽球，以0.3的概率去第二个盒子抽球。如此下去，直到重复三次，得到一个球的颜色的观测序列:</p>
+<script type="math/tex; mode=display">O=\{红，白，红\}</script><div align="center"><img src="/2019/04/24/hidden-markov-model/example.jpg" width="70%" height="70%">图1：三个盒子之间的状态转移概率</div>
 
-<p>a. <script type="math/tex">h_{\theta}(x^{(i)})=\theta x^{(i)}</script></p>
-<p>b. <script type="math/tex">L_1</script>范数 和<script type="math/tex">L_2</script>范数都能够有效的降低过拟合的风险，但是<script type="math/tex">L_1</script>范数还更易获得稀疏解，即它求得的<script type="math/tex">\theta</script>会有更少的非零分量。</p>
-<h3 id="2-2-线性回归求解"><a href="#2-2-线性回归求解" class="headerlink" title="2.2 线性回归求解"></a><font color="blue">2.2 线性回归求解</font></h3><font color="red">梯度下降法</font>
+<p>注意在这个过程中，观察者只能看到球的颜色序列，却不能看到球是从哪个盒子里取出的。</p>
+<div align="center"><img src="/2019/04/24/hidden-markov-model/HMM.jpg" width="70%" height="70%">图2：隐马尔可夫模型</div>
 
-<ul>
-<li><p><strong>损失函数：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}</script></p>
-</li>
-<li><p><strong>目标：</strong> <script type="math/tex">\min_{\theta} J(\theta)=min_{\theta} \dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}</script></p>
-</li>
-<li><p><strong>求导过程：</strong><script type="math/tex">\dfrac {\partial J\left( \theta \right) }{\partial \theta_j }\\\ =\dfrac{\partial \left(\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}\right)}{\partial \theta_j}\\\ =\dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j</script></p>
-</li>
-<li><p><strong>更新过程：</strong><script type="math/tex">\theta_j \leftarrow \theta_j -\alpha\dfrac{ \partial J}{\partial \theta_j}\\\ = \theta_j -\alpha \left( \dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j \right)</script> </p>
-<p>,其中<script type="math/tex">\alpha</script>为学习速率</p>
-</li>
-</ul>
-<font color="red">正规方程法</font>
-
-<p>​    由<a href="https://humingguang.github.io/2019/04/11/Linear-model/" target="_blank" rel="noopener">线性模型最小二乘法</a>可知，</p>
-<script type="math/tex; mode=display">\theta = \left(X^{T} X\right)^{-1} X^{T} Y</script><p>其中<script type="math/tex">\left(X^{T} X\right)^{-1}</script>可能无法求逆</p>
-<h3 id="2-3-岭回归求解"><a href="#2-3-岭回归求解" class="headerlink" title="2.3 岭回归求解"></a><font color="blue">2.3 岭回归求解</font></h3><font color="red">梯度下降</font>
-
-<ul>
-<li><p><strong>损失函数：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2} \lambda \sum_{j=1}^{m} \theta_j^{2}</script></p>
-</li>
-<li><p><strong>目标：</strong> <script type="math/tex">\min_{\theta} J(\theta)= min_{\theta} \dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2}  \lambda \sum_{j=1}^{m} \theta_j^{2}</script></p>
-</li>
-<li><p><strong>求导过程：</strong><script type="math/tex">\dfrac {\partial J\left( \theta \right) }{\partial \theta_j }\\\ =\dfrac{\partial \left(\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2} \lambda \sum_{j=1}^{m} \theta_j^{2}\right)}{\partial \theta_j}\\\ =\dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)}_)-y^{(i)}\right) \cdot x^{(i)}_j+\dfrac{1}{N} \lambda \theta_j</script></p>
-</li>
-<li><p><strong>更新过程：</strong><script type="math/tex">\theta_j \leftarrow \theta_j -\alpha\dfrac{ \partial J}{\partial \theta_j}\\\ =\theta_j -\alpha \left(\dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j+\dfrac{1}{N} \lambda \theta_j \right) \\\ = \left(1-\dfrac{\alpha \lambda}{N}\right) \theta_j -\alpha \left(\dfrac{1}{N} \sum_{i=1}^{N}  \left(h_{\theta}(x^{(i)})-y^{(i)}\right) x_{j}^{(i)}\right)</script> </p>
-</li>
-</ul>
-<font color="red">正规方程法</font>
-
-<p>加入正则化后，使<script type="math/tex">\left(X^{T} X + \lambda I\right)^{-1}</script>有更大的可能可以求逆</p>
-<script type="math/tex; mode=display">\theta = \left(X^{T} X + \lambda I\right)^{-1} X^{T} Y</script><p>其中<script type="math/tex">I=\begin{pmatrix}
-0 & 0 \\
-0 & I_1
-\end{pmatrix}</script></p>
-<hr>
-<font color="blue">声明</font>
-
-<ul>
-<li><strong>参考资料1</strong>：<a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92" target="_blank" rel="noopener">http://deeplearning.stanford.edu/wiki/index.php/Softmax%E5%9B%9E%E5%BD%92</a></li>
-<li><strong>参考资料2</strong>：<a href="https://blog.csdn.net/hzw19920329/article/details/77200475" target="_blank" rel="noopener">https://blog.csdn.net/hzw19920329/article/details/77200475</a></li>
-<li><strong>参考资料3</strong>：李航老师：《统计机器学习》</li>
-<li><strong>参考资料4</strong>：周志华老师：《机器学习》</li>
-<li>本博文为原创总结，如有转载，请注名出处！</li>
-</ul>
+<p>那么按照我们上一节HMM模型的定义，我们的观察集合是:</p>
+<script type="math/tex; mode=display">V=\{红，白\}，M=2</script><p>我们的状态集合是：</p>
+<script type="math/tex; mode=display">Q =\{盒子1，盒子2，盒子3\}， N=3</script><p>而观察序列和状态序列的长度为3.</p>
+<p>初始状态分布为：</p>
+<script type="math/tex; mode=display">\Pi = (0.2,0.4,0.4)^T</script><p>状态转移概率分布矩阵为：</p>
+<script type="math/tex; mode=display">A = \left( \begin{array} {ccc} 0.5 & 0.2 & 0.3 \\ 0.3 & 0.5 & 0.2 \\ 0.2 & 0.3 &0.5 \end{array} \right)</script><p>观测数据概率矩阵为：</p>
+<script type="math/tex; mode=display">B = \left( \begin{array} {ccc} 0.5 & 0.5 \\ 0.4 & 0.6 \\ 0.7 & 0.3 \end{array} \right)</script><h1 id="四、HMM观测序列的生成"><a href="#四、HMM观测序列的生成" class="headerlink" title="四、HMM观测序列的生成"></a><font color="bule">四、HMM观测序列的生成</font></h1><p><strong>输入：</strong>HMM的模型$\lambda = (A, B, \Pi)$，观测序列的长度$T$</p>
+<p><strong>输出：</strong>观测序列$O ={o_1,o_2,…o_T}$</p>
+<p>1）根据初始状态概率分布$\Pi$生成隐藏状态$i_1$</p>
+<p>2)  for $t$ from 1 to $T$</p>
+<p>​    a. 按照隐藏状态<script type="math/tex">i_t</script>的<strong>观测状态</strong>分布$b_{i_t}(k)$生成观察状态$o_t$</p>
+<p>​    b. 按照隐藏状态<script type="math/tex">i_t</script>的<strong>状态转移</strong>概率分布<script type="math/tex">\left\{a_{i,i_{t+1}} \right\}</script>产生隐藏状态$i_{t+1}$</p>
+<p>所有的$0_t$一起形成观测序列$O ={o_1,o_2,…o_T}$</p>
+<h1 id="五、HMM模型的三个基本问题"><a href="#五、HMM模型的三个基本问题" class="headerlink" title="五、HMM模型的三个基本问题"></a><font color="bule">五、HMM模型的三个基本问题</font></h1><p><strong>HMM模型一共有三个经典的问题需要解决：</strong></p>
+<p>1） <strong>概率计算问题：</strong>给定模型$λ=(A,B,Π)$和观测序列$O ={o_1,o_2,…o_T}$，计算在模型$λ$下观测序列$O$出现的概率$P(O|λ)$，这个问题的求解需要用到<strong>前向后向算法</strong>。</p>
+<p>2）<strong>学习问题：</strong>给定观测序列$O ={o_1,o_2,…o_T}$，估计模型$λ=(A,B,Π)$的参数，使该模型下观测序列的条件概率$P(O|λ)$最大。这个问题的求解需要用到<strong>基于EM算法的鲍姆-韦尔奇算法</strong>。</p>
+<p>3）<strong>预测问题，也称为解码问题：</strong>给定模型$λ=(A,B,Π)$和观测序列$O ={o_1,o_2,…o_T}$，求给定观测序列条件概率$P(I|O)$最大的状态序列$I={i_1,i_2,…,i_T}$。即给定观测序列，求最可能出现的对应的状态序列。这个问题的求解需要用到<strong>基于动态规划的维特比算法</strong>。</p>
 
     </article>
     <!-- license  -->
@@ -532,17 +494,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/04/14/Meachine-Learning-Lagrange-duality/" title="详解拉格朗日及其对偶问题">
-                    <div class="nextTitle">详解拉格朗日及其对偶问题</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/04/12/common-parameter-estimation/" title="常用的参数估计方法">
-                    <div class="prevTitle">常用的参数估计方法</div>
+                <a href="/2019/04/23/python-2/" title="Python系列(二)：数据的构造和组织">
+                    <div class="prevTitle">Python系列(二)：数据的构造和组织</div>
                 </a>
             
         </li>
@@ -661,7 +618,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#逻辑斯谛回归、岭回归及Lasso回归"><span class="toc-number">1.</span> <span class="toc-text">逻辑斯谛回归、岭回归及Lasso回归</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-逻辑斯谛回归"><span class="toc-number">1.1.</span> <span class="toc-text">1. 逻辑斯谛回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-二项逻辑斯谛模型"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 二项逻辑斯谛模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2几率-odds"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2几率(odds)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-多项逻辑斯谛回归-Softmax-Regression"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 多项逻辑斯谛回归(Softmax Regression)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Softmax-回归-vs-k-个二元逻辑斯谛回归"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4 Softmax 回归 vs  k 个二元逻辑斯谛回归</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-逻辑斯谛回归与线性回归的异同"><span class="toc-number">1.1.5.</span> <span class="toc-text">1.5 逻辑斯谛回归与线性回归的异同</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-岭回归及Lasso回归"><span class="toc-number">1.2.</span> <span class="toc-text">2. 岭回归及Lasso回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-三种回归损失函数对比"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 三种回归损失函数对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-线性回归求解"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 线性回归求解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-岭回归求解"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 岭回归求解</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、什么样的问题需要HHM"><span class="toc-number">1.</span> <span class="toc-text">一、什么样的问题需要HHM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、HMM模型的定义"><span class="toc-number">2.</span> <span class="toc-text">二、HMM模型的定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、一个HMM模型实例"><span class="toc-number">3.</span> <span class="toc-text">三、一个HMM模型实例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、HMM观测序列的生成"><span class="toc-number">4.</span> <span class="toc-text">四、HMM观测序列的生成</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、HMM模型的三个基本问题"><span class="toc-number">5.</span> <span class="toc-text">五、HMM模型的三个基本问题</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
