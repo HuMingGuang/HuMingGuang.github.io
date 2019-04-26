@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>MingGuangHu&#39;s Studio.</title>
+    <title>Python编程(三)：深入理解Python · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -218,12 +218,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Python编程(三)：深入理解Python</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">MingGuangHu's Studio.</a>
 </header>
@@ -235,24 +246,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            Python编程(三)：深入理解Python
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="python">python</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">569</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/04/26</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -353,308 +414,82 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/14/Meachine-Learning-Lagrange-duality/">
-            
-                <span>详解拉格朗日及其对偶问题</span>
-        </a>
-        <div class="abstract-content">
-            介绍三种优化问题:无约束的优化、带等式约束的优化、带不等式约束的优化；解释拉格朗日对偶性
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="一、基本语义问题"><a href="#一、基本语义问题" class="headerlink" title="一、基本语义问题"></a><font color="bule">一、基本语义问题</font></h1><h2 id="1-变量和对象"><a href="#1-变量和对象" class="headerlink" title="1.变量和对象"></a>1.变量和对象</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th><font color="red">序号</font></th>
+<th style="text-align:left"><font color="red">c语言</font></th>
+<th><font color="red">Python</font></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td style="text-align:left">值语义</td>
+<td>引用语义</td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align:left">变量必须声明类型，以便安排存储，不同类型的变量大小不同，也导致一种类型的变量不能保存其他类型的值。</td>
+<td>变量只需保存对象标识，所有变量大小相同。变量不需要说明，赋值即定义。变量没有类型，一个变量完全可以一会关联整数，一会关联字符串。</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align:left"></td>
+<td>缺点：由于变量无类型，解释器不能根据代码中变量确定操作是否正常进行，必须在运行中检查。运行中频繁检查时Python程序效率低的一个重要原因。</td>
+</tr>
+</tbody>
+</table>
 </div>
-            
-        </div>
+<h2 id="2-赋值和共享"><a href="#2-赋值和共享" class="headerlink" title="2.赋值和共享"></a>2.赋值和共享</h2><p>在Python中数据值是独立对象，赋给变量就是建立关联，以便通过变量使用对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#######改变所关联对象</span></span><br><span class="line"><span class="comment">#两个变量同时关联同一个对象，或者说共享同一个对象</span></span><br><span class="line">s = <span class="string">"abcd"</span></span><br><span class="line">t = s				<span class="comment">#t和s关联的是同一个对象</span></span><br><span class="line">u = <span class="string">"abcd"</span>	<span class="comment">#u与t/s，不属于同一个对象</span></span><br><span class="line"></span><br><span class="line">s = <span class="string">"fgh"</span>		<span class="comment">#修改s所关联的对象,但是此时t仍然为"abcd"，并没有改变对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#######修改关联对象的值</span></span><br><span class="line">x = [<span class="number">1</span>,<span class="number">3</span>,<span class="number">6</span>]</span><br><span class="line">y = x</span><br><span class="line">z = [<span class="number">1</span>,<span class="number">3</span>,<span class="number">6</span>]</span><br><span class="line"><span class="comment">#与上述赋值一致</span></span><br><span class="line">x[<span class="number">1</span>] = <span class="number">10</span>		<span class="comment">#此时修改了x的所关联对象中的值，变为[1,10,6]，同时y也变为[1,10,6]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#######拷贝，得到另一个独立的对象</span></span><br><span class="line">w = x.copy()	<span class="comment">#等价于w = x[:]</span></span><br><span class="line">x.append(<span class="number">100</span>)	<span class="comment"># x: [1,3,6,100], w: [1,3,6]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">###扩展赋值操作</span></span><br><span class="line"><span class="comment">##不变对象，创建了新的关联对象，不会改变原来对象</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t1=t2=(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>id(t1)==id(t2)</span><br><span class="line"><span class="literal">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t1+=(<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t1</span><br><span class="line">(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t2</span><br><span class="line">(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"><span class="comment">##可变对象，关联对象值改变了，改变了同一个对象</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x=y=[<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x+=[<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<h1 id="二、程序的语义实现"><a href="#二、程序的语义实现" class="headerlink" title="二、程序的语义实现"></a><font color="bule">二、程序的语义实现</font></h1><h1 id="三、生成器函数和必包"><a href="#三、生成器函数和必包" class="headerlink" title="三、生成器函数和必包"></a><font color="bule">三、生成器函数和必包</font></h1><h1 id="四、异常和异常处理"><a href="#四、异常和异常处理" class="headerlink" title="四、异常和异常处理"></a><font color="bule">四、异常和异常处理</font></h1><h1 id="五、效率"><a href="#五、效率" class="headerlink" title="五、效率"></a><font color="bule">五、效率</font></h1><hr>
+<font size="5" color="blue">声明</font>
+
+<ul>
+<li><strong>参考资料1</strong>：《程序员学Python》</li>
+<li>本博文为原创总结，如有转载，请注名出处！</li>
+</ul>
+
     </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/12/linear-model-1/">
-            
-                <span>逻辑斯谛回归、岭回归及Lasso回归</span>
-        </a>
-        <div class="abstract-content">
-            介绍逻辑斯谛回归、岭回归及其Lasso回归的区别
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/12/common-parameter-estimation/">
-            
-                <span>常用的参数估计方法</span>
-        </a>
-        <div class="abstract-content">
-            最小二乘法、最大似然估计、最大后验估计、贝叶斯估计
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/11/Linear-model/">
-            
-                <span>线形模型:最小二乘法</span>
-        </a>
-        <div class="abstract-content">
-            介绍最小二乘法的基础知识，比较最小二乘与似然函数的关系，讨论最小二乘的局限性
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/10/esemble-learning/">
-            
-                <span>集成学习</span>
-        </a>
-        <div class="abstract-content">
-            介绍Bagging、Boosting的基础知识，并比较之间的区别，偏差与方差的概念，Adaboosting算法， GBDT算法。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/08/decision-tree/">
-            
-                <span>决策树算法</span>
-        </a>
-        <div class="abstract-content">
-            介绍决策树算法基础知识，几种常用的决策树算法:ID3 、C4.5、CART，决策树不同的剪枝方法。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/08/Bayesian/">
-            
-                <span>朴素贝叶斯</span>
-        </a>
-        <div class="abstract-content">
-            介绍朴素贝叶斯的基本概念，并使用贝叶斯方法对垃圾邮件进行分类。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/07/recommend-system-6/">
-            
-                <span>推荐系统（七）</span>
-        </a>
-        <div class="abstract-content">
-            推荐系统总结-综合实践
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/07</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/02/meachine-learning-question/">
-            
-                <span>机器学习问题的梳理</span>
-        </a>
-        <div class="abstract-content">
-            机器学习的问题梳理
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/02/recommend-system-5/">
-            
-                <span>推荐系统（六）</span>
-        </a>
-        <div class="abstract-content">
-            介绍邻域协同推荐算法：ICF 和 UCF 的计算流程，以及代码实现
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/04/26/python-copy/" title="Python系列问题：深拷贝、浅拷贝">
+                    <div class="nextTitle">Python系列问题：深拷贝、浅拷贝</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/04/24/hidden-markov-model/" title="隐马尔可夫模型">
+                    <div class="prevTitle">隐马尔可夫模型</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/">NEXT &#62;</a>
-    </nav>
     
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -739,6 +574,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、基本语义问题"><span class="toc-number">1.</span> <span class="toc-text">一、基本语义问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-变量和对象"><span class="toc-number">1.1.</span> <span class="toc-text">1.变量和对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-赋值和共享"><span class="toc-number">1.2.</span> <span class="toc-text">2.赋值和共享</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、程序的语义实现"><span class="toc-number">2.</span> <span class="toc-text">二、程序的语义实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、生成器函数和必包"><span class="toc-number">3.</span> <span class="toc-text">三、生成器函数和必包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、异常和异常处理"><span class="toc-number">4.</span> <span class="toc-text">四、异常和异常处理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、效率"><span class="toc-number">5.</span> <span class="toc-text">五、效率</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1375,6 +1228,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({

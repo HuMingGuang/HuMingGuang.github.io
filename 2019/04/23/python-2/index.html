@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Python系列(二)：数据的构造和组织 · MingGuangHu&#39;s Studio.</title>
+    <title>Python(二)：数据的构造和组织 · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -232,7 +232,7 @@
                 <a href="/">MingGuangHu&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Python系列(二)：数据的构造和组织</a>
+                <a href="#" class="post-name">Python(二)：数据的构造和组织</a>
             </div>
     </div>
     
@@ -262,7 +262,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Python系列(二)：数据的构造和组织
+            Python(二)：数据的构造和组织
             <!-- 404 -->
             
         </h1>
@@ -433,7 +433,7 @@ height:50vh;
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>b1 = <span class="string">b'this is a a bytes'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ba1=bytearray(b1)<span class="comment">#通过类型名创建</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ba1</span><br><span class="line">bytearray(<span class="string">b'this is a a bytes'</span>)</span><br></pre></td></tr></table></figure>
 <h2 id="9-array类型"><a href="#9-array类型" class="headerlink" title="9.array类型"></a>9.array类型</h2><p>array一种专门用于表示数值序列的类型，存储比较紧凑，操作效率比表高，是一种可变类型。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用前要先导入array包，一个数组的所有元素应同属于一个类型</span></span><br><span class="line"><span class="keyword">from</span> array <span class="keyword">import</span> array</span><br><span class="line"></span><br><span class="line"><span class="comment">#i声明了数组类型，为整型，创建了空的整型数组</span></span><br><span class="line">int_array = array(<span class="string">"i"</span>)</span><br><span class="line"><span class="comment">#d声明数组类型为浮点型，并加入10个元素</span></span><br><span class="line">float_array = array(<span class="string">"d"</span>,[i*<span class="number">0.1</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>)])</span><br></pre></td></tr></table></figure>
-<p><strong>如果计算中需要很大的数值向量或矩阵，用array既节约存储也节省时间。如果数值序列不太大，直接使用表更方便。</strong></p>
+<p><strong>如果计算中需要很大的数值向量或矩阵，用array既节约存储也节省时间。如果数值序列不太大，直接使用列表更方便。</strong></p>
 <h1 id="三、字符串和格式化"><a href="#三、字符串和格式化" class="headerlink" title="三、字符串和格式化"></a><font color="bule">三、字符串和格式化</font></h1><h2 id="1-常用分类谓词"><a href="#1-常用分类谓词" class="headerlink" title="1.常用分类谓词"></a>1.常用分类谓词</h2><p><img src="/2019/04/23/python-2/4.jpg" width="75%" height="75%"></p>
 <h2 id="2-生成新串的一些操作"><a href="#2-生成新串的一些操作" class="headerlink" title="2.生成新串的一些操作"></a>2.生成新串的一些操作</h2><p><img src="/2019/04/23/python-2/5.jpg" width="75%" height="75%"></p>
 <h2 id="3-常用的字符串操作"><a href="#3-常用的字符串操作" class="headerlink" title="3.常用的字符串操作"></a>3.常用的字符串操作</h2><p><img src="/2019/04/23/python-2/6.jpg" width="75%" height="75%"></p>
@@ -516,8 +516,8 @@ height:50vh;
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/04/22/python-1/" title="Python系列(一)：Python基础">
-                    <div class="prevTitle">Python系列(一)：Python基础</div>
+                <a href="/2019/04/22/python-1/" title="Python编程(一)：Python基础">
+                    <div class="prevTitle">Python编程(一)：Python基础</div>
                 </a>
             
         </li>
@@ -969,9 +969,37 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 26
+        Total : 28
         </div>
         <!-- search  -->
         
@@ -991,17 +1019,27 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href="/2019/04/26/python-copy/">Python系列问题：深拷贝、浅拷贝</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href="/2019/04/26/python-3/">Python编程(三)：深入理解Python</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/24</span><a class="archive-post-title" href="/2019/04/24/hidden-markov-model/">隐马尔可夫模型</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/23</span><a class="archive-post-title" href="/2019/04/23/python-2/">Python系列(二)：数据的构造和组织</a>
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href="/2019/04/23/python-2/">Python(二)：数据的构造和组织</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/22</span><a class="archive-post-title" href="/2019/04/22/python-1/">Python系列(一)：Python基础</a>
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href="/2019/04/22/python-1/">Python编程(一)：Python基础</a>
         </li>
     
     
@@ -1177,9 +1215,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
     
-        <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
-    
         <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
+    
+        <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

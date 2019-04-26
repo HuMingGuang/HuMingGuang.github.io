@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>MingGuangHu&#39;s Studio.</title>
+    <title>Python系列问题：深拷贝、浅拷贝 · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -218,12 +218,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Python系列问题：深拷贝、浅拷贝</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">MingGuangHu's Studio.</a>
 </header>
@@ -235,24 +246,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            Python系列问题：深拷贝、浅拷贝
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="python">python</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">625</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/04/26</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -353,308 +414,68 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/14/Meachine-Learning-Lagrange-duality/">
-            
-                <span>详解拉格朗日及其对偶问题</span>
-        </a>
-        <div class="abstract-content">
-            介绍三种优化问题:无约束的优化、带等式约束的优化、带不等式约束的优化；解释拉格朗日对偶性
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="Python-直接赋值、浅拷贝和深度拷贝解析"><a href="#Python-直接赋值、浅拷贝和深度拷贝解析" class="headerlink" title="Python 直接赋值、浅拷贝和深度拷贝解析"></a>Python 直接赋值、浅拷贝和深度拷贝解析</h2><blockquote>
+<ul>
+<li><p><strong>直接赋值：</strong>其实就是对象的引用（别名）。</p>
+</li>
+<li><p><strong>浅拷贝(copy)：</strong>拷贝父对象，不会拷贝对象的内部的子对象。</p>
+</li>
+<li><strong>深拷贝(deepcopy)：</strong> copy 模块的 deepcopy 方法，完全拷贝了父对象及其子对象。</li>
+<li><font color="red">总结：赋值是原对象变它也变，浅拷贝是原对象的子对象变它才变，深拷贝是原对象的子对象变，它也不变</font>
+
+</li>
+</ul>
+</blockquote>
+<h3 id="一、字典浅拷贝实例"><a href="#一、字典浅拷贝实例" class="headerlink" title="一、字典浅拷贝实例"></a><font color="bule">一、字典浅拷贝实例</font></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;a = &#123;<span class="number">1</span>: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = a.copy()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a, b</span><br><span class="line">(&#123;<span class="number">1</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]&#125;, &#123;<span class="number">1</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]&#125;)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a[<span class="number">1</span>].append(<span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a, b</span><br><span class="line">(&#123;<span class="number">1</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]&#125;, &#123;<span class="number">1</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="二、深度拷贝需要引入-copy-模块"><a href="#二、深度拷贝需要引入-copy-模块" class="headerlink" title="二、深度拷贝需要引入 copy 模块"></a><font color="bule">二、深度拷贝需要引入 copy 模块</font></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;<span class="keyword">import</span> copy</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = copy.deepcopy(a)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a, c</span><br><span class="line">(&#123;<span class="number">1</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]&#125;, &#123;<span class="number">1</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]&#125;)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a[<span class="number">1</span>].append(<span class="number">5</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a, c</span><br><span class="line">(&#123;<span class="number">1</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]&#125;, &#123;<span class="number">1</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="三、解析"><a href="#三、解析" class="headerlink" title="三、解析"></a><font color="bule">三、解析</font></h3><h4 id="3-1-b-a-赋值引用，a-和-b-都指向同一个对象"><a href="#3-1-b-a-赋值引用，a-和-b-都指向同一个对象" class="headerlink" title="3.1 b = a:赋值引用，a 和 b 都指向同一个对象"></a>3.1 b = a:赋值引用，a 和 b 都指向同一个对象</h4><p><img src="/2019/04/26/python-copy/1.png" width="45%" height="45%"></p>
+<h4 id="3-2-b-a-copy-浅拷贝-a-和-b-是一个独立的对象，但他们的子对象还是指向统一对象（是引用）"><a href="#3-2-b-a-copy-浅拷贝-a-和-b-是一个独立的对象，但他们的子对象还是指向统一对象（是引用）" class="headerlink" title="3.2 b = a.copy(): 浅拷贝, a 和 b 是一个独立的对象，但他们的子对象还是指向统一对象（是引用）"></a>3.2 b = a.copy(): 浅拷贝, a 和 b 是一个独立的对象，但他们的子对象还是指向统一对象（是引用）</h4><p><img src="/2019/04/26/python-copy/2.png" width="45%" height="45%"></p>
+<h4 id="3-3-b-copy-deepcopy-a-深度拷贝-a-和-b-完全拷贝了父对象及其子对象，两者是完全独立的"><a href="#3-3-b-copy-deepcopy-a-深度拷贝-a-和-b-完全拷贝了父对象及其子对象，两者是完全独立的" class="headerlink" title="3.3 b = copy.deepcopy(a):深度拷贝, a 和 b 完全拷贝了父对象及其子对象，两者是完全独立的"></a>3.3 b = copy.deepcopy(a):深度拷贝, a 和 b 完全拷贝了父对象及其子对象，两者是完全独立的</h4><p><img src="/2019/04/26/python-copy/3.png" width="45%" height="45%"></p>
+<h3 id="四、列表（可变对象）实例"><a href="#四、列表（可变对象）实例" class="headerlink" title="四、列表（可变对象）实例"></a><font color="bule">四、列表（可变对象）实例</font></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*-coding:utf-8 -*-</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> copy</span><br><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, [<span class="string">'a'</span>, <span class="string">'b'</span>]] <span class="comment">#原始对象</span></span><br><span class="line"> </span><br><span class="line">b = a                       <span class="comment">#赋值，传对象的引用</span></span><br><span class="line">c = copy.copy(a)            <span class="comment">#对象拷贝，浅拷贝</span></span><br><span class="line">d = copy.deepcopy(a)        <span class="comment">#对象拷贝，深拷贝</span></span><br><span class="line"> </span><br><span class="line">a.append(<span class="number">5</span>)                 <span class="comment">#修改对象a</span></span><br><span class="line">a[<span class="number">4</span>].append(<span class="string">'c'</span>)            <span class="comment">#修改对象a中的['a', 'b']数组子对象</span></span><br><span class="line"> </span><br><span class="line">print( <span class="string">'a = '</span>, a )</span><br><span class="line">print( <span class="string">'b = '</span>, b )</span><br><span class="line">print( <span class="string">'c = '</span>, c )</span><br><span class="line">print( <span class="string">'d = '</span>, d )</span><br><span class="line"></span><br><span class="line"><span class="comment">###输出结果</span></span><br><span class="line">(<span class="string">'a = '</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>], <span class="number">5</span>])</span><br><span class="line">(<span class="string">'b = '</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>], <span class="number">5</span>])</span><br><span class="line">(<span class="string">'c = '</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]])</span><br><span class="line">(<span class="string">'d = '</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, [<span class="string">'a'</span>, <span class="string">'b'</span>]])</span><br></pre></td></tr></table></figure>
+<h3 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a><font color="bule">五、总结</font></h3><p>首先得<strong>搞清楚你的对象是可变对象，还是不可变对象</strong>。如果是不可变对象<code>a</code>，则在赋值之后如果改变值，就已经创建了新的对象<code>b</code>，原来所指的对象<code>a</code>并没有改变；如果是可变对象，则要根据上述第三章的情况讨论。</p>
+<p><strong>下图是不可变对象的赋值操作</strong></p>
+<p><img src="/2019/04/26/python-copy/copy.jpg" width="55%" height="55%"></p>
+<hr>
+<font size="5" color="blue">声明</font>
+
+<ul>
+<li><strong>参考资料1</strong>：<a href="http://www.runoob.com/w3cnote/python-understanding-dict-copy-shallow-or-deep.html" target="_blank" rel="noopener">http://www.runoob.com/w3cnote/python-understanding-dict-copy-shallow-or-deep.html</a></li>
+<li>本博文为原创总结，如有转载，请注名出处！</li>
+</ul>
+
     </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/12/linear-model-1/">
-            
-                <span>逻辑斯谛回归、岭回归及Lasso回归</span>
-        </a>
-        <div class="abstract-content">
-            介绍逻辑斯谛回归、岭回归及其Lasso回归的区别
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/12/common-parameter-estimation/">
-            
-                <span>常用的参数估计方法</span>
-        </a>
-        <div class="abstract-content">
-            最小二乘法、最大似然估计、最大后验估计、贝叶斯估计
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/11/Linear-model/">
-            
-                <span>线形模型:最小二乘法</span>
-        </a>
-        <div class="abstract-content">
-            介绍最小二乘法的基础知识，比较最小二乘与似然函数的关系，讨论最小二乘的局限性
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/10/esemble-learning/">
-            
-                <span>集成学习</span>
-        </a>
-        <div class="abstract-content">
-            介绍Bagging、Boosting的基础知识，并比较之间的区别，偏差与方差的概念，Adaboosting算法， GBDT算法。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/08/decision-tree/">
-            
-                <span>决策树算法</span>
-        </a>
-        <div class="abstract-content">
-            介绍决策树算法基础知识，几种常用的决策树算法:ID3 、C4.5、CART，决策树不同的剪枝方法。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/08/Bayesian/">
-            
-                <span>朴素贝叶斯</span>
-        </a>
-        <div class="abstract-content">
-            介绍朴素贝叶斯的基本概念，并使用贝叶斯方法对垃圾邮件进行分类。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/07/recommend-system-6/">
-            
-                <span>推荐系统（七）</span>
-        </a>
-        <div class="abstract-content">
-            推荐系统总结-综合实践
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/07</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/02/meachine-learning-question/">
-            
-                <span>机器学习问题的梳理</span>
-        </a>
-        <div class="abstract-content">
-            机器学习的问题梳理
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/02/recommend-system-5/">
-            
-                <span>推荐系统（六）</span>
-        </a>
-        <div class="abstract-content">
-            介绍邻域协同推荐算法：ICF 和 UCF 的计算流程，以及代码实现
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="推荐系统">推荐系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习实战">机器学习实战</a>
-    
-</div>
-            
-        </div>
-    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/04/26/python-3/" title="Python编程(三)：深入理解Python">
+                    <div class="prevTitle">Python编程(三)：深入理解Python</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/">NEXT &#62;</a>
-    </nav>
     
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -739,6 +560,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Python-直接赋值、浅拷贝和深度拷贝解析"><span class="toc-number">1.</span> <span class="toc-text">Python 直接赋值、浅拷贝和深度拷贝解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、字典浅拷贝实例"><span class="toc-number">1.1.</span> <span class="toc-text">一、字典浅拷贝实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、深度拷贝需要引入-copy-模块"><span class="toc-number">1.2.</span> <span class="toc-text">二、深度拷贝需要引入 copy 模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、解析"><span class="toc-number">1.3.</span> <span class="toc-text">三、解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-b-a-赋值引用，a-和-b-都指向同一个对象"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 b = a:赋值引用，a 和 b 都指向同一个对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-b-a-copy-浅拷贝-a-和-b-是一个独立的对象，但他们的子对象还是指向统一对象（是引用）"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 b = a.copy(): 浅拷贝, a 和 b 是一个独立的对象，但他们的子对象还是指向统一对象（是引用）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-b-copy-deepcopy-a-深度拷贝-a-和-b-完全拷贝了父对象及其子对象，两者是完全独立的"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 b = copy.deepcopy(a):深度拷贝, a 和 b 完全拷贝了父对象及其子对象，两者是完全独立的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、列表（可变对象）实例"><span class="toc-number">1.4.</span> <span class="toc-text">四、列表（可变对象）实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、总结"><span class="toc-number">1.5.</span> <span class="toc-text">五、总结</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1375,6 +1214,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
