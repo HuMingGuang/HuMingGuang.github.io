@@ -416,7 +416,7 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="一、表达式和计算"><a href="#一、表达式和计算" class="headerlink" title="一、表达式和计算"></a><font color="bule">一、表达式和计算</font></h1><p><strong>1.算数运算符</strong>：<code>//</code>整除，<code>**</code>乘幂，<code>/</code>除</p>
+        <h2 id="一、表达式和计算"><a href="#一、表达式和计算" class="headerlink" title="一、表达式和计算"></a><font color="bule">一、表达式和计算</font></h2><p><strong>1.算数运算符</strong>：<code>//</code>整除，<code>**</code>乘幂，<code>/</code>除</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">10.0</span>/<span class="number">3.0</span></span><br><span class="line"><span class="number">3.333333333333335</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">10</span>//<span class="number">3</span></span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
 <p><strong>2.复数</strong>的虚部使用<code>j或者J</code>，复数类型为<code>complex</code>，得到复数的虚部<code>(2+3j).imag</code>，得到复数的实部<code>(2+3j).real</code></p>
 <p><strong>3.python的类型错误</strong>是运行时错误，与C和Java等语言不同，那里的类型错误由编译器检查</p>
@@ -432,7 +432,7 @@ height:50vh;
 <font color="red">9.字符串操作</font>
 
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>len(<span class="string">'I am'</span>) <span class="comment">#字符串长度</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'I am'</span>[<span class="number">2</span>]	<span class="comment">#字符串每个位置都可以通过下标访问</span></span><br><span class="line"><span class="string">'a'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'Student'</span>[<span class="number">-2</span>]	<span class="comment">#允许负数下标，-2表示从后往前数第二个位置</span></span><br><span class="line"><span class="string">'n'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'I am'</span>+<span class="string">' '</span>+<span class="string">'a student'</span> <span class="comment">#字符串的拼接</span></span><br><span class="line"><span class="string">'I am a student'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'Hello'</span> * <span class="number">3</span>  <span class="comment">#字符串的拷贝</span></span><br><span class="line"><span class="string">'HelloHelloHello'</span></span><br><span class="line"><span class="comment">#######################</span></span><br><span class="line"><span class="comment">#切片操作，下标范围采用左闭右开</span></span><br><span class="line">s[m:n]			<span class="comment">#得到包含s[m]到s[n-1]的串，m&gt;=n 得到空串</span></span><br><span class="line">s[m:n:d]		<span class="comment">#得到下标m到n-1范围里，按下标步进值d选出字符构造出的串</span></span><br><span class="line"><span class="comment">#上述m、n、d都可以忽略，但是冒号不能省，m省略表示0，n省略表示len(s)，d省略表示为1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'I am a student'</span>[<span class="number">3</span>:]</span><br><span class="line"><span class="string">'m a student'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'I am a student'</span>[:<span class="number">4</span>]</span><br><span class="line"><span class="string">'I am'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'I am a student'</span>[::<span class="number">2</span>]</span><br><span class="line"><span class="string">'Ia  tdn'</span></span><br></pre></td></tr></table></figure>
-<h1 id="二、变量和赋值"><a href="#二、变量和赋值" class="headerlink" title="二、变量和赋值"></a><font color="bule">二、变量和赋值</font></h1><p><strong>1.合法标识符</strong></p>
+<h2 id="二、变量和赋值"><a href="#二、变量和赋值" class="headerlink" title="二、变量和赋值"></a><font color="bule">二、变量和赋值</font></h2><p><strong>1.合法标识符</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#标识符为字符开头的字母数字串</span></span><br><span class="line">_____	<span class="comment">#下划线可以看为字母，所以该标识符合法</span></span><br></pre></td></tr></table></figure>
 <p><strong>2.输出函数Print</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = <span class="number">123455</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"a is "</span>,a)</span><br><span class="line">a <span class="keyword">is</span>  <span class="number">123455</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b=<span class="string">"a sutdent"</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"b is "</span>,b)</span><br><span class="line">b <span class="keyword">is</span>  a sutdent</span><br></pre></td></tr></table></figure>
@@ -440,7 +440,7 @@ height:50vh;
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a= input(<span class="string">"please input value: "</span>)</span><br><span class="line">please input value: <span class="number">123</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"the value is "</span>,a)</span><br><span class="line">the value <span class="keyword">is</span>  <span class="number">123</span></span><br></pre></td></tr></table></figure>
 <p><strong>4.在一行中写多个语句</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在一行中写多个语句,需要在语句之间加分号</span></span><br><span class="line">x=len; y = x+<span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h1 id="三、逻辑和控制"><a href="#三、逻辑和控制" class="headerlink" title="三、逻辑和控制"></a><font color="bule">三、逻辑和控制</font></h1><p><strong>1.条件判断和条件语句</strong></p>
+<h2 id="三、逻辑和控制"><a href="#三、逻辑和控制" class="headerlink" title="三、逻辑和控制"></a><font color="bule">三、逻辑和控制</font></h2><p><strong>1.条件判断和条件语句</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x&gt; <span class="number">1</span> <span class="keyword">and</span> x&lt;<span class="number">10</span> <span class="comment">#可简写为 1&lt;x&lt;10</span></span><br><span class="line">x&gt;<span class="number">10</span> <span class="keyword">and</span> x&gt;y**<span class="number">2</span> <span class="comment">#可简写为 10&lt; x &gt;y**2</span></span><br><span class="line"><span class="comment">#######################</span></span><br><span class="line"><span class="comment">#比较运算符的优先级低于算术运算符</span></span><br><span class="line">x + y &gt; x**<span class="number">2</span>	<span class="comment">#合法的，表示(x+y) &gt; (x**2)</span></span><br><span class="line"><span class="comment">#逻辑运算符中not的优先级最高，但是低于比较运算符，or优先级最低</span></span><br><span class="line"><span class="keyword">not</span> x**<span class="number">2</span> &gt; <span class="number">5</span> <span class="keyword">or</span> y &lt; <span class="number">6</span> <span class="keyword">and</span> x*y &gt;<span class="number">8</span>  <span class="comment">#相当于not(x**2&gt;5) or ((y&gt;6) and (x*y)&gt;8)</span></span><br></pre></td></tr></table></figure>
 <p><strong>2.if语句的拓展形式</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> 表达式：</span><br><span class="line">	语句<span class="number">1</span></span><br><span class="line"><span class="keyword">elif</span> 表达式：</span><br><span class="line">	语句<span class="number">2</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  语句<span class="number">3</span></span><br></pre></td></tr></table></figure>
@@ -460,7 +460,7 @@ height:50vh;
 <p><strong>8.循环描述只在for语句开始求值一次</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">n=<span class="number">3</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">	print(i**<span class="number">2</span>)</span><br><span class="line">	n=n+<span class="number">3</span></span><br><span class="line"><span class="comment">#虽然循体中修改了n，但是并不影响循环体执行的次数</span></span><br></pre></td></tr></table></figure>
 <p>9.<code>break</code>导致当前循环语句结束，<code>continue</code>导致循环体的本次迭代结束；两个语句都在循环体里，<strong>控制包含它们的最内层的循环语句</strong></p>
-<h1 id="四、定义函数"><a href="#四、定义函数" class="headerlink" title="四、定义函数"></a><font color="bule">四、定义函数</font></h1><p><strong>1.标准函数</strong><code>isinstance(x,t)</code>用于检查<code>x</code>的类型是否为<code>t</code></p>
+<h2 id="四、定义函数"><a href="#四、定义函数" class="headerlink" title="四、定义函数"></a><font color="bule">四、定义函数</font></h2><p><strong>1.标准函数</strong><code>isinstance(x,t)</code>用于检查<code>x</code>的类型是否为<code>t</code></p>
 <font color="red">2.断言语句</font>
 
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assert</span> 条件				<span class="comment">#断言语句强制要求assert后的条件成立，否则就会报错,并返回出错的行号</span></span><br><span class="line"><span class="keyword">assert</span> 条件，表达式	<span class="comment">#断言要求assert后的条件成立，否则就会报错，返回出错的行号，并且计算出表达式的值返回</span></span><br></pre></td></tr></table></figure>
@@ -506,8 +506,8 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href="/2019/04/23/python-2/" title="Python(二)：数据的构造和组织">
-                    <div class="nextTitle">Python(二)：数据的构造和组织</div>
+                <a href="/2019/04/23/python-2/" title="Python编程(二)：数据的构造和组织">
+                    <div class="nextTitle">Python编程(二)：数据的构造和组织</div>
                 </a>
             
         </li>
@@ -634,7 +634,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、表达式和计算"><span class="toc-number">1.</span> <span class="toc-text">一、表达式和计算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、变量和赋值"><span class="toc-number">2.</span> <span class="toc-text">二、变量和赋值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、逻辑和控制"><span class="toc-number">3.</span> <span class="toc-text">三、逻辑和控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、定义函数"><span class="toc-number">4.</span> <span class="toc-text">四、定义函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、函数定义的若干问题"><span class="toc-number">5.</span> <span class="toc-text">五、函数定义的若干问题</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、表达式和计算"><span class="toc-number">1.</span> <span class="toc-text">一、表达式和计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、变量和赋值"><span class="toc-number">2.</span> <span class="toc-text">二、变量和赋值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、逻辑和控制"><span class="toc-number">3.</span> <span class="toc-text">三、逻辑和控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、定义函数"><span class="toc-number">4.</span> <span class="toc-text">四、定义函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、函数定义的若干问题"><span class="toc-number"></span> <span class="toc-text">五、函数定义的若干问题</span></a>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -991,9 +991,22 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 28
+        Total : 29
         </div>
         <!-- search  -->
         
@@ -1013,6 +1026,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href="/2019/04/29/topic-model/">topic-model</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/27</span><a class="archive-post-title" href="/2019/04/27/Hidden-Markov-Models/">隐马尔可夫模型</a>
         </li>
     
@@ -1028,7 +1046,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/23</span><a class="archive-post-title" href="/2019/04/23/python-2/">Python(二)：数据的构造和组织</a>
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href="/2019/04/23/python-2/">Python编程(二)：数据的构造和组织</a>
         </li>
     
     
@@ -1158,11 +1176,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
-        <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
-    
         <span class="sidebar-tag-name" data-tags="推荐系统"><span class="iconfont-archer">&#xe606;</span>推荐系统</span>
     
         <span class="sidebar-tag-name" data-tags="机器学习实战"><span class="iconfont-archer">&#xe606;</span>机器学习实战</span>
+    
+        <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
     
         <span class="sidebar-tag-name" data-tags="Python编程"><span class="iconfont-archer">&#xe606;</span>Python编程</span>
     
