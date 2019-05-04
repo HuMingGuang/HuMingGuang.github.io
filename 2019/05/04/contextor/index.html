@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>MingGuangHu&#39;s Studio.</title>
+    <title>Python系列问题（二）：上下文管理器 · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -218,12 +218,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Python系列问题（二）：上下文管理器</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">MingGuangHu's Studio.</a>
 </header>
@@ -235,24 +246,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            Python系列问题（二）：上下文管理器
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Python系列问题">Python系列问题</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">807</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/05/04</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -353,39 +414,90 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/16/genetic-algorithm/">
-            
-                <span>遗传算法</span>
-        </a>
-        <div class="abstract-content">
-            介绍遗传算法的基本知识，并用简单的python代码实现其功能
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/16</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
-    
+            <main class="main post-page">
+    <article class="article-entry">
+        <h3 id="一、上下文管理器"><a href="#一、上下文管理器" class="headerlink" title="一、上下文管理器"></a>一、上下文管理器</h3><p>上下文管理协议为<code>__enter__</code>和<code>__exit__</code>方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Contextor</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span>       </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, exc_type, exc_val, exc_tb)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">contextor = Contextor()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> contextor [<span class="keyword">as</span> var]:</span><br><span class="line">    with_body</span><br></pre></td></tr></table></figure>
+<p><code>Contextor</code> 实现了<code>__enter__</code>和<code>__exit__</code>这两个上下文管理器协议，当Contextor调用/实例化的时候，则创建了上下文管理器<code>contextor</code>。</p>
+<p>配合<code>with</code>语句使用的时候，上下文管理器会自动调用<code>__enter__</code>方法，然后进入运行时上下文环境，如果有as 从句，返回自身或另一个与运行时上下文相关的对象，值赋值给var。当with<em>body执行完毕退出with语句块或者with<em>body代码块出现异常，则会自动执行<code>__exit__</code>方法，并且会把对于的异常参数传递进来。如果`__exit</em></em><code>函数返回</code>True`。则with语句代码块不会显示的抛出异常，终止程序，如果返回None或者False，异常会被主动raise，并终止程序。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">with语句执行步骤</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1. 执行 contextor 以获取上下文管理器</td>
+</tr>
+<tr>
+<td style="text-align:left">2. 加载上下文管理器的 <strong>exit</strong>() 方法以备稍后调用</td>
+</tr>
+<tr>
+<td style="text-align:left">3. 调用上下文管理器的 <strong>enter</strong>() 方法</td>
+</tr>
+<tr>
+<td style="text-align:left">4. 如果有 as var 从句，则将 <strong>enter</strong>() 方法的返回值赋给 var</td>
+</tr>
+<tr>
+<td style="text-align:left">5. 执行子代码块 with_body</td>
+</tr>
+<tr>
+<td style="text-align:left">6. 调用上下文管理器的 <strong>exit</strong>() 方法，如果 with_body 的退出是由异常引发的，那么该异常的 type、value 和 traceback 会作为参数传给 <strong>exit</strong>()，否则传三个 None</td>
+</tr>
+<tr>
+<td style="text-align:left">7. 如果 with_body 的退出由异常引发，并且 <strong>exit</strong>() 的返回值等于 False，那么这个异常将被重新引发一次；如果 <strong>exit</strong>() 的返回值等于 True，那么这个异常就被无视掉，继续执行后面的代码</td>
+</tr>
+</tbody>
+</table>
 </div>
-            
-        </div>
+<div align="center"><img src="/2019/05/04/contextor/contextor.jpg" width="100%" height="100%">图1：上下文管理器运行流程</div>
+
+<p><strong>总结：</strong>上下文可以理解为执行当前body语句的上下环境，比如你要执行数据库操作，你的上文可以理解为打开数据库，下文为关闭数据库。</p>
+<h3 id="二、上下文管理器工具"><a href="#二、上下文管理器工具" class="headerlink" title="二、上下文管理器工具"></a>二、上下文管理器工具</h3><p>通过实现上下文协议定义创建上下文管理器很方便，Python为了更优雅，还专门提供了一个模块用于实现更函数式的上下文管理器用法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> contextlib</span><br><span class="line"></span><br><span class="line"><span class="meta">@contextlib.contextmanager</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">database</span><span class="params">()</span>:</span></span><br><span class="line">    db = Database()</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> db.connected:</span><br><span class="line">            db.connect()</span><br><span class="line">        <span class="keyword">yield</span> db</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        db.close()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_query</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">with</span> database() <span class="keyword">as</span> db:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'handle ---'</span>, db.query()</span><br></pre></td></tr></table></figure>
+<p>使用contextlib 定义一个上下文管理器函数，通过with语句，database调用生成一个上下文管理器，然后调用函数隐式的<code>__enter__</code>方法，并将结果通yield返回。最后退出上下文环境的时候，在excepition代码块中执行了<code>__exit__</code>方法。当然我们可以手动模拟上述代码的执行的细节。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">1</span>]: context = database()    <span class="comment"># 创建上下文管理器</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">2</span>]: context</span><br><span class="line">&lt;contextlib.GeneratorContextManager object at <span class="number">0x107188f10</span>&gt;</span><br><span class="line"></span><br><span class="line">In [<span class="number">3</span>]: db = context.__enter__() <span class="comment"># 进入with语句</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">4</span>]: db                          <span class="comment"># as语句，返回 Database实例</span></span><br><span class="line">Out[<span class="number">4</span>]: &lt;__main__.Database at <span class="number">0x107188a10</span>&gt;</span><br><span class="line"></span><br><span class="line">In [<span class="number">5</span>]: db.query()       </span><br><span class="line">Out[<span class="number">5</span>]: <span class="string">'query data'</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">6</span>]: db.connected</span><br><span class="line">Out[<span class="number">6</span>]: <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">7</span>]: db.__exit__(<span class="literal">None</span>, <span class="literal">None</span>, <span class="literal">None</span>)    <span class="comment"># 退出with语句</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">8</span>]: db</span><br><span class="line">Out[<span class="number">8</span>]: &lt;__main__.Database at <span class="number">0x107188a10</span>&gt;</span><br><span class="line"></span><br><span class="line">In [<span class="number">9</span>]: db.connected</span><br><span class="line">Out[<span class="number">9</span>]: <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<hr>
+<font size="5" color="blue">声明</font>
+
+<ul>
+<li><strong>参考资料1</strong>：<a href="https://www.jianshu.com/p/d53449f9e7e0" target="_blank" rel="noopener">https://www.jianshu.com/p/d53449f9e7e0</a></li>
+<li>本博文为原创总结，如有转载，请注名出处！</li>
+</ul>
+
     </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/05/04/执行-contextor-以获取上下文管理器/" title="执行 contextor 以获取上下文管理器">
+                    <div class="prevTitle">执行 contextor 以获取上下文管理器</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -470,6 +582,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、上下文管理器"><span class="toc-number">1.</span> <span class="toc-text">一、上下文管理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、上下文管理器工具"><span class="toc-number">2.</span> <span class="toc-text">二、上下文管理器工具</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1182,6 +1312,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
