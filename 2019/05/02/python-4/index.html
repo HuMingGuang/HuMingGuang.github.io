@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="MingGuang HU">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="MingGuang HU">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Python编程(四)：面向对象编程 · MingGuangHu&#39;s Studio.</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/assets/bitbug_favicon.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+        <!-- algolia -->
+        <script>
+            
+            var hits = JSON.parse('{"per_page":10}')
+            var labels = JSON.parse('{"input_placeholder":"Search for Posts","hits_empty":"We did not find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}')
+
+            var algolia = {
+                applicationID: 'L4H8NR9HZK',
+                apiKey: 'dd0a87d811733fb786ed3807e9023178',
+                indexName: 'blog',
+                hits: hits,
+                labels: labels
+            }
+        </script>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Python编程(四)：面向对象编程</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">MingGuangHu's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Python编程(四)：面向对象编程
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Python编程">Python编程</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.5k</span>阅读时长: <span class="post-count reading-time">6 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/05/02</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="一、Python的类和对象"><a href="#一、Python的类和对象" class="headerlink" title="一、Python的类和对象"></a><font color="bule">一、Python的类和对象</font></h2><p>1.一个<strong>class</strong>定义产生一个用户定义类型，可以向内置类型一样创建对象，称为该类的<strong>实例</strong>。</p>
+<p>2.一个类里可以定义一个名字为<code>__init__</code>的初始化函数，在创建这个类的实例时，解释器将自动调用这个函数，建立对象的初始状态。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rational</span>:</span></span><br><span class="line">  <span class="comment">#__init__的第一个形参(self)表示在创建的对象</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__inti__</span><span class="params">(self,num,den=<span class="number">1</span>)</span>:</span></span><br><span class="line">		....</span><br></pre></td></tr></table></figure>
+<p>3.Python没有说明属性只限制内部访问的专门机制，只能通过编程来约定保护。<strong>一般约定</strong>：类定义里由一个下划线<code>_</code>开头的属性名（包括函数名）当作内部名，不应该在类外使用。如果在类里出现<strong>以两个下划线开头的属性名</strong>，解释器会把它们换名，使在<strong>类定义之外直接写属性名时无法找到该属性</strong>，这是一种保护。</p>
+<p>4.构造有理函数类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rational</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,num,den=<span class="number">1</span>)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span>(isinstance(num,int) <span class="keyword">and</span> isinstance(den,int)):<span class="comment">#类型不匹配</span></span><br><span class="line">            <span class="keyword">raise</span> TypeError</span><br><span class="line">        <span class="keyword">if</span> den ==<span class="number">0</span>: <span class="comment">#如果分母为0，抛出异常</span></span><br><span class="line">            <span class="keyword">raise</span> ZeroDivisionError</span><br><span class="line">        sign = <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> num &lt; <span class="number">0</span>:</span><br><span class="line">            num,sign = -num,-sign</span><br><span class="line">        <span class="keyword">if</span> den &lt; <span class="number">0</span>:</span><br><span class="line">            den,sign = -den,-sign</span><br><span class="line">        g = Rational._gcd(num,den)  <span class="comment">#调用本类的静态函数gcd</span></span><br><span class="line">        self._num = sign * (num//g)</span><br><span class="line">        self._den = den//g      <span class="comment">#向下取整</span></span><br><span class="line">    <span class="comment">#静态方法，方法的形参不应有self形参，前面必须加上@staticmethod</span></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_gcd</span><span class="params">(m,n)</span>:</span>		<span class="comment">#求最大公约数</span></span><br><span class="line">        <span class="keyword">if</span> n==<span class="number">0</span>:</span><br><span class="line">            m,n = n,m</span><br><span class="line">        <span class="keyword">while</span> m!=<span class="number">0</span>:</span><br><span class="line">            m,n = n%m,m</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="string">"""为所有运算符规定特殊方法名，特殊方法名都以两个下划线开始</span></span><br><span class="line"><span class="string">    +运算对应的名字是__add__,*对应的是__mul__,</span></span><br><span class="line"><span class="string">    解释器遇到有有理数做_运算时，会直接找到名为__add__的实例方法</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__add__</span><span class="params">(self,another)</span>:</span>  <span class="comment">#模拟加法运算</span></span><br><span class="line">        den = self._den * another.den()</span><br><span class="line">        num = (self._num * another.den()+   <span class="comment">#调用另一个对象的属性，只能使用函数调用</span></span><br><span class="line">                self._den * another.num())</span><br><span class="line">        <span class="keyword">return</span> Rational(num,den)    <span class="comment">#构造Rational新对象，保证运算结果规范</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__mul__</span><span class="params">(self,another)</span>:</span>  <span class="comment">#模拟乘法运算</span></span><br><span class="line">        <span class="keyword">return</span> Rational(self._num * another.num(),self._den * another.den())</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__floordiv__</span><span class="params">(self,another)</span>:</span> <span class="comment">#模拟整除//运算,普通除法/得到的是浮点数</span></span><br><span class="line">        <span class="keyword">if</span> another.num() == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">raise</span> ZeroDivisionError</span><br><span class="line">        <span class="keyword">return</span> Rational(self._num * another.den(),self._den * another.num())</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__eq__</span><span class="params">(self,another)</span>:</span><span class="comment">#比较两个有理数是否相等</span></span><br><span class="line">        <span class="keyword">return</span> (self._num == another.num <span class="keyword">and</span> </span><br><span class="line">                self._den == another.den())</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__lt__</span><span class="params">(self,another)</span>:</span><span class="comment">#有理数比较大小</span></span><br><span class="line">        <span class="keyword">return</span> (self._num * another.den() &lt; </span><br><span class="line">                self._den * another.num())</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span><span class="comment">#为能被内置函数str调用，重写方法</span></span><br><span class="line">        <span class="keyword">return</span> str(self._num)+<span class="string">"/"</span>+str(self._den)</span><br><span class="line">    <span class="string">"""使用函数访问内部变量</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">num</span><span class="params">(self)</span>:</span><span class="comment">#使用函数访问内部变量</span></span><br><span class="line">        <span class="keyword">return</span> self._num</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">den</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._den</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    r=Rational(<span class="number">8</span>,<span class="number">12</span>)<span class="comment">#创建实例对象</span></span><br><span class="line">    print(r.num())<span class="comment">#通过实例对象的函数，访问对象的内部变量</span></span><br><span class="line">    print(r.den())</span><br><span class="line">    <span class="comment">#five是默认参数的有理数对象</span></span><br><span class="line">    five = Rational(<span class="number">5</span>)</span><br><span class="line">    x = Rational(<span class="number">3</span>,<span class="number">5</span>)</span><br><span class="line">    <span class="comment">#直接调用__str__方法</span></span><br><span class="line">    print(<span class="string">"Two thirds are"</span>,Rational(<span class="number">2</span>,<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment">#使用类中的算术运算符(+ *)和条件运算符计算</span></span><br><span class="line">    y = five + x * Rational(<span class="number">5</span>,<span class="number">17</span>)</span><br><span class="line">    print(<span class="string">"y is "</span>,y)</span><br><span class="line">    <span class="comment">#使用内置的比较大小的方法</span></span><br><span class="line">    <span class="keyword">if</span> y &gt; Rational(<span class="number">123</span>,<span class="number">11</span>):</span><br><span class="line">        print(<span class="string">"It is large."</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#判断five是否为Rational类型</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(five,Rational):</span><br><span class="line">        print(<span class="string">"five  is Rational Type."</span>)</span><br><span class="line"><span class="comment">#######输出结果</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line">Two thirds are <span class="number">2</span>/<span class="number">3</span></span><br><span class="line">y <span class="keyword">is</span>  <span class="number">88</span>/<span class="number">17</span></span><br><span class="line">five  <span class="keyword">is</span> Rational Type</span><br></pre></td></tr></table></figure>
+<p>5.定义类方法</p>
+<p>定义类的方法时加<code>@classmethod</code>，用于实现与这个类本身相关的操作，其参数表里至少要有一个表示定义类的形参，习惯用<code>cls</code>.类方法需要通过类名，以属性引用的形式调用，执行时这个类约束到方法的<code>cls</code>参数，可以通过<code>cls</code>访问其它属性。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Countable</span>:</span></span><br><span class="line">    counter = <span class="number">0</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        Countable.counter +=<span class="number">1</span></span><br><span class="line">    <span class="comment">#类方法,该方法与实例无关，因此不应该是实例方法，但与该类的整体有关，获得本类的性质</span></span><br><span class="line"><span class="meta">    @classmethod    </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_count</span><span class="params">(cls)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> Countable.counter</span><br><span class="line">    </span><br><span class="line">x = Countable()</span><br><span class="line">y = Countable()</span><br><span class="line">z = Countable()</span><br><span class="line"></span><br><span class="line">print(Countable.get_count())</span><br><span class="line"><span class="comment">####输出结果</span></span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>6.类定义是一种作用域单位</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>:</span></span><br><span class="line">    a = <span class="number">0</span></span><br><span class="line">    b = a+<span class="number">1</span></span><br><span class="line"><span class="comment">#定义的名字是局部的，只在类定义内部可见，在类外使用时必须采用基于类名的属性访问方式</span></span><br><span class="line">x = C.b		</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+<p>7.把已定义类的对象作为新类的对象的成分</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x, y)</span>:</span></span><br><span class="line">        self._x = x</span><br><span class="line">        self._y = y</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getx</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._x</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">gety</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._y</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">area</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">move</span><span class="params">(self,delta_x,delta_y)</span>:</span></span><br><span class="line">        self._x += delta_x</span><br><span class="line">        self._y += delta_y</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span>:</span></span><br><span class="line">    <span class="comment">#引入已定义的类的对象作为新类的对象的成分</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, point, length, width)</span>:</span></span><br><span class="line">        self._point = point</span><br><span class="line">        self._length = length</span><br><span class="line">        self._width = width</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getx</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._point.getx()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">gety</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._point.gety()</span><br><span class="line">    <span class="comment">#修改已定义类的方法</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">area</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._length * self._width</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">move</span><span class="params">(self,delta_x,delta_y)</span>:</span></span><br><span class="line">        self._point.move(delta_x,delta_y)</span><br></pre></td></tr></table></figure>
+<p>8.一个类管理器，用于管理具有多个相同的类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#用户类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        self._name = name</span><br><span class="line">        self._total = <span class="number">0.0</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pay</span><span class="params">(self,price)</span>:</span></span><br><span class="line">        self._total += price</span><br><span class="line">        <span class="keyword">return</span> price</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">total</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._total</span><br><span class="line"><span class="comment">#使用类对象和方法，处理多用户的问题</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomerManager</span>:</span></span><br><span class="line">    _customers = &#123;&#125;</span><br><span class="line">    <span class="comment">#创建新用户</span></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">new_customer</span><span class="params">(cls,name)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(name,str):</span><br><span class="line">            <span class="keyword">raise</span> TypeError(<span class="string">"Create Record Error:"</span>,name)</span><br><span class="line">        cls._customers[name] = Customer(name)</span><br><span class="line">    <span class="comment">#付钱</span></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pay_price</span><span class="params">(cls,name,price)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">not</span> isinstance(name,str) <span class="keyword">or</span> </span><br><span class="line">            <span class="keyword">not</span> isinstance(price,float)):</span><br><span class="line">            <span class="keyword">raise</span> TypeError(<span class="string">"Purchase Error"</span>,name,price)</span><br><span class="line">        <span class="keyword">if</span> name <span class="keyword">not</span> <span class="keyword">in</span> cls._customers:  <span class="comment">#无此用户时，自动添加</span></span><br><span class="line">            cls._customers[name] = Customer(name)</span><br><span class="line">        <span class="keyword">return</span> cls._customers[name].pay(price)</span><br><span class="line">    <span class="comment">#检查总消费</span></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check_total</span><span class="params">(cls,name)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> name <span class="keyword">not</span> <span class="keyword">in</span> cls._customers:</span><br><span class="line">            <span class="keyword">raise</span> KeyError(<span class="string">"No this customer:"</span>,name)</span><br><span class="line">        <span class="keyword">return</span> cls._customers[name].total()</span><br><span class="line"><span class="comment">#给类起别名</span></span><br><span class="line">cm = CustomerManager</span><br><span class="line">cm.new_customer(<span class="string">"Li Lei"</span>)</span><br><span class="line">cm.new_customer(<span class="string">"Han Ming"</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Li Lei spends :"</span>,cm.pay_price(<span class="string">"Li Lei"</span>,<span class="number">123.1</span>))</span><br><span class="line">print(<span class="string">"Li Lei spends :"</span>,cm.pay_price(<span class="string">"Li Lei"</span>,<span class="number">313.3</span>))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Han Ming spends :"</span>,cm.pay_price(<span class="string">"Han Ming"</span>,<span class="number">100.0</span>))</span><br><span class="line">print(<span class="string">"Han Ming spends :"</span>,cm.pay_price(<span class="string">"Han Ming"</span>,<span class="number">121.0</span>))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Li Lei spends totally :"</span>,cm.check_total(<span class="string">"Li Lei"</span>))</span><br><span class="line">print(<span class="string">"Han Ming spends totally :"</span>,cm.check_total(<span class="string">"Han Ming"</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="三、继承"><a href="#三、继承" class="headerlink" title="三、继承"></a><font color="bule">三、继承</font></h2><h2 id="四、特殊方法和特殊的类"><a href="#四、特殊方法和特殊的类" class="headerlink" title="四、特殊方法和特殊的类"></a><font color="bule">四、特殊方法和特殊的类</font></h2><h2 id="五、实例：链接表"><a href="#五、实例：链接表" class="headerlink" title="五、实例：链接表"></a><font color="bule">五、实例：链接表</font></h2>
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/04/29/topic-model/" title="主题模型">
+                    <div class="prevTitle">主题模型</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:936068345@qq.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/HuMingGuang" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title="wechat">
+                  
+                  <img class="profile-qr" src="/assets/Wechat.jpeg">
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、Python的类和对象"><span class="toc-number">1.</span> <span class="toc-text">一、Python的类和对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、继承"><span class="toc-number">2.</span> <span class="toc-text">三、继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、特殊方法和特殊的类"><span class="toc-number">3.</span> <span class="toc-text">四、特殊方法和特殊的类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、实例：链接表"><span class="toc-number">4.</span> <span class="toc-text">五、实例：链接表</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 30
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href="/2019/05/02/python-4/">Python编程(四)：面向对象编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href="/2019/04/29/topic-model/">主题模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href="/2019/04/27/Hidden-Markov-Models/">隐马尔可夫模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href="/2019/04/26/python-copy/">Python系列问题（一）：深拷贝、浅拷贝</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href="/2019/04/26/python-3/">Python编程(三)：深入理解Python</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href="/2019/04/23/python-2/">Python编程(二)：数据的构造和组织</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href="/2019/04/22/python-1/">Python编程(一)：Python基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href="/2019/04/21/Gaussian-Mixture-Model/">高斯混合模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href="/2019/04/20/EM-algorithm/">EM算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href="/2019/04/17/GPUCB/">高斯过程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href="/2019/04/16/genetic-algorithm/">遗传算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2019/04/14/support-vector-machine/">支持向量机</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2019/04/14/Meachine-Learning-Lagrange-duality/">详解拉格朗日及其对偶问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href="/2019/04/12/common-parameter-estimation/">常用的参数估计方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href="/2019/04/12/linear-model-1/">逻辑斯谛回归、岭回归及Lasso回归</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href="/2019/04/11/Linear-model/">线形模型:最小二乘法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href="/2019/04/10/esemble-learning/">集成学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href="/2019/04/08/decision-tree/">决策树算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href="/2019/04/08/Bayesian/">朴素贝叶斯</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href="/2019/04/07/recommend-system-6/">推荐系统（七）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href="/2019/04/02/meachine-learning-question/">机器学习问题的梳理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href="/2019/04/02/recommend-system-5/">推荐系统（六）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href="/2019/04/01/KNN/">KNN算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href="/2019/03/30/recommend-system-4/">推荐系统（五）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href="/2019/03/28/recommend-system-3/">推荐系统（四）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/27</span><a class="archive-post-title" href="/2019/03/27/recommend-system-2/">推荐系统（三）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href="/2019/03/26/consistent-hashing/">一致性哈希算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href="/2019/03/26/recommend-system-1/">推荐系统（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/25</span><a class="archive-post-title" href="/2019/03/25/recommend-system/">推荐系统（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href="/2019/03/22/Coding-1/">C++基础知识梳理</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
+    
+        <span class="sidebar-tag-name" data-tags="推荐系统"><span class="iconfont-archer">&#xe606;</span>推荐系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习实战"><span class="iconfont-archer">&#xe606;</span>机器学习实战</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python编程"><span class="iconfont-archer">&#xe606;</span>Python编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python系列问题"><span class="iconfont-archer">&#xe606;</span>Python系列问题</span>
+    
+        <span class="sidebar-tag-name" data-tags="C++"><span class="iconfont-archer">&#xe606;</span>C++</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="机器学习"><span class="iconfont-archer">&#xe60a;</span>机器学习</span>
+    
+        <span class="sidebar-category-name" data-categories="转载文章"><span class="iconfont-archer">&#xe60a;</span>转载文章</span>
+    
+        <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
+    
+        <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
+    
+        <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
+    
+        <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "MingGuang HU"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.8.0/dist/instantsearch.min.js" defer></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
+
+
