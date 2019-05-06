@@ -419,7 +419,7 @@ height:50vh;
         <h3 id="一、上下文管理器"><a href="#一、上下文管理器" class="headerlink" title="一、上下文管理器"></a>一、上下文管理器</h3><p>上下文管理协议为<code>__enter__</code>和<code>__exit__</code>方法</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Contextor</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span>       </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, exc_type, exc_val, exc_tb)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">contextor = Contextor()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> contextor [<span class="keyword">as</span> var]:</span><br><span class="line">    with_body</span><br></pre></td></tr></table></figure>
 <p><code>Contextor</code> 实现了<code>__enter__</code>和<code>__exit__</code>这两个上下文管理器协议，当Contextor调用/实例化的时候，则创建了上下文管理器<code>contextor</code>。</p>
-<p>配合<code>with</code>语句使用的时候，上下文管理器会自动调用<code>__enter__</code>方法，然后进入运行时上下文环境，如果有as 从句，返回自身或另一个与运行时上下文相关的对象，值赋值给var。当with<em>body执行完毕退出with语句块或者with<em>body代码块出现异常，则会自动执行<code>__exit__</code>方法，并且会把对于的异常参数传递进来。如果`__exit</em></em><code>函数返回</code>True`。则with语句代码块不会显示的抛出异常，终止程序，如果返回None或者False，异常会被主动raise，并终止程序。</p>
+<p>配合<code>with</code>语句使用的时候，上下文管理器会自动调用<code>__enter__</code>方法，然后进入运行时上下文环境，如果有as 从句，返回自身或另一个与运行时上下文相关的对象，值赋值给var。当<strong>with_body</strong>执行完毕退出with语句块或者<strong>with_body</strong>代码块出现异常，则会自动执行<code>__exit__</code>方法，并且会把对于的异常参数传递进来。如果<code>__exit__</code>函数返回<strong>True</strong>。则with语句代码块不会显示的抛出异常，终止程序。如果返回<strong>None</strong>或者<strong>False</strong>，异常会被主动raise，并终止程序。</p>
 <div class="table-container">
 <table>
 <thead>
@@ -1016,8 +1016,6 @@ top:50vh;
     
     
     
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 32
@@ -1207,11 +1205,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
     
-        <span class="sidebar-tag-name" data-tags="Python系列问题"><span class="iconfont-archer">&#xe606;</span>Python系列问题</span>
-    
         <span class="sidebar-tag-name" data-tags="推荐系统"><span class="iconfont-archer">&#xe606;</span>推荐系统</span>
     
         <span class="sidebar-tag-name" data-tags="机器学习实战"><span class="iconfont-archer">&#xe606;</span>机器学习实战</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python系列问题"><span class="iconfont-archer">&#xe606;</span>Python系列问题</span>
     
         <span class="sidebar-tag-name" data-tags="Python编程"><span class="iconfont-archer">&#xe606;</span>Python编程</span>
     
@@ -1252,9 +1250,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="机器学习"><span class="iconfont-archer">&#xe60a;</span>机器学习</span>
     
-        <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
-    
         <span class="sidebar-category-name" data-categories="转载文章"><span class="iconfont-archer">&#xe60a;</span>转载文章</span>
+    
+        <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
     
         <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
     
