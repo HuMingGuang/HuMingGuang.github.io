@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">840</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.9k</span>阅读时长: <span class="post-count reading-time">14 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -421,19 +421,20 @@ height:50vh;
 <p>降维之所以有效的<strong>原因</strong>是：人们观测或者收集到的数据样本虽然是高维的，但是<strong>与学习任务密切相关的也许仅仅是某个低维分布，即高维空间中的一个低维“嵌入”</strong>。</p>
 <p><strong>常见的降维方法</strong></p>
 <p>监督降维算法：<strong>线性判别分析(Linear Discriminant Analysis:LDA)</strong> 。</p>
-<p>无监督降维算法：<strong>主成分分析PCA</strong> 。</p>
-<h2 id="二、主成分分析-PCA"><a href="#二、主成分分析-PCA" class="headerlink" title="二、主成分分析 PCA"></a>二、主成分分析 PCA</h2><h3 id="2-1-坐标变换"><a href="#2-1-坐标变换" class="headerlink" title="2.1 坐标变换"></a>2.1 坐标变换</h3><p>1.给定数据集 <script type="math/tex">\mathbb D=\{\mathbf{\vec x}_1,\cdots,\mathbf{\vec x}_N\}</script> ，其中 <script type="math/tex">\mathbf{\vec x}_i\in \mathbb R^n</script> 。假定样本经过了<strong>中心化</strong>，即：</p>
+<p>无监督降维算法：<strong>主成分分析PCA(Principal Component Analysis)</strong> 。</p>
+<h2 id="二、主成分分析-PCA"><a href="#二、主成分分析-PCA" class="headerlink" title="二、主成分分析 PCA"></a>二、主成分分析 PCA</h2><p><strong>PCA是属于一种线性、无监督、全局的降维算法</strong></p>
+<h3 id="2-1-坐标变换"><a href="#2-1-坐标变换" class="headerlink" title="2.1 坐标变换"></a>2.1 坐标变换</h3><p>1.给定数据集 <script type="math/tex">\mathbb D=\{\mathbf{\vec x}_1,\cdots,\mathbf{\vec x}_N\}</script> ，其中 <script type="math/tex">\mathbf{\vec x}_i\in \mathbb R^n</script> 。假定样本经过了<strong>中心化</strong>，即：</p>
 <script type="math/tex; mode=display">\mathbf{\vec x}_i \leftarrow\mathbf{\vec x}_i- \frac 1N \sum_{j=1}^{N}\mathbf{\vec x}_j</script><ul>
 <li><script type="math/tex">\bar{\mathbf{\vec x}} =\frac 1N \sum_{j=1}^{N}\mathbf{\vec x}_j</script>称作数据集<script type="math/tex">\mathbb D</script>  的中心向量，它的各元素就是各个特征的均值。</li>
 <li>之所以进行中心化，是因为经过中心化之后常规的线性变换就是绕原点的旋转变换，也就是坐标变换。</li>
 </ul>
 <p>2.假设<strong>坐标变换</strong>矩阵为<script type="math/tex">\mathbf W^\prime \in \mathbb R^{n\times n}</script>  ，经过变换之后样本 <script type="math/tex">\mathbf{\vec x}</script> 的坐标为：<script type="math/tex">\mathbf{\vec z}^\prime=\mathbf W^{^\prime\,T}\mathbf{\vec x}=(z_1,\cdots,z_n)^T</script>  。其中<script type="math/tex">\mathbf W^\prime=(\mathbf{\vec w}_1,\mathbf{\vec w}_2,\cdots,\mathbf{\vec w}_n)</script>  ，<script type="math/tex">\mathbf{\vec w}_i\in \mathbb R^n</script> 。</p>
-<p>令  <script type="math/tex">\mathbf{\vec z}=(z_1,\cdots,z_d)^T,d\lt n</script>，它表示样本<script type="math/tex">\mathbf{\vec x}</script>  降低到 <script type="math/tex">d</script> 维度。令<script type="math/tex">>\mathbf W=(\mathbf{\vec w}_1,\mathbf{\vec w}_2,\cdots,\mathbf{\vec w}_d)</script>  ，则有：<script type="math/tex">\mathbf{\vec z}=\mathbf W^T\mathbf{\vec x}</script>  。</p>
+<p>令  <script type="math/tex">\mathbf{\vec z}=(z_1,\cdots,z_d)^T,d\lt n</script>，它表示样本<script type="math/tex">\mathbf{\vec x}</script>  降低到 <script type="math/tex">d</script> 维度。令<script type="math/tex">\mathbf {W}=(\mathbf{\vec w}_1,\mathbf{\vec w}_2,\cdots,\mathbf{\vec w}_d)</script>  ，则有：<script type="math/tex">\mathbf{\vec z}=\mathbf W^T\mathbf{\vec x}</script>  。</p>
 <p>根据坐标变换矩阵的性质，有：</p>
 <ul>
-<li><script type="math/tex; mode=display">||\mathbf{\vec w}_i||_2=1$$， $$i=1,2,\cdots,d</script></li>
-<li><script type="math/tex; mode=display">\mathbf{\vec w}_i\cdot\mathbf{\vec w}_j=0,i\ne j</script></li>
-<li><script type="math/tex; mode=display">\mathbf W^\prime\mathbf W^{\prime\; T} =\mathbf I_{n\times n}$$  ， $$\mathbf W^T\mathbf W=\mathbf I_{d\times d}</script></li>
+<li><script type="math/tex">||\mathbf{\vec w}_i||_2=1</script>， <script type="math/tex">i=1,2,\cdots,d</script>  .</li>
+<li><script type="math/tex">\mathbf{\vec w}_i\cdot\mathbf{\vec w}_j=0,i\ne j</script>   .</li>
+<li><script type="math/tex">\mathbf W^\prime\mathbf W^{\prime\; T} =\mathbf I_{n\times n}</script>  ， <script type="math/tex">\mathbf W^T\mathbf W=\mathbf I_{d\times d}</script>.</li>
 </ul>
 <p>3.对数据集 <script type="math/tex">\mathbb D</script> 中的样本<script type="math/tex">\mathbf{\vec x}_i</script>  ，<strong>降维后的数据</strong>为<script type="math/tex">\mathbf{\vec z}_i</script>  。令：</p>
 <script type="math/tex; mode=display">\mathbf X=\begin{bmatrix}
@@ -463,6 +464,129 @@ z_{N,1}&z_{N,2}&\cdots&z_{N,d}\\
 </ul>
 <p>则根据<script type="math/tex">z_{i,j}=\mathbf{\vec w}_j\cdot \mathbf{\vec x}_i=\sum_{k=1}^n w_{j,k}\times x_{i,k}</script> ，有 ：</p>
 <script type="math/tex; mode=display">\mathbf{\vec v}_j = \sum_{k=1}^n w_{j,k} \mathbf{\vec u}_j</script><p>因此降维的物理意义为：<strong>通过线性组合原始特征，从而去掉一些冗余的或者不重要的特征、保留重要的特征</strong>。</p>
+<h3 id="2-2-重构误差"><a href="#2-2-重构误差" class="headerlink" title="2.2 重构误差"></a>2.2 重构误差</h3><p>1.考虑对 <script type="math/tex">\mathbf{\vec z}</script> 进行重构，重构之后的样本为：<script type="math/tex">\hat{\mathbf{\vec x}} = \mathbf W \mathbf{\vec z}</script>  。</p>
+<p>因为<script type="math/tex">\mathbf{\vec z}=\mathbf W^T\mathbf{\vec x}</script>，所以对整个数据集 <script type="math/tex">\mathbb D</script> 所有<strong>重建样本与原始样本的误差为</strong>：</p>
+<script type="math/tex; mode=display">\sum_{i=1}^{N}  ||\hat{\mathbf {\vec x}}_i- \mathbf{\vec x}_i ||_2^{2}=\sum_{i=1}^{N} ||\mathbf W\mathbf W^{T} \mathbf {\vec x}_i -\mathbf{\vec x}_i||_2^{2}</script><p>2.根据定义有：</p>
+<script type="math/tex; mode=display">\mathbf W \mathbf W ^{T} \mathbf {\vec x}_i=(\mathbf {\vec w}_1,\mathbf  {\vec w}_2,\cdots,\mathbf  {\vec w}_d)\begin{bmatrix}\mathbf  {\vec w}_1^{T}\\
+\mathbf  {\vec w}_2^{T}\\
+\vdots \\
+\mathbf  {\vec w}_d^{T}\end{bmatrix}  \mathbf  {\vec x}_i=\sum_{j=1}^{d}\mathbf  {\vec w}_j(\mathbf  {\vec w}_j^{T} \mathbf  {\vec x}_i)</script><p>由于 <script type="math/tex">\mathbf {\vec w}_j^{T} \mathbf {\vec x}_i</script> 是标量，所以有：<script type="math/tex">\mathbf W\mathbf W^{T} \mathbf {\vec x}_i=\sum_{j=1}^{d}(\mathbf {\vec w}_j^{T} \mathbf {\vec x}_i)\mathbf {\vec w}_j</script>  。</p>
+<p>由于标量的转置等于它本身，所以有：<script type="math/tex">\mathbf W\mathbf W^{T} \mathbf {\vec x}_i=\sum_{j=1}^{d}(\mathbf {\vec x}_i^T\mathbf {\vec w}_j)\mathbf {\vec w}_j</script> 。</p>
+<p>则有：</p>
+<script type="math/tex; mode=display">\sum_{i=1}^{N}  ||\hat{\mathbf {\vec x}}_i- \mathbf{\vec x}_i ||_2^{2}=\sum_{i=1}^{N} ||\mathbf W\mathbf W^{T} \mathbf {\vec x}_i-\mathbf{\vec x}_i||_2^{2}\\
+=\sum_{i=1}^{N}  ||\sum_{j=1}^{d}(\mathbf {\vec x}_i^T\mathbf {\vec w}_j )\mathbf {\vec w}_j -\mathbf{\vec x}_i ||_2^2\\
+=\sum_{i=1}^{N}  ||\mathbf{\vec x}_i-\sum_{j=1}^{d}(\mathbf {\vec x}_i^T\mathbf {\vec w}_j )\mathbf {\vec w}_j ||_2^2</script><p>3.根据  <script type="math/tex">\mathbf X</script>的定义，可以证明（ <script type="math/tex">||\cdot||_F</script> 为矩阵的<code>Frobenius</code>范数）：</p>
+<script type="math/tex; mode=display">||\mathbf X- \mathbf X \mathbf W \mathbf W^{T}||_F^{2}=\sum_{i=1}^{N}||\mathbf {\vec x}_i- \sum_{j=1}^{d}(\mathbf {\vec x}_i^{T}  \mathbf {\vec w}_j)\mathbf {\vec w}_j||_2^{2}</script><p>证明：</p>
+<script type="math/tex; mode=display">\mathbf X- \mathbf X \mathbf W \mathbf W^{T}=\mathbf X-\begin{bmatrix}
+\mathbf{\vec x}_1^T\\
+\vdots\\
+\mathbf{\vec x}_N^T
+\end{bmatrix}
+\begin{bmatrix}\mathbf{\vec w}_1,\mathbf{\vec w}_2,\cdots,\mathbf{\vec w}_d\end{bmatrix}
+\begin{bmatrix}
+\mathbf{\vec w}_1^T\\
+\vdots\\
+\mathbf{\vec w}_d^T
+\end{bmatrix}\\
+=\mathbf X-
+\begin{bmatrix}
+\mathbf{\vec x}_1^T\mathbf{\vec w}_1&\cdots&\mathbf{\vec x}_1^T\mathbf{\vec w}_d\\
+\vdots&\ddots&\vdots\\
+\mathbf{\vec x}_N^T\mathbf{\vec w}_1&\cdots&\mathbf{\vec x}_N^T\mathbf{\vec w}_d
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{\vec w}_1^T\\
+\vdots\\
+\mathbf{\vec w}_d^T
+\end{bmatrix}\\
+=\mathbf X- \begin{bmatrix}
+\sum_{k=1}^dw_{k,1}\times \mathbf{\vec x}_1^T\mathbf{\vec w}_k&\cdots&\sum_{k=1}^dw_{k,n}\times \mathbf{\vec x}_1^T\mathbf{\vec w}_k\\
+\vdots&\ddots&\vdots\\
+\sum_{k=1}^dw_{k,1}\times \mathbf{\vec x}_N^T\mathbf{\vec w}_k&\cdots&\sum_{k=1}^dw_{k,n}\times \mathbf{\vec x}_N^T\mathbf{\vec w}_k\\
+\end{bmatrix}</script><p>则有：</p>
+<script type="math/tex; mode=display">||\mathbf X- \mathbf X \mathbf W \mathbf W^{T}||_F^{2}=\sum_{i=1}^N\sum_{j=1}^n\left[x_{i,j}-\left(\sum_{k=1}^dw_{k,j}\times \mathbf{\vec x}_i^T\mathbf{\vec w}_k\right)\right]^2\\
+=\sum_{i=1}^N|| \mathbf{\vec x}_i - \sum_{k=1}^d(\mathbf{\vec x}_i^T\mathbf{\vec w}_k)\mathbf{\vec w}_k||_2^2</script><p>将最后的下标从  <script type="math/tex">k</script>替换为<script type="math/tex">j</script>  即可得证。</p>
+<p>4.<strong>PCA降维要求重构误差最小</strong>。现在求解最优化问题：</p>
+<script type="math/tex; mode=display">\mathbf W^{*}=\arg\min_{\mathbf W}\sum_{i=1}^{N}||\hat{\mathbf {\vec x}}_i- \mathbf{\vec x}_i ||_2^{2} 
+=\arg\min_{\mathbf W} ||\mathbf X - \mathbf X \mathbf W\mathbf W^{T}||_F^{2} \\
+=\arg\min_{\mathbf W}tr\left[(\mathbf X - \mathbf X \mathbf W\mathbf W^{T})^{T}(\mathbf X - \mathbf X \mathbf W\mathbf W^{T})\right]\\
+=\arg\min_{\mathbf W}tr\left[(\mathbf X^T- \mathbf W\mathbf W^{T}\mathbf X^T)(\mathbf X - \mathbf X \mathbf W\mathbf W^{T})\right] \\
+=\arg\min_{\mathbf W}tr\left[ \mathbf X^T\mathbf X-\mathbf X ^T\mathbf X \mathbf W\mathbf W^{T}-\mathbf W\mathbf W^{T}\mathbf X^T\mathbf X + \mathbf W\mathbf W^{T}\mathbf X^T\mathbf X \mathbf W\mathbf W^{T}\right]\\
+=\arg\min_{\mathbf W}\left[ tr(\mathbf X^T\mathbf X )-tr(\mathbf X^T \mathbf X \mathbf W\mathbf W^{T})-tr(\mathbf W\mathbf W^{T}\mathbf X^T\mathbf X)
++tr(\mathbf W\mathbf W^{T}\mathbf X^T\mathbf X \mathbf W\mathbf W^{T})\right]</script><p>因为矩阵及其转置的迹相等，因此 <script type="math/tex">tr(\mathbf X ^T\mathbf X \mathbf W\mathbf W^{T})=tr(\mathbf W\mathbf W^{T}\mathbf X^T\mathbf X )</script> 。</p>
+<p>由于可以在<script type="math/tex">tr(\cdot)</script>  中调整矩阵的顺序，则<script type="math/tex">tr(\mathbf W\mathbf W^{T}\mathbf X^T\mathbf X \mathbf W\mathbf W^{T})=tr(\mathbf X^T\mathbf X \mathbf W\mathbf W^{T}\mathbf W\mathbf W^{T})</script>  。</p>
+<p>考虑到：</p>
+<script type="math/tex; mode=display">\mathbf W^{T} \mathbf W=\begin{bmatrix}\mathbf {\vec w}_1^{T}\\
+\vdots \\
+\mathbf  {\vec w}_d^{T}\end{bmatrix}(\mathbf  {\vec w}_1,\cdots,\mathbf  {\vec w}_d) =\mathbf I_{d\times d}</script><p>代入上式有：<script type="math/tex">tr(\mathbf W\mathbf W^{T}\mathbf X^T\mathbf X \mathbf W\mathbf W^{T})=tr(\mathbf X^T\mathbf X \mathbf W\mathbf W^{T})</script> 。</p>
+<p>于是有：</p>
+<script type="math/tex; mode=display">\mathbf W^{*}=\arg\min_{\mathbf W}\left[tr(\mathbf X^T\mathbf X)-tr(\mathbf X^T\mathbf X \mathbf W\mathbf W^{T})\right]</script><p>由于<script type="math/tex">tr(\mathbf X^T\mathbf X)</script>  与<script type="math/tex">\mathbf W</script>  无关，因此：</p>
+<script type="math/tex; mode=display">\mathbf W^{*} =\arg\min_{\mathbf W} -tr(\mathbf X^{T} \mathbf X \mathbf W\mathbf W^{T})
+= \arg\max_{\mathbf W}tr(\mathbf X ^{T}\mathbf X\mathbf W\mathbf W^{T})</script><p>调整矩阵顺序，则有：<script type="math/tex">\mathbf W^{*} =\arg\max_{\mathbf W}tr(\mathbf W^T\mathbf X ^{T} \mathbf X \mathbf W)</script>。其约束条件为： <script type="math/tex">\mathbf W ^{T}\mathbf W=\mathbf I_{d\times d}</script> 。</p>
+<p>5.<code>PCA</code> 最优化问题需要求解就是 <script type="math/tex">\mathbf X^T\mathbf X</script> 的特征值</p>
+<ul>
+<li>只需要对矩阵  <script type="math/tex">\mathbf X^T\mathbf X \in \mathbb R^{n\times n}</script>进行特征值分解，将求得的特征值排序：<script type="math/tex">\lambda_1\ge \lambda_2\ge\cdots\ge\lambda_n</script>  。然后取前 <script type="math/tex">d</script> 个特征值对应的单位特征向量构成坐标变换矩阵  <script type="math/tex">\mathbf W=(\mathbf {\vec w}_1,\mathbf {\vec w}_2,\cdots,\mathbf {\vec w}_d)</script> 。</li>
+<li>当样本数据进行了中心化时 ，<script type="math/tex">\sum_{i=1}^{N}\mathbf {\vec x}_i  \mathbf {\vec x}_i^{T}=\mathbf X^{T}\mathbf X</script>  就是样本集的协方差矩阵。这也是为什么需要对样本进行中心化的一个原因。</li>
+</ul>
+<p><strong>6.PCA的求解方法</strong></p>
+<ul>
+<li>对样本数据进行中心化处理</li>
+<li>求样本协方差矩阵</li>
+<li>对协方差矩阵进行特征分解，将特征值从大到小排列</li>
+<li>取特征值前<script type="math/tex">d</script>大对应的特征向量<script type="math/tex">w_1,w_2,\cdots,w_d</script>，通过以下将<script type="math/tex">n</script>维样本映射到<script type="math/tex">d</script>维:<script type="math/tex">\mathbf{\vec z}=\mathbf W^T\mathbf{\vec x}</script></li>
+</ul>
+<h3 id="2-3-PCA-算法"><a href="#2-3-PCA-算法" class="headerlink" title="2.3 PCA 算法"></a>2.3 PCA 算法</h3><p>1.<strong>PCA算法</strong></p>
+<p><strong>输入</strong></p>
+<ul>
+<li>样本集<script type="math/tex">\mathbb D=\{\mathbf{\vec x}_1,\mathbf{\vec x}_2,\cdots,\mathbf{\vec x}_N\}</script>  。</li>
+<li>低维空间维数 <script type="math/tex">d</script> 。</li>
+</ul>
+<p><strong>输出：</strong>投影矩阵  <script type="math/tex">\mathbf W=(\mathbf {\vec w}_1,\mathbf {\vec w}_2,\cdots,\mathbf {\vec w}_d)</script>。</p>
+<p><strong>算法步骤</strong></p>
+<ul>
+<li>对所有样本进行中心化操作：<script type="math/tex">\mathbf{\vec x}_i \leftarrow\mathbf{\vec x}_i- \frac 1N \sum_{j=1}^{N}\mathbf{\vec x}_j</script>   。</li>
+<li>计算样本的协方差矩阵  <script type="math/tex">\mathbf X^T\mathbf X</script> 。</li>
+<li>对协方差矩阵 <script type="math/tex">\mathbf X^T\mathbf X</script>  做特征值分解。</li>
+<li>取最大的 <script type="math/tex">d</script> 个特征值对应的单位特征向量<script type="math/tex">\mathbf {\vec w}_1,\mathbf {\vec w}_2,\cdots,\mathbf {\vec w}_d</script>  ，构造投影矩阵  <script type="math/tex">\mathbf W=(\mathbf {\vec w}_1,\mathbf {\vec w}_2,\cdots,\mathbf {\vec w}_d)</script>。</li>
+</ul>
+<p>2.通常低维空间维数 <script type="math/tex">d</script> 的选取有两种方法：</p>
+<ul>
+<li><p>通过交叉验证法选取较好的 <script type="math/tex">d</script> 。“比较好”指的是在降维后的学习器的性能比较好。</p>
+</li>
+<li><p>从算法原理的角度设置一个阈值，比如 <script type="math/tex">t=95\%</script> ，然后选取使得下式成立的最小的 <script type="math/tex">d</script> 的值：</p>
+<script type="math/tex; mode=display">\frac{\sum_{i=1}^{d }\lambda_i}{\sum_{i=1}^{n}\lambda_i} \ge t</script><p>其中 <script type="math/tex">\lambda_i</script> 从大到小排列。</p>
+</li>
+</ul>
+<h3 id="2-4-PCA、SVD、LDA的区别与联系"><a href="#2-4-PCA、SVD、LDA的区别与联系" class="headerlink" title="2.4 PCA、SVD、LDA的区别与联系"></a>2.4 PCA、SVD、LDA的区别与联系</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>区别与联系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PCA</strong></td>
+<td>PCA是属于一种<strong>线性、无监督、全局的降维算法</strong>。<strong>目标：</strong>选择方差大的投影面。<strong>应用：</strong>PCA在语音识别中，可以过滤音频中固定的频率的背景噪声。</td>
+</tr>
+<tr>
+<td><strong>SVD</strong></td>
+<td>可以用于PCA 和 LDA中，<strong>避免做特征分解</strong>（开销大）。直接根据SVD求出右奇异矩阵，而右奇异矩阵可以用于列数（即特征维度）的压缩。</td>
+</tr>
+<tr>
+<td><strong>LDA</strong></td>
+<td>LDA是<strong>无监督的降维算法</strong>，相比于PCA可以对<strong>有类别信息的数据进行降维处理</strong>。<strong>目标：</strong>选择在投影后类内方差小，类间方差大的投影面（也就是将数据投影，使同一类别的数据投影尽可能接近，不同类别的距离尽可能大）。<strong>应用：</strong>在语音识别中，可以对每个人的语音信号进行区分（因为LDA可以对有类别信息，做降维处理）。LDA除了可以做降维，还可以做分类。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<font size="5" color="blue">声明</font>
+
+<p><strong>参考资料1</strong>：<a href="https://www.cnblogs.com/pinard/p/6251584.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6251584.html</a></p>
+<p><strong>参考资料2</strong>：<a href="http://www.huaxiaozhuan.com/统计学习/chapters/10_PCA.html" target="_blank" rel="noopener">http://www.huaxiaozhuan.com/统计学习/chapters/10_PCA.html</a></p>
+<p><strong>本博文为原创总结，如有转载，请注名出处！</strong></p>
 
     </article>
     <!-- license  -->
@@ -595,7 +719,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、维度灾难"><span class="toc-number">1.</span> <span class="toc-text">一、维度灾难</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、主成分分析-PCA"><span class="toc-number">2.</span> <span class="toc-text">二、主成分分析 PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-坐标变换"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 坐标变换</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、维度灾难"><span class="toc-number">1.</span> <span class="toc-text">一、维度灾难</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、主成分分析-PCA"><span class="toc-number">2.</span> <span class="toc-text">二、主成分分析 PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-坐标变换"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 坐标变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-重构误差"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 重构误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-PCA-算法"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 PCA 算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-PCA、SVD、LDA的区别与联系"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 PCA、SVD、LDA的区别与联系</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -608,10 +732,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
     
     
     
