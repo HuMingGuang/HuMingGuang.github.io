@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>高斯过程 · MingGuangHu&#39;s Studio.</title>
+    <title>无监督学习-聚类 · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -232,7 +232,7 @@
                 <a href="/">MingGuangHu&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">高斯过程</a>
+                <a href="#" class="post-name">无监督学习-聚类</a>
             </div>
     </div>
     
@@ -262,7 +262,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            高斯过程
+            无监督学习-聚类
             <!-- 404 -->
             
         </h1>
@@ -287,12 +287,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.9k</span>阅读时长: <span class="post-count reading-time">11 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">4k</span>阅读时长: <span class="post-count reading-time">17 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/04/17</span>
+                    <span class="post-intro-time">2019/05/07</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -416,131 +416,234 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="1-高斯分布"><a href="#1-高斯分布" class="headerlink" title="1. 高斯分布"></a><font color="bule">1. 高斯分布</font></h1><h2 id="1-1-一元正态分布（一元高斯分布）"><a href="#1-1-一元正态分布（一元高斯分布）" class="headerlink" title="1.1 一元正态分布（一元高斯分布）"></a><font color="blue">1.1 一元正态分布（一元高斯分布）</font></h2><p>若一维随机变量$x$服从期望为$\mu$、标准差为$\sigma$的正态分布，记为</p>
-<script type="math/tex; mode=display">\begin{align} x \sim N(\mu,\sigma^{2}) \tag{1} \end{align}</script><p>则其概率密度函数为</p>
-<script type="math/tex; mode=display">\begin{align} {f(x)=\frac {1}{\sigma \sqrt {2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma ^2}}}\tag{2} \end{align}</script><p><strong>其中</strong>:<script type="math/tex">{\mu =\frac {1}{m}\sum_{i=1}^mx^{(i)}\qquad \sigma^2=\frac {1}{m}\sum_{i=1}^m(x^{(i)}-\mu )^2)}</script></p>
-<p><img src="/2019/04/17/GPUCB/gp.jpeg" width="70%" height="70%"></p>
-<h2 id="1-2多元正态分布（多元高斯分布）"><a href="#1-2多元正态分布（多元高斯分布）" class="headerlink" title="1.2多元正态分布（多元高斯分布）"></a><font color="blue">1.2多元正态分布（多元高斯分布）</font></h2><p>若随机变量$x\in R^{n}$服从多元正态分布，其中$\mu \in R^{n}$、协方差矩阵$\Sigma \in S_{++}^{n}$ 为对称半正定$n \times n$矩阵，则</p>
-<script type="math/tex; mode=display">\begin{align} p(x;\mu,\Sigma)=\dfrac {1}{\sqrt {\left( 2\pi \right) ^{k}|\Sigma|}}\exp \left( -\dfrac {1}{2}\left( x-\mu\right) ^{T}\Sigma ^{-1}\left( x-\mu \right) \right) \tag{2} \end{align}</script><p>​    可以记为$x\sim N(\mu,\Sigma)$.</p>
-<p>高斯随机变量在机器学习中经常使用，主要有两方面原因：</p>
+        <h2 id="一、聚类"><a href="#一、聚类" class="headerlink" title="一、聚类"></a>一、聚类</h2><p>1.在无监督学习<code>(unsupervised learning)</code>中，<strong>训练样本的标记信息是未知的。</strong></p>
+<p>2.<strong>无监督学习的目标</strong>：通过对无标记训练样本的学习来揭露数据的内在性质以及规律。</p>
+<p><strong>3.一个经典的无监督学习任务：寻找数据的最佳表达</strong><code>(representation)</code>。常见的有：</p>
 <ul>
-<li>普遍地用于<strong>建模”噪声”</strong>，噪声可以被认为是影响测度过程的许多小的独立随机扰动的累积；</li>
-<li>其次，高斯随机变量对于许多分析<strong>操作都很方便</strong>，因为在实践中出现的许多涉及高斯分布的积分都具有简单的闭合形式解。</li>
+<li><strong>低维表达</strong>：试图将数据（位于高维空间）中的信息尽可能压缩在一个较低维空间中。</li>
+<li><strong>稀疏表达</strong>：将数据嵌入到大多数项为零的一个表达中。该策略通常需要进行维度扩张。</li>
+<li><strong>独立表达</strong>：使数据的各个特征相互独立。</li>
 </ul>
-<details>
-
-<summary> <font color="red">接下来讲解多元高斯的一些属性</font> </summary>
-
-
-
-如果随机变量$x \in R^{n}$服从$x \sim N(\mu,\Sigma)$多元正态分布，必须满足下面三个等价条件：<br>
-
-<font color="red">第一</font>，任何随机变量的线性组合$y=a_1 x_1+a_2 x_2 +…,+a_n x_n$都服从正态分布<br>
-
-<font color="red">第二</font>，存在随机变量$z=\left[z_1,z_2,…,z_m\right]^{T}$(其中每个元素都满足标准的正态分布)，向量$\mu=\left[\mu_1,\mu_2,…,\mu_n\right]^{T}$及$n \times m$矩阵$A$满足：$x=A z+\mu$ <br>
-
-<font color="red">第三</font>，存在$\mu$和一个对称半正定矩阵$\Sigma$满足$x$的特征函数:$\phi \left( x;\mu ,\Sigma \right) =\exp ( i\mu ^{T}x-\dfrac {1}{2}x^{T}\Sigma x)  $
-
-​    如果$\Sigma$是非奇异值矩阵，则概率密度函数为$f(x_1,x_2,…,x_n)=\dfrac {1}{\sqrt {\left( 2\pi \right) ^{n}}\left| \varepsilon \right| }\exp ( -\dfrac {1}{2}\left( x-\mu \right) ^{T}\Sigma ^{-1}\left( x-\mu 1\right) )$
-
-<br>
-
-<br>
-
-将$x$分为两个集合$x_A=[x_1…x_r]\in R^{r}$、$x_B=[x_{x+1} … x_{n}]\in R^{n-r}$，所以$x=\begin{bmatrix}x_A    \\x_B \end{bmatrix}$、$\mu=\begin{bmatrix}\mu_A    \\ \mu_B \end{bmatrix}$、$\Sigma= \begin{bmatrix}\Sigma_{AA} &   \Sigma_{AB}  \\\Sigma_{BA}  & \Sigma_{BB} \end{bmatrix}$，其中$\Sigma_{AB} =\Sigma_{BA}^{T}$以及$\Sigma = E[(x-\mu)(x-\mu)^{T}]=\Sigma^{T}$。<br>
-
-<br>
-
-
-
-<font color="blue">属性一：正则化</font> <br>
-
-$\int _{x}p\left( x;\mu ,\Sigma \right) dx=1$
-
-<br>
-
-<font color="blue">属性二：边际概率</font> <br>
-
-$p\left( x_{A}\right) =\int _{x_{B}}P\left( x_{A},x_{B};\mu ,\Sigma \right) dx_{B}$ <br>
-
-$p\left( x_{B}\right) =\int _{x_{A}}P\left( x_{A},x_{B};\mu ,\Sigma \right) dx_{A}$ <br>
-
-$x_A \sim N(\mu_A,\Sigma_{AA})$ <br>
-
-$x_B \sim N(\mu_B,\Sigma_{BB})$<br>
-
-<font color="blue">属性三：条件概率</font> <br>
-
-$p(x_A|x_B) = \dfrac{P\left( x_{A},x_{B};\mu ,\Sigma \right) }{\int _{x_{A}}P\left( x_{A},x_{B};\mu ,\Sigma \right) dx_{A}}$ <br>
-
-$p(x_B|x_A) = \dfrac{P\left( x_{A},x_{B};\mu ,\Sigma \right) }{\int _{x_{B}}P\left( x_{A},x_{B};\mu ,\Sigma \right) dx_{B}}$ <br>
-
-$x_A|x_B \sim N(\mu_A+\Sigma_{AB} \Sigma_{BB}^{-1} (x_B-\mu_B),\Sigma_{AA}-\Sigma_{AB}\Sigma_{BB}^{-1}\Sigma_{BA})$ <br>
-
-$x_B|x_A \sim N(\mu_B+\Sigma_{BA} \Sigma_{AA}^{-1} (x_A-\mu_A),\Sigma_{BB}-\Sigma_{BA}\Sigma_{AA}^{-1}\Sigma_{AB})$ <br>
-
-<font color="blue">属性四：求和</font> <br>
-
-若$y \sim N(\mu,\Sigma)$且$z \sim N(\mu^\prime,\Sigma^\prime)$，则$y+z \sim N(\mu+\mu^\prime,\Sigma+\Sigma^\prime)$
-
-</details>
-
-<h1 id="2-贝叶斯线性回归"><a href="#2-贝叶斯线性回归" class="headerlink" title="2. 贝叶斯线性回归"></a><font color="bule">2. 贝叶斯线性回归</font></h1><p>若训练集<script type="math/tex">S=\left\{ (x^{(i)},y^{(i)})\right\}^{m}_{i=1}</script>满足独立同分布，线性回归为<script type="math/tex">y^{(i)}=\theta^{T} x^{(i)}+\epsilon ^{(i)},i=1,…,m</script>，其中<script type="math/tex">\epsilon^{(i)}\sim N(0,\sigma^2)</script>即<script type="math/tex">y^{(i)}-\theta^{T}x^{(i)} \sim N(0,\sigma^2)</script>。等价于</p>
-<script type="math/tex; mode=display">\begin{align} P(y^{(i)}|x^{(i)},\theta)= \dfrac {1}{\sqrt { 2\pi } \sigma}\ \exp\left( -\dfrac{(y^{(i)}-\theta^{T}x^{(i)})^2}{2\sigma^2}\right) \tag{3} \end{align}</script><p>假设在贝叶斯线性回归中，参数$\theta$的先验分布是已知的为$\theta \sim N(0,\tau^2 I)$，使用贝叶斯公式计算，则后验分布为</p>
-<p><img src="/2019/04/17/GPUCB/1.png" width="70%" height="70%"></p>
-<p>假设在测试集上的噪声$\epsilon$与训练集上一致，则在贝叶斯线性回归下的新测试点<script type="math/tex">x_{\ast}</script>，对应的回归<script type="math/tex">y_{\ast}</script>不是单个的值，而是在可能输出上的整个概率分布，即后验预测分布：</p>
-<p><img src="/2019/04/17/GPUCB/2.png" width="45%" height="45%"></p>
-<p>同时贝叶斯线性回归可以表示为</p>
-<p><img src="/2019/04/17/GPUCB/3.png" width="45%" height="45%"></p>
-<p>其中$A=\dfrac{1}{\sigma^2}X^TX+\dfrac{1}{\tau^2}I$</p>
-<blockquote>
-<p><strong>总结</strong></p>
-<p>如果使用贝叶斯线性回归，首先要先使用贝叶斯公式计算出在训练集下$\theta$的概率分布，然后计算出在给定训练集和$\theta$的概率分布以及新的测试点<script type="math/tex">x_{\ast}</script>下的输出<script type="math/tex">y_{\ast}</script>的概率分布。</p>
-<p>从上述公式可知，在给定输入下，我们得到输出的后验分布（为高斯分布），从中刻画了$\epsilon$的随机性和选择$\theta$的不确定性。然而经典的概率线性回归直接从训练数据估计参数$\theta$，并没有给出学习出参数的可靠性分析。</p>
-</blockquote>
-<h1 id="3-高斯过程"><a href="#3-高斯过程" class="headerlink" title="3.  高斯过程"></a><font color="bule">3.  高斯过程</font></h1><p><strong>高斯过程</strong>（英语：<strong>Gaussian process</strong>）是观测值出现在一个连续域（例如时间或空间）的统计模型。在高斯过程中，连续输入空间中<strong>每个点都是与一个正态分布的随机变量相关联</strong>。此外，这些随机变量的<strong>每个有限集合都有一个多元正态分布</strong>。高斯过程的分布是时间域上所有随机变量的联合分布，且其<strong>联合分布为多元正态分布</strong>。</p>
-<p><strong>定义：</strong>随机变量的集合为随机过程<script type="math/tex">\left\{ f(x):x\in \chi \right\}</script>，高斯过程是<script type="math/tex">\left\{ f(x):x\in \chi \right\}</script>满足多元高斯分布的特殊的随机过程。</p>
-<p><img src="/2019/04/17/GPUCB/4.png" width="50%" height="50%"></p>
-<p><strong>一个GP可以被mean和covariance function共同唯一决定</strong></p>
-<p><img src="/2019/04/17/GPUCB/gp1.jpg" width="70%" height="70%"></p>
-<p>上述图一共有5条不同颜色的线，每一条曲线代表了一个GP的样本。首先我们来看看其中的那个橘黄色的线，对应x轴上找一个点，比如$x=2$大概对应的的y轴约为$2.6$左右。可是这真的是一个确定点么？不，它所代表的是对应$x=2$时的一个随机变量$X_{x=2}$正好出现的点罢了，本质上对应$x=2$的是一个随机变量而不是一个确定的点。另外对应于任一时刻的随机变量还需要服从一个确定的高斯分布（并不是说所有时刻对应的随机变量需要服从同一个高斯，只是服从的高斯分布的具体参数只跟时刻有关）。除此之外，若是GP的样本，还需要满足的是，任意个点（对应不同时刻的随机变量）联合需要服从多元高斯分布。</p>
-<h1 id="4-高斯过程回归"><a href="#4-高斯过程回归" class="headerlink" title="4. 高斯过程回归"></a><font color="bule">4. 高斯过程回归</font></h1><p>若训练集<script type="math/tex">S=\left\{ (x^{(i)},y^{(i)})\right\}^{m}_{i=1}</script>满足独立同分布的未知分布，高斯过程回归模型为<script type="math/tex">y^{(i)}=f(x^{(i)})+\epsilon ^{(i)},i=1,…,m</script>，其中<script type="math/tex">\epsilon^{(i)}\sim N(0,\sigma^2)</script>即<script type="math/tex">y^{(i)}-f(x^{(i)}) \sim N(0,\sigma^2)</script>。不同于贝叶斯线性回归，我们假设先验$f(\cdot)$满足0均值的高斯过程先验</p>
-<script type="math/tex; mode=display">\begin{align}f(\cdot) \sim GP(0,k(\cdot,\cdot))\tag{5} \end{align}</script><p>现在令测试集<script type="math/tex">T=\left\{ (x_{\ast}^{(i)},y_{\ast}^{(i)})\right\}</script>与训练集有相同的分布。</p>
-<p>回顾多元高斯分布的性质，因为$f(\cdot)$满足0均值高斯分布，则其联合分布满足多元高斯分布，所以</p>
-<p><img src="/2019/04/17/GPUCB/5.png" width="55%" height="55%"></p>
-<p>同理，从噪声的分布假设，我们有</p>
-<p><img src="/2019/04/17/GPUCB/6.png" width="35%" height="35%"></p>
-<p>又因为独立高斯随机变量的总和还是高斯分布，所以</p>
-<p><img src="/2019/04/17/GPUCB/7.png" width="65%" height="65%"></p>
-<p>现在，使用条件高斯的公式，则</p>
-<p><img src="/2019/04/17/GPUCB/8.png" width="80%" height="80%"></p>
-<p>值得注意的是，尽管高斯过程本身相当复杂，但在高斯过程回归模型中执行预测非常简单！</p>
-<p>与贝叶斯线性回归的不同之处在于，贝叶斯线性回归使用$\theta^{T}x$，需要先计算$\theta$的后验分布，再计算预测输出的分布；而高斯回归使用的是$f(\cdot)$，而且其满足某种正态分布，直接根据正态分布的性质计算。</p>
-<blockquote>
-<p><strong>现在我们讨论一下为什么高斯过程在面对回归问题上比较好</strong></p>
+<p>4.无监督学习应用最广的是<strong>聚类</strong><code>(clustering)</code> 。</p>
 <ul>
-<li>第一，作为贝叶斯方法，高斯过程在预测过程中不仅可以度量固有的噪声的不确定性，还可以考虑参数估计的问题；</li>
-<li>第二，高斯回归是非参数的，因此可以模拟输入集合的任何一种函数模型；</li>
-<li>第三，高斯回归提供了一种自然的方式帮助把核函数引入到回归建模框架中，巧妙地选择核函数，可以充分利用起数据的结构优势；</li>
-<li>第四，高斯过程回归模型虽然在概念上可能有点难以理解，但是实现操作起来比较简单。</li>
+<li>给定数据集 <script type="math/tex">\mathbb{D}=\left\{\mathbf{\vec{x}}_1,\mathbf{\vec{x}}_2,…,\mathbf{\vec{x}}_N\right\}</script> ，聚类试图将数据集中的样本划分为<script type="math/tex">K</script>个不相交的子集<script type="math/tex">\left\{\mathbb{C}_1,\mathbb{C}_2,…,\mathbb{C}_K\right\}</script>  ，每个子集称为一个簇<code>cluster</code>。其中：<script type="math/tex">\mathbb{C}_k\bigcap_{k\neq l}\mathbb{C}_l=\varnothing,\mathbb{D}=\bigcup_{k=1}^{K}\mathbb{C}_k</script>。</li>
+<li>通过这样的划分，每个簇可能对应于一个潜在的概念。这些概念对于聚类算法而言，事先可能是未知的。</li>
+<li><strong>聚类过程仅仅能自动形成簇结构，簇所对应的概念语义需要由使用者来提供</strong>。</li>
 </ul>
+<p>5.通常用<script type="math/tex">\lambda_i \in \left\{1,2,…,K\right\}</script>表示样本<script type="math/tex">\mathbf{\vec{x}}_i</script>的簇标记<code>cluster label</code>，即 <script type="math/tex">\mathbf{\vec{x}}_i \in \mathbb{C}_{\lambda_i}</script>。于是数据集<script type="math/tex">\mathbb{D}</script>的聚类结果可以用包含<script type="math/tex">N</script>个元素的簇标记向量  <script type="math/tex">\vec{\lambda}=(\lambda_1,\lambda_2,…,\lambda_N)^{T}</script>来表示。</p>
+<p><strong>6.聚类的作用：</strong></p>
+<ul>
+<li>可以作为一个单独的过程，用于<strong>寻找数据内在的分布结构</strong>。</li>
+<li>也可以作为其他学习任务的前驱过程。如对<strong>数据先进行聚类，然后对每个簇单独训练模型</strong>。</li>
+</ul>
+<p>7.<strong>聚类问题本身是病态的。即：没有某个标准来衡量聚类的效果</strong>。</p>
+<ul>
+<li><p>可以简单的度量聚类的性质，如每个聚类的元素到该类中心点的平均距离。</p>
+<p>但是实际上不知道这个平均距离对应于真实世界的物理意义。</p>
+</li>
+<li><p>可能很多不同的聚类都很好地对应了现实世界的某些属性，它们都是合理的。</p>
+<p>如：在图片识别中包含的图片有：红色卡车、红色汽车、灰色卡车、灰色汽车。可以聚类成：红色一类、灰色一类；也可以聚类成：卡车一类、汽车一类。</p>
+<blockquote>
+<p>解决该问题的一个做法是：利用深度学习来进行分布式表达，可以对每个车辆赋予两个属性：一个表示颜色、一个表示型号。</p>
 </blockquote>
-<h1 id="5-GP-UCB优化算法"><a href="#5-GP-UCB优化算法" class="headerlink" title="5. GP-UCB优化算法"></a><font color="bule">5. GP-UCB优化算法</font></h1><p><strong>GP-UCB</strong>（Gaussian Process-Upper Confidence Bound）</p>
-<p>我们令<script type="math/tex">\mu_N (\theta)</script>和<script type="math/tex">k_N (\theta)</script>是给定输入空间上的均值和协方差，$\theta$为参数空间。在每次迭代过程中，我们都是想最大化后验均值<script type="math/tex">\mu^{\ast}=\arg \max_{\theta} [\mu_{N}(\theta)]</script>，这种方式会有可能陷入局部最优，我们现在想去权衡exploitation和exploration的问题。</p>
-<p>显然，如果有足够的计算能力，可以考虑对许多参数点进行采样，以便有足够的整个感兴趣区域的覆盖范围；然而，由于维度的诅咒，这种策略即使在适度的维度上也会失败。 通过考虑模拟函数的不确定性（也可以在GP回归中进行分析计算），可以获得比较好的解决方法(GP-UCB)：<strong>直观地说，应该探索最大可能合理的区域，即参数中的区域具有大量后验概率质量的空间，以使该函数具有较高的值</strong>。它还考虑了后验协方差$k_N(\theta)$，它研究可能隐藏全局最大值的新区域（远离当前输入点）; 这意味着它使分布的上分位数最大化（例如，95％分位数）。</p>
-<p> 选择要添加到输入空间的下一个输入点$\theta$应满足一下规则：</p>
-<script type="math/tex; mode=display">\begin{align} \theta_{N+1} = \arg \max_{\theta} \left( \mu_{N} (\theta) + \beta_{N} \sqrt {K_{N}\left( \theta \right) }\right)\tag{6} \end{align}</script><p>其中$\beta_N$是一个常数，它依赖于迭代，以确保收敛。 这使我们能够重新设计平衡有利区域（仿真所具有的区域）的优化问题和探索新区域（仿真非常不确定，因此可能隐藏高值）。 只要不能进一步改进（即，新输入的评估类似于包括当前观察组的那些），该算法就停止，或者我们达到预定的最大迭代次数。 算法与全局最优的收敛在理论上可以得到证实（<strong>参考资料4</strong>）。</p>
+</li>
+</ul>
+<h2 id="二、性能度量"><a href="#二、性能度量" class="headerlink" title="二、性能度量"></a>二、性能度量</h2><h3 id="2-1-性能度量的定义"><a href="#2-1-性能度量的定义" class="headerlink" title="2.1 性能度量的定义"></a>2.1 性能度量的定义</h3><p>1.聚类的性能度量也称作聚类的有效性指标<code>validity index</code> 。</p>
+<p>2.直观上看，希望同一簇的样本尽可能彼此相似，不同簇的样本之间尽可能不同。即：簇内相似度<code>intra-cluster similarity</code>高，且簇间相似度<code>inter-cluster similarity</code>低。</p>
+<p>3.<strong>聚类的性能度量分两类：</strong></p>
+<ul>
+<li>聚类结果与某个参考模型<code>reference model</code>进行比较，称作外部指标<code>external index</code> 。</li>
+<li>直接考察聚类结果而不利用任何参考模型，称作内部指标<code>internal index</code> 。</li>
+</ul>
+<p>这里我们主要考虑内部指标的情况。</p>
+<h3 id="2-2-内部指标"><a href="#2-2-内部指标" class="headerlink" title="2.2 内部指标"></a>2.2 内部指标</h3><p>对于数据集 <script type="math/tex">\mathbb{D}=\left\{\mathbf{\vec{x}}_1,\mathbf{\vec{x}}_2,…,\mathbf{\vec{x}}_N\right\}</script>，假定通过聚类给出的簇划分为<script type="math/tex">\mathcal{C}=\left\{\mathbb{C}_1,\mathbb{C}_2,…,\mathbb{C}_K\right\}</script> 。定义：</p>
+<script type="math/tex; mode=display">\text{avg}(\mathbb C_k)=\frac{2}{|\mathbb C_k|(|\mathbb C_k|-1)}\sum_{\mathbf {\vec x}_i,\mathbf {\vec x}_j \in \mathbb   C_k,i\ne j}\text{distance}(\mathbf {\vec x}_i,\mathbf {\vec x}_j),\quad k=1,2,\cdots,K\\
+\text{diam}(\mathbb C_k)=\max_{\mathbf {\vec x}_i,\mathbf {\vec x}_j \in \mathbb C_k,i\ne j}\text{distance}(\mathbf {\vec x}_i,\mathbf {\vec x}_j),\quad k=1,2,\cdots,K\\
+d_{min}(\mathbb C_k,\mathbb C_l)=\min_{\mathbf {\vec x}_i \in \mathbb C_k,\mathbf {\vec x}_j \in \mathbb C_l} \text{distance}(\mathbf {\vec x}_i,\mathbf {\vec x}_j),\quad k,l=1,2,\cdots,K;k\ne l\\
+d_{cen}(\mathbb C_k,\mathbb C_l)=\text{distance}( \vec \mu _k, \vec \mu _l),\quad k,l=1,2,\cdots,K;k\ne l</script><p>其中：<script type="math/tex">\text{distance}(\mathbf {\vec x}_i,\mathbf {\vec x}_j)</script>表示两点 <script type="math/tex">\mathbf {\vec x}_i,\mathbf {\vec x}_j</script> 之间的距离； <script type="math/tex">\vec \mu _k</script>表示簇  <script type="math/tex">\mathbb C_k</script> 的中心点，  <script type="math/tex">\vec \mu _l</script>表示簇<script type="math/tex">\mathbb C_l</script> 的中心点， <script type="math/tex">\text{distance}( \vec \mu _k, \vec \mu _l)</script>表示簇<script type="math/tex">\mathbb C_k,\mathbb C_l</script>  的中心点之间的距离。</p>
+<p>上述定义的意义为：</p>
+<ul>
+<li><script type="math/tex">\text{avg}(\mathbb C_k)</script> ： 簇<script type="math/tex">\mathbb C_k</script>  中每对样本之间的平均距离。</li>
+<li><script type="math/tex">\text{diam}(\mathbb C_k)</script>：簇<script type="math/tex">\mathbb C_k</script>中距离最远的两个点的距离。</li>
+<li><script type="math/tex">d_{min}(\mathbb C_k,\mathbb C_l)</script> ：簇<script type="math/tex">\mathbb C_k,\mathbb C_l</script>之间最近的距离。</li>
+<li><script type="math/tex">d_{cen}(\mathbb C_k,\mathbb C_l)</script> ：簇<script type="math/tex">\mathbb C_k,\mathbb C_l</script>中心点之间的距离。</li>
+</ul>
+<h4 id="2-2-1-DB指数"><a href="#2-2-1-DB指数" class="headerlink" title="2.2.1 DB指数"></a>2.2.1 DB指数</h4><p><code>DB</code>指数<code>Davies-Bouldin Index:DBI</code>：</p>
+<script type="math/tex; mode=display">DBI=\frac 1K \sum_{k=1}^{K}\max_{k\ne l}\left(\frac{\text{avg}(\mathbb C_k)+\text{avg}(\mathbb C_l)}{d_{cen}(\mathbb C_k,\mathbb C_l)}\right)</script><p><strong>其物理意义为：</strong></p>
+<ul>
+<li><p>给定两个簇，每个簇样本距离均值之和比上两个簇的中心点之间的距离作为度量。</p>
+<p>该度量越小越好。</p>
+</li>
+<li><p>给定一个簇<script type="math/tex">k</script>  ，遍历其它的簇，寻找该度量的最大值。</p>
+</li>
+<li><p>对所有的簇，取其最大度量的均值。</p>
+</li>
+</ul>
+<p><strong>显然<script type="math/tex">DBI</script>越小越好:</strong></p>
+<ul>
+<li>如果每个簇样本距离均值越小（即簇内样本距离都很近），则<script type="math/tex">DBI</script> 越小。</li>
+<li>如果簇间中心点的距离越大（即簇间样本距离相互都很远），则 <script type="math/tex">DBI</script>越小。</li>
+</ul>
+<h4 id="2-2-2-Dunn指数"><a href="#2-2-2-Dunn指数" class="headerlink" title="2.2.2 Dunn指数"></a>2.2.2 Dunn指数</h4><p><code>Dunn</code>指数<code>Dunn Index:DI</code>：</p>
+<script type="math/tex; mode=display">DI=  \frac{\min_{k\ne l} d_{min}(\mathbb C_k,\mathbb C_l)}{\max_{i}\text{diam}(\mathbb C_i)}</script><p>其物理意义为：任意两个簇之间最近的距离的最小值，除以任意一个簇内距离最远的两个点的距离的最大值。</p>
+<p><strong>显然<script type="math/tex">DI</script>越大越好:</strong></p>
+<ul>
+<li>如果任意两个簇之间最近的距离的最小值越大（即簇间样本距离相互都很远），则 <script type="math/tex">DI</script> 越大。</li>
+<li>如果任意一个簇内距离最远的两个点的距离的最大值越小（即簇内样本距离都很近），则 <script type="math/tex">DI</script> 越大。 </li>
+</ul>
+<h3 id="2-3-距离度量"><a href="#2-3-距离度量" class="headerlink" title="2.3 距离度量"></a>2.3 距离度量</h3><p><strong>1.距离函数 <script type="math/tex">\text{distance}( \cdot, \cdot )</script> 常用的有以下距离：</strong></p>
+<ul>
+<li><p>闵可夫斯基距离<code>Minkowski distance</code>：</p>
+<p>给定样本 <script type="math/tex">\mathbf {\vec x}_i=(x_{i,1},x_{i,2},\cdots,x_{i,n})^{T},\mathbf {\vec x}_j=(x_{j,1},x_{j,2},\cdots,x_{j,n})^{T}</script>，则闵可夫斯基距离定义为：</p>
+<script type="math/tex; mode=display">\text{distance}( \mathbf {\vec x}_i, \mathbf {\vec x}_j )=\left(\sum_{d=1}^{n}|x_{i,d}-x_{j,d}|^{p}\right)^{1/p}</script><ul>
+<li><p>当 <script type="math/tex">p=2</script> 时，闵可夫斯基距离就是欧式距离<code>Euclidean distance</code>：</p>
+<script type="math/tex; mode=display">\text{distance}( \mathbf {\vec x}_i, \mathbf {\vec x}_j )=||\mathbf {\vec x}_i-\mathbf {\vec x}_j||_{2}=\sqrt {\sum_{d=1}^{n}|x_{i,d}-x_{j,d}|^{2}}</script></li>
+<li><p>当 <script type="math/tex">p=1</script> 时，闵可夫斯基距离就是曼哈顿距离<code>Manhattan distance</code>：</p>
+<script type="math/tex; mode=display">\text{distance}( \mathbf {\vec x}_i, \mathbf {\vec x}_j )=||\mathbf {\vec x}_i-\mathbf {\vec x}_j||_{1}=  \sum_{d=1}^{n}|x_{i,d}-x_{j,d}|</script></li>
+</ul>
+</li>
+<li><p><code>VDM</code>距离<code>Value Difference Metric</code>：</p>
+<p>考虑非数值类属性（如属性取值为：<code>中国，印度，美国，英国</code>），令  <script type="math/tex">m_{d,a}</script>表示<script type="math/tex">x_d=a</script>  的样本数； <script type="math/tex">m_{d,a,k}</script>表示 <script type="math/tex">x_d=a</script> 且位于簇 <script type="math/tex">\mathbb C_k</script>  中的样本的数量。则在属性  上的两个取值 <script type="math/tex">a,b</script> 之间的 <code>VDM</code>距离为：</p>
+<script type="math/tex; mode=display">VDM_p(a,b)=\left(\sum_{k=1}^{K}\left|\frac {m_{d,a,k}}{m_{d,a}}-\frac {m_{d,b,k}}{m_{d,b}}\right|^{p}\right)^{1/p}</script><p>该距离刻画的是：属性取值在各簇上的频率分布之间的差异。</p>
+</li>
+</ul>
+<p><strong>2.当样本的属性为数值属性与非数值属性混合时，</strong>可以将闵可夫斯基距离与 <code>VDM</code> 距离混合使用。</p>
+<p>假设属性 <script type="math/tex">x_1,x_2,\cdots,x_{n_c}</script> 为数值属性， 属性<script type="math/tex">x_{n_c+1},x_{n_c+2},\cdots,x_{n}</script> 为非数值属性。则：</p>
+<script type="math/tex; mode=display">\text{distance}( \mathbf {\vec x}_i, \mathbf {\vec x}_j )=\left (\sum_{d=1}^{n_c}|x_{i,d}-x_{j,d}|^{p}+\sum_{d=n_c+1}^{n}VDM_p(x_{i,d},x_{j,d})^p\right)^{1/p}</script><p><strong>3.当样本空间中不同属性的重要性不同时，可以采用加权距离</strong>。</p>
+<p>以加权闵可夫斯基距离为例：</p>
+<script type="math/tex; mode=display">\text{distance}( \mathbf {\vec x}_i, \mathbf {\vec x}_j )=\left(\sum_{d=1}^{n}w_d\times|x_{i,d}-x_{j,d}|^{p}\right)^{1/p}\\
+w_d \ge 0,d=1,2,\cdots,n;\quad \sum_{d=1}^{n}w_d=1</script><p>4.这里的距离函数都是事先定义好的。在有些实际任务中，有必要基于数据样本来确定合适的距离函数。这可以通过距离度量学习<code>distance metric learning</code>来实现。</p>
+<p>5.这里的距离度量满足三角不等式： <script type="math/tex">\text{distance}( \mathbf {\vec x}_i, \mathbf {\vec x}_j ) \le \text{distance}( \mathbf {\vec x}_i, \mathbf {\vec x}_k )+\text{distance}( \mathbf {\vec x}_k, \mathbf {\vec x}_j )</script>。</p>
+<p>在某些任务中，根据数据的特点可能需要放松这一性质。如：<code>美人鱼</code>和<code>人</code>距离很近，<code>美人鱼</code>和<code>鱼</code>距离很近，但是<code>人</code>和<code>鱼</code>的距离很远。这样的距离称作非度量距离<code>non-metric distance</code>。</p>
+<h2 id="三、k-means-算法及其变种"><a href="#三、k-means-算法及其变种" class="headerlink" title="三、k-means 算法及其变种"></a>三、k-means 算法及其变种</h2><h3 id="3-1-k-means-算法"><a href="#3-1-k-means-算法" class="headerlink" title="3.1 k-means 算法"></a>3.1 k-means 算法</h3><p>1.给定样本集<script type="math/tex">\mathbb D=\{\mathbf{\vec x}_1,\mathbf{\vec x}_2,\cdots,\mathbf{\vec x}_N\}</script> ， 假设一个划分为<script type="math/tex">\mathcal C=\{\mathbb C_1,\mathbb C_2,\cdots,\mathbb C_K\}</script> 。</p>
+<p>定义该划分的平方误差为：</p>
+<script type="math/tex; mode=display">err=\sum_{k=1}^{K}\sum_{\mathbf{\vec x}_i \in \mathbb C_k}||\mathbf{\vec x}_i-\vec \mu_k||_2^{2}</script><p>其中 <script type="math/tex">\vec \mu_k=\frac {1}{|\mathbb C_k|}\sum_{\mathbf{\vec x}_i \in \mathbb C_k}\mathbf{\vec x}_i</script>是簇<script type="math/tex">\mathbb C_k</script> 的均值向量。</p>
+<ul>
+<li><p><script type="math/tex">err</script>刻画了簇类样本围绕簇均值向量的紧密程度，其值越小，则簇内样本相似度越高。</p>
+</li>
+<li><p><code>k-means</code> 算法的优化目标为：最小化<script type="math/tex">err</script>  。即：</p>
+<p><script type="math/tex">\min_{\mathcal C} \sum_{k=1}^{K}\sum_{\mathbf{\vec x}_i \in C_k}||\mathbf{\vec x}_i-\vec \mu_k||_2^{2}</script>  。</p>
+</li>
+</ul>
+<p>2.<code>k-means</code> 的优化目标需要考察  的所有可能的划分，这是一个<code>NP</code>难的问题。实际上<code>k-means</code> 采用贪心策略，通过迭代优化来近似求解。</p>
+<ul>
+<li>首先假设一组均值向量。</li>
+<li>然后根据假设的均值向量给出了<script type="math/tex">\mathbb D</script> 的一个划分。</li>
+<li>再根据这个划分来计算真实的均值向量：<ul>
+<li>如果真实的均值向量等于假设的均值向量，则说明假设正确。根据假设均值向量给出的<script type="math/tex">\mathbb D</script> 的一个划分确实是原问题的解。</li>
+<li>如果真实的均值向量不等于假设的均值向量，则可以将真实的均值向量作为新的假设均值向量，继续迭代求解。</li>
+</ul>
+</li>
+</ul>
+<p>3.这里的一个关键就是：给定一组假设的均值向量，如何计算出 <script type="math/tex">\mathbb D</script>的一个簇划分？</p>
+<p><code>k</code>均值算法的策略是：样本离哪个簇的均值向量最近，则该样本就划归到那个簇。</p>
+<p><strong>4.k-means 算法</strong></p>
+<p><strong>输入</strong></p>
+<ul>
+<li>样本集<script type="math/tex">\mathbb D=\{\mathbf{\vec x}_1,\mathbf{\vec x}_2,\cdots,\mathbf{\vec x}_N\}</script>  。</li>
+<li>聚类簇数 <script type="math/tex">K</script>。</li>
+</ul>
+<p><strong>输出</strong></p>
+<ul>
+<li>簇划分<script type="math/tex">\mathcal C=\{\mathbb C_1,\mathbb C_2,\cdots,\mathbb C_K\}</script> 。</li>
+</ul>
+<p><strong>算法步骤</strong></p>
+<ul>
+<li><p>从 <script type="math/tex">\mathbb D</script> 中随机选择  <script type="math/tex">K</script>个样本作为初始均值向量 <script type="math/tex">\{\vec \mu_1,\vec \mu_2,\cdots,\vec \mu_K\}</script> 。</p>
+</li>
+<li><p>重复迭代直到算法收敛，迭代过程：</p>
+<ul>
+<li><p>初始化阶段：取 <script type="math/tex">\mathbb C_k=\phi,k=1,2,\cdots,K</script></p>
+</li>
+<li><p>划分阶段：令  <script type="math/tex">\mathbf{\vec x}_i,i=1,2,\cdots,N</script>：</p>
+<ul>
+<li><p>计算 <script type="math/tex">\mathbf{\vec x}_i</script> 的簇标记：<script type="math/tex">\lambda_i=\arg\min_{k}||\mathbf{\vec x}_i-\vec \mu_k||_2 ,k \in \{1,2,\cdots,K\}</script>。</p>
+<p>即：将 <script type="math/tex">\mathbf{\vec x}_i</script> 离哪个簇的均值向量最近，则该样本就标记为那个簇。</p>
+</li>
+<li><p>然后将样本<script type="math/tex">\mathbf{\vec x}_i</script>划入相应的簇：</p>
+<p><script type="math/tex">\mathbb C_{\lambda_i}= \mathbb C_{\lambda_i} \bigcup\{\mathbf{\vec x}_i\}</script> 。</p>
+</li>
+</ul>
+</li>
+<li><p>重计算阶段：计算<script type="math/tex">\hat{\vec \mu}_k =\frac {1}{|\mathbb C_k|}\sum_{\mathbf{\vec x}_i \in \mathbb C_k}\mathbf{\vec x}_i</script>   。</p>
+</li>
+<li><p>终止条件判断：</p>
+<ul>
+<li>如果对所有的<script type="math/tex">k \in \{1,2,\cdots,K\}</script> ，都有 <script type="math/tex">\hat{\vec \mu}_k=\vec \mu_k</script>，则算法收敛，终止迭代。</li>
+<li>否则重赋值<script type="math/tex">\hat{\vec \mu}_k=\vec \mu_k</script>  。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>5.k-means 优点</strong></p>
+<ul>
+<li><p>计算复杂度低，为<script type="math/tex">O(N\times K \times q)</script>  ，其中<script type="math/tex">q</script>  为迭代次数。</p>
+<p>通常 <script type="math/tex">K</script> 和  <script type="math/tex">q</script>要远远小于<script type="math/tex">N</script> ，此时复杂度相当于<script type="math/tex">O(N)</script> 。</p>
+</li>
+<li><p>思想简单，容易实现。</p>
+</li>
+</ul>
+<p><strong>6.k-means 缺点</strong></p>
+<ul>
+<li><p>需要首先确定聚类的数量 <script type="math/tex">K</script>  。</p>
+</li>
+<li><p>分类结果严重依赖于分类中心的初始化。</p>
+<p>通常进行多次<code>k-means</code>，然后选择最优的那次作为最终聚类结果。</p>
+</li>
+<li><p>结果不一定是全局最优的，只能保证局部最优。</p>
+</li>
+<li><p>对噪声敏感。因为簇的中心是取平均，因此聚类簇很远地方的噪音会导致簇的中心点偏移。</p>
+</li>
+<li><p>无法解决不规则形状的聚类。</p>
+</li>
+<li><p>无法处理离散特征，如：<code>国籍、性别</code> 等。</p>
+</li>
+</ul>
+<p><strong>7.k-means 性质</strong></p>
+<ul>
+<li><p><code>k-means</code> 实际上假设数据是呈现球形分布，实际任务中很少有这种情况。</p>
+<p>与之相比，<code>GMM</code> 使用更加一般的数据表示，即高斯分布。</p>
+</li>
+<li><p><code>k-means</code> 假设各个簇的先验概率相同，但是各个簇的数据量可能不均匀。</p>
+</li>
+<li><p><code>k-means</code> 使用欧式距离来衡量样本与各个簇的相似度。这种距离实际上假设数据的各个维度对于相似度的作用是相同的。</p>
+</li>
+<li><p><code>k-means</code> 中，各个样本点只属于与其相似度最高的那个簇，这实际上是<code>硬</code> 分簇。</p>
+</li>
+<li><p><code>k-means</code> 算法的迭代过程实际上等价于<code>EM</code> 算法。</p>
+</li>
+</ul>
+<h3 id="3-2-K-means的变种改进"><a href="#3-2-K-means的变种改进" class="headerlink" title="3.2 K-means的变种改进"></a>3.2 K-means的变种改进</h3> <div align="center"><img src="/2019/05/07/cluster/cluster-compare.png"> 图1:k-means变种的改进</div>
+
+<h2 id="四、高斯混合聚类"><a href="#四、高斯混合聚类" class="headerlink" title="四、高斯混合聚类"></a>四、高斯混合聚类</h2><p>1.高斯混合聚类采用概率模型来表达聚类原型。</p>
+<p>2.对于<script type="math/tex">n</script>维样本空间 <script type="math/tex">\mathcal X</script>中的随机向量  ，若 <script type="math/tex">\mathbf{\vec x}</script>服从高斯分布，则其概率密度函数为 ：</p>
+<script type="math/tex; mode=display">p(\mathbf{\vec x}\mid \vec \mu,\Sigma)=\frac {1}{(2\pi)^{n/2}|\Sigma|^{1 /2}}\exp\left(-\frac 12(\mathbf{\vec x}- \vec \mu)^{T}\Sigma^{-1}(\mathbf{\vec x}- \vec \mu)\right)</script><p>其中<script type="math/tex">\vec \mu=(\mu_{1},\mu_2,\cdots,\mu_n)^{T}</script>  为  <script type="math/tex">n</script>维均值向量， <script type="math/tex">\Sigma</script> 是<script type="math/tex">n\times n</script>  的协方差矩阵。  <script type="math/tex">\mathbf{\vec x}</script>的概率密度函数由参数<script type="math/tex">\mu,\Sigma</script> 决定。</p>
+<p>3.定义高斯混合分布：<script type="math/tex">p_{\mathcal M}=\sum_{k=1}^{K}\alpha_k p(\mathbf{\vec x}\mid \vec \mu_k,\Sigma_k)</script>  。该分布由<script type="math/tex">K</script>  个混合成分组成，每个混合成分对应一个高斯分布。其中:</p>
+<ul>
+<li><script type="math/tex">\vec \mu_k,\Sigma_k</script>是第<script type="math/tex">k</script>个高斯混合成分的参数。</li>
+<li><script type="math/tex">\alpha_k \gt 0</script> 是相应的混合系数，满足 <script type="math/tex">\sum_{k=1}^{K}\alpha_k=1</script> 。</li>
+</ul>
+<p>4.假设训练集 <script type="math/tex">\mathbb D=\{\mathbf{\vec x}_1,\mathbf{\vec x}_2,\cdots,\mathbf{\vec x}_N\}</script> 的生成过程是由高斯混合分布给出。</p>
+<p>令随机变量 <script type="math/tex">Z \in \{1,2,\cdots,K\}</script> 表示生成样本<script type="math/tex">\mathbf{\vec x}</script>  的高斯混合成分序号，<script type="math/tex">Z</script> 的先验概率<script type="math/tex">P(Z =k)=\alpha_k</script> 。</p>
+<p>生成样本的过程分为两步：</p>
+<ul>
+<li>首先根据概率分布 <script type="math/tex">\alpha_1,\alpha_2,\cdots,\alpha_K</script>  生成随机变量  。</li>
+<li>再根据 <script type="math/tex">Z</script> 的结果，比如 ，<script type="math/tex">Z=k</script> 根据概率 <script type="math/tex">p(\mathbf{\vec x}\mid \vec \mu_k,\Sigma_k)</script>  生成样本。</li>
+</ul>
+<p><strong>5.根据贝叶斯定理， 若已知输出</strong>为<script type="math/tex">\mathbf{\vec x}_i</script> ，则 <script type="math/tex">Z</script> 的后验分布为：</p>
+<script type="math/tex; mode=display">p_{\mathcal M}(Z =k\mid \mathbf{\vec x}_i)=\frac{P(Z =k)p_{\mathcal M}(\mathbf{\vec x}_i \mid Z =k)}{p_{\mathcal M}(\mathbf{\vec x}_i)}
+= \frac{\alpha_k  p(\mathbf{\vec x}_i\mid \vec \mu_k,\Sigma_k)}{\sum_{l=1}^{K}\alpha_l p(\mathbf{\vec x}_i\mid \vec \mu_l,\Sigma_l)}</script><p>其物理意义为：所有导致输出为 <script type="math/tex">\mathbf{\vec x}_i</script> 的情况中， <script type="math/tex">Z =k</script> 发生的概率。</p>
+<p><strong>6.当高斯混合分布已知时</strong>，高斯混合聚类将样本集 <script type="math/tex">\mathbb D</script> 划分成  <script type="math/tex">K</script>个簇<script type="math/tex">\mathcal C=\{\mathbb C_1,\mathbb C_2,\cdots,\mathbb C_K\}</script>  。</p>
+<p>对于每个样本  <script type="math/tex">\mathbf{\vec x}_i</script>，给出它的簇标记<script type="math/tex">\lambda_i</script>  为：</p>
+<script type="math/tex; mode=display">\lambda_i=\arg\max_k p_{\mathcal M}(Z =k\mid \mathbf{\vec x}_i)</script><p><strong>即：如果 <script type="math/tex">\mathbf{\vec x}_i</script> 最有可能是 <script type="math/tex">Z =k</script> 产生的，则将该样本划归到簇 <script type="math/tex">\mathbb C_k</script>。</strong></p>
+<p>这就是通过最大后验概率确定样本所属的聚类。</p>
+<p>7.现在的问题是，如何学习高斯混合分布的参数。由于涉及到隐变量<script type="math/tex">Z</script>  ，可以采用<code>EM</code>算法求解。</p>
 <hr>
-<font color="blue">声明</font>
+<font size="5" color="blue">声明</font>
 
-<ul>
-<li><strong>参考资料1</strong>：<a href="https://zhuanlan.zhihu.com/p/27555501" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27555501</a></li>
-<li><strong>参考资料2</strong>：百度百科—多元正态分布</li>
-<li><strong>参考资料3</strong>：<a href="http://cs229.stanford.edu/section/cs229-gaussian_processes.pdf" target="_blank" rel="noopener">http://cs229.stanford.edu/section/cs229-gaussian_processes.pdf</a></li>
-<li><strong>参考资料4:</strong>N. Srinivas, A. Krause, Sham M. Kakade, and M. W. Seeger.Information-theoretic regret bounds for gaussian process optimiza- tion in the bandit setting. IEEE Transactions on Information Theory, 58(5):3250–3265, 2012. 8, 11, 47, 51, 52, 68, 69, 124</li>
-<li><strong>参考资料5:</strong> A Robust Genetic Algorithm for Learning Temporal Specifications from Data</li>
-<li>本博文为原创总结，如有转载，请注名出处！</li>
-</ul>
+<p><strong>参考资料1</strong>：<a href="http://www.huaxiaozhuan.com/统计学习/chapters/11_cluster.html" target="_blank" rel="noopener">http://www.huaxiaozhuan.com/统计学习/chapters/11_cluster.html</a></p>
+<p><strong>本博文为原创总结，如有转载，请注名出处！</strong></p>
 
     </article>
     <!-- license  -->
@@ -549,17 +652,12 @@ $x_B|x_A \sim N(\mu_B+\Sigma_{BA} \Sigma_{AA}^{-1} (x_A-\mu_A),\Sigma_{BB}-\Sigm
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/04/20/EM-algorithm/" title="EM算法">
-                    <div class="nextTitle">EM算法</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/04/16/genetic-algorithm/" title="遗传算法">
-                    <div class="prevTitle">遗传算法</div>
+                <a href="/2019/05/05/python-5/" title="Python编程(五)：Python编程进阶">
+                    <div class="prevTitle">Python编程(五)：Python编程进阶</div>
                 </a>
             
         </li>
@@ -678,7 +776,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-高斯分布"><span class="toc-number">1.</span> <span class="toc-text">1. 高斯分布</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-一元正态分布（一元高斯分布）"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 一元正态分布（一元高斯分布）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2多元正态分布（多元高斯分布）"><span class="toc-number">1.2.</span> <span class="toc-text">1.2多元正态分布（多元高斯分布）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-贝叶斯线性回归"><span class="toc-number">2.</span> <span class="toc-text">2. 贝叶斯线性回归</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-高斯过程"><span class="toc-number">3.</span> <span class="toc-text">3.  高斯过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-高斯过程回归"><span class="toc-number">4.</span> <span class="toc-text">4. 高斯过程回归</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-GP-UCB优化算法"><span class="toc-number">5.</span> <span class="toc-text">5. GP-UCB优化算法</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、聚类"><span class="toc-number">1.</span> <span class="toc-text">一、聚类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、性能度量"><span class="toc-number">2.</span> <span class="toc-text">二、性能度量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-性能度量的定义"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 性能度量的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-内部指标"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 内部指标</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-DB指数"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 DB指数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-Dunn指数"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 Dunn指数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-距离度量"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 距离度量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、k-means-算法及其变种"><span class="toc-number">3.</span> <span class="toc-text">三、k-means 算法及其变种</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-k-means-算法"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 k-means 算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-K-means的变种改进"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 K-means的变种改进</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、高斯混合聚类"><span class="toc-number">4.</span> <span class="toc-text">四、高斯混合聚类</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
