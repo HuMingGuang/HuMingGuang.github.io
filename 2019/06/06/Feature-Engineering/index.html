@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="MingGuang HU">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="MingGuang HU">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>特征工程 · MingGuangHu&#39;s Studio.</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/assets/bitbug_favicon.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+        <!-- algolia -->
+        <script>
+            
+            var hits = JSON.parse('{"per_page":10}')
+            var labels = JSON.parse('{"input_placeholder":"Search for Posts","hits_empty":"We did not find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}')
+
+            var algolia = {
+                applicationID: 'L4H8NR9HZK',
+                apiKey: 'dd0a87d811733fb786ed3807e9023178',
+                indexName: 'blog',
+                hits: hits,
+                labels: labels
+            }
+        </script>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">特征工程</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">MingGuangHu's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            特征工程
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.4k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/06/06</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="1-数据处理"><a href="#1-数据处理" class="headerlink" title="1. 数据处理"></a><font color="bule">1. 数据处理</font></h2><h3 id="1-1-量纲不一"><a href="#1-1-量纲不一" class="headerlink" title="1.1 量纲不一"></a><font color="blue">1.1 量纲不一</font></h3><p><strong>量纲</strong>：就是单位，特征的单位不一致，特征就不能放在一起比较。解决量纲不一致的<strong>方法</strong>：<code>0-1标准化</code>、<code>Z标准化</code>、<code>Normalizer归一化</code>.</p>
+<h4 id="0-1标准化"><a href="#0-1标准化" class="headerlink" title="0-1标准化"></a>0-1标准化</h4><p>是对原始数据进行线性变换，将特征值映射成区间为［0，1］的标准值中：</p>
+<script type="math/tex; mode=display">标准化值 = \frac{原数据－最小值}{最大值－最小值}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导入数据到data变量中</span></span><br><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line">data = pandas.read_csv(<span class="string">'路径.csv'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#（一）Min-Max 标准化</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</span><br><span class="line"><span class="comment">#初始化一个scaler对象</span></span><br><span class="line">scaler = MinMaxScaler()</span><br><span class="line"><span class="comment">#调用scaler的fit_transform方法，把我们要处理的列作为参数传进去</span></span><br><span class="line"></span><br><span class="line">data[<span class="string">'标准化后的A列数据'</span>] = scaler.fit_transform(data[<span class="string">'A列数据'</span>])</span><br><span class="line">data[<span class="string">'标准化后的B列数据'</span>] = scaler.fit_transform(data[<span class="string">'B列数据'</span>])</span><br></pre></td></tr></table></figure>
+<h4 id="Z标准化"><a href="#Z标准化" class="headerlink" title="Z标准化"></a>Z标准化</h4><p>基于特征值的均值（mean）和标准差（standard deviation）进行数据的标准化。它的计算公式为：</p>
+<script type="math/tex; mode=display">标准化数据 = \frac{原数据－均值}{标准差}</script><p>标准化后的变量值围绕0上下波动，大于0说明高于平均水平，小于0说明低于平均水平。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#（二）Z-Score标准化 （可在scale中直接实现）</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> scale</span><br><span class="line">data[<span class="string">'标准化后的A列数据'</span>] = scale(data[<span class="string">'A列数据'</span>])</span><br><span class="line">data[<span class="string">'标准化后的B列数据'</span>] = scale(data[<span class="string">'B列数据'</span>])</span><br></pre></td></tr></table></figure>
+<h4 id="Normalizer-归一化"><a href="#Normalizer-归一化" class="headerlink" title="Normalizer 归一化"></a>Normalizer 归一化</h4><p>将每个样本缩放到单位范数（每个样本的范数为1），计算公式如下：</p>
+<script type="math/tex; mode=display">\bar x = \frac{x}{\sum_{i=1}^n x_i^2 }</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># (三) Normalizer归一化</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> Normalizer</span><br><span class="line">scaler = Normalizer()</span><br><span class="line"><span class="comment">#归一化可以同时处理多个列，所以[0]第一个进行赋值</span></span><br><span class="line">data[<span class="string">'归一化后的A列数据'</span>] = scaler.fit_transform(data[<span class="string">'A列数据'</span>])[<span class="number">0</span>]</span><br><span class="line">data[<span class="string">'归一化后的B列数据'</span>] = scaler.fit_transform(data[<span class="string">'B列数据'</span>])[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-虚拟变量"><a href="#1-2-虚拟变量" class="headerlink" title="1.2 虚拟变量"></a><font color="blue">1.2 虚拟变量</font></h3><p>虚拟变量：也叫哑变量和离散特征编码，可用来表示分类变量、非数据因素可能产生的影响。</p>
+<p>虚<strong>拟变量的两种数据类型</strong>：</p>
+<ul>
+<li>离散特征的取值之间有<strong>大小的意义</strong>：例如：尺寸（L、XL、XXL）</li>
+<li>离散特征的取值之间<strong>没有大小的意义</strong>：例如：颜色（Red、Blue、Green）</li>
+</ul>
+<p><strong>离散特征值有大小意义的虚拟变量处理： dict 映射的字典</strong></p>
+<p><code>pandas.Series.map(dict)</code></p>
+<p>离散特征的取值之间有大小意义的处理函数，我们只需要把大小值以字典的方式，作为第一个参数传入即可；</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line"><span class="comment">#有些朋友也可能是encoding='utf8'或其他</span></span><br><span class="line">data=pandas.read_csv(<span class="string">'file:///Users/apple/Desktop/jacky_1.csv'</span>,encoding=<span class="string">'GBK'</span>)</span><br><span class="line">print(data)</span><br><span class="line"><span class="comment">#查看学历去重之后的情况</span></span><br><span class="line">data[<span class="string">'学历'</span>].drop_duplicates()</span><br><span class="line"><span class="comment">#构建学历字典</span></span><br><span class="line">educationLevelDict=&#123;<span class="string">'博士'</span>:<span class="number">4</span>,<span class="string">'硕士'</span>:<span class="number">3</span>,<span class="string">'大学'</span>:<span class="number">2</span>,<span class="string">'大专'</span>:<span class="number">1</span>&#125;</span><br><span class="line"><span class="comment">#调用Map方法进行虚拟变量的转换</span></span><br><span class="line">data[<span class="string">'Education Level Map'</span>]=data[<span class="string">'Education Level'</span>].map(educationLevelDict)</span><br></pre></td></tr></table></figure>
+<p><strong>离散特征值没有大小意义的虚拟变量处理</strong></p>
+<p>离散特征的取值之间没有大小意义的处理方法，我们可以使用<strong>get_dummies方法处理</strong>，它有6个常用的参数</p>
+<p>(1) data 要处理的DataFrame</p>
+<p>(2) prefix 列名的前缀，在多个列有相同的离散项时候使用</p>
+<p>(3) prefix_sep 前缀和离散值的分隔符，默认为下划线，默认即可</p>
+<p>(4) dummy_na 是否把NA值，作为一个离散值进行处理，默认不处理</p>
+<p>(5) columns 要处理的列名，如果不指定该列，那么默认处理所有列</p>
+<p>(6) drop_first 是否从备选项中删第一个，建模的时候为避免共线性使用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dummies=pandas.get_dummies(</span><br><span class="line">data,</span><br><span class="line">columns=[<span class="string">'性别'</span>],</span><br><span class="line">prefix=[<span class="string">'性别'</span>],</span><br><span class="line">prefix_sep=<span class="string">'_'</span>,</span><br><span class="line">dummy_na=<span class="literal">False</span>,</span><br><span class="line">drop_first=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-缺失值填充"><a href="#1-3-缺失值填充" class="headerlink" title="1.3 缺失值填充"></a><font color="blue">1.3 缺失值填充</font></h3><ul>
+<li>缺失值<strong>产生原因</strong><ul>
+<li>有些信息暂时无法获取；</li>
+<li>有些信息被遗漏或者错误的处理了</li>
+</ul>
+</li>
+<li>缺失值<strong>处理方法</strong><ul>
+<li>数据补齐</li>
+<li>删除缺失行</li>
+<li>不处理</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line">data=pandas.read_csv(<span class="string">'路径.csv'</span>)</span><br><span class="line"><span class="keyword">from</span> sclera.preprocessing <span class="keyword">import</span> Imputer</span><br><span class="line"><span class="comment">#'mean','median','most_frequent'</span></span><br><span class="line">imputer=Imputer(strategy=<span class="string">'mean'</span>)</span><br><span class="line">imputer.fit_transform(data[[<span class="string">'需填充列的列名'</span>]])</span><br></pre></td></tr></table></figure>
+<h2 id="2-特征选择"><a href="#2-特征选择" class="headerlink" title="2. 特征选择"></a><font color="bule">2. 特征选择</font></h2><p><strong>特征选择 ( Feature Selection )</strong>也称特征子集选择( Feature Subset Selection , FSS ) ，或属性选择( Attribute Selection ) ，是指从全部特征中选取一个特征子集，使构造出来的模型更好。</p>
+<h3 id="2-1-为什么要做特征选择"><a href="#2-1-为什么要做特征选择" class="headerlink" title="2.1 为什么要做特征选择"></a><font color="blue">2.1 为什么要做特征选择</font></h3><p>在机器学习的实际应用中，特征数量往往较多，其中可能存在不相关的特征，特征之间也可能存在相互依赖，容易导致如下的后果：</p>
+<p>特征个数越多，分析特征、训练模型所需的时间就越长。</p>
+<p>特征个数越多，容易引起“维度灾难”，模型也会越复杂，其推广能力会下降。</p>
+<p>特征选择能剔除不相关(irrelevant)或冗余(redundant )的特征，从而达到减少特征个数，提高模型精确度，减少运行时间的目的。另一方面，选取出真正相关的特征简化了模型，使研究人员易于理解数据产生的过程。</p>
+<h3 id="2-2-特征选择基本原则"><a href="#2-2-特征选择基本原则" class="headerlink" title="2.2 特征选择基本原则"></a><font color="blue">2.2 特征选择基本原则</font></h3><p>我们考虑选择的特征<strong>是否发散、是否相关</strong>。<strong>如果一个特征不发散，例如方差接近于0，也就是说样本在这个特征上基本没有差异，那我们就可以判断，这个特征对于样本的区别并没有什么用。第二个是特征与目标的相关性，与目标相关性高的特征应该优先选择。</strong></p>
+<h3 id="2-3-特征选择常用的四种方法"><a href="#2-3-特征选择常用的四种方法" class="headerlink" title="2.3 特征选择常用的四种方法"></a><font color="blue">2.3 特征选择常用的四种方法</font></h3><h4 id="方差选择法-过滤法"><a href="#方差选择法-过滤法" class="headerlink" title="方差选择法(过滤法)"></a>方差选择法(过滤法)</h4><p>使用方差选择法，先要计算各个特征的方差，然后根据阈值，选择方差大于阈值的特征。使用feature_selection库的<code>VarianceThreshold</code>类来选择特征的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#首先把数据导入到data变量中</span></span><br><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line">data=pandas.read_csv(<span class="string">'路径.csv'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用VarianceThreshold类进行方差过滤</span></span><br><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> VarianceThreshold</span><br><span class="line"></span><br><span class="line"><span class="comment">#要生成这个类的对象，就需要一个参数，就是最小方差的阈值，我们先设置为1，然后调用它的transform方法进行特征值的过滤</span></span><br><span class="line">variancethreshold=VarianceThreshold(threshold=<span class="number">1</span>)</span><br><span class="line">variancethreshold.fit_transform(data[[<span class="string">'累计销售（亿）'</span>,<span class="string">'用户忠诚度评分'</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用get_support方法，可以得到选择特征列的序号，然后根据这个序号在原始数据中把对应的列名选择出来即可</span></span><br><span class="line">varianceThreshold.get_support()</span><br><span class="line"></span><br><span class="line"><span class="comment">#看下这两个特征的方差是什么？</span></span><br><span class="line">data[[<span class="string">'累计销售（亿）'</span>,<span class="string">'用户忠诚度评分'</span>]].std()</span><br></pre></td></tr></table></figure>
+<h4 id="相关系数法"><a href="#相关系数法" class="headerlink" title="相关系数法"></a>相关系数法</h4><p>先计算各个特征对目标值的相关系数，选择更加相关的特征。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#首先导入数据到data变量中</span></span><br><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line">data=pandas.read_csv(<span class="string">'路径.csv'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#然后，SelectKBest类，通过回归的方法，以及要选择多少个特征值，新建一个 SelectKBest对象，</span></span><br><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectKBest</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> f_regression</span><br><span class="line"></span><br><span class="line">selectKBest = SelectKBest(</span><br><span class="line">    f_regression,k=<span class="number">2</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">#接着，把自变量选择出来，然后调用fit_transform方法，把自变量和因变量传入，即可选出相关度最高的两个变量。</span></span><br><span class="line">feature =data[[<span class="string">'月份'</span>,<span class="string">'季度'</span>,<span class="string">'广告推广费'</span>,<span class="string">'注册并投资人数'</span>]]</span><br><span class="line">bestFeature =selectKBest.fit_transform(</span><br><span class="line">    feature,</span><br><span class="line">    data[<span class="string">'销售金额'</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">#我们想要知道这两个自变量的名字，使用get_support方法即可得到相应的列名</span></span><br><span class="line">feature.columns[selectKBest.get_support()]</span><br></pre></td></tr></table></figure>
+<h4 id="递归特征消除法"><a href="#递归特征消除法" class="headerlink" title="递归特征消除法"></a>递归特征消除法</h4><p>使用一个基模型来进行多轮训练，经过多轮训练后，保留指定的特征数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#首先导入数据到data变量中</span></span><br><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line">data=pandas.read_csv(<span class="string">'路径.csv'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#接着，我们使用RFE类，在estimator中，把我们的基模型设置为线性回归模型LinearRegression,然后在把我们要选择的特征数设置为2，接着就可以使用这个rfe对象，把自变量和因变量传入fit_transform方法，即可得到我们需要的特征值</span></span><br><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> RFE</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"></span><br><span class="line">feature =data[[<span class="string">'月份'</span>,<span class="string">'季度'</span>,<span class="string">'广告推广费'</span>,<span class="string">'注册并投资人数'</span>]]</span><br><span class="line"></span><br><span class="line">rfe =RFE(</span><br><span class="line">    estimator=LinearRegression(),</span><br><span class="line">    n_features_to_select=<span class="number">2</span></span><br><span class="line">)</span><br><span class="line">sFeature = rfe.fit_transform(</span><br><span class="line">    feature,</span><br><span class="line">    data[<span class="string">'销售金额'</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">#同理，我们要想知道这两个自变量的名字，使用get_support方法，即可得到对应的列名</span></span><br><span class="line">rfe.get_support()</span><br></pre></td></tr></table></figure>
+<h4 id="模型选择法"><a href="#模型选择法" class="headerlink" title="模型选择法"></a>模型选择法</h4><p>它是一种我们把建好的模型对象传入选择器，然后它会根据这个已经建好的模型，自动帮我们选择最好的特征值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line">data = pandas.read_csv(<span class="string">'file:///Users/apple/Desktop/jacky_2.csv'</span>,encoding=<span class="string">'GBK'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectFromModel</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"></span><br><span class="line">feature =data[[<span class="string">'月份'</span>,<span class="string">'季度'</span>,<span class="string">'广告推广费'</span>,<span class="string">'注册并投资人数'</span>]]</span><br><span class="line">lrModel = LinearRegression()</span><br><span class="line"></span><br><span class="line">selectFromModel = SelectFromModel(lrModel)</span><br><span class="line"></span><br><span class="line">selectFromModel.fit_transform(</span><br><span class="line">    feature,</span><br><span class="line">    data[<span class="string">'销售金额'</span>]</span><br><span class="line">)</span><br><span class="line">selectFromModel.get_support()</span><br></pre></td></tr></table></figure>
+<h2 id="3-维度压缩"><a href="#3-维度压缩" class="headerlink" title="3. 维度压缩"></a><font color="bule">3. 维度压缩</font></h2><p>当特征选择完成之后，就可以直接训练模型了，但是可能由于特征矩阵过大导致计算量大，训练时间长的问题；因此，降低特征矩阵维度，也是必不可少的，主成分分析就是最常用的降维方法，在减少数据集的维度的同时，保持对方差贡献最大的特征，在sklearn中，我们使用PCA类进行主成分分析。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导入iris特征数据到data变量中</span></span><br><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA</span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d <span class="keyword">import</span> Axes3D</span><br><span class="line"></span><br><span class="line">iris =datasets.load_iris()</span><br><span class="line"></span><br><span class="line">data = iris.data</span><br><span class="line"></span><br><span class="line"><span class="comment">#分类变量到target变量中</span></span><br><span class="line">target = iris.target</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用主成分分析，将四维数据压缩为三维</span></span><br><span class="line">pca_3 = PCA(n_components=<span class="number">3</span>)</span><br><span class="line">data_pca_3 = pca_3.fit_transform(data)</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘图</span></span><br><span class="line">colors=&#123;<span class="number">0</span>:<span class="string">'r'</span>,<span class="number">1</span>:<span class="string">'b'</span>,<span class="number">2</span>:<span class="string">'k'</span>&#125;</span><br><span class="line">markers=&#123;<span class="number">0</span>:<span class="string">'x'</span>,<span class="number">1</span>:<span class="string">'D'</span>,<span class="number">2</span>:<span class="string">'o'</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#弹出图形</span></span><br><span class="line"><span class="comment">#%matplotlib qt</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#三维数据</span></span><br><span class="line">fig = plt.figure(<span class="number">1</span>,figsize=(<span class="number">8</span>,<span class="number">6</span>))</span><br><span class="line">ax = Axes3D(fig,elev=<span class="number">-150</span>,azim=<span class="number">110</span>)</span><br><span class="line"></span><br><span class="line">data_pca_gb = pandas.DataFrame(</span><br><span class="line">    data_pca_3</span><br><span class="line">).groupby(target)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> g <span class="keyword">in</span> data_pca_gb.groups:</span><br><span class="line">    ax.scatter(</span><br><span class="line">        data_pca_gb.get_group(g)[<span class="number">0</span>],</span><br><span class="line">        data_pca_gb.get_group(g)[<span class="number">1</span>],</span><br><span class="line">        data_pca_gb.get_group(g)[<span class="number">2</span>],</span><br><span class="line">        c=colors[g],</span><br><span class="line">        marker=markers[g],</span><br><span class="line">        cmap=plt.cm.Paired</span><br><span class="line">    )</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<hr>
+<font color="blue">声明</font>
+
+<ul>
+<li><strong>参考资料1</strong>：<a href="https://blog.csdn.net/jacky_zhuyuanlu/article/details/78319772" target="_blank" rel="noopener">https://blog.csdn.net/jacky_zhuyuanlu/article/details/78319772</a></li>
+<li><strong>参考资料2</strong>：<a href="https://blog.csdn.net/jacky_zhuyuanlu/article/details/78354723" target="_blank" rel="noopener">https://blog.csdn.net/jacky_zhuyuanlu/article/details/78354723</a></li>
+<li><strong>参考资料3</strong>：<a href="https://blog.csdn.net/jacky_zhuyuanlu/article/details/78379433&gt;" target="_blank" rel="noopener">https://blog.csdn.net/jacky_zhuyuanlu/article/details/78379433&gt;</a></li>
+<li>本博文为转载文章，如若使用，请注名出处！</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/05/08/rule-study/" title="规则学习">
+                    <div class="prevTitle">规则学习</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:936068345@qq.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/HuMingGuang" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title="wechat">
+                  
+                  <img class="profile-qr" src="/assets/Wechat.jpeg">
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-数据处理"><span class="toc-number">1.</span> <span class="toc-text">1. 数据处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-量纲不一"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 量纲不一</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#0-1标准化"><span class="toc-number">1.1.1.</span> <span class="toc-text">0-1标准化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Z标准化"><span class="toc-number">1.1.2.</span> <span class="toc-text">Z标准化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Normalizer-归一化"><span class="toc-number">1.1.3.</span> <span class="toc-text">Normalizer 归一化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-虚拟变量"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 虚拟变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-缺失值填充"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 缺失值填充</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-特征选择"><span class="toc-number">2.</span> <span class="toc-text">2. 特征选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-为什么要做特征选择"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 为什么要做特征选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-特征选择基本原则"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 特征选择基本原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-特征选择常用的四种方法"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 特征选择常用的四种方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方差选择法-过滤法"><span class="toc-number">2.3.1.</span> <span class="toc-text">方差选择法(过滤法)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#相关系数法"><span class="toc-number">2.3.2.</span> <span class="toc-text">相关系数法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#递归特征消除法"><span class="toc-number">2.3.3.</span> <span class="toc-text">递归特征消除法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模型选择法"><span class="toc-number">2.3.4.</span> <span class="toc-text">模型选择法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-维度压缩"><span class="toc-number">3.</span> <span class="toc-text">3. 维度压缩</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 36
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href="/2019/06/06/Feature-Engineering/">特征工程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/08</span><a class="archive-post-title" href="/2019/05/08/rule-study/">规则学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href="/2019/05/07/dimension-reduction/">降维</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href="/2019/05/07/cluster/">无监督学习-聚类</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href="/2019/05/05/python-5/">Python编程(五)：Python编程进阶</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/04</span><a class="archive-post-title" href="/2019/05/04/contextor/">Python系列问题（二）：上下文管理器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href="/2019/05/02/python-4/">Python编程(四)：面向对象编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href="/2019/04/29/topic-model/">主题模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href="/2019/04/27/Hidden-Markov-Models/">隐马尔可夫模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href="/2019/04/26/python-copy/">Python系列问题（一）：深拷贝、浅拷贝</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href="/2019/04/26/python-3/">Python编程(三)：深入理解Python</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href="/2019/04/23/python-2/">Python编程(二)：数据的构造和组织</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href="/2019/04/22/python-1/">Python编程(一)：Python基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href="/2019/04/21/Gaussian-Mixture-Model/">高斯混合模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href="/2019/04/20/EM-algorithm/">EM算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href="/2019/04/17/GPUCB/">高斯过程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href="/2019/04/16/genetic-algorithm/">遗传算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2019/04/14/support-vector-machine/">支持向量机</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2019/04/14/Meachine-Learning-Lagrange-duality/">详解拉格朗日及其对偶问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href="/2019/04/12/common-parameter-estimation/">常用的参数估计方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href="/2019/04/12/linear-model-1/">逻辑斯谛回归、岭回归及Lasso回归</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href="/2019/04/11/Linear-model/">线形模型:最小二乘法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href="/2019/04/10/esemble-learning/">集成学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href="/2019/04/08/decision-tree/">决策树算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href="/2019/04/08/Bayesian/">朴素贝叶斯</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href="/2019/04/07/recommend-system-6/">推荐系统（七）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href="/2019/04/02/meachine-learning-question/">机器学习问题的梳理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href="/2019/04/02/recommend-system-5/">推荐系统（六）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href="/2019/04/01/KNN/">KNN算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href="/2019/03/30/recommend-system-4/">推荐系统（五）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href="/2019/03/28/recommend-system-3/">推荐系统（四）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/27</span><a class="archive-post-title" href="/2019/03/27/recommend-system-2/">推荐系统（三）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href="/2019/03/26/consistent-hashing/">一致性哈希算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href="/2019/03/26/recommend-system-1/">推荐系统（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/25</span><a class="archive-post-title" href="/2019/03/25/recommend-system/">推荐系统（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href="/2019/03/22/Coding-1/">C++基础知识梳理</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
+    
+        <span class="sidebar-tag-name" data-tags="推荐系统"><span class="iconfont-archer">&#xe606;</span>推荐系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习实战"><span class="iconfont-archer">&#xe606;</span>机器学习实战</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python系列问题"><span class="iconfont-archer">&#xe606;</span>Python系列问题</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python编程"><span class="iconfont-archer">&#xe606;</span>Python编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="C++"><span class="iconfont-archer">&#xe606;</span>C++</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="机器学习"><span class="iconfont-archer">&#xe60a;</span>机器学习</span>
+    
+        <span class="sidebar-category-name" data-categories="转载文章"><span class="iconfont-archer">&#xe60a;</span>转载文章</span>
+    
+        <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
+    
+        <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
+    
+        <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
+    
+        <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "MingGuang HU"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.8.0/dist/instantsearch.min.js" defer></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
+
+

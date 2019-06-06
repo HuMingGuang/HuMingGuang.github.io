@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>MingGuangHu&#39;s Studio.</title>
+    <title>规则学习 · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -218,12 +218,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">规则学习</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">MingGuangHu's Studio.</a>
 </header>
@@ -235,24 +246,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            规则学习
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">713</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/05/08</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -353,39 +414,61 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/16/genetic-algorithm/">
-            
-                <span>遗传算法</span>
-        </a>
-        <div class="abstract-content">
-            介绍遗传算法的基本知识，并用简单的python代码实现其功能
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/16</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="优化">优化</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a><font color="bule">一、基本概念</font></h2><p>1.机器学习中的”规则”通常是指语义明确、能描述数据分布所隐含的客观规律或领域概念、可写成”若…,则…”形式的逻辑规则。”规则学习(rule learning)”是从训练数据中学习出一组能用于对未见示例进行判别的规则。</p>
+<p>2.一条规则，形如：</p>
+<script type="math/tex; mode=display">\oplus \leftarrow f_{1}\wedge f_{2}\wedge \ldots \wedge f_{L}</script><p>其中逻辑蕴含符号<script type="math/tex">\leftarrow</script>，右边部分称为”规则体(body)”，表示该条规则的前提，左边部分称为”规则头(head)”表示该条规则的结果。规则体是由逻辑文字(literal)<script type="math/tex">f_{L}</script>组成的合取式，<script type="math/tex">\wedge</script>为合取符号，表示”并且”。</p>
+<p>3.假设从西瓜数据集学到规则集合</p>
+<p><strong>规则1:</strong>好瓜<script type="math/tex">\leftarrow</script> (根蒂=蜷缩) <script type="math/tex">\wedge</script> (脐部=凹部)</p>
+<p><strong>规则2:</strong><script type="math/tex">\neg</script>好瓜<script type="math/tex">\leftarrow</script> (纹理=模糊)</p>
+<p>通过判断两个逻辑文字的赋值来对示例进行判别，规则集合中的每条规则都可看作一个子模型，规则集合式这些子模型的一个集成。</p>
+<h2 id="二、序贯覆盖"><a href="#二、序贯覆盖" class="headerlink" title="二、序贯覆盖"></a><font color="bule">二、序贯覆盖</font></h2><p>1.规则的学习的目标是产生一个能覆盖尽可能多的样例的规则集，最直接的做法是<strong>序贯覆盖(sequential covering).</strong>序贯覆盖：在训练集中每学到一条规则，就将该规则覆盖的样例去除，然后以剩下的训练样例组成训练集重复上述过程。</p>
+<p>2.<strong>规则生成：</strong>从空规则<script type="math/tex">\oplus \leftarrow</script>开始，将正例类别作为规则头，再逐个遍历训练集中的每个属性即取值，尝试将其作为逻辑文字增加到规则体中，若能使当前规则体仅覆盖正例，则由此产生一条规则，然后去除已覆盖的正例并基于剩余样本尝试生成下一条规则。</p>
+<p>3.上述规则生成若使用穷尽搜索的做法，在属性和候选值较多时会由于组合爆炸。现实任务中一般有两种策略产生规则：</p>
+<ul>
+<li><strong>自顶向下：</strong>从比较一般的规则开始，逐渐添加新文字以缩小规则覆盖范围，直到满足预定条件为止；也称为生成-测试。</li>
+<li><strong>自底向上：</strong>从比较特殊的规则开始，逐渐删除文字以扩大规则覆盖范围，直到满足预定条件为止；也称为数据驱动。</li>
+</ul>
+<p>前者更容易泛化性能较好的规则，而后者更适合于训练样本较少的情形。</p>
+<h2 id="三、剪枝优化"><a href="#三、剪枝优化" class="headerlink" title="三、剪枝优化"></a><font color="bule">三、剪枝优化</font></h2><h2 id="四、一阶规则学习"><a href="#四、一阶规则学习" class="headerlink" title="四、一阶规则学习"></a><font color="bule">四、一阶规则学习</font></h2><p>1.受限于命题逻辑表达能力，命题规则学习难以处理对象之间的”关系”，所以我们引入了一阶规则学习。</p>
+<h2 id="五、归纳逻辑程序设计"><a href="#五、归纳逻辑程序设计" class="headerlink" title="五、归纳逻辑程序设计"></a><font color="bule">五、归纳逻辑程序设计</font></h2>
     </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/06/06/Feature-Engineering/" title="特征工程">
+                    <div class="nextTitle">特征工程</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/05/07/dimension-reduction/" title="降维">
+                    <div class="prevTitle">降维</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -470,6 +553,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、基本概念"><span class="toc-number">1.</span> <span class="toc-text">一、基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、序贯覆盖"><span class="toc-number">2.</span> <span class="toc-text">二、序贯覆盖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、剪枝优化"><span class="toc-number">3.</span> <span class="toc-text">三、剪枝优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、一阶规则学习"><span class="toc-number">4.</span> <span class="toc-text">四、一阶规则学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、归纳逻辑程序设计"><span class="toc-number">5.</span> <span class="toc-text">五、归纳逻辑程序设计</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1270,6 +1371,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
