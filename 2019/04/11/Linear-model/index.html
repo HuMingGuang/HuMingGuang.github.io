@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.4k</span>阅读时长: <span class="post-count reading-time">6 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.3k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -416,21 +416,13 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="线性模型-最小二乘法"><a href="#线性模型-最小二乘法" class="headerlink" title="线性模型:最小二乘法"></a>线性模型:最小二乘法</h1><blockquote>
-<p><strong>主要内容</strong></p>
-<ul>
-<li>介绍最小二乘法的基础知识</li>
-<li>比较最小二乘与似然函数的关系</li>
-<li>讨论最小二乘的局限性</li>
-</ul>
-</blockquote>
-<h2 id="1-线性回归"><a href="#1-线性回归" class="headerlink" title="1. 线性回归"></a>1. 线性回归</h2><p>当我们要对样本点进行线性拟合，求得使预测尽可能准确的函数，此时需要用到线性回归。</p>
+        <h2 id="1-线性回归"><a href="#1-线性回归" class="headerlink" title="1. 线性回归"></a>1. 线性回归</h2><p>当我们要对样本点进行线性拟合，求得使预测尽可能准确的函数，此时需要用到线性回归。</p>
 <p><img src="/2019/04/11/Linear-model/linearRegression.png" width="60%" height="60%"></p>
 <p>线性回归函数：<script type="math/tex">h_{\theta}(\mathbf{x})=\sum_{i=0}^{m} \theta_{i} x_{i}=\Theta^{T}\mathbf{x}</script>.</p>
 <p>在度量回归函数的性能时，我们可以选择<strong>误差平方和最小</strong>：<script type="math/tex">J(\theta)=\frac{1}{2} \sum_{i}^{N}(h_{\theta}(x^{(i)})-y^{(i)})^{2}</script>.</p>
 <p>这样利用误差平方和最小来求解回归模型的方法称为<strong>最小二乘法（least square method）</strong>。</p>
 <h2 id="2-最小二乘法正规方程法"><a href="#2-最小二乘法正规方程法" class="headerlink" title="2. 最小二乘法正规方程法"></a>2. 最小二乘法正规方程法</h2><p>假设我们有<script type="math/tex">N</script>个样本数据，每个样本具有<script type="math/tex">m</script>个特征，现在使用线性回归的方法，去求解最优的线性回归函数<script type="math/tex">Y</script>。</p>
-<script type="math/tex; mode=display">\begin{align}  \begin{bmatrix}1 & x_1^{(1)}  & x^{(1)}_{2}&\ldots  & x^{\left(1\right) }_{m} \\1 & x_1^{(2)} &  x_2^{(2)}&\ldots &x_m^{2}  \\\vdots  &  &  &  \vdots & \vdots\\1 & x_1^{(N)} & x^{(N)}_{2}&\ldots  & x^{(N)}_{m}\end{bmatrix}\begin{bmatrix}\theta_0 \\\theta_1 \\\vdots\\\theta_m\end{bmatrix}=\begin{bmatrix}Y_1 \\ \vdots\\Y_N\end{bmatrix} \tag{1} \end{align}</script><p>令第一个矩阵为<script type="math/tex">A</script>，第二个为<script type="math/tex">\Theta</script>，第三个为<script type="math/tex">Y</script>。</p>
+<script type="math/tex; mode=display">\begin{align}  \begin{bmatrix}1 & x_1^{(1)}  & x^{(1)}_{2}&\ldots  & x^{\left(1\right) }_{m} \\1 & x_1^{(2)} &  x_2^{(2)}&\ldots &x_m^{2}  \\\vdots  &  &  &  \vdots & \vdots\\1 & x_1^{(N)} & x^{(N)}_{2}&\ldots  & x^{(N)}_{m}\end{bmatrix}\begin{bmatrix}\theta_0 \\\theta_1 \\\vdots\\\theta_m\end{bmatrix}=\begin{bmatrix}y^{(1)} \\ \vdots\\y^{(N)}\end{bmatrix} \tag{1} \end{align}</script><p>令第一个矩阵为<script type="math/tex">A</script>，第二个为<script type="math/tex">\Theta</script>，第三个为<script type="math/tex">Y</script>。</p>
 <p>则求解最优的线性函数的目标，可转化为最小化误差平方和，即<script type="math/tex">\min_{\Theta}||A\Theta-Y||_2^{2}</script>公式。</p>
 <script type="math/tex; mode=display">\begin{align}  S=||A\Theta-Y||_2^{2}=(A\Theta-Y)^{T}(A\Theta-Y)\\\ =(\Theta^{T}A^{T}-Y^{T})(A\Theta-Y)\\\ =\Theta^{T}A^{T}A\Theta-\Theta^{T}A^{T}Y-Y^{T}A\Theta+Y^{T}Y\\\ =\Theta^{T}A^{T}A\Theta-2\Theta^{T}A^{T}Y+Y^{T}Y \\ \tag{2} \end{align}</script><p>对<script type="math/tex">S</script>求导，<script type="math/tex">\begin{align} \dfrac {\partial S}{\partial \theta }=\dfrac{\partial(\Theta^{T}A^{T}A\Theta-2\Theta^{T}A^{T}Y+Y^{T}Y)}{\partial \Theta}\\\ =\dfrac{\partial(\Theta^{T}A^{T}A\Theta)}{\partial \Theta}-2A^{T}Y+0\\\ =2A^{T}A\Theta-2A^{T}Y \\ \tag{3} \end{align}</script></p>
 <p>令<script type="math/tex">\dfrac {\partial S}{\partial \theta }=0</script>，则<script type="math/tex">2A^{T}A\Theta-2A^{T}Y=0</script>，所以<script type="math/tex">\Theta=(A^{T}A)^{-1}A^{T}Y</script>.</p>
@@ -447,12 +439,12 @@ height:50vh;
 </li>
 </ul>
 <h2 id="4-最小二乘的局限性"><a href="#4-最小二乘的局限性" class="headerlink" title="4. 最小二乘的局限性"></a>4. 最小二乘的局限性</h2><ul>
-<li><p>首先，最小二乘法需要计算<script type="math/tex">X^{T}X</script>的逆矩阵，有可能它的逆矩阵不存在，这样就没有办法直接用最小二乘法了，此时梯度下降法仍然可以使用。当然，我们可以通过对样本数据进行整理，去掉冗余特征。让<script type="math/tex">X^{T}X</script>的行列式不为0，然后继续使用最小二乘法。</p>
+<li><p>首先，最小二乘法需要计算$A^{T}A$的逆矩阵，有可能它的<strong>逆矩阵不存在</strong>，这样就没有办法直接用最小二乘法了，此时梯度下降法仍然可以使用。当然，我们可以通过对样本数据进行整理，去掉冗余特征。让$A^TA$的行列式不为0，然后继续使用最小二乘法。</p>
 </li>
-<li><p>第二，当样本特征n非常的大的时候，计算<script type="math/tex">X^{T}X</script>的逆矩阵是一个非常耗时的工作（$n \times n$的矩阵求逆），甚至不可行。此时以梯度下降为代表的迭代法仍然可以使用。那这个n到底多大就不适合最小二乘法呢？如果你没有很多的分布式大数据计算资源，建议超过10000个特征就用迭代法吧。或者通过主成分分析降低特征的维度后再用最小二乘法。</p>
+<li><p>第二，当样本特征$m$非常的大的时候，计算$ A^{T}A$的逆矩阵是一个非常<strong>耗时</strong>的工作$(m+1) \times (m+1)$的矩阵求逆），甚至不可行。此时以梯度下降为代表的迭代法仍然可以使用。那这个$m$到底多大就不适合最小二乘法呢？如果你没有很多的分布式大数据计算资源，建议超过10000个特征就用迭代法吧。或者通过主成分分析降低特征的维度后再用最小二乘法。</p>
 </li>
-<li>第三，如果拟合函数不是线性的，这时无法使用最小二乘法，需要通过一些技巧转化为线性才能使用，此时梯度下降仍然可以用。</li>
-<li>第四，讲一些特殊情况。当样本量m很少，小于特征数n的时候，这时拟合方程是欠定的，常用的优化方法都无法去拟合数据。当样本量m等于特征数n的时候，用方程组求解就可以了。当m大于n时，拟合方程是超定的，也就是我们常用于最小二乘法的场景了。</li>
+<li>第三，如果<strong>拟合函数不是线性的，这时无法使用最小二乘法</strong>，需要通过一些技巧转化为线性才能使用，此时梯度下降仍然可以用。</li>
+<li>第四，讲一些特殊情况。当样本量$N$很少，小于特征数$m$的时候，这时<strong>拟合方程是欠定的，常用的优化方法都无法去拟合数据</strong>。当样本量$N$等于特征数$m$的时候，用方程组求解就可以了。当$N$大于$m$时，拟合方程是超定的，也就是我们常用于最小二乘法的场景了。</li>
 </ul>
 <hr>
 <font color="blue">声明</font>
@@ -599,7 +591,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#线性模型-最小二乘法"><span class="toc-number">1.</span> <span class="toc-text">线性模型:最小二乘法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-线性回归"><span class="toc-number">1.1.</span> <span class="toc-text">1. 线性回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-最小二乘法正规方程法"><span class="toc-number">1.2.</span> <span class="toc-text">2. 最小二乘法正规方程法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-似然函数与最小二乘法的关系"><span class="toc-number">1.3.</span> <span class="toc-text">3. 似然函数与最小二乘法的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-推理过程"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 推理过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-最小二乘与极大似然的区别"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 最小二乘与极大似然的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-最小二乘的局限性"><span class="toc-number">1.4.</span> <span class="toc-text">4. 最小二乘的局限性</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-线性回归"><span class="toc-number">1.</span> <span class="toc-text">1. 线性回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-最小二乘法正规方程法"><span class="toc-number">2.</span> <span class="toc-text">2. 最小二乘法正规方程法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-似然函数与最小二乘法的关系"><span class="toc-number">3.</span> <span class="toc-text">3. 似然函数与最小二乘法的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-推理过程"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 推理过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-最小二乘与极大似然的区别"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 最小二乘与极大似然的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-最小二乘的局限性"><span class="toc-number">4.</span> <span class="toc-text">4. 最小二乘的局限性</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
