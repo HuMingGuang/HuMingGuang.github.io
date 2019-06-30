@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">79</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.3k</span>阅读时长: <span class="post-count reading-time">10 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -418,9 +418,7 @@ height:50vh;
     <article class="article-entry">
         <h2 id="1-逻辑斯谛回归-Logistic"><a href="#1-逻辑斯谛回归-Logistic" class="headerlink" title="1. 逻辑斯谛回归(Logistic)"></a><font color="bule">1. 逻辑斯谛回归(Logistic)</font></h2><p>简单来说，逻辑斯谛回归就是将线性回归的结果输入一个Sigmoid函数，将回归值映射到0～1，表示输出为类别”1”的概率。</p>
 <p><strong>定义：</strong>sigmoid函数<script type="math/tex">f(z)=\dfrac{1}{1+e^{-z}}</script></p>
-<script type="math/tex; mode=display">f(z)=\begin{cases} 
-1  & z>0 \\
-0.5 & z=0\\ 0&z<0\end{cases}</script><p><img src="/2019/04/12/linear-model-1/sigmoid.png" width="60%" height="60%"></p>
+<p><img src="/2019/04/12/linear-model-1/sigmoid.png" width="60%" height="60%"></p>
 <h3 id><a href="#" class="headerlink" title=" "></a> </h3><h3 id="1-1-二项逻辑斯谛模型"><a href="#1-1-二项逻辑斯谛模型" class="headerlink" title="1.1 二项逻辑斯谛模型"></a><font color="blue">1.1 二项逻辑斯谛模型</font></h3><script type="math/tex; mode=display">\begin{align}  P(Y=1|x)=\frac{\exp(w\cdot x+b)}{1+\exp(w \cdot x+b)} \tag{1}\\ \end{align}</script><script type="math/tex; mode=display">\begin{align}  P(Y=0|x)=\frac{1}{1+\exp(w \cdot x)} \tag{2} \end{align}</script><p>比较上述两个条件概率值的大小，将实例<script type="math/tex">x</script> 分到概率值较大的那一类。</p>
 <p>给定数据集，定义似然函数：</p>
 <script type="math/tex; mode=display">\begin{align} L(W,b) = \prod_{i=1}^{N} [P(y_i=1|x_i)]^{y_i}[1-P(y_i=)]^{1-y_i}\tag{3}\\ \end{align}</script><p>对于上述公式(3)取对数得</p>
@@ -1155,6 +1153,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 36
@@ -1413,9 +1413,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
     
-        <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
-    
         <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
+    
+        <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
     
         <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
     
