@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">616</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">620</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -431,7 +431,7 @@ height:50vh;
 <script type="math/tex; mode=display">\begin{cases} 
 0=\nabla_w \left( \sum_{i=1}^{N}(y_i-w^{*T}x_i)^2+\lambda^*(||w^*||_2^2-m)\right) \\
 0 \leq \lambda^*.
-\end{cases}</script><p>从上面问题可以看出<strong>$L2$正则化相当于为参数定义来了一个圆形的解空间</strong>，因为必须保证$L2$范数不能大于m；同理$L1$正<strong>则化相当于为参数定义了一个菱形的解空间</strong>。如果原问题目标函数的最优解不是恰好落在解空间内，那么约束条件下的最优解一定是在解空间的边界上，<strong>而$L1$棱角分明的解空间显然更容易与目标函数等高线的角点碰撞，从而产生稀疏解，而$L2$只会使得$w$更接近0</strong>。</p>
+\end{cases}</script><p>从上面问题可以看出<strong>$L2$正则化相当于为参数定义来了一个圆形的解空间</strong>，因为必须保证$L2$范数不能大于m；同理$L1$正<strong>则化相当于为参数定义了一个菱形的解空间</strong>。如果原问题目标函数的最优解不是恰好落在解空间内，那么约束条件下的最优解一定是在解空间的边界上，<strong>而$L1$棱角分明的解空间显然更容易与目标函数等高线的角点碰撞，从而使得$w$=0产生稀疏解，而$L2$只会使得$w$更接近0</strong>。</p>
 
     </article>
     <!-- license  -->
@@ -1046,9 +1046,30 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 36
+        Total : 37
         </div>
         <!-- search  -->
         
@@ -1068,7 +1089,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/06</span><a class="archive-post-title" href="/2019/06/06/Feature-Engineering/">特征工程</a>
+            <span class="archive-post-date">07/08</span><a class="archive-post-title" href="/2019/07/08/feature-selection/">特征选择</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href="/2019/06/06/Feature-Engineering/">数据处理</a>
         </li>
     
     
@@ -1253,11 +1279,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
-        <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
-    
         <span class="sidebar-tag-name" data-tags="推荐系统"><span class="iconfont-archer">&#xe606;</span>推荐系统</span>
     
         <span class="sidebar-tag-name" data-tags="机器学习实战"><span class="iconfont-archer">&#xe606;</span>机器学习实战</span>
+    
+        <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
     
         <span class="sidebar-tag-name" data-tags="Python系列问题"><span class="iconfont-archer">&#xe606;</span>Python系列问题</span>
     
@@ -1297,6 +1323,8 @@ jsonContent:
 </div>
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="特征工程"><span class="iconfont-archer">&#xe60a;</span>特征工程</span>
     
         <span class="sidebar-category-name" data-categories="机器学习"><span class="iconfont-archer">&#xe60a;</span>机器学习</span>
     
