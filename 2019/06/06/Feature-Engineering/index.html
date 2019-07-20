@@ -423,7 +423,7 @@ height:50vh;
 <script type="math/tex; mode=display">标准化数据 = \frac{原数据－均值}{标准差}</script><p>标准化后的变量值围绕0上下波动，大于0说明高于平均水平，小于0说明低于平均水平。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#（二）Z-Score标准化 （可在scale中直接实现）</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> scale</span><br><span class="line">data[<span class="string">'标准化后的A列数据'</span>] = scale(data[<span class="string">'A列数据'</span>])</span><br><span class="line">data[<span class="string">'标准化后的B列数据'</span>] = scale(data[<span class="string">'B列数据'</span>])</span><br></pre></td></tr></table></figure>
 <h4 id="Normalizer-归一化"><a href="#Normalizer-归一化" class="headerlink" title="Normalizer 归一化"></a>Normalizer 归一化</h4><p>将每个样本缩放到单位范数（每个样本的范数为1），计算公式如下：</p>
-<script type="math/tex; mode=display">\bar x = \frac{x}{\sum_{i=1}^n x_i^2 }</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># (三) Normalizer归一化</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> Normalizer</span><br><span class="line">scaler = Normalizer()</span><br><span class="line"><span class="comment">#归一化可以同时处理多个列，所以[0]第一个进行赋值</span></span><br><span class="line">data[<span class="string">'归一化后的A列数据'</span>] = scaler.fit_transform(data[<span class="string">'A列数据'</span>])[<span class="number">0</span>]</span><br><span class="line">data[<span class="string">'归一化后的B列数据'</span>] = scaler.fit_transform(data[<span class="string">'B列数据'</span>])[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<script type="math/tex; mode=display">\bar x = \frac{x}{\sum_{i=1}^n x_i^2 }</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># (三) Normalizer归一化</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> Normalizer</span><br><span class="line">scaler = Normalizer()</span><br><span class="line"><span class="comment">#归一化可以同时处理多个列，所以[0]第一个进行赋值</span></span><br><span class="line">data[<span class="string">'归一化后的A列数据'</span>] = scaler.fit_transform(data[<span class="string">'A列数据'</span>])[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
 <h3 id="2-虚拟变量"><a href="#2-虚拟变量" class="headerlink" title="2. 虚拟变量"></a><font color="blue">2. 虚拟变量</font></h3><p>虚拟变量：也叫哑变量和离散特征编码，可用来表示分类变量、非数据因素可能产生的影响。</p>
 <p>虚<strong>拟变量的两种数据类型</strong>：</p>
 <ul>
@@ -1102,9 +1102,43 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 37
+        Total : 39
         </div>
         <!-- search  -->
         
@@ -1121,6 +1155,16 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/10</span><a class="archive-post-title" href="/2019/07/10/xgboost-lightgbm/">xgboost&lightgbm</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/08</span><a class="archive-post-title" href="/2019/07/08/sample/">解决样本类别分布不均衡问题</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1372,6 +1416,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
     
         <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
+    
+        <span class="sidebar-category-name" data-categories="机器学习技术"><span class="iconfont-archer">&#xe60a;</span>机器学习技术</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
