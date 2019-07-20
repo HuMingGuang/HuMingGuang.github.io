@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>xgboost&amp;lightgbm · MingGuangHu&#39;s Studio.</title>
+    <title>数据分析的常用操作 · MingGuangHu&#39;s Studio.</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -232,7 +232,7 @@
                 <a href="/">MingGuangHu&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">xgboost&lightgbm</a>
+                <a href="#" class="post-name">数据分析的常用操作</a>
             </div>
     </div>
     
@@ -262,7 +262,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            xgboost&lightgbm
+            数据分析的常用操作
             <!-- 404 -->
             
         </h1>
@@ -287,12 +287,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">7</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">749</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/07/10</span>
+                    <span class="post-intro-time">2019/07/20</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -416,7 +416,17 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="1-XGBoost"><a href="#1-XGBoost" class="headerlink" title="1. XGBoost"></a><font color="bule">1. XGBoost</font></h1><h1 id="2-LightGBM"><a href="#2-LightGBM" class="headerlink" title="2. LightGBM"></a><font color="bule">2. LightGBM</font></h1><h1 id="3-Battle-XGBoost-与-LightGBM"><a href="#3-Battle-XGBoost-与-LightGBM" class="headerlink" title="3. Battle :XGBoost 与 LightGBM"></a><font color="bule">3. Battle :XGBoost 与 LightGBM</font></h1>
+        <h3 id="1-统计次数"><a href="#1-统计次数" class="headerlink" title="1.统计次数"></a>1.统计次数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 每个app的总使用次数统计</span></span><br><span class="line">app_num = packtime[<span class="string">'app'</span>].value_counts().reset_index()</span><br><span class="line">app_num.columns = [<span class="string">'app'</span>, <span class="string">'app_num'</span>]</span><br><span class="line">packtime = pd.merge(left=packtime, right=app_num, on=<span class="string">'app'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 统计每台设备的app数量</span></span><br><span class="line">df_app = packtime[[<span class="string">'device_id'</span>, <span class="string">'app'</span>]]</span><br><span class="line">apps = df_app.drop_duplicates().groupby([<span class="string">'device_id'</span>])[<span class="string">'app'</span>].apply(<span class="string">' '</span>.join).reset_index()</span><br><span class="line">apps[<span class="string">'app_length'</span>] = apps[<span class="string">'app'</span>].apply(<span class="keyword">lambda</span> x:len(x.split(<span class="string">' '</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment">#根据'device_id', 'app'为特征，对period求和</span></span><br><span class="line">device_app_use_time = packtime.groupby([<span class="string">'device_id'</span>, <span class="string">'app'</span>])[<span class="string">'period'</span>].agg(<span class="string">'sum'</span>).reset_index()</span><br></pre></td></tr></table></figure>
+<h3 id="2-长尾处理"><a href="#2-长尾处理" class="headerlink" title="2. 长尾处理"></a>2. 长尾处理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 同样的，针对长尾分布做些处理（尝试过不做处理，或换其他阈值，这个100的阈值最高）</span></span><br><span class="line">packtime.loc[packtime.app_num &lt; <span class="number">100</span>, <span class="string">'app'</span>] = <span class="string">'other'</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-排序"><a href="#3-排序" class="headerlink" title="3.排序"></a>3.排序</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app_use_top100 = app_use_time.sort_values(by=<span class="string">'period'</span>, ascending=<span class="literal">False</span>)[:<span class="number">100</span>][<span class="string">'app'</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="4-Label编码-将离散值转化为0-n-1"><a href="#4-Label编码-将离散值转化为0-n-1" class="headerlink" title="4. Label编码-将离散值转化为0~(n-1)"></a>4. Label编码-将离散值转化为0~(n-1)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将 ph_ver 进行 label encoder</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder</span><br><span class="line">ph_ver_le = preprocessing.LabelEncoder()</span><br><span class="line">train[<span class="string">'ph_ver'</span>] = ph_ver_le.fit_transform(train[<span class="string">'ph_ver'</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="5-确认某个数据表是否在另一个数据表中"><a href="#5-确认某个数据表是否在另一个数据表中" class="headerlink" title="5.确认某个数据表是否在另一个数据表中"></a>5.确认某个数据表是否在另一个数据表中</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#找出所有chunk中appId在appId_top50中的那些元素</span></span><br><span class="line"><span class="comment">#appId_top50必须为一维数组,['uId','appId','duration','timess']表示满足条件后选取的列</span></span><br><span class="line">chunk = chunk.loc[chunk[<span class="string">'appId'</span>].isin(appId_top50),[<span class="string">'uId'</span>,<span class="string">'appId'</span>,<span class="string">'duration'</span>,<span class="string">'timess'</span>]]</span><br></pre></td></tr></table></figure>
+<h3 id="6-将某一行数据转化为列数据"><a href="#6-将某一行数据转化为列数据" class="headerlink" title="6. 将某一行数据转化为列数据"></a>6. 将某一行数据转化为列数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">result = (df.pivot(index=<span class="string">'user_id'</span>,columns=<span class="string">'category'</span>).swaplevel(axis=<span class="number">1</span>).fillna(<span class="number">0</span>))</span><br><span class="line">result.columns = [<span class="string">'&#123;&#125;_&#123;&#125;'</span>.format(cat,col) <span class="keyword">for</span> cat, col <span class="keyword">in</span> result.columns]</span><br><span class="line"><span class="comment">#链接:https://cloud.tencent.com/developer/ask/200752/answer/312449</span></span><br></pre></td></tr></table></figure>
+<h3 id="7-怎样高效地根据一个表对另一个表做匹配"><a href="#7-怎样高效地根据一个表对另一个表做匹配" class="headerlink" title="7.怎样高效地根据一个表对另一个表做匹配"></a>7.怎样高效地根据一个表对另一个表做匹配</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment">#显示所有列</span></span><br><span class="line">pd.set_option(<span class="string">'display.max_columns'</span>,<span class="literal">None</span>)</span><br><span class="line"><span class="comment">#读入数据</span></span><br><span class="line">user_app_usage = pd.read_csv(<span class="string">"data/user_app_usage.csv"</span>,chunksize=<span class="number">100000000</span>,names=[<span class="string">'uId'</span>,<span class="string">'appId'</span>,<span class="string">'duration'</span>,<span class="string">'times'</span>,<span class="string">'use_data'</span>])</span><br><span class="line">app_info = pd.read_csv(<span class="string">'data/app_info.csv'</span>,names=[<span class="string">'appId'</span>,<span class="string">'category'</span>])</span><br><span class="line"><span class="comment"># 使用内连接，将app_info中的appId与user_app_usage做多对多的做交集，删除脏的appId</span></span><br><span class="line"><span class="comment">#　将处理的结果存入表格种</span></span><br><span class="line">j = <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> user_app_usage: </span><br><span class="line">    app_usage = pd.merge(chunk,app_info,on=<span class="string">'appId'</span>)</span><br><span class="line">    <span class="keyword">if</span> j==<span class="number">1</span>:</span><br><span class="line">        pd.DataFrame(app_usage).to_csv(<span class="string">'data/processingData/user_app_usage_pro.csv'</span>,</span><br><span class="line">                                       mode=<span class="string">'a'</span>,index=<span class="literal">False</span>)</span><br><span class="line">        j = j+<span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">     pd.DataFrame(app_usage).to_csv(<span class="string">'data/processingData/user_app_usage_pro.csv'</span>,</span><br><span class="line">                                    mode=<span class="string">'a'</span>,index=<span class="literal">False</span>,header=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df1 = pd.DataFrame(&#123;<span class="string">'key'</span>:[<span class="string">'b'</span>,<span class="string">'b'</span>,<span class="string">'a'</span>,<span class="string">'c'</span>,<span class="string">'a'</span>,<span class="string">'a'</span>,<span class="string">'b'</span>],<span class="string">'data1'</span>:range(<span class="number">7</span>)&#125;)</span><br><span class="line">df2 = pd.DataFrame(&#123;<span class="string">'key'</span>:[<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'d'</span>,<span class="string">'a'</span>],<span class="string">'data2'</span>:range(<span class="number">4</span>)&#125;)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">----df1------</span></span><br><span class="line"><span class="string">	key	data1</span></span><br><span class="line"><span class="string">0	b	0</span></span><br><span class="line"><span class="string">1	b	1</span></span><br><span class="line"><span class="string">2	a	2</span></span><br><span class="line"><span class="string">3	c	3</span></span><br><span class="line"><span class="string">4	a	4</span></span><br><span class="line"><span class="string">5	a	5</span></span><br><span class="line"><span class="string">6	b	6</span></span><br><span class="line"><span class="string">----df2------</span></span><br><span class="line"><span class="string">   key	data2</span></span><br><span class="line"><span class="string">0	a	0</span></span><br><span class="line"><span class="string">1	b	1</span></span><br><span class="line"><span class="string">2	d	2</span></span><br><span class="line"><span class="string">3	a	3</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">pd.merge(df1,df2,on=<span class="string">'key'</span>)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">这里是多对多做交集，其中左表种的每个a会对应右边中的每个a都有一行数据</span></span><br><span class="line"><span class="string">----merge----</span></span><br><span class="line"><span class="string">   key data1 data2</span></span><br><span class="line"><span class="string">0	b	0	1</span></span><br><span class="line"><span class="string">1	b	1	1</span></span><br><span class="line"><span class="string">2	b	6	1</span></span><br><span class="line"><span class="string">3	a	2	0</span></span><br><span class="line"><span class="string">4	a	2	3</span></span><br><span class="line"><span class="string">5	a	4	0</span></span><br><span class="line"><span class="string">6	a	4	3</span></span><br><span class="line"><span class="string">7	a	5	0</span></span><br><span class="line"><span class="string">8	a	5	3</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h3 id="8-train和test集合并处理"><a href="#8-train和test集合并处理" class="headerlink" title="8.  train和test集合并处理"></a>8.  train和test集合并处理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给训练集和测试集增加一列标识，方便拆分</span></span><br><span class="line">train[<span class="string">'source'</span>] = <span class="string">'train'</span></span><br><span class="line">test[<span class="string">'source'</span>] = <span class="string">'test'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练集、测试集合并</span></span><br><span class="line">data=pd.concat([train, test],ignore_index=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 处理数据</span></span><br><span class="line"><span class="comment"># data............</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#　拆分训练集和测试集</span></span><br><span class="line">train = data.loc[data[<span class="string">'source'</span>]==<span class="string">'train'</span>]</span><br><span class="line">test = data.loc[data[<span class="string">'source'</span>]==<span class="string">'test'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 去除训练集和测试集中的source标识</span></span><br><span class="line">train.drop(<span class="string">'source'</span>,axis=<span class="number">1</span>,inplace=<span class="literal">True</span>)</span><br><span class="line">test.drop([<span class="string">'source'</span>,<span class="string">'Disbursed'</span>],axis=<span class="number">1</span>,inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#　将处理完的数据存储到文件中</span></span><br><span class="line">train.to_csv(<span class="string">'train_modified.csv'</span>,index=<span class="literal">False</span>)</span><br><span class="line">test.to_csv(<span class="string">'test_modified.csv'</span>,index=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="9-训练的时候拆分训练数据和预测数据"><a href="#9-训练的时候拆分训练数据和预测数据" class="headerlink" title="9.训练的时候拆分训练数据和预测数据"></a>9.训练的时候拆分训练数据和预测数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#　拆分出预测数；target为目标列，IDcol为序号列,train[predictors]为特征列</span></span><br><span class="line">predictors = [x <span class="keyword">for</span> x <span class="keyword">in</span> train.columns <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> [target, IDcol]]</span><br><span class="line">tain[predictors]</span><br></pre></td></tr></table></figure>
+
     </article>
     <!-- license  -->
     
@@ -433,8 +443,8 @@ height:50vh;
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/07/08/feature-selection/" title="特征选择">
-                    <div class="prevTitle">特征选择</div>
+                <a href="/2019/07/20/data-mining-1/" title="GBM & XGBoost的调参">
+                    <div class="prevTitle">GBM & XGBoost的调参</div>
                 </a>
             
         </li>
@@ -553,7 +563,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-XGBoost"><span class="toc-number">1.</span> <span class="toc-text">1. XGBoost</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-LightGBM"><span class="toc-number">2.</span> <span class="toc-text">2. LightGBM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Battle-XGBoost-与-LightGBM"><span class="toc-number">3.</span> <span class="toc-text">3. Battle :XGBoost 与 LightGBM</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-统计次数"><span class="toc-number">1.</span> <span class="toc-text">1.统计次数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-长尾处理"><span class="toc-number">2.</span> <span class="toc-text">2. 长尾处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-排序"><span class="toc-number">3.</span> <span class="toc-text">3.排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Label编码-将离散值转化为0-n-1"><span class="toc-number">4.</span> <span class="toc-text">4. Label编码-将离散值转化为0~(n-1)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-确认某个数据表是否在另一个数据表中"><span class="toc-number">5.</span> <span class="toc-text">5.确认某个数据表是否在另一个数据表中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-将某一行数据转化为列数据"><span class="toc-number">6.</span> <span class="toc-text">6. 将某一行数据转化为列数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-怎样高效地根据一个表对另一个表做匹配"><span class="toc-number">7.</span> <span class="toc-text">7.怎样高效地根据一个表对另一个表做匹配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-train和test集合并处理"><span class="toc-number">8.</span> <span class="toc-text">8.  train和test集合并处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-训练的时候拆分训练数据和预测数据"><span class="toc-number">9.</span> <span class="toc-text">9.训练的时候拆分训练数据和预测数据</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1079,9 +1089,24 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 39
+        Total : 40
         </div>
         <!-- search  -->
         
@@ -1106,7 +1131,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/10</span><a class="archive-post-title" href="/2019/07/10/xgboost-lightgbm/">xgboost&lightgbm</a>
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href="/2019/07/20/data-mining-2/">数据分析的常用操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href="/2019/07/20/data-mining-1/">GBM & XGBoost的调参</a>
         </li>
     
     
@@ -1301,11 +1331,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
-        <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
-    
         <span class="sidebar-tag-name" data-tags="推荐系统"><span class="iconfont-archer">&#xe606;</span>推荐系统</span>
     
         <span class="sidebar-tag-name" data-tags="机器学习实战"><span class="iconfont-archer">&#xe606;</span>机器学习实战</span>
+    
+        <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
     
         <span class="sidebar-tag-name" data-tags="Python系列问题"><span class="iconfont-archer">&#xe606;</span>Python系列问题</span>
     
@@ -1354,13 +1384,13 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
     
+        <span class="sidebar-category-name" data-categories="数据挖掘实践"><span class="iconfont-archer">&#xe60a;</span>数据挖掘实践</span>
+    
         <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
     
         <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
     
         <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
-    
-        <span class="sidebar-category-name" data-categories="机器学习技术"><span class="iconfont-archer">&#xe60a;</span>机器学习技术</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

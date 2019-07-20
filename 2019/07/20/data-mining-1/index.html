@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="MingGuang HU">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="MingGuang HU">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>GBM &amp; XGBoost的调参 · MingGuangHu&#39;s Studio.</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/assets/bitbug_favicon.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+        <!-- algolia -->
+        <script>
+            
+            var hits = JSON.parse('{"per_page":10}')
+            var labels = JSON.parse('{"input_placeholder":"Search for Posts","hits_empty":"We did not find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}')
+
+            var algolia = {
+                applicationID: 'L4H8NR9HZK',
+                apiKey: 'dd0a87d811733fb786ed3807e9023178',
+                indexName: 'blog',
+                hits: hits,
+                labels: labels
+            }
+        </script>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">MingGuangHu&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">GBM & XGBoost的调参</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">MingGuangHu's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            GBM & XGBoost的调参
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="机器学习">机器学习</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.1k</span>阅读时长: <span class="post-count reading-time">12 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/07/20</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="1-GBM训练调参流程"><a href="#1-GBM训练调参流程" class="headerlink" title="1. GBM训练调参流程"></a>1. GBM训练调参流程</h2><h3 id="1-1-建模与验证"><a href="#1-1-建模与验证" class="headerlink" title="1.1 建模与验证"></a>1.1 建模与验证</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">function:</span></span><br><span class="line"><span class="string">fit the model</span></span><br><span class="line"><span class="string">determine training accuracy</span></span><br><span class="line"><span class="string">determine training AUC</span></span><br><span class="line"><span class="string">determine testing AUC</span></span><br><span class="line"><span class="string">perform CV is performCV is True</span></span><br><span class="line"><span class="string">plot Feature Importance if printFeatureImportance is True</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> GradientBoostingClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> cross_validation, metrics</span><br><span class="line"><span class="keyword">from</span> sklearn.grid_search <span class="keyword">import</span> GridSearchCV</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pylab <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">from</span> matplotlib.pylab <span class="keyword">import</span> rcParams</span><br><span class="line">rcParams[<span class="string">'figure.figsize'</span>] = <span class="number">12</span>, <span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">modelfit</span><span class="params">(alg, dtrain, predictors,target,performCV=True, printFeatureImportance=True, cv_folds=<span class="number">5</span>)</span>:</span></span><br><span class="line">    <span class="comment">#Fit the algorithm on the data</span></span><br><span class="line">    alg.fit(dtrain[predictors], dtrain[target])</span><br><span class="line">        </span><br><span class="line">    <span class="comment">#Predict training set:</span></span><br><span class="line">    dtrain_predictions = alg.predict(dtrain[predictors])</span><br><span class="line">    dtrain_predprob = alg.predict_proba(dtrain[predictors])[:,<span class="number">1</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#Perform cross-validation:</span></span><br><span class="line">    <span class="keyword">if</span> performCV:</span><br><span class="line">        cv_score = cross_validation.cross_val_score(alg, dtrain[predictors], dtrain[<span class="string">'age_group'</span>], cv=cv_folds, scoring=<span class="string">'roc_auc'</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#Print model report:</span></span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"\nModel Report"</span>)</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"Accuracy : %.4g"</span>%metrics.accuracy_score(dtrain[target].values, dtrain_predictions))</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"AUC Score (Train): %f"</span>%metrics.roc_auc_score(dtrain[target], dtrain_predprob))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> performCV:</span><br><span class="line">        <span class="keyword">print</span> (<span class="string">"CV Score : Mean - %.7g | Std - %.7g | Min - %.7g | Max - %.7g"</span> % (np.mean(cv_score),np.std(cv_score),np.min(cv_score),np.max(cv_score)))</span><br><span class="line">                </span><br><span class="line">    <span class="comment">#Print Feature Importance:</span></span><br><span class="line">    <span class="keyword">if</span> printFeatureImportance:</span><br><span class="line">        feat_imp = pd.Series(alg.feature_importances_, predictors).sort_values(ascending=<span class="literal">False</span>)</span><br><span class="line">        feat_imp.plot(kind=<span class="string">'bar'</span>, title=<span class="string">'Feature Importances'</span>)</span><br><span class="line">        plt.ylabel(<span class="string">'Feature Importance Score'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-构造基模型"><a href="#1-2-构造基模型" class="headerlink" title="1.2 构造基模型"></a>1.2 构造基模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># target为目标列， IDcol为ID列</span></span><br><span class="line">predictors = [x <span class="keyword">for</span> x <span class="keyword">in</span> train.columns <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> [target, IDcol]]</span><br><span class="line"><span class="comment"># 构造基模型</span></span><br><span class="line">gbm0 = GradientBoostingClassifier(random_state=<span class="number">10</span>)</span><br><span class="line"><span class="comment"># 模型拟合</span></span><br><span class="line">modelfit(gbm0, train, predictors,target)</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-参数调整"><a href="#1-3-参数调整" class="headerlink" title="1.3 参数调整"></a>1.3 参数调整</h3><p><strong>模型参数分为两种</strong></p>
+<ul>
+<li>树具体参数<ul>
+<li>min_samples_split</li>
+<li>min_samples_leaf</li>
+<li>max_depth</li>
+<li>min_leaf_nodes</li>
+<li>max_features</li>
+<li>loss function</li>
+</ul>
+</li>
+<li>Boosting具体参数<ul>
+<li>n_estimators</li>
+<li>learning_rate</li>
+<li>subsample</li>
+</ul>
+</li>
+</ul>
+<font color="red">**第一个问题：为更高的学习速率寻找估计器参数**</font>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意：如果是多类问题，将scoring='roc_auc'改为scoring='accuracy',roc是用于二分类问题的</span></span><br><span class="line">predictors = [x <span class="keyword">for</span> x <span class="keyword">in</span> train.columns <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> [target, IDcol]]</span><br><span class="line">param_test1 = &#123;<span class="string">'n_estimators'</span>:range(<span class="number">20</span>,<span class="number">81</span>,<span class="number">10</span>)&#125;</span><br><span class="line">gsearch1 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=<span class="number">0.1</span>, min_samples_split=<span class="number">500</span>,</span><br><span class="line">                                  min_samples_leaf=<span class="number">50</span>,max_depth=<span class="number">8</span>,max_features=<span class="string">'sqrt'</span>, subsample=<span class="number">0.8</span>,random_state=<span class="number">10</span>), </span><br><span class="line">                       param_grid = param_test1, scoring=<span class="string">'roc_auc'</span>,n_jobs=<span class="number">4</span>,iid=<span class="literal">False</span>, cv=<span class="number">5</span>)</span><br><span class="line">gsearch1.fit(train[predictors],train[target])</span><br><span class="line"><span class="comment">#　得到最好的估计器参数</span></span><br><span class="line">gsearch1.grid_scores_, gsearch1.best_params_, gsearch1.best_score_</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;'n_estimators': 60&#125;,0.83842766395593704)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<font color="red">**第二个问题：调整树的具体参数**</font>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据第一个问题确定的估计器参数，进一步优化max_depth参数</span></span><br><span class="line">param_test2 = &#123;<span class="string">'max_depth'</span>:range(<span class="number">5</span>,<span class="number">16</span>,<span class="number">2</span>), <span class="string">'min_samples_split'</span>:range(<span class="number">200</span>,<span class="number">1001</span>,<span class="number">200</span>)&#125;</span><br><span class="line">gsearch2 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">60</span>,</span><br><span class="line">                                                max_features=<span class="string">'sqrt'</span>, subsample=<span class="number">0.8</span>, random_state=<span class="number">10</span>), </span><br><span class="line">                       param_grid = param_test2, scoring=<span class="string">'roc_auc'</span>,n_jobs=<span class="number">4</span>,iid=<span class="literal">False</span>, cv=<span class="number">5</span>)</span><br><span class="line">gsearch2.fit(train[predictors],train[target])</span><br><span class="line"><span class="comment"># 得到最好的树的最大深度、最小分类数</span></span><br><span class="line">gsearch2.grid_scores_, gsearch2.best_params_, gsearch2.best_score_</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;'max_depth': 9, 'min_samples_split': 1000&#125;,</span></span><br><span class="line"><span class="string"> 0.83843938077464664)</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment">#　若min_samples_split到达最大值，我们将进一步解决</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 固定max_depth,进一步调整min_samples_split和min_samples_leaf</span></span><br><span class="line">param_test3 = &#123;<span class="string">'min_samples_split'</span>:range(<span class="number">1000</span>,<span class="number">2100</span>,<span class="number">200</span>), <span class="string">'min_samples_leaf'</span>:range(<span class="number">30</span>,<span class="number">71</span>,<span class="number">10</span>)&#125;</span><br><span class="line">gsearch3 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">60</span>,max_depth=<span class="number">9</span>,</span><br><span class="line">                                                    max_features=<span class="string">'sqrt'</span>, subsample=<span class="number">0.8</span>, random_state=<span class="number">10</span>), </span><br><span class="line">                       param_grid = param_test3, scoring=<span class="string">'roc_auc'</span>,n_jobs=<span class="number">4</span>,iid=<span class="literal">False</span>, cv=<span class="number">5</span>)</span><br><span class="line">gsearch3.fit(train[predictors],train[target])</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;'min_samples_leaf': 60, 'min_samples_split': 1200&#125;,</span></span><br><span class="line"><span class="string"> 0.83959087132827259)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型的拟合</span></span><br><span class="line">modelfit(gsearch3.best_estimator_, train, test, predictors)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Model Report</span></span><br><span class="line"><span class="string">Accuracy : 0.9854</span></span><br><span class="line"><span class="string">AUC Score (Train): 0.896453</span></span><br><span class="line"><span class="string">CV Score : Mean - 0.8395909 | Std - 0.009890497 | Min - 0.8259075 | Max - 0.8527672</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  调整max_features</span></span><br><span class="line">param_test4 = &#123;<span class="string">'max_features'</span>:range(<span class="number">7</span>,<span class="number">20</span>,<span class="number">2</span>)&#125;</span><br><span class="line">gsearch4 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">60</span>,max_depth=<span class="number">9</span>, </span><br><span class="line">                            min_samples_split=<span class="number">1200</span>, min_samples_leaf=<span class="number">60</span>, subsample=<span class="number">0.8</span>, random_state=<span class="number">10</span>),</span><br><span class="line">                       param_grid = param_test4, scoring=<span class="string">'roc_auc'</span>,n_jobs=<span class="number">4</span>,iid=<span class="literal">False</span>, cv=<span class="number">5</span>)</span><br><span class="line">gsearch4.fit(train[predictors],train[target])</span><br><span class="line">gsearch4.grid_scores_, gsearch4.best_params_, gsearch4.best_score_</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string"> &#123;'max_features': 7&#125;,</span></span><br><span class="line"><span class="string"> 0.83959087132827259)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<font color="red">**第三个问题：调整下采样数和更低的学习速率**</font>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调整subsample</span></span><br><span class="line">param_test5 = &#123;<span class="string">'subsample'</span>:[<span class="number">0.6</span>,<span class="number">0.7</span>,<span class="number">0.75</span>,<span class="number">0.8</span>,<span class="number">0.85</span>,<span class="number">0.9</span>]&#125;</span><br><span class="line">gsearch5 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">60</span>,max_depth=<span class="number">9</span>, </span><br><span class="line">                            min_samples_split=<span class="number">1200</span>, min_samples_leaf=<span class="number">60</span>, subsample=<span class="number">0.8</span>, random_state=<span class="number">10</span>, max_features=<span class="number">7</span>),</span><br><span class="line">                       param_grid = param_test5, scoring=<span class="string">'roc_auc'</span>,n_jobs=<span class="number">4</span>,iid=<span class="literal">False</span>, cv=<span class="number">5</span>)</span><br><span class="line">gsearch5.fit(train[predictors],train[target])</span><br><span class="line">gsearch5.grid_scores_, gsearch5.best_params_, gsearch5.best_score_</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;'subsample': 0.85&#125;,</span></span><br><span class="line"><span class="string"> 0.83988852960292915)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<font color="red">所有的调整都是为了降低学习速率和增加估计器数量，从而得到更高鲁棒性的结果</font>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#　不断调整learning_rate和 n_estimators的值</span></span><br><span class="line"><span class="comment"># modified_1</span></span><br><span class="line">predictors = [x <span class="keyword">for</span> x <span class="keyword">in</span> train.columns <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> [target, IDcol]]</span><br><span class="line">gbm_tuned_1 = GradientBoostingClassifier(learning_rate=<span class="number">0.05</span>, n_estimators=<span class="number">120</span>,max_depth=<span class="number">9</span>, min_samples_split=<span class="number">1200</span>, </span><br><span class="line">                                         min_samples_leaf=<span class="number">60</span>, subsample=<span class="number">0.85</span>, random_state=<span class="number">10</span>, max_features=<span class="number">7</span>)</span><br><span class="line">modelfit(gbm_tuned_1, train, test, predictors)</span><br><span class="line"><span class="comment"># modified_2</span></span><br><span class="line">predictors = [x <span class="keyword">for</span> x <span class="keyword">in</span> train.columns <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> [target, IDcol]]</span><br><span class="line">gbm_tuned_2 = GradientBoostingClassifier(learning_rate=<span class="number">0.01</span>, n_estimators=<span class="number">600</span>,max_depth=<span class="number">9</span>, min_samples_split=<span class="number">1200</span>, </span><br><span class="line">                                         min_samples_leaf=<span class="number">60</span>, subsample=<span class="number">0.85</span>, random_state=<span class="number">10</span>, max_features=<span class="number">7</span>)</span><br><span class="line">modelfit(gbm_tuned_2, train, test, predictors)</span><br><span class="line"><span class="comment"># modified_3</span></span><br><span class="line">predictors = [x <span class="keyword">for</span> x <span class="keyword">in</span> train.columns <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> [target, IDcol]]</span><br><span class="line">gbm_tuned_3 = GradientBoostingClassifier(learning_rate=<span class="number">0.005</span>, n_estimators=<span class="number">1200</span>,max_depth=<span class="number">9</span>, min_samples_split=<span class="number">1200</span>, </span><br><span class="line">                                         min_samples_leaf=<span class="number">60</span>, subsample=<span class="number">0.85</span>, random_state=<span class="number">10</span>, max_features=<span class="number">7</span>,</span><br><span class="line">                                         warm_start=<span class="literal">True</span>)</span><br><span class="line">modelfit(gbm_tuned_3, train, test, predictors, performCV=<span class="literal">False</span>)</span><br><span class="line"><span class="comment">##　不断的尝试参数值，选择其中准确率最高的参数值</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-XgBoost训练调参过程"><a href="#2-XgBoost训练调参过程" class="headerlink" title="2. XgBoost训练调参过程"></a>2. XgBoost训练调参过程</h2><ul>
+<li>确定学习速率和tree_based 参数调优的估计器数目</li>
+<li>max_depth 和 min_weight 参数调优</li>
+<li>gamma参数调优</li>
+<li>正则化参数调优</li>
+<li>降低学习速率</li>
+</ul>
+<p><strong>XgBoost算法是串行处理的，但是工程上xgboost还提出了一种可并行的近似直方图算法，对每个特征高效地生成候选的分割点。</strong></p>
+<h3 id="2-1建模与验证"><a href="#2-1建模与验证" class="headerlink" title="2.1建模与验证"></a>2.1建模与验证</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">test_results = pd.read_csv(<span class="string">'test_results.csv'</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">modelfit</span><span class="params">(alg, dtrain, dtest, predictors,useTrainCV=True, cv_folds=<span class="number">5</span>, early_stopping_rounds=<span class="number">50</span>)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> useTrainCV:</span><br><span class="line">        xgb_param = alg.get_xgb_params()</span><br><span class="line">        xgtrain = xgb.DMatrix(dtrain[predictors].values, label=dtrain[target].values)</span><br><span class="line">        xgtest = xgb.DMatrix(dtest[predictors].values)</span><br><span class="line">        cvresult = xgb.cv(xgb_param, xgtrain, num_boost_round=alg.get_params()[<span class="string">'n_estimators'</span>], nfold=cv_folds,</span><br><span class="line">            metrics=<span class="string">'auc'</span>, early_stopping_rounds=early_stopping_rounds, show_progress=<span class="literal">False</span>)</span><br><span class="line">        alg.set_params(n_estimators=cvresult.shape[<span class="number">0</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#Fit the algorithm on the data dtrain[]中的Disbursed为Y，predictors为X。根据具体情况改变</span></span><br><span class="line">    alg.fit(dtrain[predictors], dtrain[<span class="string">'Disbursed'</span>],eval_metric=<span class="string">'auc'</span>)</span><br><span class="line">        </span><br><span class="line">    <span class="comment">#Predict training set:</span></span><br><span class="line">    dtrain_predictions = alg.predict(dtrain[predictors])</span><br><span class="line">    dtrain_predprob = alg.predict_proba(dtrain[predictors])[:,<span class="number">1</span>]</span><br><span class="line">        </span><br><span class="line">    <span class="comment">#Print model report:</span></span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"\nModel Report"</span>)</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"Accuracy : %.4g"</span> % metrics.accuracy_score(dtrain[<span class="string">'Disbursed'</span>].values, dtrain_predictions))</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"AUC Score (Train): %f"</span> % metrics.roc_auc_score(dtrain[<span class="string">'Disbursed'</span>], dtrain_predprob))</span><br><span class="line">    </span><br><span class="line"><span class="comment">#     Predict on testing data:</span></span><br><span class="line">    dtest[<span class="string">'predprob'</span>] = alg.predict_proba(dtest[predictors])[:,<span class="number">1</span>]</span><br><span class="line">    results = test_results.merge(dtest[[<span class="string">'ID'</span>,<span class="string">'predprob'</span>]], on=<span class="string">'ID'</span>)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'AUC Score (Test): %f'</span> % metrics.roc_auc_score(results[<span class="string">'Disbursed'</span>], results[<span class="string">'predprob'</span>])</span><br><span class="line">                </span><br><span class="line">    feat_imp = pd.Series(alg.booster().get_fscore()).sort_values(ascending=<span class="literal">False</span>)</span><br><span class="line">    feat_imp.plot(kind=<span class="string">'bar'</span>, title=<span class="string">'Feature Importances'</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'Feature Importance Score'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-构造基模型"><a href="#2-2-构造基模型" class="headerlink" title="2.2 构造基模型"></a>2.2 构造基模型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">predictors = [x for x in train.columns if x not in [target, IDcol]]</span><br><span class="line">xgb1 = XGBClassifier(</span><br><span class="line">        learning_rate =0.1,</span><br><span class="line">        n_estimators=1000,</span><br><span class="line">        max_depth=5,</span><br><span class="line">        min_child_weight=1,</span><br><span class="line">        gamma=0,</span><br><span class="line">        subsample=0.8,</span><br><span class="line">        colsample_bytree=0.8,</span><br><span class="line">        objective= &apos;binary:logistic&apos;,</span><br><span class="line">        nthread=4,</span><br><span class="line">        scale_pos_weight=1,</span><br><span class="line">        seed=27)</span><br><span class="line">modelfit(xgb1, train, test, predictors)</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-调整参数-按照步骤进行"><a href="#2-3-调整参数-按照步骤进行" class="headerlink" title="2.3 调整参数-按照步骤进行"></a>2.3 调整参数-按照步骤进行</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调整max_depth和 min_child_weight</span></span><br><span class="line">param_test1 = &#123;</span><br><span class="line">    <span class="string">'max_depth'</span>:range(<span class="number">3</span>,<span class="number">10</span>,<span class="number">2</span>),</span><br><span class="line">    <span class="string">'min_child_weight'</span>:range(<span class="number">1</span>,<span class="number">6</span>,<span class="number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line">gsearch1 = GridSearchCV(estimator = XGBClassifier( learning_rate =<span class="number">0.1</span>, n_estimators=<span class="number">140</span>, max_depth=<span class="number">5</span>,</span><br><span class="line">                                        min_child_weight=<span class="number">1</span>, gamma=<span class="number">0</span>, subsample=<span class="number">0.8</span>, colsample_bytree=<span class="number">0.8</span>,</span><br><span class="line">                                        objective= <span class="string">'binary:logistic'</span>, nthread=<span class="number">4</span>, scale_pos_weight=<span class="number">1</span>, seed=<span class="number">27</span>), </span><br><span class="line">                       param_grid = param_test1, scoring=<span class="string">'roc_auc'</span>,n_jobs=<span class="number">4</span>,iid=<span class="literal">False</span>, cv=<span class="number">5</span>)</span><br><span class="line">gsearch1.fit(train[predictors],train[target])</span><br><span class="line">gsearch1.grid_scores_, gsearch1.best_params_, gsearch1.best_score_</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;'max_depth': 5, 'min_child_weight': 5&#125;,</span></span><br><span class="line"><span class="string"> 0.84123292820257589)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调整max_depth和 min_child_weight</span></span><br><span class="line">param_test2 = &#123;</span><br><span class="line">    <span class="string">'max_depth'</span>:[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>],</span><br><span class="line">    <span class="string">'min_child_weight'</span>:[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">&#125;</span><br><span class="line">gsearch2 = GridSearchCV(estimator = XGBClassifier( learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">140</span>, max_depth=<span class="number">5</span>,</span><br><span class="line">                                        min_child_weight=<span class="number">2</span>, gamma=<span class="number">0</span>, subsample=<span class="number">0.8</span>, colsample_bytree=<span class="number">0.8</span>,</span><br><span class="line">                                        objective= <span class="string">'binary:logistic'</span>, nthread=<span class="number">4</span>, scale_pos_weight=<span class="number">1</span>,seed=<span class="number">27</span>), </span><br><span class="line">                       param_grid = param_test2, scoring=<span class="string">'roc_auc'</span>,n_jobs=<span class="number">4</span>,iid=<span class="literal">False</span>, cv=<span class="number">5</span>)</span><br><span class="line">gsearch2.fit(train[predictors],train[target])</span><br><span class="line">gsearch2.grid_scores_, gsearch2.best_params_, gsearch2.best_score_</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;'max_depth': 4, 'min_child_weight': 6&#125;,</span></span><br><span class="line"><span class="string"> 0.84124915179964577)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调整 min_child_weight</span></span><br><span class="line">param_test2b = &#123;</span><br><span class="line">    <span class="string">'min_child_weight'</span>:[<span class="number">6</span>,<span class="number">8</span>,<span class="number">10</span>,<span class="number">12</span>]</span><br><span class="line">&#125;</span><br><span class="line">gsearch2b = GridSearchCV(estimator = XGBClassifier( learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">140</span>, max_depth=<span class="number">4</span>,</span><br><span class="line">                                        min_child_weight=<span class="number">2</span>, gamma=<span class="number">0</span>, subsample=<span class="number">0.8</span>, colsample_bytree=<span class="number">0.8</span>,</span><br><span class="line">                                        objective= <span class="string">'binary:logistic'</span>, nthread=<span class="number">4</span>, scale_pos_weight=<span class="number">1</span>,seed=<span class="number">27</span>), </span><br><span class="line">                       param_grid = param_test2b, scoring=<span class="string">'roc_auc'</span>,n_jobs=<span class="number">4</span>,iid=<span class="literal">False</span>, cv=<span class="number">5</span>)</span><br><span class="line">gsearch2b.fit(train[predictors],train[target])</span><br><span class="line">gsearch2b.grid_scores_, gsearch2b.best_params_, gsearch2b.best_score_</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;'min_child_weight': 6&#125;,</span></span><br><span class="line"><span class="string"> 0.84124915179964577)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据上面３次实验，得到较优的值 'max_depth': 4, 'min_child_weight': 6,并现在调整gamma</span></span><br><span class="line"><span class="comment"># 调整 gamma</span></span><br><span class="line">param_test3 = &#123;</span><br><span class="line">    <span class="string">'gamma'</span>:[i/<span class="number">10.0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">5</span>)]</span><br><span class="line">&#125;</span><br><span class="line">gsearch3 = GridSearchCV(estimator = XGBClassifier( learning_rate =<span class="number">0.1</span>, n_estimators=<span class="number">140</span>, max_depth=<span class="number">4</span>,</span><br><span class="line">                                        min_child_weight=<span class="number">6</span>, gamma=<span class="number">0</span>, subsample=<span class="number">0.8</span>, colsample_bytree=<span class="number">0.8</span>,</span><br><span class="line">                                        objective= <span class="string">'binary:logistic'</span>, nthread=<span class="number">4</span>, scale_pos_weight=<span class="number">1</span>,seed=<span class="number">27</span>), </span><br><span class="line">                       param_grid = param_test3, scoring=<span class="string">'roc_auc'</span>,n_jobs=<span class="number">4</span>,iid=<span class="literal">False</span>, cv=<span class="number">5</span>)</span><br><span class="line">gsearch3.fit(train[predictors],train[target])</span><br><span class="line">gsearch3.grid_scores_, gsearch3.best_params_, gsearch3.best_score_</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;'gamma': 0.0&#125;,</span></span><br><span class="line"><span class="string"> 0.84124915179964577)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型训练以及准确率报告</span></span><br><span class="line">predictors = [x <span class="keyword">for</span> x <span class="keyword">in</span> train.columns <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> [target, IDcol]]</span><br><span class="line">xgb2 = XGBClassifier(</span><br><span class="line">        learning_rate =<span class="number">0.1</span>,</span><br><span class="line">        n_estimators=<span class="number">1000</span>,</span><br><span class="line">        max_depth=<span class="number">4</span>,</span><br><span class="line">        min_child_weight=<span class="number">6</span>,</span><br><span class="line">        gamma=<span class="number">0</span>,</span><br><span class="line">        subsample=<span class="number">0.8</span>,</span><br><span class="line">        colsample_bytree=<span class="number">0.8</span>,</span><br><span class="line">        objective= <span class="string">'binary:logistic'</span>,</span><br><span class="line">        nthread=<span class="number">4</span>,</span><br><span class="line">        scale_pos_weight=<span class="number">1</span>,</span><br><span class="line">        seed=<span class="number">27</span>)</span><br><span class="line">modelfit(xgb2, train, test, predictors)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调整subsample和 colsample_bytree</span></span><br><span class="line">param_test4 = &#123;</span><br><span class="line">    <span class="string">'subsample'</span>:[i/<span class="number">10.0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">6</span>,<span class="number">10</span>)],</span><br><span class="line">    <span class="string">'colsample_bytree'</span>:[i/<span class="number">10.0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">6</span>,<span class="number">10</span>)]</span><br><span class="line">&#125;</span><br><span class="line">gsearch4 = GridSearchCV(estimator = XGBClassifier( learning_rate =<span class="number">0.1</span>, n_estimators=<span class="number">177</span>, max_depth=<span class="number">4</span>,</span><br><span class="line">                                        min_child_weight=<span class="number">6</span>, gamma=<span class="number">0</span>, subsample=<span class="number">0.8</span>, colsample_bytree=<span class="number">0.8</span>,</span><br><span class="line">                                        objective= <span class="string">'binary:logistic'</span>, nthread=<span class="number">4</span>, scale_pos_weight=<span class="number">1</span>,seed=<span class="number">27</span>), </span><br><span class="line">                       param_grid = param_test4, scoring=<span class="string">'roc_auc'</span>,n_jobs=<span class="number">4</span>,iid=<span class="literal">False</span>, cv=<span class="number">5</span>)</span><br><span class="line">gsearch4.fit(train[predictors],train[target])</span><br><span class="line">gsearch4.grid_scores_, gsearch4.best_params_, gsearch4.best_score_</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string"> &#123;'colsample_bytree': 0.8, 'subsample': 0.8&#125;,</span></span><br><span class="line"><span class="string"> 0.8410246925643593)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调整subsample和 colsample_bytree</span></span><br><span class="line">param_test5 = &#123;</span><br><span class="line">    <span class="string">'subsample'</span>:[i/<span class="number">100.0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">75</span>,<span class="number">90</span>,<span class="number">5</span>)],</span><br><span class="line">    <span class="string">'colsample_bytree'</span>:[i/<span class="number">100.0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">75</span>,<span class="number">90</span>,<span class="number">5</span>)]</span><br><span class="line">&#125;</span><br><span class="line">gsearch5 = GridSearchCV(estimator = XGBClassifier( learning_rate =<span class="number">0.1</span>, n_estimators=<span class="number">177</span>, max_depth=<span class="number">4</span>,</span><br><span class="line">                                        min_child_weight=<span class="number">6</span>, gamma=<span class="number">0</span>, subsample=<span class="number">0.8</span>, colsample_bytree=<span class="number">0.8</span>,</span><br><span class="line">                                        objective= <span class="string">'binary:logistic'</span>, nthread=<span class="number">4</span>, scale_pos_weight=<span class="number">1</span>,seed=<span class="number">27</span>), </span><br><span class="line">                       param_grid = param_test5, scoring=<span class="string">'roc_auc'</span>,n_jobs=<span class="number">4</span>,iid=<span class="literal">False</span>, cv=<span class="number">5</span>)</span><br><span class="line">gsearch5.fit(train[predictors],train[target])</span><br><span class="line">gsearch5.grid_scores_, gsearch5.best_params_, gsearch5.best_score_</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;'colsample_bytree': 0.8, 'subsample': 0.8&#125;,</span></span><br><span class="line"><span class="string"> 0.8410246925643593)</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 两次得到的值一样，所以确定下来</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">param_test6 = &#123;</span><br><span class="line">    <span class="string">'reg_alpha'</span>:[<span class="number">1e-5</span>, <span class="number">1e-2</span>, <span class="number">0.1</span>, <span class="number">1</span>, <span class="number">100</span>]</span><br><span class="line">&#125;</span><br><span class="line">gsearch6 = GridSearchCV(estimator = XGBClassifier( learning_rate =<span class="number">0.1</span>, n_estimators=<span class="number">177</span>, max_depth=<span class="number">4</span>,</span><br><span class="line">                                        min_child_weight=<span class="number">6</span>, gamma=<span class="number">0.1</span>, subsample=<span class="number">0.8</span>, colsample_bytree=<span class="number">0.8</span>,</span><br><span class="line">                                        objective= <span class="string">'binary:logistic'</span>, nthread=<span class="number">4</span>, scale_pos_weight=<span class="number">1</span>,seed=<span class="number">27</span>), </span><br><span class="line">                       param_grid = param_test6, scoring=<span class="string">'roc_auc'</span>,n_jobs=<span class="number">4</span>,iid=<span class="literal">False</span>, cv=<span class="number">5</span>)</span><br><span class="line">gsearch6.fit(train[predictors],train[target])</span><br><span class="line">gsearch6.grid_scores_, gsearch6.best_params_, gsearch6.best_score_</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string"> &#123;'reg_alpha': 0.01&#125;,</span></span><br><span class="line"><span class="string"> 0.84084269674772316)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 因为上面reg_alpha的结果是0.01，所以重新设置reg_alpha的范围为[0, 0.001, 0.005, 0.01, 0.05]进行训练</span></span><br><span class="line">param_test7 = &#123;</span><br><span class="line">    <span class="string">'reg_alpha'</span>:[<span class="number">0</span>, <span class="number">0.001</span>, <span class="number">0.005</span>, <span class="number">0.01</span>, <span class="number">0.05</span>]</span><br><span class="line">&#125;</span><br><span class="line">gsearch7 = GridSearchCV(estimator = XGBClassifier( learning_rate =<span class="number">0.1</span>, n_estimators=<span class="number">177</span>, max_depth=<span class="number">4</span>,</span><br><span class="line">                                        min_child_weight=<span class="number">6</span>, gamma=<span class="number">0.1</span>, subsample=<span class="number">0.8</span>, colsample_bytree=<span class="number">0.8</span>,</span><br><span class="line">                                        objective= <span class="string">'binary:logistic'</span>, nthread=<span class="number">4</span>, scale_pos_weight=<span class="number">1</span>,seed=<span class="number">27</span>), </span><br><span class="line">                       param_grid = param_test7, scoring=<span class="string">'roc_auc'</span>,n_jobs=<span class="number">4</span>,iid=<span class="literal">False</span>, cv=<span class="number">5</span>)</span><br><span class="line">gsearch7.fit(train[predictors],train[target])</span><br><span class="line">gsearch7.grid_scores_, gsearch7.best_params_, gsearch7.best_score_</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;'reg_alpha': 0.005&#125;,</span></span><br><span class="line"><span class="string"> 0.84118352535245489)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调整n_estimators</span></span><br><span class="line">xgb3 = XGBClassifier(</span><br><span class="line">        learning_rate =<span class="number">0.1</span>,</span><br><span class="line">        n_estimators=<span class="number">1000</span>,</span><br><span class="line">        max_depth=<span class="number">4</span>,</span><br><span class="line">        min_child_weight=<span class="number">6</span>,</span><br><span class="line">        gamma=<span class="number">0</span>,</span><br><span class="line">        subsample=<span class="number">0.8</span>,</span><br><span class="line">        colsample_bytree=<span class="number">0.8</span>,</span><br><span class="line">        reg_alpha=<span class="number">0.005</span>,</span><br><span class="line">        objective= <span class="string">'binary:logistic'</span>,</span><br><span class="line">        nthread=<span class="number">4</span>,</span><br><span class="line">        scale_pos_weight=<span class="number">1</span>,</span><br><span class="line">        seed=<span class="number">27</span>)</span><br><span class="line">modelfit(xgb3, train, test, predictors)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调整n_estimators</span></span><br><span class="line">xgb4 = XGBClassifier(</span><br><span class="line">        learning_rate =<span class="number">0.01</span>,</span><br><span class="line">        n_estimators=<span class="number">5000</span>,</span><br><span class="line">        max_depth=<span class="number">4</span>,</span><br><span class="line">        min_child_weight=<span class="number">6</span>,</span><br><span class="line">        gamma=<span class="number">0</span>,</span><br><span class="line">        subsample=<span class="number">0.8</span>,</span><br><span class="line">        colsample_bytree=<span class="number">0.8</span>,</span><br><span class="line">        reg_alpha=<span class="number">0.005</span>,</span><br><span class="line">        objective= <span class="string">'binary:logistic'</span>,</span><br><span class="line">        nthread=<span class="number">4</span>,</span><br><span class="line">        scale_pos_weight=<span class="number">1</span>,</span><br><span class="line">        seed=<span class="number">27</span>)</span><br><span class="line">modelfit(xgb4, train, test, predictors)</span><br></pre></td></tr></table></figure>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/07/20/data-mining-2/" title="数据分析的常用操作">
+                    <div class="nextTitle">数据分析的常用操作</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/07/08/feature-selection/" title="特征选择">
+                    <div class="prevTitle">特征选择</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:936068345@qq.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/HuMingGuang" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title="wechat">
+                  
+                  <img class="profile-qr" src="/assets/Wechat.jpeg">
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-GBM训练调参流程"><span class="toc-number">1.</span> <span class="toc-text">1. GBM训练调参流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-建模与验证"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 建模与验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-构造基模型"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 构造基模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-参数调整"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 参数调整</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-XgBoost训练调参过程"><span class="toc-number">2.</span> <span class="toc-text">2. XgBoost训练调参过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1建模与验证"><span class="toc-number">2.1.</span> <span class="toc-text">2.1建模与验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-构造基模型"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 构造基模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-调整参数-按照步骤进行"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 调整参数-按照步骤进行</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 40
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/21</span><a class="archive-post-title" href="/2019/07/21/sample/">解决样本类别分布不均衡问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href="/2019/07/20/data-mining-2/">数据分析的常用操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href="/2019/07/20/data-mining-1/">GBM & XGBoost的调参</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/08</span><a class="archive-post-title" href="/2019/07/08/feature-selection/">特征选择</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href="/2019/06/06/Feature-Engineering/">数据处理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/08</span><a class="archive-post-title" href="/2019/05/08/rule-study/">规则学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href="/2019/05/07/dimension-reduction/">降维</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href="/2019/05/07/cluster/">无监督学习-聚类</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href="/2019/05/05/python-5/">Python编程(五)：Python编程进阶</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/04</span><a class="archive-post-title" href="/2019/05/04/contextor/">Python系列问题（二）：上下文管理器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href="/2019/05/02/python-4/">Python编程(四)：面向对象编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href="/2019/04/29/topic-model/">主题模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href="/2019/04/27/Hidden-Markov-Models/">隐马尔可夫模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href="/2019/04/26/python-copy/">Python系列问题（一）：深拷贝、浅拷贝</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href="/2019/04/26/python-3/">Python编程(三)：深入理解Python</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href="/2019/04/23/python-2/">Python编程(二)：数据的构造和组织</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href="/2019/04/22/python-1/">Python编程(一)：Python基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href="/2019/04/21/Gaussian-Mixture-Model/">高斯混合模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href="/2019/04/20/EM-algorithm/">EM算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href="/2019/04/17/GPUCB/">高斯过程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href="/2019/04/16/genetic-algorithm/">遗传算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2019/04/14/support-vector-machine/">支持向量机</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2019/04/14/Meachine-Learning-Lagrange-duality/">详解拉格朗日及其对偶问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href="/2019/04/12/common-parameter-estimation/">常用的参数估计方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href="/2019/04/12/linear-model-1/">逻辑斯谛回归、岭回归及Lasso回归</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href="/2019/04/11/Linear-model/">线形模型:最小二乘法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href="/2019/04/10/esemble-learning/">集成学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href="/2019/04/08/decision-tree/">决策树算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href="/2019/04/08/Bayesian/">朴素贝叶斯</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href="/2019/04/07/recommend-system-6/">推荐系统（七）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href="/2019/04/02/meachine-learning-question/">机器学习问题的梳理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href="/2019/04/02/recommend-system-5/">推荐系统（六）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href="/2019/04/01/KNN/">KNN算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href="/2019/03/30/recommend-system-4/">推荐系统（五）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href="/2019/03/28/recommend-system-3/">推荐系统（四）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/27</span><a class="archive-post-title" href="/2019/03/27/recommend-system-2/">推荐系统（三）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href="/2019/03/26/consistent-hashing/">一致性哈希算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href="/2019/03/26/recommend-system-1/">推荐系统（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/25</span><a class="archive-post-title" href="/2019/03/25/recommend-system/">推荐系统（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href="/2019/03/22/Coding-1/">C++基础知识梳理</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="推荐系统"><span class="iconfont-archer">&#xe606;</span>推荐系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习实战"><span class="iconfont-archer">&#xe606;</span>机器学习实战</span>
+    
+        <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python系列问题"><span class="iconfont-archer">&#xe606;</span>Python系列问题</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python编程"><span class="iconfont-archer">&#xe606;</span>Python编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="C++"><span class="iconfont-archer">&#xe606;</span>C++</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="特征工程"><span class="iconfont-archer">&#xe60a;</span>特征工程</span>
+    
+        <span class="sidebar-category-name" data-categories="机器学习"><span class="iconfont-archer">&#xe60a;</span>机器学习</span>
+    
+        <span class="sidebar-category-name" data-categories="转载文章"><span class="iconfont-archer">&#xe60a;</span>转载文章</span>
+    
+        <span class="sidebar-category-name" data-categories="编程"><span class="iconfont-archer">&#xe60a;</span>编程</span>
+    
+        <span class="sidebar-category-name" data-categories="数据挖掘实践"><span class="iconfont-archer">&#xe60a;</span>数据挖掘实践</span>
+    
+        <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
+    
+        <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
+    
+        <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "MingGuang HU"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.8.0/dist/instantsearch.min.js" defer></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
+
+
