@@ -416,7 +416,7 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="1-感知机"><a href="#1-感知机" class="headerlink" title="1.感知机"></a>1.感知机</h2><h3 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h3><p><strong>（感知机）</strong>假设输入空间（特征空间）是$\chi\subseteq R^n$,输出空间是$\gamma =\left{+1,-1\right}$。输入$x\in \chi$表示实例的特征向量，对应于输入空间的点，输出$y\in \gamma$表示实例的类别。由输入空间到输出空间的如下函数：</p>
+        <h2 id="1-感知机"><a href="#1-感知机" class="headerlink" title="1.感知机"></a>1.感知机</h2><h3 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h3><p><strong>（感知机）</strong>假设输入空间（特征空间）是$\chi\subseteq R^n$,输出空间是<script type="math/tex">\gamma =\left\{+1,-1\right\}</script>。输入$x\in \chi$表示实例的特征向量，对应于输入空间的点，输出$y\in \gamma$表示实例的类别。由输入空间到输出空间的如下函数：</p>
 <script type="math/tex; mode=display">f(x) = \mbox{sign}(w\cdot x+b)</script><p>称为感知机。其中</p>
 <script type="math/tex; mode=display">\mbox{sign}(x) = \begin{cases} +1,x\geq0 \\ -1,x\leq0 \end{cases}</script><h3 id="1-2-基本思想"><a href="#1-2-基本思想" class="headerlink" title="1.2 基本思想"></a>1.2 基本思想</h3><p>随机选择一个超平面对样本点进行划分，然后当一个实例点被误分类，即位于分类超平面错误一侧时，则调整$w$和$b$，使分类超平面向该误分类点的一侧移动，直至超平面越过该误分类点为止。</p>
 <p>所以，如果初始值不同，最后得到的分割超平面也不同，即感知机模型的分割超平面可能存在多个（<strong>解不唯一</strong>）。</p>
@@ -425,7 +425,7 @@ height:50vh;
 <li>感知机模型仅适用于二分类问题，具有局限性</li>
 </ul>
 <h3 id="1-4-感知机学习算法"><a href="#1-4-感知机学习算法" class="headerlink" title="1.4 感知机学习算法"></a>1.4 感知机学习算法</h3><p>已知<strong>损失函数</strong>为$L(w,b) = -\sum_{x_i\in M}y_i \cdot(w\cdot x_i+b)$，$M$表示所有误分类点的集合；所以利用梯度下降法，我们得:</p>
-<script type="math/tex; mode=display">\dfrac{\partial}{\partial w} L(w,b)= -\sum_{x_i\in M}y_i x_i</script><script type="math/tex; mode=display">\dfrac{\partial}{\partial b}L(w,b) =-\sum_{x_i\in M} y_i</script><p><strong>输入：</strong>训练集$T=\left{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\right}$,学习速率$\eta$</p>
+<script type="math/tex; mode=display">\dfrac{\partial}{\partial w} L(w,b)= -\sum_{x_i\in M}y_i x_i</script><script type="math/tex; mode=display">\dfrac{\partial}{\partial b}L(w,b) =-\sum_{x_i\in M} y_i</script><p><strong>输入：</strong>训练集<script type="math/tex">T=\left\{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\right\}</script>,学习速率$\eta$</p>
 <p><strong>输出：</strong>感知机模型$h(x) = \mbox{sign}(w\cdot x+b)$</p>
 <p>步骤如下：</p>
 <p>第1步：选取初始值向量$w$和偏执常数$b$</p>
@@ -470,14 +470,14 @@ height:50vh;
 <script type="math/tex; mode=display">\begin{align}  L= \max_{\alpha}\sum _{i}\alpha _{i}-\dfrac {1}{2}\sum _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}x^{(i)}x^{\left( j\right) }\tag{12} \end{align}</script><p>所以上述公式<strong>5</strong>的<strong>对偶问题为</strong></p>
 <script type="math/tex; mode=display">\begin{align} \begin{cases}   \max_{\alpha}\sum _{i}\alpha _{i}-\dfrac {1}{2}\sum _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}x^{(i)}x^{\left( j\right) } \\ \mathbf{s.t} \mbox{   }  \alpha \geq0, \sum_i \alpha^{(i)} y^{(i)}=0 \end{cases} \tag{13} \end{align}</script><p>所以原来求<script type="math/tex">\min_{w,b} \max_{\alpha_i}</script>的问题变为<script type="math/tex">\max_{\alpha_i} \min_{w,b}</script>的问题。原问题计算复杂，变换到对偶问题上，求解相对简便。</p>
 <script type="math/tex; mode=display">\begin{align}  \begin{cases}  \min_{\alpha}\dfrac {1}{2}\sum _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}x^{(i)}x^{\left( j\right) } -\sum _{i}\alpha _{i}\\ \mathbf{s.t} \mbox{   }  \alpha \geq0, \sum_i \alpha^{(i)} y^{(i)}=0 \end{cases} \tag{14} \end{align}</script><h3 id="2-3-SMO-序列最小最优化算法"><a href="#2-3-SMO-序列最小最优化算法" class="headerlink" title="2.3 SMO(序列最小最优化算法)"></a>2.3 SMO(序列最小最优化算法)</h3><p>SMO用于求解最优的$\alpha^{*}$</p>
-<h3 id="2-4-硬间隔支持向量机算法"><a href="#2-4-硬间隔支持向量机算法" class="headerlink" title="2.4 硬间隔支持向量机算法"></a>2.4 硬间隔支持向量机算法</h3><p><strong>输入：</strong>线性可分训练集$T=\left{ (x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\right}$，且$y_i\in\left{-1,1\right}$，$i=1,2,…,M$</p>
-<p><strong>输出：</strong>分割超平面$w^{<em>}\cdot x+ b^{</em>} =0$和分类决策函数$h(x) = \mbox{sign}(w^{<em>}\cdot x+b^{</em>})$</p>
+<h3 id="2-4-硬间隔支持向量机算法"><a href="#2-4-硬间隔支持向量机算法" class="headerlink" title="2.4 硬间隔支持向量机算法"></a>2.4 硬间隔支持向量机算法</h3><p><strong>输入：</strong>线性可分训练集<script type="math/tex">T=\left\{ (x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\right\}</script>，且<script type="math/tex">y_i\in\left\{-1,1\right\}$，$i=1,2,…,M</script></p>
+<p><strong>输出：</strong>分割超平面<script type="math/tex">w^{*}\cdot x+ b^{*} =0</script>和分类决策函数<script type="math/tex">h(x) = \mbox{sign}(w^{*}\cdot x+b^{*})</script>.</p>
 <p>步骤如下：</p>
 <p><strong>第1步：</strong>构造约束优化问题</p>
 <script type="math/tex; mode=display">\begin{align}  \begin{cases}  \min_{\alpha}\dfrac {1}{2}\sum _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}x^{(i)}x^{\left( j\right) } -\Sigma _{i}\alpha _{i}\\ \mathbf{s.t} \mbox{   }  \alpha \geq0, \sum_i \alpha^{(i)} y^{(i)}=0 \end{cases} \tag{15} \end{align}</script><p><strong>第2步：</strong>利用<strong>SMO算法求解上面的优化问题</strong>，得到$\alpha$向量的值$\alpha^{*}$</p>
 <p><strong>第3步：</strong>利用下式计算$w$向量的值$w^{*}$</p>
-<script type="math/tex; mode=display">\begin{align} w^{*} = \sum_{i=1}^{M} \alpha_{i}^{*} y_i x_i \tag{16} \end{align}</script><p><strong>第4步：</strong>找到满足$\alpha^{<em>}_s&gt;0$对应的支持向量点$(x_s,y_s)$，$s=1,2,3,\cdots,S$,利用下式计算$b$的值$b^{</em>}$</p>
-<script type="math/tex; mode=display">\begin{align} b^{*} = \dfrac{1}{S} \sum_{s=1}^{S} [y_s-w^{*}\cdot x_s]\tag{17} \end{align}</script><p><strong>第5步：</strong>由$w^{<em>}$和$b^{</em>}$得到分割超平面$w^{<em>}\cdot x+b^{</em>} =0$和分类决策函数$h(x)=\mbox{sign}(w^{<em>}\cdot x+b^{</em>})$</p>
+<script type="math/tex; mode=display">\begin{align} w^{*} = \sum_{i=1}^{M} \alpha_{i}^{*} y_i x_i \tag{16} \end{align}</script><p><strong>第4步：</strong>找到满足<script type="math/tex">\alpha^{*}_s>0</script>对应的支持向量点<script type="math/tex">(x_s,y_s)</script>，$s=1,2,3,\cdots,S$,利用下式计算$b$的值$b^{*}$</p>
+<script type="math/tex; mode=display">\begin{align} b^{*} = \dfrac{1}{S} \sum_{s=1}^{S} [y_s-w^{*}\cdot x_s]\tag{17} \end{align}</script><p><strong>第5步：</strong>由<script type="math/tex">w^{*}</script>和<script type="math/tex">b^{*}</script>得到分割超平面<script type="math/tex">w^{*}\cdot x+b^{*} =0</script>和分类决策函数<script type="math/tex">h(x)=\mbox{sign}(w^{*}\cdot x+b^{*})</script>.</p>
 <h2 id="3-软间隔支持向量机"><a href="#3-软间隔支持向量机" class="headerlink" title="3. 软间隔支持向量机"></a>3. 软间隔支持向量机</h2><p>当不同类别的样本很有可能存在部分混叠的情况，这种情况下连分割超平面都找不到。针对这种情况，SVM模型提出了增加一个松弛变量$\xi_i$的办法。所以我们定义了软间隔$y_i (w\cdot x_i +b)\geq 1-\xi_i$，同时在优化目标上增加惩罚项$c \xi_i$.原来优化问题变为</p>
 <script type="math/tex; mode=display">\begin{align} \begin{cases} \min_w \dfrac{||w||^{2}}{2} +c \sum_{i=1}^{M} \xi_i \\ \mathbf{s.t} \mbox{  } y^{(i)} w^{T} x^{(i)}\geq 1-\xi_i &\xi_i\ \geq 0 \mbox{  , } i=1,2,…,M \end{cases} \tag{18} \end{align}</script><p>与上述的硬间隔支持向量机相比，最终的优化约束问题并没有变，只是增加了一些约束条件。</p>
 <script type="math/tex; mode=display">\begin{align}  \begin{cases}  \min_{\alpha}\dfrac {1}{2}\sum _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}x^{(i)}x^{\left( j\right) } -\sum _{i}\alpha _{i}\\ \mathbf{s.t} \mbox{   }  \alpha \geq0, \sum_i \alpha^{(i)} y^{(i)}=0 \\ 0\leq \alpha_i \leq c,i=1,2,\cdots,M \end{cases} \tag{19} \end{align}</script><h2 id="4-合页损失函数-Hinge-Loss"><a href="#4-合页损失函数-Hinge-Loss" class="headerlink" title="4. 合页损失函数(Hinge-Loss)"></a>4. 合页损失函数(Hinge-Loss)</h2><p>硬间隔支持向量机和软间隔支持向量机都叫做线性支持向量机，是一种线性模型。线性支持向量机还有另外一种解释，那就是最小化下述目标函数：</p>
@@ -1536,22 +1536,7 @@ jsonContent:
     
         <script src="/scripts/share.js" async></script>    
      
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-</body>
+    </body>
 </html>
 
 
