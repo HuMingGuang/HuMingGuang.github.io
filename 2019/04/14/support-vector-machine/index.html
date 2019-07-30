@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.3k</span>阅读时长: <span class="post-count reading-time">6 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.6k</span>阅读时长: <span class="post-count reading-time">11 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -416,15 +416,25 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h1><blockquote>
-<p>主要内容</p>
-<ul>
-<li>介绍间隔最大化</li>
-<li>发现对偶问题</li>
+        <h2 id="1-感知机"><a href="#1-感知机" class="headerlink" title="1.感知机"></a>1.感知机</h2><h3 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h3><p><strong>（感知机）</strong>假设输入空间（特征空间）是$\chi\subseteq R^n$,输出空间是$\gamma =\left{+1,-1\right}$。输入$x\in \chi$表示实例的特征向量，对应于输入空间的点，输出$y\in \gamma$表示实例的类别。由输入空间到输出空间的如下函数：</p>
+<script type="math/tex; mode=display">f(x) = \mbox{sign}(w\cdot x+b)</script><p>称为感知机。其中</p>
+<script type="math/tex; mode=display">\mbox{sign}(x) = \begin{cases} +1,x\geq0 \\ -1,x\leq0 \end{cases}</script><h3 id="1-2-基本思想"><a href="#1-2-基本思想" class="headerlink" title="1.2 基本思想"></a>1.2 基本思想</h3><p>随机选择一个超平面对样本点进行划分，然后当一个实例点被误分类，即位于分类超平面错误一侧时，则调整$w$和$b$，使分类超平面向该误分类点的一侧移动，直至超平面越过该误分类点为止。</p>
+<p>所以，如果初始值不同，最后得到的分割超平面也不同，即感知机模型的分割超平面可能存在多个（<strong>解不唯一</strong>）。</p>
+<h3 id="1-3-缺点"><a href="#1-3-缺点" class="headerlink" title="1.3 缺点"></a>1.3 缺点</h3><ul>
+<li>当训练数据集线性不可分时，感知机的学习算法不收敛，迭代过程会发生振荡；</li>
+<li>感知机模型仅适用于二分类问题，具有局限性</li>
 </ul>
-</blockquote>
-<h2 id="1-间隔最大化"><a href="#1-间隔最大化" class="headerlink" title="1. 间隔最大化"></a>1. 间隔最大化</h2><p>支持向量机(Support vecotr machine)的基本想法是<strong>求解能够正确划分训练数据集并且间隔最大的分离超平面。</strong></p>
-<p>给定一个二分类问题，我们需要找到最优的超平面</p>
+<h3 id="1-4-感知机学习算法"><a href="#1-4-感知机学习算法" class="headerlink" title="1.4 感知机学习算法"></a>1.4 感知机学习算法</h3><p>已知<strong>损失函数</strong>为$L(w,b) = -\sum_{x_i\in M}y_i \cdot(w\cdot x_i+b)$，$M$表示所有误分类点的集合；所以利用梯度下降法，我们得:</p>
+<script type="math/tex; mode=display">\dfrac{\partial}{\partial w} L(w,b)= -\sum_{x_i\in M}y_i x_i</script><script type="math/tex; mode=display">\dfrac{\partial}{\partial b}L(w,b) =-\sum_{x_i\in M} y_i</script><p><strong>输入：</strong>训练集$T=\left{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\right}$,学习速率$\eta$</p>
+<p><strong>输出：</strong>感知机模型$h(x) = \mbox{sign}(w\cdot x+b)$</p>
+<p>步骤如下：</p>
+<p>第1步：选取初始值向量$w$和偏执常数$b$</p>
+<p>第2步：在训练集中选取数据$(x_i,y_i)$</p>
+<p>第3步：如果$y_i(w\cdot x_i+b)&lt;0$（判定为误分类点），则进行更新，</p>
+<script type="math/tex; mode=display">w \leftarrow w+\eta y_i x_i</script><script type="math/tex; mode=display">b \leftarrow b+\eta y_i</script><p>第4步：重复第2步和第3步，直至训练集没有误分类点或满足迭代截止要求，得到感知机模型$h(x)=\mbox{sign}(w\cdot x+b)$</p>
+<h2 id="2-硬间隔支持向量机"><a href="#2-硬间隔支持向量机" class="headerlink" title="2. 硬间隔支持向量机"></a>2. 硬间隔支持向量机</h2><h3 id="2-1-问题定义"><a href="#2-1-问题定义" class="headerlink" title="2.1 问题定义"></a>2.1 问题定义</h3><p>SVM模型和感知机模型一样，也是一种二分类模型。但是SVM模型不仅要让样本被分割超平面分开，还希望那些<strong>离分割超平面最近的点到分割超平面的距离最小</strong>。</p>
+<p>支持向量机(Support vecotr machine)的基本想法是<strong>求解能够正确划分训练数据集并且间隔最大的分离超平面。</strong></p>
+<p>给定一个二分类问题，我们需要找到最优的超平面（<strong>具有唯一性</strong>）</p>
 <p><img src="/2019/04/14/support-vector-machine/1.png" width="45%" height="45%"></p>
 <p>但是存在多个超平面，哪个是满足正确分类的最优选择？</p>
 <p>我们选择线性模型<script type="math/tex">h_w(x)=w^{T}x+b</script>,希望训练数据<script type="math/tex">D={(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),…,(x^{(N)},y^{(N)})}</script>其中 <script type="math/tex">x^{(i)}:h_w(x^{(i)})\rightarrow y^{(i)}</script>，<script type="math/tex">y^{(i)} \in \left\{ -1,+1\right\}</script>。如果正确分类所有数据，则<script type="math/tex">y^{(i)} h_w(x^{(i)}>0</script>.通过缩放数据，可以得到两个超平面（虚线画出），这两个超平面之间的间隔即为两类的间隔。</p>
@@ -439,8 +449,8 @@ height:50vh;
 <script type="math/tex; mode=display">\begin{align} & w^{T} (x+\lambda w) +b=1\\& \Rightarrow  w^{T}x+\lambda w^{T} w+b=1 \\  & \Rightarrow w^{T}x+b=1-\lambda w^{T}w \tag{3} \end{align}</script><p>因为<script type="math/tex">w^{T}x+b=-1</script>，所以</p>
 <script type="math/tex; mode=display">\begin{align}  & \lambda ||w||^{2} =2 \\ & \Rightarrow  \lambda=\dfrac{2}{||w||^{2}}  \tag{3} \end{align}</script><p>通s过代入<script type="math/tex">\lambda</script>，<font color="red">间隔大小</font>为<script type="math/tex">\lambda ||w|| = \dfrac{2}{||w||^{2}}  ||w|| =\dfrac{2}{||w||}</script></p>
 <p><strong>综上，分类问题变为一个优化问题：</strong></p>
-<script type="math/tex; mode=display">\begin{align} \begin{cases} max_w \dfrac{2}{||w||} \\ \mathbf{s.t} & y^{(i)} w^{T} x^{(i)}\geq 1 & \mbox{for } i=1,2,…,N  \end{cases} \tag{4} \end{align}</script><p>为了数学计算的方便，我们把上述最大化问题重写为最小化问题</p>
-<script type="math/tex; mode=display">\begin{align} \begin{cases} min_w \dfrac{||w||^{2}}{2} \\ \mathbf{s.t} & y^{(i)} w^{T} x^{(i)}\geq 1 & \mbox{for } i=1,2,…,N  \end{cases} \tag{5} \end{align}</script><h2 id="2-对偶形式"><a href="#2-对偶形式" class="headerlink" title="2. 对偶形式"></a>2. 对偶形式</h2><h3 id="2-1-带不等式约束例子"><a href="#2-1-带不等式约束例子" class="headerlink" title="2.1 带不等式约束例子"></a>2.1 带不等式约束例子</h3><p>我们先回顾一下带不等式约束的优化问题</p>
+<script type="math/tex; mode=display">\begin{align} \begin{cases} \max_w \dfrac{2}{||w||} \\ \mathbf{s.t} & y^{(i)} w^{T} x^{(i)}\geq 1 & \mbox{for } i=1,2,…,N  \end{cases} \tag{4} \end{align}</script><p>为了数学计算的方便，我们把上述最大化问题重写为最小化问题</p>
+<script type="math/tex; mode=display">\begin{align} \begin{cases} \min_w \dfrac{||w||^{2}}{2} \\ \mathbf{s.t} & y^{(i)} w^{T} x^{(i)}\geq 1 & \mbox{for } i=1,2,…,N  \end{cases} \tag{5} \end{align}</script><h3 id="2-2-对偶形式"><a href="#2-2-对偶形式" class="headerlink" title="2.2. 对偶形式"></a>2.2. 对偶形式</h3><h4 id="2-2-1-带不等式约束例子"><a href="#2-2-1-带不等式约束例子" class="headerlink" title="2.2.1 带不等式约束例子"></a>2.2.1 带不等式约束例子</h4><p>我们先回顾一下带不等式约束的优化问题</p>
 <p>假设</p>
 <script type="math/tex; mode=display">\begin{align} \begin{cases}\min f(x)=x^{2} \\ \mathbf{s.t} & b-x \leq0   \end{cases} \tag{7} \end{align}</script><p><img src="/2019/04/14/support-vector-machine/4.png" width="45%" height="45%"></p>
 <p>我们首先构造拉格朗日函数</p>
@@ -450,16 +460,34 @@ height:50vh;
 <script type="math/tex; mode=display">\begin{aligned} \dfrac {\partial L}{\partial \alpha }=0\Rightarrow b-X=0\Rightarrow b-\dfrac {\alpha }{2}=0\Rightarrow \alpha ^{\ast }=2b,x^{\ast }=b\end{aligned}</script><p>根据上图我们要考虑<script type="math/tex">b</script>的取值，当$b\leq0$时，<script type="math/tex">f(x)=x^2</script>的最优解为<script type="math/tex">x^{\ast}=0</script>，当<script type="math/tex">b > 0</script>时，我们最优值取<script type="math/tex">x^{\ast}=b</script>.</p>
 <p>综上两种情况，我们得<script type="math/tex">\alpha^{\ast}=\max(0,2b)</script></p>
 <p>所以原始优化问题变为</p>
-<script type="math/tex; mode=display">\begin{align} \begin{cases} \min_x max_\alpha L(x,\alpha) \\ \mathbf{s.t} & \alpha \geq0  \end{cases} \tag{8} \end{align}</script><h3 id="2-2-间隔最大化的对偶问题"><a href="#2-2-间隔最大化的对偶问题" class="headerlink" title="2.2 间隔最大化的对偶问题"></a>2.2 间隔最大化的对偶问题</h3><p>由上述公式<strong>5</strong>可知，</p>
-<script type="math/tex; mode=display">\begin{align} \begin{cases} min_w \dfrac{||w||^{2}}{2} \\ \mathbf{s.t} & y^{(i)} w^{T} x^{(i)}\geq 1 & \mbox{for } i=1,2,…,N  \end{cases} \tag{5} \end{align}</script><p>根据上述例子，对于不等式优化方法以及引入拉格朗日乘子得：</p>
-<script type="math/tex; mode=display">\begin{align}  L=\dfrac{1}{2} ||w||^{2} + max_{\alpha_i} \sum_i \alpha_i \left[  1- y^{(i)}( wx^{(i)}+b) \right] \tag{9} \end{align}</script><p>即优化问题是<script type="math/tex">\min_{w,b} \max_{\alpha_i}\dfrac{1}{2} ||w||^{2} +  \sum_i \alpha_i \left[  1- y^{(i)}( wx^{(i)}+b) \right]</script></p>
+<script type="math/tex; mode=display">\begin{align} \begin{cases} \min_x \max_\alpha L(x,\alpha) \\ \mathbf{s.t} & \alpha \geq0  \end{cases} \tag{8} \end{align}</script><h4 id="2-2-2-间隔最大化的对偶问题"><a href="#2-2-2-间隔最大化的对偶问题" class="headerlink" title="2.2.2 间隔最大化的对偶问题"></a>2.2.2 间隔最大化的对偶问题</h4><p>由上述公式<strong>5</strong>可知，</p>
+<script type="math/tex; mode=display">\begin{align} \begin{cases} \min_w \dfrac{||w||^{2}}{2} \\ \mathbf{s.t} & y^{(i)} w^{T} x^{(i)}\geq 1 & \mbox{for } i=1,2,…,N  \end{cases} \tag{5} \end{align}</script><p>根据上述例子，对于不等式优化方法以及引入拉格朗日乘子得：</p>
+<script type="math/tex; mode=display">\begin{align}  L=\dfrac{1}{2} ||w||^{2} + \max_{\alpha_i} \sum_i \alpha_i \left[  1- y^{(i)}( wx^{(i)}+b) \right] \tag{9} \end{align}</script><p>即优化问题是<script type="math/tex">\min_{w,b} \max_{\alpha_i}\dfrac{1}{2} ||w||^{2} +  \sum_i \alpha_i \left[  1- y^{(i)}( wx^{(i)}+b) \right]</script></p>
 <p>在上述公式中存在三个未知变量，不好去解决。接下来，我们想办法将<script type="math/tex">w,b</script>这两个变量由<script type="math/tex">\alpha</script>代替。</p>
 <p>根据公式<strong>9</strong>，我们对其求偏导得</p>
 <script type="math/tex; mode=display">\begin{align}\dfrac {\partial L}{\partial  w}=0\Rightarrow w-\sum _{i}\alpha _{i}y^{(i)}x^{\left( i\right) }=0\\
 \Rightarrow w= \sum _{i}\alpha _{i }y^{(i)}x^{\left( i\right) } \\ \tag{10} \end{align}</script><script type="math/tex; mode=display">\begin{align} \dfrac {\partial L}{\partial b}=0\Rightarrow \sum _{i}\alpha _{i}y^{\left( i\right) }=0  \\ \tag{11} \end{align}</script><p>将公式<strong>10、11</strong>的结果带入公式<strong>9</strong>中，所以得</p>
-<script type="math/tex; mode=display">\begin{align}  L= max_{\alpha_i}\Sigma _{i}\alpha _{i}-\dfrac {1}{2}\sum _{i}\Sigma _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}x^{(i)}x^{\left( j\right) }\tag{12} \end{align}</script><p>所以上述公式<strong>5</strong>的<strong>对偶问题为</strong></p>
-<script type="math/tex; mode=display">\begin{align} \begin{cases}  & \max_{\alpha_i}\Sigma _{i}\alpha _{i}-\dfrac {1}{2}\sum _{i}\Sigma _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}x^{(i)}x^{\left( j\right) } \\ \mathbf{s.t} &  \alpha \geq0, \sum_i \alpha^{(i)} y^{(i)} \end{cases} \tag{13} \end{align}</script><p>所以原来求<script type="math/tex">\min_{w,b} \max_{\alpha_i}</script>的问题变为<script type="math/tex">\max_{\alpha_i} \min_{w,b}</script>的问题。原问题计算复杂，变换到对偶问题上，求解相对简便。</p>
-<hr>
+<script type="math/tex; mode=display">\begin{align}  L= \max_{\alpha}\sum _{i}\alpha _{i}-\dfrac {1}{2}\sum _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}x^{(i)}x^{\left( j\right) }\tag{12} \end{align}</script><p>所以上述公式<strong>5</strong>的<strong>对偶问题为</strong></p>
+<script type="math/tex; mode=display">\begin{align} \begin{cases}   \max_{\alpha}\sum _{i}\alpha _{i}-\dfrac {1}{2}\sum _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}x^{(i)}x^{\left( j\right) } \\ \mathbf{s.t} \mbox{   }  \alpha \geq0, \sum_i \alpha^{(i)} y^{(i)}=0 \end{cases} \tag{13} \end{align}</script><p>所以原来求<script type="math/tex">\min_{w,b} \max_{\alpha_i}</script>的问题变为<script type="math/tex">\max_{\alpha_i} \min_{w,b}</script>的问题。原问题计算复杂，变换到对偶问题上，求解相对简便。</p>
+<script type="math/tex; mode=display">\begin{align}  \begin{cases}  \min_{\alpha}\dfrac {1}{2}\sum _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}x^{(i)}x^{\left( j\right) } -\sum _{i}\alpha _{i}\\ \mathbf{s.t} \mbox{   }  \alpha \geq0, \sum_i \alpha^{(i)} y^{(i)}=0 \end{cases} \tag{14} \end{align}</script><h3 id="2-3-SMO-序列最小最优化算法"><a href="#2-3-SMO-序列最小最优化算法" class="headerlink" title="2.3 SMO(序列最小最优化算法)"></a>2.3 SMO(序列最小最优化算法)</h3><p>SMO用于求解最优的$\alpha^{*}$</p>
+<h3 id="2-4-硬间隔支持向量机算法"><a href="#2-4-硬间隔支持向量机算法" class="headerlink" title="2.4 硬间隔支持向量机算法"></a>2.4 硬间隔支持向量机算法</h3><p><strong>输入：</strong>线性可分训练集$T=\left{ (x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\right}$，且$y_i\in\left{-1,1\right}$，$i=1,2,…,M$</p>
+<p><strong>输出：</strong>分割超平面$w^{<em>}\cdot x+ b^{</em>} =0$和分类决策函数$h(x) = \mbox{sign}(w^{<em>}\cdot x+b^{</em>})$</p>
+<p>步骤如下：</p>
+<p><strong>第1步：</strong>构造约束优化问题</p>
+<script type="math/tex; mode=display">\begin{align}  \begin{cases}  \min_{\alpha}\dfrac {1}{2}\sum _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}x^{(i)}x^{\left( j\right) } -\Sigma _{i}\alpha _{i}\\ \mathbf{s.t} \mbox{   }  \alpha \geq0, \sum_i \alpha^{(i)} y^{(i)}=0 \end{cases} \tag{15} \end{align}</script><p><strong>第2步：</strong>利用<strong>SMO算法求解上面的优化问题</strong>，得到$\alpha$向量的值$\alpha^{*}$</p>
+<p><strong>第3步：</strong>利用下式计算$w$向量的值$w^{*}$</p>
+<script type="math/tex; mode=display">\begin{align} w^{*} = \sum_{i=1}^{M} \alpha_{i}^{*} y_i x_i \tag{16} \end{align}</script><p><strong>第4步：</strong>找到满足$\alpha^{<em>}_s&gt;0$对应的支持向量点$(x_s,y_s)$，$s=1,2,3,\cdots,S$,利用下式计算$b$的值$b^{</em>}$</p>
+<script type="math/tex; mode=display">\begin{align} b^{*} = \dfrac{1}{S} \sum_{s=1}^{S} [y_s-w^{*}\cdot x_s]\tag{17} \end{align}</script><p><strong>第5步：</strong>由$w^{<em>}$和$b^{</em>}$得到分割超平面$w^{<em>}\cdot x+b^{</em>} =0$和分类决策函数$h(x)=\mbox{sign}(w^{<em>}\cdot x+b^{</em>})$</p>
+<h2 id="3-软间隔支持向量机"><a href="#3-软间隔支持向量机" class="headerlink" title="3. 软间隔支持向量机"></a>3. 软间隔支持向量机</h2><p>当不同类别的样本很有可能存在部分混叠的情况，这种情况下连分割超平面都找不到。针对这种情况，SVM模型提出了增加一个松弛变量$\xi_i$的办法。所以我们定义了软间隔$y_i (w\cdot x_i +b)\geq 1-\xi_i$，同时在优化目标上增加惩罚项$c \xi_i$.原来优化问题变为</p>
+<script type="math/tex; mode=display">\begin{align} \begin{cases} \min_w \dfrac{||w||^{2}}{2} +c \sum_{i=1}^{M} \xi_i \\ \mathbf{s.t} \mbox{  } y^{(i)} w^{T} x^{(i)}\geq 1-\xi_i &\xi_i\ \geq 0 \mbox{  , } i=1,2,…,M \end{cases} \tag{18} \end{align}</script><p>与上述的硬间隔支持向量机相比，最终的优化约束问题并没有变，只是增加了一些约束条件。</p>
+<script type="math/tex; mode=display">\begin{align}  \begin{cases}  \min_{\alpha}\dfrac {1}{2}\sum _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}x^{(i)}x^{\left( j\right) } -\sum _{i}\alpha _{i}\\ \mathbf{s.t} \mbox{   }  \alpha \geq0, \sum_i \alpha^{(i)} y^{(i)}=0 \\ 0\leq \alpha_i \leq c,i=1,2,\cdots,M \end{cases} \tag{19} \end{align}</script><h2 id="4-合页损失函数-Hinge-Loss"><a href="#4-合页损失函数-Hinge-Loss" class="headerlink" title="4. 合页损失函数(Hinge-Loss)"></a>4. 合页损失函数(Hinge-Loss)</h2><p>硬间隔支持向量机和软间隔支持向量机都叫做线性支持向量机，是一种线性模型。线性支持向量机还有另外一种解释，那就是最小化下述目标函数：</p>
+<script type="math/tex; mode=display">\begin{align}  \min_{w,b} \sum_{i=1}^M [1-y_i(w\cdot x_i+b)]_{+}+\lambda ||w||^2\tag{20} \end{align}</script><p><img src="/2019/04/14/support-vector-machine/hing_loss.jpg" width="45%" height="45%"></p>
+<p><strong>合页损失：</strong></p>
+<script type="math/tex; mode=display">\begin{align}  [1-y_i(w\cdot x_i+b)]_{+}  =  \begin{cases} 1-y_i(w\cdot x_i+b) , & y_i(w\cdot x_i+b)<1\\ 0, &y_i(w\cdot x_i+b)\geq1  \end{cases} \tag{21} \end{align}</script><p>当样本点$(x_i,y_i)$被正确分类且函数间隔$y_i(w\cdot x_i+b)$大于等于1时，损失是0；否则损失是$1-y_i(w\cdot x_i+b)$</p>
+<h2 id="5-非线性支持向量机"><a href="#5-非线性支持向量机" class="headerlink" title="5. 非线性支持向量机"></a>5. 非线性支持向量机</h2><p>由于上述讲述的都是线性支持向量机，并不能处理非线性的情况。原始的约束优化问题为</p>
+<script type="math/tex; mode=display">\begin{align}  \begin{cases}  \min_{\alpha}\dfrac {1}{2}\sum _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}x^{(i)}x^{\left( j\right) } -\sum _{i}\alpha _{i}\\ \mathbf{s.t} \mbox{   }  \alpha \geq0, \sum_i \alpha^{(i)} y^{(i)}=0 \\ 0\leq \alpha_i \leq c,i=1,2,\cdots,M \end{cases} \tag{19} \end{align}</script><p>如果定义一个低维特征空间到高维特征空间的映射$\phi$，利用这个映射函数，将所有特征映射到一个更高的维度，让数据线性可分。新的优化问题为</p>
+<script type="math/tex; mode=display">\begin{align}  \begin{cases}  \min_{\alpha}\dfrac {1}{2}\sum _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}(\phi(x^{(i)})\cdot\phi(x^{(j)})) -\sum _{i}\alpha _{i}\\ \mathbf{s.t} \mbox{   }  \alpha \geq0, \sum_i \alpha^{(i)} y^{(i)}=0 \\ 0\leq \alpha_i \leq c,i=1,2,\cdots,M \end{cases} \tag{22} \end{align}</script><p>而这种转换方法称为<strong>“核函数”</strong>，更具体的可以写为</p>
+<script type="math/tex; mode=display">\begin{align}  \begin{cases}  \min_{\alpha}\dfrac {1}{2}\sum _{i}\alpha _{i}\alpha _{j}y^{(i)}y^{(j)}K(x^{(i)},x^{(j)}) -\sum _{i}\alpha _{i}\\ \mathbf{s.t} \mbox{   }  \alpha \geq0, \sum_i \alpha^{(i)} y^{(i)}=0 \\ 0\leq \alpha_i \leq c,i=1,2,\cdots,M \end{cases} \tag{23} \end{align}</script><hr>
 <font color="blue">声明</font>
 
 <ul>
@@ -603,7 +631,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#支持向量机"><span class="toc-number">1.</span> <span class="toc-text">支持向量机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-间隔最大化"><span class="toc-number">1.1.</span> <span class="toc-text">1. 间隔最大化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-对偶形式"><span class="toc-number">1.2.</span> <span class="toc-text">2. 对偶形式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-带不等式约束例子"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 带不等式约束例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-间隔最大化的对偶问题"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 间隔最大化的对偶问题</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-感知机"><span class="toc-number">1.</span> <span class="toc-text">1.感知机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-定义"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-基本思想"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 基本思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-缺点"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-感知机学习算法"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 感知机学习算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-硬间隔支持向量机"><span class="toc-number">2.</span> <span class="toc-text">2. 硬间隔支持向量机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-问题定义"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 问题定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-对偶形式"><span class="toc-number">2.2.</span> <span class="toc-text">2.2. 对偶形式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-带不等式约束例子"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 带不等式约束例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-间隔最大化的对偶问题"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 间隔最大化的对偶问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-SMO-序列最小最优化算法"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 SMO(序列最小最优化算法)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-硬间隔支持向量机算法"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 硬间隔支持向量机算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-软间隔支持向量机"><span class="toc-number">3.</span> <span class="toc-text">3. 软间隔支持向量机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-合页损失函数-Hinge-Loss"><span class="toc-number">4.</span> <span class="toc-text">4. 合页损失函数(Hinge-Loss)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-非线性支持向量机"><span class="toc-number">5.</span> <span class="toc-text">5. 非线性支持向量机</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1144,9 +1172,22 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 40
+        Total : 41
         </div>
         <!-- search  -->
         
@@ -1163,6 +1204,11 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/30</span><a class="archive-post-title" href="/2019/07/30/meachine-learning-summary/">百面机器学习笔记</a>
+        </li>
     
     
         <li class="archive-post-item">
