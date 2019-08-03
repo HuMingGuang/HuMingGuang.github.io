@@ -427,14 +427,14 @@ height:50vh;
 </ul>
 </blockquote>
 <h2 id="1-推荐算法基础知识介绍"><a href="#1-推荐算法基础知识介绍" class="headerlink" title="1. 推荐算法基础知识介绍"></a>1. 推荐算法基础知识介绍</h2><h3 id="1-1-推荐算法脑图总结"><a href="#1-1-推荐算法脑图总结" class="headerlink" title="1.1 推荐算法脑图总结"></a>1.1 推荐算法脑图总结</h3><p><img src="/2019/03/30/recommend-system-4/Recommend system.png" alt="Recommend system"></p>
-<h2 id="2-基于关联规则的协同过滤算法"><a href="#2-基于关联规则的协同过滤算法" class="headerlink" title="2. 基于关联规则的协同过滤算法"></a>2. 基于关联规则的协同过滤算法</h2><h3 id="2-1-Aprior算法"><a href="#2-1-Aprior算法" class="headerlink" title="2.1 Aprior算法"></a>2.1 Aprior算法</h3><h4 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a><font color="blue">背景介绍</font></h4><p>​    Apriori算法是常⽤的⽤于挖掘出数据关联规则的算法，它⽤来<strong>找出数据值中频繁出现的数据集合</strong>，找出这些集合的模式有助于我们做⼀些决策。<strong>频繁集</strong>：出现次数多的数据集。</p>
+<h2 id="2-基于关联规则的协同过滤算法"><a href="#2-基于关联规则的协同过滤算法" class="headerlink" title="2. 基于关联规则的协同过滤算法"></a>2. 基于关联规则的协同过滤算法</h2><h3 id="2-1-Apriori算法"><a href="#2-1-Apriori算法" class="headerlink" title="2.1 Apriori算法"></a>2.1 Apriori算法</h3><h4 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a><font color="blue">背景介绍</font></h4><p>​    Apriori算法是常⽤的⽤于挖掘出数据关联规则的算法，它⽤来<strong>找出数据值中频繁出现的数据集合</strong>，找出这些集合的模式有助于我们做⼀些决策。<strong>频繁集</strong>：出现次数多的数据集。</p>
 <h4 id="频繁项集的评估规则"><a href="#频繁项集的评估规则" class="headerlink" title="频繁项集的评估规则"></a><font color="blue">频繁项集的评估规则</font></h4><ul>
 <li><p><strong>支持度：</strong>几个关联的数据在数据集中出现的次数占总数据集的比重；<strong>联合概率</strong>。</p>
-<script type="math/tex; mode=display">Support(X,Y)=P(X,Y)=\frac{num(X,Y)}{num(AllExamples)}​</script><p><strong>例：</strong>用户中购买啤酒和尿布的占总体的比例。</p>
+<script type="math/tex; mode=display">Support(X,Y)=P(X,Y)=\frac{num(X,Y)}{num(AllExamples)}</script><p><strong>例：</strong>用户中购买啤酒和尿布的占总体的比例。</p>
 <p><font color="red"><strong>注：</strong></font>支持度高的数据不一定构成频繁项集，但是支持度太低的数据肯定不构成频繁项集。</p>
 </li>
 <li><p><strong>置信度：</strong>一个数据出现后，另一个数据出现的概率；<strong>条件概率</strong>。</p>
-<script type="math/tex; mode=display">Confidence(x \Leftarrow y)=P(X|Y)=\frac{P(X,Y)}{P(Y)}​</script><p><strong>例：</strong>在购买啤酒的用户中，购买了尿布的比例。</p>
+<script type="math/tex; mode=display">Confidence(x \Leftarrow y)=P(X|Y)=\frac{P(X,Y)}{P(Y)}</script><p><strong>例：</strong>在购买啤酒的用户中，购买了尿布的比例。</p>
 </li>
 <li><p><strong>提升度：</strong>含有Y的条件下，同时含有X的概率，与X总体发生的概率之比。</p>
 <script type="math/tex; mode=display">Lift(X \Leftarrow Y)=\frac{P(X|Y)}{P(X)}=\frac{Confidence(x \Leftarrow y)}{P(X)}</script></li>
@@ -657,7 +657,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#推荐算法-关联规则的协同过滤"><span class="toc-number">1.</span> <span class="toc-text">推荐算法-关联规则的协同过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-推荐算法基础知识介绍"><span class="toc-number">1.1.</span> <span class="toc-text">1. 推荐算法基础知识介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-推荐算法脑图总结"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 推荐算法脑图总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-基于关联规则的协同过滤算法"><span class="toc-number">1.2.</span> <span class="toc-text">2. 基于关联规则的协同过滤算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Aprior算法"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 Aprior算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#背景介绍"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">背景介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#频繁项集的评估规则"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">频繁项集的评估规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#算法思想"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">算法思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#算法流程"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">算法流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Apriori-实现代码"><span class="toc-number">1.2.1.5.</span> <span class="toc-text">Apriori 实现代码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-FP-Growth算法（别名：FP-Tree算法）"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 FP Growth算法（别名：FP Tree算法）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本介绍"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree-数据结构"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">FP Tree 数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#项头表的建立"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">项头表的建立</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree的建立"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">FP Tree的建立</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree的挖掘"><span class="toc-number">1.2.2.5.</span> <span class="toc-text">FP Tree的挖掘</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree的算法流程"><span class="toc-number">1.2.2.6.</span> <span class="toc-text">FP Tree的算法流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree实现代码"><span class="toc-number">1.2.2.7.</span> <span class="toc-text">FP Tree实现代码</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#推荐算法-关联规则的协同过滤"><span class="toc-number">1.</span> <span class="toc-text">推荐算法-关联规则的协同过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-推荐算法基础知识介绍"><span class="toc-number">1.1.</span> <span class="toc-text">1. 推荐算法基础知识介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-推荐算法脑图总结"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 推荐算法脑图总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-基于关联规则的协同过滤算法"><span class="toc-number">1.2.</span> <span class="toc-text">2. 基于关联规则的协同过滤算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Apriori算法"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 Apriori算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#背景介绍"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">背景介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#频繁项集的评估规则"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">频繁项集的评估规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#算法思想"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">算法思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#算法流程"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">算法流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Apriori-实现代码"><span class="toc-number">1.2.1.5.</span> <span class="toc-text">Apriori 实现代码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-FP-Growth算法（别名：FP-Tree算法）"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 FP Growth算法（别名：FP Tree算法）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本介绍"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree-数据结构"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">FP Tree 数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#项头表的建立"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">项头表的建立</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree的建立"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">FP Tree的建立</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree的挖掘"><span class="toc-number">1.2.2.5.</span> <span class="toc-text">FP Tree的挖掘</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree的算法流程"><span class="toc-number">1.2.2.6.</span> <span class="toc-text">FP Tree的算法流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FP-Tree实现代码"><span class="toc-number">1.2.2.7.</span> <span class="toc-text">FP Tree实现代码</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1562,7 +1562,22 @@ jsonContent:
     
         <script src="/scripts/share.js" async></script>    
      
-    </body>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
 </html>
 
 
