@@ -419,7 +419,7 @@ height:50vh;
         <h2 id="1-逻辑斯谛回归-Logistic"><a href="#1-逻辑斯谛回归-Logistic" class="headerlink" title="1. 逻辑斯谛回归(Logistic)"></a><font color="bule">1. 逻辑斯谛回归(Logistic)</font></h2><p>简单来说，逻辑斯谛回归就是将线性回归的结果输入一个Sigmoid函数，将回归值映射到0～1，表示输出为类别”1”的概率。</p>
 <p><strong>定义：</strong>sigmoid函数<script type="math/tex">f(z)=\dfrac{1}{1+e^{-z}}</script></p>
 <p><img src="/2019/04/12/linear-model-1/sigmoid.png" width="60%" height="60%"></p>
-<h3 id><a href="#" class="headerlink" title=" "></a> </h3><h3 id="1-1-二项逻辑斯谛模型"><a href="#1-1-二项逻辑斯谛模型" class="headerlink" title="1.1 二项逻辑斯谛模型"></a><font color="blue">1.1 二项逻辑斯谛模型</font></h3><script type="math/tex; mode=display">\begin{align}  P(Y=1|x)=\frac{\exp(w\cdot x+b)}{1+\exp(w \cdot x+b)} \tag{1}\\ \end{align}</script><script type="math/tex; mode=display">\begin{align}  P(Y=0|x)=\frac{1}{1+\exp(w \cdot x)} \tag{2} \end{align}</script><p>比较上述两个条件概率值的大小，将实例<script type="math/tex">x</script> 分到概率值较大的那一类。</p>
+<h3 id><a href="#" class="headerlink" title=" "></a> </h3><h3 id="1-1-二项逻辑斯谛模型"><a href="#1-1-二项逻辑斯谛模型" class="headerlink" title="1.1 二项逻辑斯谛模型"></a><font color="blue">1.1 二项逻辑斯谛模型</font></h3><script type="math/tex; mode=display">\begin{align}  P(Y=1|x)=\frac{\exp(w\cdot x+b)}{1+\exp(w \cdot x+b)} \tag{1}\\ \end{align}</script><script type="math/tex; mode=display">\begin{align}  P(Y=0|x)=\frac{1}{1+\exp(w \cdot x+b)} \tag{2} \end{align}</script><p>比较上述两个条件概率值的大小，将实例<script type="math/tex">x</script> 分到概率值较大的那一类。</p>
 <p>给定数据集，定义似然函数：</p>
 <script type="math/tex; mode=display">\begin{align} L(W,b) = \prod_{i=1}^{N} [P(y_i=1|x_i)]^{y_i}[1-P(y_i=)]^{1-y_i}\tag{3}\\ \end{align}</script><p>对于上述公式(3)取对数得</p>
 <script type="math/tex; mode=display">\begin{align} \ln L(w,b) &=\sum_{i=1}^{N}\left\{y_i\cdot \ln[P(y_i=1|x_i)]+(1-y_i)\ln[1-P(y_i|x_i)] \right\}\\&= \sum_{i=1}^N\left\{y_i\cdot \ln\dfrac{e^{w\cdot x_i+b}}{1+e^{w\cdot x_i+b}}+(1-y_i)\ln\dfrac{1}{1+e^{w\cdot x_i+b}}\right\}\\&=\sum_{i=1}^N \left\{ y_i\cdot (w\cdot x_i+b)-y_i\cdot\ln(1+e^{w\cdot x_i+b})+(y_i-1)\cdot \ln(1+e^{w\cdot x_i+b})\right\}\\&=\sum_{i=1}^{N} \left\{ y_i\cdot(w\cdot x_i+b)-\ln(1+e^{w\cdot x_i+b})\right\}  \tag{4}\\ \end{align}</script><p>所以要使得属于真实标记的概率越大，即要最大化对数似然函数，显然上述公式属于优化问题，可以使用梯度下降法对$w$和$b$求导或者使用拟牛顿法求解。</p>
@@ -448,7 +448,7 @@ height:50vh;
 </ul>
 <p><strong>缺点</strong></p>
 <ul>
-<li>Logistic回归模型本质上是一种先线性模型，只能做线性分类，不适合处理非线性的情况</li>
+<li>Logistic回归模型本质上是一种线性模型，只能做线性分类，不适合处理非线性的情况</li>
 <li>Logistic回归模型对正负样本的分布比较敏感，所有要注意样本的平衡性</li>
 </ul>
 <h3 id="1-7-逻辑斯谛回归与线性回归的异同"><a href="#1-7-逻辑斯谛回归与线性回归的异同" class="headerlink" title="1.7 逻辑斯谛回归与线性回归的异同"></a><font color="blue">1.7 逻辑斯谛回归与线性回归的异同</font></h3><div class="table-container">
@@ -484,23 +484,24 @@ height:50vh;
 </table>
 </div>
 <h2 id="2-岭回归及Lasso回归"><a href="#2-岭回归及Lasso回归" class="headerlink" title="2. 岭回归及Lasso回归"></a><font color="bule">2. 岭回归及Lasso回归</font></h2><p><strong>岭回归与Lasso回归的出现</strong>是为了解决<strong>线性回归出现的过拟合以及在通过正规方程方法求解<script type="math/tex">X^{T}X</script>的不可逆</strong>这两类问题，这两种回归通过在<strong>损失函数中引入正则化项</strong>来解决这两个问题。Lasso是基于惩罚方法对样本数据进行变量选择，通过对原本的系数进行压缩，将原本很小的系数直接压缩至0，从而将这部分系数所对应的变量视为非显著性变量，将不显著的变量直接舍弃。</p>
-<h3 id="2-1-三种回归损失函数对比"><a href="#2-1-三种回归损失函数对比" class="headerlink" title="2.1 三种回归损失函数对比"></a><font color="blue">2.1 三种回归损失函数对比</font></h3><p><strong>线性回归：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}</script></p>
-<p><strong>岭回归：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2} \lambda \sum_{j=1}^{m} \theta_j^{2}</script>，<strong>加入L-2norm的惩罚项</strong>或者说<strong>正则化项</strong></p>
-<p><strong>Lasso回归：</strong><script type="math/tex">J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\lambda \sum_{j=1}^{m} |\theta_j|</script>，<strong>加入L-1norm的惩罚项</strong></p>
+<h3 id="2-1-三种回归损失函数对比"><a href="#2-1-三种回归损失函数对比" class="headerlink" title="2.1 三种回归损失函数对比"></a><font color="blue">2.1 三种回归损失函数对比</font></h3><p><strong>线性回归：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}</script></p>
+<p><strong>岭回归：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2} \lambda \sum_{j=1}^{m} \theta_j^{2}</script>，<strong>加入L-2norm的惩罚项</strong>或者说<strong>正则化项</strong></p>
+<p><strong>Lasso回归：</strong><script type="math/tex">J(\theta)=\dfrac{1}{2}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\lambda \sum_{j=1}^{m} |\theta_j|</script>，<strong>加入L-1norm的惩罚项</strong></p>
 <font color="red">注：</font>
 
 <p>a. <script type="math/tex">h_{\theta}(x^{(i)})=\theta x^{(i)}</script></p>
 <p>b. <script type="math/tex">L_1</script>范数 和<script type="math/tex">L_2</script>范数都能够有效的降低过拟合的风险，但是<script type="math/tex">L_1</script>范数还更易获得稀疏解，即它求得的<script type="math/tex">\theta</script>会有更少的非零分量。</p>
-<h3 id="2-2-线性回归求解"><a href="#2-2-线性回归求解" class="headerlink" title="2.2 线性回归求解"></a><font color="blue">2.2 线性回归求解</font></h3><font color="red">梯度下降法</font>
+<p><strong>ElasitcNet回归</strong>：将L1和L2正则化进行融合</p>
+<script type="math/tex; mode=display">J(\theta)=\dfrac{1}{2}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2} +\alpha \rho||w||_{1}+\dfrac{\alpha(1-\rho)}{2}||w||_2^{2}</script><h3 id="2-2-线性回归求解"><a href="#2-2-线性回归求解" class="headerlink" title="2.2 线性回归求解"></a><font color="blue">2.2 线性回归求解</font></h3><font color="red">梯度下降法</font>
 
 <ul>
-<li><p><strong>损失函数：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}</script></p>
+<li><p><strong>损失函数：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}</script></p>
 </li>
-<li><p><strong>目标：</strong> <script type="math/tex">\min_{\theta} J(\theta)=min_{\theta} \dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}</script></p>
+<li><p><strong>目标：</strong> <script type="math/tex">\min_{\theta} J(\theta)=\min_{\theta} \dfrac{1}{2}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}</script></p>
 </li>
-<li><p><strong>求导过程：</strong><script type="math/tex">\dfrac {\partial J\left( \theta \right) }{\partial \theta_j }\\\ =\dfrac{\partial \left(\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}\right)}{\partial \theta_j}\\\ =\dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j</script></p>
+<li><p><strong>求导过程：</strong><script type="math/tex">\dfrac {\partial J\left( \theta \right) }{\partial \theta_j }\\\ =\dfrac{\partial \left(\dfrac{1}{2}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}\right)}{\partial \theta_j}\\\ =\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j</script></p>
 </li>
-<li><p><strong>更新过程：</strong><script type="math/tex">\theta_j \leftarrow \theta_j -\alpha\dfrac{ \partial J}{\partial \theta_j}\\\ = \theta_j -\alpha \left( \dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j \right)</script> </p>
+<li><p><strong>更新过程：</strong><script type="math/tex">\theta_j \leftarrow \theta_j -\alpha\dfrac{ \partial J}{\partial \theta_j}\\\ = \theta_j -\alpha \left( \sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j \right)</script> </p>
 <p>,其中<script type="math/tex">\alpha</script>为学习速率</p>
 </li>
 </ul>
@@ -511,13 +512,13 @@ height:50vh;
 <h3 id="2-3-岭回归求解"><a href="#2-3-岭回归求解" class="headerlink" title="2.3 岭回归求解"></a><font color="blue">2.3 岭回归求解</font></h3><font color="red">梯度下降</font>
 
 <ul>
-<li><p><strong>损失函数：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2} \lambda \sum_{j=1}^{m} \theta_j^{2}</script></p>
+<li><p><strong>损失函数：</strong> <script type="math/tex">J(\theta)=\dfrac{1}{2}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2} \lambda \sum_{j=1}^{m} \theta_j^{2}</script></p>
 </li>
-<li><p><strong>目标：</strong> <script type="math/tex">\min_{\theta} J(\theta)= min_{\theta} \dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2}  \lambda \sum_{j=1}^{m} \theta_j^{2}</script></p>
+<li><p><strong>目标：</strong> <script type="math/tex">\min_{\theta} J(\theta)= \min_{\theta} \dfrac{1}{2}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2}  \lambda \sum_{j=1}^{m} \theta_j^{2}</script></p>
 </li>
-<li><p><strong>求导过程：</strong><script type="math/tex">\dfrac {\partial J\left( \theta \right) }{\partial \theta_j }\\\ =\dfrac{\partial \left(\dfrac{1}{2N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2} \lambda \sum_{j=1}^{m} \theta_j^{2}\right)}{\partial \theta_j}\\\ =\dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)}_)-y^{(i)}\right) \cdot x^{(i)}_j+\dfrac{1}{N} \lambda \theta_j</script></p>
+<li><p><strong>求导过程：</strong><script type="math/tex">\dfrac {\partial J\left( \theta \right) }{\partial \theta_j }\\\ =\dfrac{\partial \left(\dfrac{1}{2}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right)^{2}+\dfrac{1}{2} \lambda \sum_{j=1}^{m} \theta_j^{2}\right)}{\partial \theta_j}\\\ =\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)}_)-y^{(i)}\right) \cdot x^{(i)}_j+ \lambda \theta_j</script></p>
 </li>
-<li><p><strong>更新过程：</strong><script type="math/tex">\theta_j \leftarrow \theta_j -\alpha\dfrac{ \partial J}{\partial \theta_j}\\\ =\theta_j -\alpha \left(\dfrac{1}{N}\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j+\dfrac{1}{N} \lambda \theta_j \right) \\\ = \left(1-\dfrac{\alpha \lambda}{N}\right) \theta_j -\alpha \left(\dfrac{1}{N} \sum_{i=1}^{N}  \left(h_{\theta}(x^{(i)})-y^{(i)}\right) x_{j}^{(i)}\right)</script> </p>
+<li><p><strong>更新过程：</strong><script type="math/tex">\theta_j \leftarrow \theta_j -\alpha\dfrac{ \partial J}{\partial \theta_j}\\\ =\theta_j -\alpha \left(\sum_{i=1}^{N} \left( h_{\theta}(x^{(i)})-y^{(i)}\right) \cdot x^{(i)}_j+ \lambda \theta_j \right) \\\ = \left(1-\alpha \lambda\right) \theta_j -\alpha \left( \sum_{i=1}^{N}  \left(h_{\theta}(x^{(i)})-y^{(i)}\right) x_{j}^{(i)}\right)</script> </p>
 </li>
 </ul>
 <font color="red">正规方程法</font>
@@ -687,6 +688,10 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
     
     
     

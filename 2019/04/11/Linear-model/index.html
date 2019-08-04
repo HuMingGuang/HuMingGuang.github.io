@@ -431,7 +431,7 @@ height:50vh;
 <script type="math/tex; mode=display">\begin{align}  & p(\epsilon^{(i)})=\dfrac{1}{\sqrt{2\pi}\sigma}\exp\left(-\dfrac{(\epsilon^{(i)})^2}{2\sigma^2}\right) \\ &p(y^{(i)}|x^{(i)};\theta)=\dfrac{1}{\sqrt{2\pi}\sigma}\exp\left(-\dfrac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2}\right) \tag{4} \end{align}</script><p>可以理解为使预测值<script type="math/tex">y^{(i)}</script>的越大就越接近真实值；</p>
 <p>(3) 因为变量独立同分布，所以似然函数为</p>
 <script type="math/tex; mode=display">\begin{align}  L(\theta)&=\prod_{i=1}^{N}p(y^{(i)}|x^{(i)};\theta)\\ &=\prod_{i=1}^{N}\dfrac{1}{\sqrt{2\pi}\sigma}\exp\left(-\dfrac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2}\right) \tag{5} \end{align}</script><p>(4) 求解似然函数，取对数</p>
-<script type="math/tex; mode=display">\begin{align}  l(\theta)&=\log L(\theta)\\&=\log \prod_{i=1}^{N}\dfrac{1}{\sqrt{2\pi}\sigma}\exp\left(-\dfrac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2}\right) \\& = N\log \dfrac{1}{\sqrt{2\pi}\sigma}-\dfrac{1}{\sigma^2}\dfrac{1}{2}\sum_{i=1}^N \left(-\dfrac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2}\right)\\ \tag{6} \end{align}</script><p>要使<script type="math/tex">l(\theta)</script>最大，即要使平方误差<script type="math/tex">J(\theta)=\dfrac{1}{2}\sum_{i=1}^N {(y^{(i)}-\theta^{T}x^{(i)})}^{2}</script>最小。<strong>所以，极大似然函数的过程即在最小化平方误差。</strong></p>
+<script type="math/tex; mode=display">\begin{align}  l(\theta)&=\log L(\theta)\\&=\log \prod_{i=1}^{N}\dfrac{1}{\sqrt{2\pi}\sigma}\exp\left(-\dfrac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2}\right) \\& = N\log \dfrac{1}{\sqrt{2\pi}\sigma}-\dfrac{1}{\sigma^2}\dfrac{1}{2}\sum_{i=1}^N (y^{(i)}-\theta^Tx^{(i)})^2\\ \tag{6} \end{align}</script><p>要使<script type="math/tex">l(\theta)</script>最大，即要使平方误差<script type="math/tex">J(\theta)=\dfrac{1}{2}\sum_{i=1}^N {(y^{(i)}-\theta^{T}x^{(i)})}^{2}</script>最小。<strong>所以，极大似然函数的过程即在最小化平方误差。</strong></p>
 <h3 id="3-2-最小二乘与极大似然的区别"><a href="#3-2-最小二乘与极大似然的区别" class="headerlink" title="3.2 最小二乘与极大似然的区别"></a>3.2 最小二乘与极大似然的区别</h3><ul>
 <li><p><strong>最小二乘法：</strong>即观测值与实际数据误差平方和<script type="math/tex">J(\theta)=\dfrac{1}{2}\sum_{i=1}^{N} {(y^{(i)}-\theta^{T}x^{(i)})}^{2}</script>最小，其没有假设，几何意义上就是距离最小；</p>
 </li>
@@ -604,6 +604,10 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
     
     
     
