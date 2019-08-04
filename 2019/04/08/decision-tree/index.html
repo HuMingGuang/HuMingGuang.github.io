@@ -503,9 +503,9 @@ height:50vh;
 </div>
 <h4 id="1-3-1-计算经验熵"><a href="#1-3-1-计算经验熵" class="headerlink" title="1.3.1 计算经验熵"></a>1.3.1 计算经验熵</h4><p>样本标签包含“是”和“否”两类，其中$P(是)=\dfrac{3}{8}$,$P(否)=\dfrac{5}{8}$</p>
 <script type="math/tex; mode=display">\begin{align}  H(D_Y) &= \sum_{i=1}^{2}\dfrac{|D_i|}{|D|}\log \dfrac{|D_i|}{|D|} \\ &=\dfrac{3}{8}\log \dfrac{3}{8}+\dfrac{5}{8}\log \dfrac{5}{8}\\ &=0.2873 \end{align}</script><h4 id="1-3-2-计算条件经验熵"><a href="#1-3-2-计算条件经验熵" class="headerlink" title="1.3.2 计算条件经验熵"></a>1.3.2 计算条件经验熵</h4><ul>
-<li><p><strong>对“拥有房产”特征计算条件经验熵</strong>: 存在$\left{是，否\right}$两种特征，这里的$D$的取值分别为有房产($D<em>1:3$)和无房产($D_2:5$),$D</em>{11}$表示在有房产($D_{1}$)的特征下没有逾期的个数.</p>
+<li><p><strong>对“拥有房产”特征计算条件经验熵</strong>: 存在<script type="math/tex">\left\{是,否 \right\}</script>两种特征，这里的$D$的取值分别为有房产($D<em>1:3$)和无房产($D_2:5$),$D</em>{11}$表示在有房产($D_{1}$)的特征下没有逾期的个数.</p>
 <script type="math/tex; mode=display">\begin{align}  H(D|A_{1})&=\sum_{i=1}^{2}  \dfrac{|D_i|}{|D|} -\sum_{k=1}^{2}\left( \dfrac{|D_{ik}|}{|D_{i}|}\log\dfrac{|D_{ik}|}{|D_{i}|}\right)\\ &=\dfrac{3}{8}\times 0+\dfrac{5}{8}\times \left( -\dfrac{2}{5}\log \dfrac{2}{5} -\dfrac{3}{5}\log \dfrac{3}{5} \right) \\&= 0.1827\end{align}</script></li>
-<li><p><strong>对“婚姻状况”特征计算条件经验熵</strong>: 存在$\left{未婚，已婚，离婚\right}$三种 v特征，所以D的是取值分别为未婚$D<em>{1}:3$,已婚$D</em>{2}:3$，离婚$D<em>{3}:2$.$D</em>{11}$表示在未婚($D_{1}$)的特征下没有逾期的个数.</p>
+<li><p><strong>对“婚姻状况”特征计算条件经验熵</strong>: 存在<script type="math/tex">\left\{ 未婚,已婚,离婚 \right\}</script>三种 v特征，所以D的是取值分别为未婚$D<em>{1}:3$,已婚$D</em>{2}:3$，离婚$D<em>{3}:2$.$D</em>{11}$表示在未婚($D_{1}$)的特征下没有逾期的个数.</p>
 <script type="math/tex; mode=display">\begin{align}  H(D|A_{2})&=\sum_{i=1}^{3}  \dfrac{|D_i|}{|D|} -\sum_{k=1}^{2}\left( \dfrac{|D_{ik}|}{|D_{i}|}\log\dfrac{|D_{ik}|}{|D_{i}|}\right)\\ &=\dfrac{3}{8}\times 0 +\dfrac{3}{8}\times \left(- \dfrac{2}{3}\log  \dfrac{2}{3}- \dfrac{1}{3}\log \dfrac{2}{3}\right)+\dfrac{2}{8}\times 0 \\&=0.1844 \end{align}</script></li>
 <li><p><strong>对于“年收入”特征是数值型，无法直接计算经验熵，一般需要离散化处理</strong></p>
 </li>
