@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.9k</span>阅读时长: <span class="post-count reading-time">12 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">3.4k</span>阅读时长: <span class="post-count reading-time">13 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -504,9 +504,9 @@ height:50vh;
 <h4 id="1-3-1-计算经验熵"><a href="#1-3-1-计算经验熵" class="headerlink" title="1.3.1 计算经验熵"></a>1.3.1 计算经验熵</h4><p>样本标签包含“是”和“否”两类，其中$P(是)=\dfrac{3}{8}$,$P(否)=\dfrac{5}{8}$</p>
 <script type="math/tex; mode=display">\begin{align}  H(D_Y) &= \sum_{i=1}^{2}\dfrac{|D_i|}{|D|}\log \dfrac{|D_i|}{|D|} \\ &=\dfrac{3}{8}\log \dfrac{3}{8}+\dfrac{5}{8}\log \dfrac{5}{8}\\ &=0.2873 \end{align}</script><h4 id="1-3-2-计算条件经验熵"><a href="#1-3-2-计算条件经验熵" class="headerlink" title="1.3.2 计算条件经验熵"></a>1.3.2 计算条件经验熵</h4><ul>
 <li><p><strong>对“拥有房产”特征计算条件经验熵</strong>: 存在<script type="math/tex">\left\{是,否 \right\}</script>两种特征，这里的$D$的取值分别为有房产($D<em>1:3$)和无房产($D_2:5$),$D</em>{11}$表示在有房产($D_{1}$)的特征下没有逾期的个数.</p>
-<script type="math/tex; mode=display">\begin{align}  H(D|A_{1})&=\sum_{i=1}^{2}  \dfrac{|D_i|}{|D|} -\sum_{k=1}^{2}\left( \dfrac{|D_{ik}|}{|D_{i}|}\log\dfrac{|D_{ik}|}{|D_{i}|}\right)\\ &=\dfrac{3}{8}\times 0+\dfrac{5}{8}\times \left( -\dfrac{2}{5}\log \dfrac{2}{5} -\dfrac{3}{5}\log \dfrac{3}{5} \right) \\&= 0.1827\end{align}</script></li>
-<li><p><strong>对“婚姻状况”特征计算条件经验熵</strong>: 存在<script type="math/tex">\left\{ 未婚,已婚,离婚 \right\}</script>三种 v特征，所以D的是取值分别为未婚$D<em>{1}:3$,已婚$D</em>{2}:3$，离婚$D<em>{3}:2$.$D</em>{11}$表示在未婚($D_{1}$)的特征下没有逾期的个数.</p>
-<script type="math/tex; mode=display">\begin{align}  H(D|A_{2})&=\sum_{i=1}^{3}  \dfrac{|D_i|}{|D|} -\sum_{k=1}^{2}\left( \dfrac{|D_{ik}|}{|D_{i}|}\log\dfrac{|D_{ik}|}{|D_{i}|}\right)\\ &=\dfrac{3}{8}\times 0 +\dfrac{3}{8}\times \left(- \dfrac{2}{3}\log  \dfrac{2}{3}- \dfrac{1}{3}\log \dfrac{2}{3}\right)+\dfrac{2}{8}\times 0 \\&=0.1844 \end{align}</script></li>
+<script type="math/tex; mode=display">\begin{align}  H(D|A_{1})&=\sum_{i=1}^{2}  \dfrac{|D_i|}{|D|}\left( -\sum_{k=1}^{2}\left( \dfrac{|D_{ik}|}{|D_{i}|}\log\dfrac{|D_{ik}|}{|D_{i}|}\right)\right)\\ &=\dfrac{3}{8}\times 0+\dfrac{5}{8}\times \left( -\dfrac{2}{5}\log \dfrac{2}{5} -\dfrac{3}{5}\log \dfrac{3}{5} \right) \\&= 0.1827\end{align}</script></li>
+<li><p><strong>对“婚姻状况”特征计算条件经验熵</strong>: 存在<script type="math/tex">\left\{ 未婚,已婚,离婚 \right\}</script>三种特征，所以D的是取值分别为未婚<script type="math/tex">D_{1}:3</script>,已婚<script type="math/tex">D_{2}:3</script>，离婚<script type="math/tex">D_{3}:2</script>.<script type="math/tex">D_{11}</script>表示在未婚(<script type="math/tex">D_{1}</script>)的特征下没有逾期的个数.</p>
+<script type="math/tex; mode=display">\begin{align}  H(D|A_{2})&=\sum_{i=1}^{3}  \dfrac{|D_i|}{|D|} \left(-\sum_{k=1}^{2}\left( \dfrac{|D_{ik}|}{|D_{i}|}\log\dfrac{|D_{ik}|}{|D_{i}|}\right)\right)\\ &=\dfrac{3}{8}\times 0 +\dfrac{3}{8}\times \left(- \dfrac{2}{3}\log  \dfrac{2}{3}- \dfrac{1}{3}\log \dfrac{2}{3}\right)+\dfrac{2}{8}\times 0 \\&=0.1844 \end{align}</script></li>
 <li><p><strong>对于“年收入”特征是数值型，无法直接计算经验熵，一般需要离散化处理</strong></p>
 </li>
 </ul>
@@ -529,23 +529,41 @@ height:50vh;
 <li>再对子结点递归地调用以上方法，构建决策树；</li>
 <li>直到所有特征的信息增益均很小或没有特征可以选择为止，最后得到一个决策树。</li>
 </ul>
-<h4 id="2-2-C4-5-最大信息增益比"><a href="#2-2-C4-5-最大信息增益比" class="headerlink" title="2.2 C4.5-最大信息增益比"></a><font color="blue">2.2 C4.5-最大信息增益比</font></h4><p>C4.5算法与ID3算法相似，C4.5算法对ID3算法进行了改进。C4.5在生成的过程中，用<strong>信息增益比来选择特征</strong>。</p>
-<script type="math/tex; mode=display">\begin{align} g_R(D,A)&=\frac{g(D,A)}{H_A(D)}\\ &=\frac{-\sum_{k=1}^{K}\frac{|C_k|}{|D|} \log_2 \frac{|C_k|}{|D|} +\sum_{i=1}^{n}\frac{|D_i|}{|D|} \left( -\sum_{k=1}^{K}\frac{|D_{ik}|}{|D_i|}\log_2 \frac{|D_{ik}|}{|D_i|}\right)}{-\sum_{i=1}^{n}\frac{|D_i|}{|D|}\log_2 \frac{|D_i|}{|D|}} \tag{7}\\\ \end{align}</script><h3 id="2-3-CART-最小基尼指数-Gini"><a href="#2-3-CART-最小基尼指数-Gini" class="headerlink" title="2.3 CART-最小基尼指数(Gini)"></a><font color="blue">2.3 CART-最小基尼指数(Gini)</font></h3><h4 id="2-3-1-基尼指数"><a href="#2-3-1-基尼指数" class="headerlink" title="2.3.1 基尼指数"></a>2.3.1 基尼指数</h4><p><strong>Gini描述的是数据纯度，与信息熵含义类似</strong></p>
-<script type="math/tex; mode=display">\begin{align}  Gini(D)=\sum_{k=1}^{K} \frac{|C_k|}{|D|}\left(1-\frac{|C_k|}{|D|}\right)=1-\sum_{k=1}^{K}\left(\frac{|C_k|}{|D|} \right)^{2} \tag{8}\\\ \end{align}</script><p>其中<script type="math/tex">C_k</script>表示<script type="math/tex">D</script>中属于第<script type="math/tex">k</script>类的样本子集，<script type="math/tex">K</script>是类的个数。</p>
-<h4 id="2-3-2-在特征-A-下的Gini指数"><a href="#2-3-2-在特征-A-下的Gini指数" class="headerlink" title="2.3.2 在特征$A$ 下的Gini指数"></a>2.3.2 在特征$A$ 下的Gini指数</h4><script type="math/tex; mode=display">\begin{align}  Gini(D|A)=\sum_{i=1}^{2}\frac{|D_i|}{|D|} Gini(D_i)=\sum_{i=1}^{2}\frac{|D_i|}{|D|}  \left(1-\sum_{k=1}^{K}\left(\frac{|C_k|}{|D|} \right)^{2}\right)  \tag{9}\\\ \end{align}</script><font color="red"> CART在每一次迭代中选择基尼指数最小的特征及其对应的切分点进行分类。但与ID3、C4.5不同的是，CART是一颗二叉树，采用二元切割，每一步将数据按特征A的取值切成两份，分别进入左右子树。</font>
+<h4 id="2-2-C4-5-最大信息增益比"><a href="#2-2-C4-5-最大信息增益比" class="headerlink" title="2.2 C4.5-最大信息增益比"></a><font color="blue">2.2 C4.5-最大信息增益比</font></h4><p><strong>ID3决策树存在三个缺点</strong></p>
+<ul>
+<li>使用信息增益来选择特征，偏向于优先选取取值较多的特征</li>
+<li>不能处理连续值特征</li>
+<li>容易过拟合</li>
+</ul>
+<p>针对上述三个问题，<strong>C4.5决策树</strong>给出了解决方法</p>
+<font color="red">**问题一：ID3决策树容易偏向于优先选取取值较多的特征**</font>
 
-<p>CART在构建二叉决策树的过程中，<strong>对回归树用平方误差最小化准则</strong>，<strong>对分类树用基尼指数最小化准则</strong>，进行特征选择，生成二叉树。</p>
-<h4 id="2-3-3-分类树算法"><a href="#2-3-3-分类树算法" class="headerlink" title="2.3.3 分类树算法"></a>2.3.3 分类树算法</h4><p><strong>输入：</strong>训练数据集<script type="math/tex">D={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}</script>，停止条件</p>
+<p><strong>解决方法：</strong>用信息增益比代替信息增益</p>
+<font color="red">**问题二：ID3决策树不能解决连续值特征**</font>
+
+<p><strong>解决方法：</strong>将连续的数值特征进行从小到大排序，得到属性值集合<script type="math/tex">\left\{a_1,a_2,\cdots,a_n \right\}</script>,将区间<script type="math/tex">[a_i,a_{i+1})</script>的中位数<script type="math/tex">\dfrac{a_i+a_{i+1}}{2}</script>作为候选划分点，于是得到包含<script type="math/tex">n-1</script>个元素的划分点集合<script type="math/tex">T_a = \left\{\dfrac{a_i+a_{i+1}}{2}|1\leq i\leq n-1\right\}</script>.基于每个划分点，我们可以将样本分为两类，从而可以得到基于划分点的信息增益值，选取信息增益值最大的划分点，对样本进行划分。</p>
+<font color="red">**问题三：ID3决策树容易过拟合**</font>
+
+<p><strong>解决方法：</strong>决策树过拟合问题主要是由于树的分叉过细造成的，C4.5引入了正则化系数进行初步的剪枝来缓解过拟合问题。</p>
+<h3 id="2-3-CART-最小基尼指数-Gini"><a href="#2-3-CART-最小基尼指数-Gini" class="headerlink" title="2.3 CART-最小基尼指数(Gini)"></a><font color="blue">2.3 CART-最小基尼指数(Gini)</font></h3><h4 id="2-3-1-ID3树和C4-5树的改进——CART树"><a href="#2-3-1-ID3树和C4-5树的改进——CART树" class="headerlink" title="2.3.1 ID3树和C4.5树的改进——CART树"></a>2.3.1 ID3树和C4.5树的改进——CART树</h4><p>C4.5决策树使用熵模型，存在大量的对数计算，计算过程较为复杂；其次ID3决策树和C4.5决策树采用多叉树形式，一旦使用其特征划分，之后不能再利用，特征信息的利用率低；C4.5决策树对连续数值的处理方式是按区间将其离散化，这样会损失该特征的一部分内部信息。</p>
+<font color="red">**问题一：ID3决策树和C4.5决策树特征选择过程对数计算过于复杂**</font>
+
+<p>CART树在分类任务时，使用基尼指数作为特征选择的标准；CART树在回归任务时，采用平方误差最小化进行特征选择，这两种方式都减少了大量的对数运算。</p>
+<font color="red">**问题二：ID3决策树和C4.5决策树对特征划分过于迅速**</font>
+
+<p>ID3决策树和C4.5决策树采用多叉树进行特征划分，CART分类树和回归树采用二叉树对每个特征进行划分。值的注意的是ID3决策树和C4.5决策树每次只需计算该特征的加入带来的信息增益比；但是CART树采用二叉树划分，实际在每次特征选择时计算了某个特征下某个划分点的基尼系数或平方误差。即前者每次进行特征选择的最小单位是某个特征；而后者最小单位是某个特征下的某个切分点。这样CART树可以对同一个特征进行多次利用。</p>
+<font color="red">**问题三：ID3决策树和C4.5决策树不能处理回归问题**</font>
+
+<p>使用均方误差的方式，代替信息增益或者信息增益比；同时在预测回归时，采用叶子节点中所有样本点标签值的均值。</p>
+<h4 id="2-3-2-基尼指数"><a href="#2-3-2-基尼指数" class="headerlink" title="2.3.2 基尼指数"></a>2.3.2 基尼指数</h4><p><strong>Gini描述的是数据纯度，与信息熵含义类似</strong></p>
+<script type="math/tex; mode=display">\begin{align}  Gini(D)=\sum_{k=1}^{K} \frac{|C_k|}{|D|}\left(1-\frac{|C_k|}{|D|}\right)=1-\sum_{k=1}^{K}\left(\frac{|C_k|}{|D|} \right)^{2} \tag{8}\\\ \end{align}</script><p>其中<script type="math/tex">C_k</script>表示<script type="math/tex">D</script>中属于第<script type="math/tex">k</script>类的样本子集，<script type="math/tex">K</script>是类的个数。</p>
+<p>基尼指数越小，表明样本只属于同一个类的概率越高。</p>
+<h4 id="2-3-3在特征-A-下的Gini指数"><a href="#2-3-3在特征-A-下的Gini指数" class="headerlink" title="2.3.3在特征$A$ 下的Gini指数"></a>2.3.3在特征$A$ 下的Gini指数</h4><script type="math/tex; mode=display">\begin{align}  Gini(D|A)=\sum_{i=1}^{2}\frac{|D_i|}{|D|} Gini(D_i)=\sum_{i=1}^{2}\frac{|D_i|}{|D|}  \left(1-\sum_{k=1}^{K}\left(\frac{|C_k|}{|D|} \right)^{2}\right)  \tag{9}\\\ \end{align}</script><h4 id="2-3-4-分类树算法"><a href="#2-3-4-分类树算法" class="headerlink" title="2.3.4 分类树算法"></a>2.3.4 分类树算法</h4><p><strong>输入：</strong>训练数据集<script type="math/tex">D={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}</script>，停止条件</p>
 <p><strong>输出：</strong>分类树 <script type="math/tex">T</script></p>
 <p>1）利用特征 <script type="math/tex">A</script> 的取值 <script type="math/tex">a</script> 将数据分为两部分，计算 <script type="math/tex">A=a</script> 时的基尼系数：</p>
 <script type="math/tex; mode=display">\begin{align}   Gini(D,A) = \frac{|D_1|}{|D|}Gini(D_1) + \frac{|D_2|}{|D|}Gini(D_2) \tag{10}\\\ \end{align}</script><p>2）对整个数据集中所有的可能特征 <script type="math/tex">A</script> 以及其可能取值 <script type="math/tex">a</script> 选取<strong>基尼系数最小的特征</strong> <script type="math/tex">A^{*}</script> 与特征下的取值 <script type="math/tex">a^{*}</script>，来将数据集切分，将数据 <script type="math/tex">D_1</script>、<script type="math/tex">D_2</script> 分到两个子节点中去。</p>
 <p>3）对子节点递归的调用 1)∼2) ，直至满足停止条件</p>
 <p>4）返回 CART 树<script type="math/tex">T</script></p>
-<h3 id="2-4-三种算法的比较"><a href="#2-4-三种算法的比较" class="headerlink" title="2.4 三种算法的比较"></a><font color="blue">2.4 三种算法的比较</font></h3><p><strong>从评价标准</strong>：ID3 分类的泛化能力较弱，C4.5实际是对ID3进行优化，引入信息增益比，一定程度上对取值比较多的特征进行惩罚，避免ID3出现过拟合的特性，提升决策树的泛化能力。</p>
-<p><strong>从样本类型</strong>：ID3只能处理离散型变量，而C4.5和CART都可以处理连续型变量。</p>
-<p><strong>从应用角度</strong>：ID3和C4.5只能用于分类任务，而CART（Classification and Regression Tree，分类回归树）不仅可以用于分类，还可以用于回归任务。</p>
-<p>ID3 和 C4.5可以在每个结点上产生多叉分支，且每个特征在层级之间不会复用；而CART每个结点只会产生来两个分支，且每个特征可以重复使用。</p>
-<p>ID3 和C4.5通过剪枝来权衡树的准确性和泛化能力，而CART直接利用全部数据发现所有可能的树结构进行对比。</p>
 <h2 id="3-决策树剪枝"><a href="#3-决策树剪枝" class="headerlink" title="3. 决策树剪枝"></a><font color="bule">3. 决策树剪枝</font></h2><p>一棵完全生长的决策树面临一个很严重的问题，即过拟合。我们需要对决策树进行剪枝，剪掉一些枝叶，<strong>提升模型的泛化能力。</strong></p>
 <h3 id="3-1-预剪枝-Pre-Pruning"><a href="#3-1-预剪枝-Pre-Pruning" class="headerlink" title="3.1 预剪枝(Pre-Pruning)"></a><font color="blue">3.1 预剪枝(Pre-Pruning)</font></h3><p><strong>在生成决策树的过程中，停止树的增长。</strong></p>
 <p><strong>核心思想：</strong>在树中结点进行扩展之前，先计算当前的划分是否能带来模型泛化能力的提升，如果不能，则不再继续生长子树。此时可能存在不同类别的样本同时存于结点中，按照多数投票的原则判断该结点所属类别。</p>
@@ -559,6 +577,59 @@ height:50vh;
 <p><strong>核心思想：</strong>让算法生成一棵完全生长的决策树，然后从底层向上计算是否剪枝。剪枝过程将子树删除，用一个叶子结点替代，该结点的类别同样按照多数投票的原则进行判断。剪枝过程，如果在测试集上的准确率有所提高，则进行剪枝。</p>
 <p><strong>相比于预剪枝，后剪枝通常得到的决策树泛化能力更强，但是时间开销会更大。</strong></p>
 <p><img src="/2019/04/08/decision-tree/pruneTree.png" alt="pruneTree"></p>
+<h2 id="4-小结"><a href="#4-小结" class="headerlink" title="4. 小结"></a><font color="bule">4. 小结</font></h2><h3 id="4-1-算法比较"><a href="#4-1-算法比较" class="headerlink" title="4.1 算法比较"></a><font color="blue">4.1 算法比较</font></h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">输入数据类型</th>
+<th style="text-align:center">树类型</th>
+<th style="text-align:center">特征选择标准</th>
+<th style="text-align:center">输出类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>ID3</strong></td>
+<td style="text-align:center">类别</td>
+<td style="text-align:center">二叉树/多叉树</td>
+<td style="text-align:center">信息增益</td>
+<td style="text-align:center">二分类/多分类</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>C4.5</strong></td>
+<td style="text-align:center">类别、数值</td>
+<td style="text-align:center">二叉树/多叉树</td>
+<td style="text-align:center">信息增益比</td>
+<td style="text-align:center">二分类/多分类</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>CART树分类</strong></td>
+<td style="text-align:center">类别、数值</td>
+<td style="text-align:center">只能二叉树</td>
+<td style="text-align:center">基尼指数</td>
+<td style="text-align:center">二分类/多分类</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>CART树回归</strong></td>
+<td style="text-align:center">类别、数值</td>
+<td style="text-align:center">只能二叉树</td>
+<td style="text-align:center">平方误差</td>
+<td style="text-align:center">回归</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="4-2-优缺点"><a href="#4-2-优缺点" class="headerlink" title="4.2 优缺点"></a><font color="blue">4.2 优缺点</font></h3><h4 id="4-2-1-优点"><a href="#4-2-1-优点" class="headerlink" title="4.2.1 优点"></a>4.2.1 优点</h4><ul>
+<li>决策树模型可视化，简单易理解</li>
+<li>可处理类别型数据、数值型数据</li>
+<li>可处理多分类和非线性分类问题</li>
+<li>可作为集成模型的基模型</li>
+</ul>
+<h4 id="4-2-2-缺点"><a href="#4-2-2-缺点" class="headerlink" title="4.2.2 缺点"></a>4.2.2 缺点</h4><ul>
+<li>决策树模型对噪声比较敏感，噪声较大，容易产生过拟合</li>
+<li>处理特征关联性较强的数据时，表现不太好</li>
+</ul>
 <hr>
 <font color="blue">声明</font>
 
@@ -567,6 +638,7 @@ height:50vh;
 <li><strong>参考资料2</strong>：李航老师的《统计学习方法》</li>
 <li><strong>参考资料3</strong>：<a href="https://www.cnblogs.com/ooon/p/5647309.html" target="_blank" rel="noopener">https://www.cnblogs.com/ooon/p/5647309.html</a></li>
 <li><strong>参考资料4</strong>：《百面机器学习》</li>
+<li><strong>参考资料5</strong>：《机器学习基础》</li>
 <li>本博文为原创总结，如有转载，请注名出处！</li>
 </ul>
 
@@ -706,7 +778,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-决策树基础知识"><span class="toc-number">1.</span> <span class="toc-text">1. 决策树基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-定义"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-信息论"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 信息论</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#信息量函数"><span class="toc-number">1.2.1.</span> <span class="toc-text">信息量函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#熵"><span class="toc-number">1.2.2.</span> <span class="toc-text">熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#经验熵"><span class="toc-number">1.2.3.</span> <span class="toc-text">经验熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#条件熵"><span class="toc-number">1.2.4.</span> <span class="toc-text">条件熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#经验条件熵"><span class="toc-number">1.2.5.</span> <span class="toc-text">经验条件熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信息增益"><span class="toc-number">1.2.6.</span> <span class="toc-text">信息增益</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信息增益比"><span class="toc-number">1.2.7.</span> <span class="toc-text">信息增益比</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#决策树中所有公式总结"><span class="toc-number">1.2.8.</span> <span class="toc-text">决策树中所有公式总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-实例解释"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 实例解释</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-计算经验熵"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.3.1 计算经验熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-计算条件经验熵"><span class="toc-number">1.3.2.</span> <span class="toc-text">1.3.2 计算条件经验熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-3-计算信息增益"><span class="toc-number">1.3.3.</span> <span class="toc-text">1.3.3 计算信息增益</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-4-计算信息增益比"><span class="toc-number">1.3.4.</span> <span class="toc-text">1.3.4 计算信息增益比</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-几种常用的决策树算法"><span class="toc-number">2.</span> <span class="toc-text">2. 几种常用的决策树算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-ID3-最大信息增益"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 ID3-最大信息增益</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-C4-5-最大信息增益比"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.2 C4.5-最大信息增益比</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-CART-最小基尼指数-Gini"><span class="toc-number">2.2.</span> <span class="toc-text">2.3 CART-最小基尼指数(Gini)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-基尼指数"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.3.1 基尼指数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-在特征-A-下的Gini指数"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.3.2 在特征$A$ 下的Gini指数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-3-分类树算法"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.3.3 分类树算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-三种算法的比较"><span class="toc-number">2.3.</span> <span class="toc-text">2.4 三种算法的比较</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-决策树剪枝"><span class="toc-number">3.</span> <span class="toc-text">3. 决策树剪枝</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-预剪枝-Pre-Pruning"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 预剪枝(Pre-Pruning)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-后剪枝-Post-Pruning"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 后剪枝(Post-Pruning)</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-决策树基础知识"><span class="toc-number">1.</span> <span class="toc-text">1. 决策树基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-定义"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-信息论"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 信息论</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#信息量函数"><span class="toc-number">1.2.1.</span> <span class="toc-text">信息量函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#熵"><span class="toc-number">1.2.2.</span> <span class="toc-text">熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#经验熵"><span class="toc-number">1.2.3.</span> <span class="toc-text">经验熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#条件熵"><span class="toc-number">1.2.4.</span> <span class="toc-text">条件熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#经验条件熵"><span class="toc-number">1.2.5.</span> <span class="toc-text">经验条件熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信息增益"><span class="toc-number">1.2.6.</span> <span class="toc-text">信息增益</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信息增益比"><span class="toc-number">1.2.7.</span> <span class="toc-text">信息增益比</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#决策树中所有公式总结"><span class="toc-number">1.2.8.</span> <span class="toc-text">决策树中所有公式总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-实例解释"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 实例解释</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-计算经验熵"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.3.1 计算经验熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-计算条件经验熵"><span class="toc-number">1.3.2.</span> <span class="toc-text">1.3.2 计算条件经验熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-3-计算信息增益"><span class="toc-number">1.3.3.</span> <span class="toc-text">1.3.3 计算信息增益</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-4-计算信息增益比"><span class="toc-number">1.3.4.</span> <span class="toc-text">1.3.4 计算信息增益比</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-几种常用的决策树算法"><span class="toc-number">2.</span> <span class="toc-text">2. 几种常用的决策树算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-ID3-最大信息增益"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 ID3-最大信息增益</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-C4-5-最大信息增益比"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.2 C4.5-最大信息增益比</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-CART-最小基尼指数-Gini"><span class="toc-number">2.2.</span> <span class="toc-text">2.3 CART-最小基尼指数(Gini)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-ID3树和C4-5树的改进——CART树"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.3.1 ID3树和C4.5树的改进——CART树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-基尼指数"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.3.2 基尼指数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-3在特征-A-下的Gini指数"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.3.3在特征$A$ 下的Gini指数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-4-分类树算法"><span class="toc-number">2.2.4.</span> <span class="toc-text">2.3.4 分类树算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-决策树剪枝"><span class="toc-number">3.</span> <span class="toc-text">3. 决策树剪枝</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-预剪枝-Pre-Pruning"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 预剪枝(Pre-Pruning)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-后剪枝-Post-Pruning"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 后剪枝(Post-Pruning)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-小结"><span class="toc-number">4.</span> <span class="toc-text">4. 小结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-算法比较"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 算法比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-优缺点"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-1-优点"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-2-缺点"><span class="toc-number">4.2.2.</span> <span class="toc-text">4.2.2 缺点</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
