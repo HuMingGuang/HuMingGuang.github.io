@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.6k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.8k</span>阅读时长: <span class="post-count reading-time">6 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -416,24 +416,28 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h4 id="1-数据的归一化并不是万能的，在实际应用中，通过梯度下降法求解的模型，需要归一化，包括线性回归、逻辑回归、支持向量机、神经网络等模型，但是决策树模型则并不适用。"><a href="#1-数据的归一化并不是万能的，在实际应用中，通过梯度下降法求解的模型，需要归一化，包括线性回归、逻辑回归、支持向量机、神经网络等模型，但是决策树模型则并不适用。" class="headerlink" title="1. 数据的归一化并不是万能的，在实际应用中，通过梯度下降法求解的模型，需要归一化，包括线性回归、逻辑回归、支持向量机、神经网络等模型，但是决策树模型则并不适用。"></a>1. 数据的归一化并不是万能的，在实际应用中，通过梯度下降法求解的模型，需要归一化，包括线性回归、逻辑回归、支持向量机、神经网络等模型，但是决策树模型则并不适用。</h4><h4 id="2-准确率"><a href="#2-准确率" class="headerlink" title="2.准确率"></a>2.准确率</h4><script type="math/tex; mode=display">
+        <h2 id="1-数据的归一化并不是万能的"><a href="#1-数据的归一化并不是万能的" class="headerlink" title="1. 数据的归一化并不是万能的"></a>1. 数据的归一化并不是万能的</h2><p>在实际应用中，通过梯度下降法求解的模型，需要归一化，包括线性回归、逻辑回归、支持向量机、神经网络等模型，但是决策树模型则并不适用。</p>
+<h2 id="2-准确率"><a href="#2-准确率" class="headerlink" title="2.准确率"></a>2.准确率</h2><script type="math/tex; mode=display">
 Accuracy = \dfrac{n_{correct}}{n_{total}}</script><p><strong>缺点：</strong>当负样本占$90 \%$时，分类器把所有样本都预测为负样本也可以获得$90 \%$的准确率。所以，当不同类别的样本比例非常不均衡时，占比大的类别往往成为影响准确率的最主要的因素。</p>
 <p>所以当样本非常不均衡时，我们要考虑选择其他的评估指标。</p>
-<h4 id="3-精确率和召回率的权衡"><a href="#3-精确率和召回率的权衡" class="headerlink" title="3. 精确率和召回率的权衡"></a>3. 精确率和召回率的权衡</h4><p><strong>精确率(Precision)</strong></p>
+<h2 id="3-精确率和召回率的权衡"><a href="#3-精确率和召回率的权衡" class="headerlink" title="3. 精确率和召回率的权衡"></a>3. 精确率和召回率的权衡</h2><p><strong>精确率(Precision)</strong>:查准率</p>
 <script type="math/tex; mode=display">
-Precision = \dfrac{分类正确的正样本个数:TP}{分类器判定为正样本个数:TP+FP}</script><p><strong>召回率(Recall)</strong></p>
+Precision = \dfrac{分类正确的正样本个数:TP}{分类器判定为正样本个数:TP+FP}</script><p><strong>召回率(Recall)</strong>：查全率</p>
 <script type="math/tex; mode=display">
-Recall = \dfrac{分类正确的正样本个数:TP}{真正的正样本个数:TP+FN}</script><p><strong>Precision</strong>和<strong>Recall</strong>值是既矛盾又统一的指标，为提高Precision值，分类器需要尽量在<strong>“更有把握”</strong>时才把样本预测为正样本(<strong>TP</strong>)，但此时往往会因为过于保守而漏掉很多<strong>“没有把握”</strong>的正样本(<strong>FN</strong>)，导致Recall值降低。</p>
+Recall = \dfrac{分类正确的正样本个数:TP}{真正的正样本个数:TP+FN}</script><p><img src="/2019/07/30/meachine-learning-summary/PrecisionAndReacll.png" width="45%" height="45%"></p>
+<p><img src="/2019/07/30/meachine-learning-summary/PrecisionAndReacll_1.png" width="65%" height="65%"></p>
+<p><strong>Precision</strong>和<strong>Recall</strong>值是既矛盾又统一的指标，为提高Precision值，分类器需要尽量在<strong>“更有把握”</strong>时才把样本预测为正样本(<strong>TP</strong>)，但此时往往会因为过于保守而漏掉很多<strong>“没有把握”</strong>的正样本(<strong>FN</strong>)，导致Recall值降低。</p>
 <p><strong>总结一：</strong>明确在样本不均衡的时候，直接使用准确率评估指标，对模型结果的影响很大。同时在使用精确率和召回率时，这两个时矛盾体，他们两的分母不同，一个是分类器判定的正样本个数，一个是真正的正样本个数。</p>
 <p><strong>总结二：</strong>在排序问题中，我们通常采用<strong>Top N</strong>返回结果的<strong>Precision</strong>和<strong>Recall</strong>值来衡量排序模型的性能。采用<strong>Precision</strong>返回结果，一般效果很好，但是在实际应用过程中，用户为了找<strong>一些冷门的视频</strong>，往往寻找排在靠后位置的结果，问题在召回率上。此时，应该考虑<strong>使用P-R曲线</strong>，横轴是召回率，纵轴为精确率。</p>
 <p><img src="/2019/07/30/meachine-learning-summary/P-R曲线.png" width="65%" height="65%"></p>
 <p>只用单独某一个点对应的精确率和召回率是不能全面衡量模型的性能，只能通过P-R曲线的整体表现，才能够对模型进行全面的评估。</p>
 <p>如果<strong>一个学习器的P-R曲线被另一个学习器的P-R曲线完全包住，则可断言后者的性能优于前者</strong>，例如上面的A和B优于学习器C，但是A和B的性能无法直接判断，但我们往往仍希望把学习器A和学习器B进行一个比较，我们可以根据<strong>曲线下方的面积大小来进行比较</strong>，但更常用的是<strong>平衡点</strong>或者是F1值。<strong>平衡点（BEP）是查准率=查全率时的取值，如果这个值较大，则说明学习器的性能较好</strong>。而<script type="math/tex">F1=\dfrac{2 \times Precision \times Recall}{Precision + Recall}</script>，同样，F1值越大，我们可以认为该学习器的性能较好。</p>
-<h4 id="4-ROC-曲线"><a href="#4-ROC-曲线" class="headerlink" title="4. ROC 曲线"></a>4. ROC 曲线</h4><script type="math/tex; mode=display">FPR=\dfrac{FP}{N}  $$  $$    其中N = FP+TN</script><script type="math/tex; mode=display">TPR=\dfrac{TP}{P}  $$  $$ 其中 P =TP+FN</script><p><img src="/2019/07/30/meachine-learning-summary/ROC.jpg" width="65%" height="65%"></p>
+<h2 id="4-ROC-曲线"><a href="#4-ROC-曲线" class="headerlink" title="4. ROC 曲线"></a>4. ROC 曲线</h2><script type="math/tex; mode=display">FPR=\dfrac{FP}{N}  $$  $$    其中N = FP+TN</script><script type="math/tex; mode=display">TPR=\dfrac{TP}{P}  $$  $$ 其中 P =TP+FN</script><p><img src="/2019/07/30/meachine-learning-summary/ROC.jpg" width="65%" height="65%"></p>
+<p>纵坐标是正阳率，横坐标是是伪阳率。</p>
 <p><strong>AUC</strong>为<strong>ROC</strong>曲线下的面积大小，该值量化地反映ROC曲线衡量出的模型性能。<br>相比于P-R曲线，AUC曲线对于不同的数据分布，变化更小。当正负样本比例不均衡，使用AUC曲线，比P-R曲线更能反映模型本身的好坏。</p>
-<h4 id="5-平方根误差"><a href="#5-平方根误差" class="headerlink" title="5.平方根误差"></a>5.平方根误差</h4><p><script type="math/tex">RMSE = \sqrt{\dfrac{\sum_{i=1}^n(y_i-\hat{y}_i)^2}{n}}</script>，衡量回归模型的好坏。</p>
+<h2 id="5-平方根误差"><a href="#5-平方根误差" class="headerlink" title="5.平方根误差"></a>5.平方根误差</h2><p><script type="math/tex">RMSE = \sqrt{\dfrac{\sum_{i=1}^n(y_i-\hat{y}_i)^2}{n}}</script>，衡量回归模型的好坏。</p>
 <p>如果存在个别偏离程度非常大的离群点(<strong>Outlier</strong>)时，即使离群点数量非常少，也会让$ RMSE $指标变得很差。对于噪声点，我们可以选择直接过滤掉；或者使用更鲁棒性的指标平方绝对百分比误差<script type="math/tex">MAPE= \sum_{i=1}^{n}|\dfrac{y_i-\hat{y_i}}{y_i}|\times \dfrac{100}{n}</script>，相当于把每个点的误差进行归一化，将对了个别离群点带来的绝对误差的影响。</p>
-<h4 id="6-A-B测试"><a href="#6-A-B测试" class="headerlink" title="6.A/B测试"></a>6.A/B测试</h4><p><strong>为什进行A/B测试</strong></p>
+<h2 id="6-A-B测试"><a href="#6-A-B测试" class="headerlink" title="6. A/B测试"></a>6. A/B测试</h2><p><strong>为什进行A/B测试</strong></p>
 <ul>
 <li>离线测试无法完全消除模型过拟合的影响</li>
 <li>离线评估无法完全还原线上的工程环境，比如无法考虑线上环境的延迟，数据丢失……</li>
@@ -441,10 +445,10 @@ Recall = \dfrac{分类正确的正样本个数:TP}{真正的正样本个数:TP+F
 </ul>
 <p><strong>如何进行线上A/B测试</strong></p>
 <p>进行A/B测试的主要手段是进行用户分桶，即将用户分为实验组和对照组，对实验组的用户施以新模型，对照组的用户施以旧模型。</p>
-<h4 id="7-交叉验证和自助采样验证"><a href="#7-交叉验证和自助采样验证" class="headerlink" title="7. 交叉验证和自助采样验证"></a>7. 交叉验证和自助采样验证</h4><p><strong>k-fold交叉验证</strong>：将全部数据样本划分为k个大小相等的样本子集，依次遍历这k个子集，每次把当前子集作为验证集，其余所有子集作为训练集；最后把k次评估指标的平均值作为最终的评估指标。</p>
+<h2 id="7-交叉验证和自助采样验证"><a href="#7-交叉验证和自助采样验证" class="headerlink" title="7. 交叉验证和自助采样验证"></a>7. 交叉验证和自助采样验证</h2><p><strong>k-fold交叉验证</strong>：将全部数据样本划分为k个大小相等的样本子集，依次遍历这k个子集，每次把当前子集作为验证集，其余所有子集作为训练集；最后把k次评估指标的平均值作为最终的评估指标。</p>
 <p><strong>留一验证：</strong>每次留1个样本作为验证集，其余所有样本作为测试集，样本总数为n,依次对n个样本进行遍历，进行n次验证，再将评估指标求平均值得到最终的评估指标。</p>
 <p><strong>自助交叉验证</strong>：当数据量比较小的时候，样本进行划分，会让训练集进一步减小，会影响模型训练效果。我们采用自助(Bootstrap)采样，在总数为n的样本中，又放回地进行n次随机抽样，得到大小为n的训练集。在采样中有些样本被重复采样，有些样本没有被抽取过，将这些没有被抽出的样本作为验证集，进行模型的验证。当数据很大时，有大约<script type="math/tex">36.8\%</script>的样本从未被选择。</p>
-<h4 id="8-解决过拟合和欠拟合的方法"><a href="#8-解决过拟合和欠拟合的方法" class="headerlink" title="8. 解决过拟合和欠拟合的方法"></a>8. 解决过拟合和欠拟合的方法</h4><p><strong>过拟合</strong></p>
+<h2 id="8-解决过拟合和欠拟合的方法"><a href="#8-解决过拟合和欠拟合的方法" class="headerlink" title="8. 解决过拟合和欠拟合的方法"></a>8. 解决过拟合和欠拟合的方法</h2><p><strong>过拟合</strong></p>
 <ul>
 <li>从数据入手，获取更多的数据</li>
 <li>降低模型复杂度：减少神经网络的层数，神经元个数；在决策树中降低树的深度</li>
@@ -457,7 +461,35 @@ Recall = \dfrac{分类正确的正样本个数:TP}{真正的正样本个数:TP+F
 <li>增加模型复杂度</li>
 <li>减小正则化系数</li>
 </ul>
-<h4 id="9"><a href="#9" class="headerlink" title="9."></a>9.</h4>
+<h2 id="9-如何对决策树进行剪枝"><a href="#9-如何对决策树进行剪枝" class="headerlink" title="9. 如何对决策树进行剪枝"></a>9. 如何对决策树进行剪枝</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>预剪枝</th>
+<th>后剪枝</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>定义</strong></td>
+<td>生长决策树的过程中，停止树的增长</td>
+<td>在算法完成一颗完全生长的决策树后，从底层向上计算是否剪枝</td>
+</tr>
+<tr>
+<td><strong>方法</strong></td>
+<td>树生长的停止标准：（1）达到预定的树深度 （2）当前节点的样本数量小于某个阈值 （3）计算每次分类对测试集的准确度的提升，当小于某个阈值时，不再生长</td>
+<td>（1）根据完整的决策树，生成一个子序列树 （2）在子序列树中，根据某种标准(代价复杂度，最小误差，错误率降低)进行剪枝</td>
+</tr>
+<tr>
+<td><strong>总结</strong></td>
+<td>预剪枝存在欠拟合的风险</td>
+<td>CART树使用的是CCP(代价复杂度剪枝)，后剪枝的问题在于时间开销大</td>
+</tr>
+</tbody>
+</table>
+</div>
+
     </article>
     <!-- license  -->
     
@@ -589,7 +621,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-数据的归一化并不是万能的，在实际应用中，通过梯度下降法求解的模型，需要归一化，包括线性回归、逻辑回归、支持向量机、神经网络等模型，但是决策树模型则并不适用。"><span class="toc-number">1.</span> <span class="toc-text">1. 数据的归一化并不是万能的，在实际应用中，通过梯度下降法求解的模型，需要归一化，包括线性回归、逻辑回归、支持向量机、神经网络等模型，但是决策树模型则并不适用。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-准确率"><span class="toc-number">2.</span> <span class="toc-text">2.准确率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-精确率和召回率的权衡"><span class="toc-number">3.</span> <span class="toc-text">3. 精确率和召回率的权衡</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-ROC-曲线"><span class="toc-number">4.</span> <span class="toc-text">4. ROC 曲线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-平方根误差"><span class="toc-number">5.</span> <span class="toc-text">5.平方根误差</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-A-B测试"><span class="toc-number">6.</span> <span class="toc-text">6.A/B测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-交叉验证和自助采样验证"><span class="toc-number">7.</span> <span class="toc-text">7. 交叉验证和自助采样验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-解决过拟合和欠拟合的方法"><span class="toc-number">8.</span> <span class="toc-text">8. 解决过拟合和欠拟合的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9"><span class="toc-number">9.</span> <span class="toc-text">9.</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-数据的归一化并不是万能的"><span class="toc-number">1.</span> <span class="toc-text">1. 数据的归一化并不是万能的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-准确率"><span class="toc-number">2.</span> <span class="toc-text">2.准确率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-精确率和召回率的权衡"><span class="toc-number">3.</span> <span class="toc-text">3. 精确率和召回率的权衡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-ROC-曲线"><span class="toc-number">4.</span> <span class="toc-text">4. ROC 曲线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-平方根误差"><span class="toc-number">5.</span> <span class="toc-text">5.平方根误差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-A-B测试"><span class="toc-number">6.</span> <span class="toc-text">6. A/B测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-交叉验证和自助采样验证"><span class="toc-number">7.</span> <span class="toc-text">7. 交叉验证和自助采样验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-解决过拟合和欠拟合的方法"><span class="toc-number">8.</span> <span class="toc-text">8. 解决过拟合和欠拟合的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-如何对决策树进行剪枝"><span class="toc-number">9.</span> <span class="toc-text">9. 如何对决策树进行剪枝</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
