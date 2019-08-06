@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.8k</span>阅读时长: <span class="post-count reading-time">14 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">3.3k</span>阅读时长: <span class="post-count reading-time">16 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -550,7 +550,41 @@ z_{N,1}&z_{N,2}&\cdots&z_{N,d}\\
 <script type="math/tex; mode=display">\frac{\sum_{i=1}^{d }\lambda_i}{\sum_{i=1}^{n}\lambda_i} \ge t</script><p>其中 <script type="math/tex">\lambda_i</script> 从大到小排列。</p>
 </li>
 </ul>
-<h3 id="2-4-PCA、SVD、LDA的区别与联系"><a href="#2-4-PCA、SVD、LDA的区别与联系" class="headerlink" title="2.4 PCA、SVD、LDA的区别与联系"></a>2.4 PCA、SVD、LDA的区别与联系</h3><div class="table-container">
+<h2 id="三、线性判别分析-LDA"><a href="#三、线性判别分析-LDA" class="headerlink" title="三、线性判别分析 LDA"></a>三、线性判别分析 LDA</h2><ol>
+<li><p>中心思想：最大化类间距离和最小化类内距离</p>
+</li>
+<li><p>目标函数：<script type="math/tex">\max_{w}J(w)=\dfrac{||w^{T}(\mu_1-\mu_2)||_{2}^{2}}{D_1+D_2}</script></p>
+<p>表示为类间距离和类内距离($D<em>1=\sum</em>{x_1\in C_1}w^{T}(x-\mu_1)(x-\mu_1)^{T}w$为投影后的方差)的比值</p>
+</li>
+<li><p>相比于PCA是对样本的协方差矩阵$\sum$求解特征矩阵和特征向量作为投影向量，LDA使用的是$S<em>{w}^{-1}S</em>{B}$($S<em>{w}^{-1}$:类内散度矩阵,$S</em>{B}$)的求解特征矩阵和特征向量作为投影向量。</p>
+</li>
+</ol>
+<h2 id="四、局部线性嵌入LLE"><a href="#四、局部线性嵌入LLE" class="headerlink" title="四、局部线性嵌入LLE"></a>四、局部线性嵌入LLE</h2><ol>
+<li><p>相比于PCA和LDA等关注样本方差的降维方法，LLE(Locally Linear Embedding)更关注于降维时保持样本局部的线性特征。例如：</p>
+<script type="math/tex; mode=display">x_1= w_{12}x_2+w_{13}x_3+w_{14}x_4</script><p>经过LLE降维后，希望$x<em>1$在低维空间对应的投影$$x</em>{1}^{‘} x<em>{2}^{‘} x</em>{3}^{‘}x_{4}^{‘}$$仍然保持线性关系</p>
+<script type="math/tex; mode=display">x_{1}^{'}\simeq w_{12}x_{2}^{'}+w_{13}x_{3}^{'}+w_{14}x_{4}^{'}</script></li>
+<li><p>LLE 算法步骤</p>
+<p>第一步：计算样本$x<em>i$的$K$个最近邻$x</em>{i1},x<em>{i2},\cdots,x</em>{iK}$</p>
+<p>第二步：求出局部协方差矩阵$Z_{i}=(x_i-x_j)(x_i-x_j)^{T}$，并计算相应的权重系数向量</p>
+<script type="math/tex; mode=display">W_i=\dfrac{Z_{i}^{-1}l_k}{l_{k}Z_{i}^{-1}l_k}</script><p>第三步：权重系数向量$W_i$组成权重系数矩阵$W$，计算$M=(I-W)^{T}(I-W)$</p>
+<p>第四步：计算矩阵$M$的中最小的$d$个特征值对应的特征向量$v_1,v_2,\cdots,v_d$，一般第一个最小的特征值值为0舍弃.这$d$个特征向量组成的特征矩阵即为降维后的样本集</p>
+</li>
+<li><p>小结</p>
+<ul>
+<li>优点<ul>
+<li>学习任意维的局部线性的低维流形（局部具有欧式空间性质）</li>
+<li>稀疏矩阵特征分解，计算复杂度较小的</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>流形只能是不闭合的，且样本集是稠密均匀的</li>
+<li>对最近邻样本的选择敏感</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="五、-PCA、SVD、LDA的区别与联系"><a href="#五、-PCA、SVD、LDA的区别与联系" class="headerlink" title="五、 PCA、SVD、LDA的区别与联系"></a>五、 PCA、SVD、LDA的区别与联系</h2><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -561,7 +595,7 @@ z_{N,1}&z_{N,2}&\cdots&z_{N,d}\\
 <tbody>
 <tr>
 <td><strong>PCA</strong></td>
-<td>PCA是属于一种<strong>线性、无监督、全局的降维算法</strong>。<strong>目标：</strong>选择方差大的投影面。<strong>应用：</strong>PCA在语音识别中，可以过滤音频中固定的频率的背景噪声。</td>
+<td>PCA是属于一种<strong>线性、无监督、全局的降维算法</strong>。<strong>目标：</strong>选择方差大的投影面。<strong>应用：</strong>PCA在语音识别中，可以过滤音频中固定的频率的背景噪声；人脸识别的脸部特征提出中。</td>
 </tr>
 <tr>
 <td><strong>SVD</strong></td>
@@ -569,7 +603,7 @@ z_{N,1}&z_{N,2}&\cdots&z_{N,d}\\
 </tr>
 <tr>
 <td><strong>LDA</strong></td>
-<td>LDA是<strong>无监督的降维算法</strong>，相比于PCA可以对<strong>有类别信息的数据进行降维处理</strong>。<strong>目标：</strong>选择在投影后类内方差小，类间方差大的投影面（也就是将数据投影，使同一类别的数据投影尽可能接近，不同类别的距离尽可能大）。<strong>应用：</strong>在语音识别中，可以对每个人的语音信号进行区分（因为LDA可以对有类别信息，做降维处理）。LDA除了可以做降维，还可以做分类。</td>
+<td>LDA是<strong>有监督的降维算法</strong>，相比于PCA可以对<strong>有类别信息的数据进行降维处理</strong>。<strong>目标：</strong>选择在投影后类内方差小，类间方差大的投影面（也就是将数据投影，使同一类别的数据投影尽可能接近，不同类别的距离尽可能大）。<strong>应用：</strong>在语音识别中，可以对每个人的语音信号进行区分（因为LDA可以对有类别信息，做降维处理）。<strong>LDA除了可以做降维，还可以做分类。</strong></td>
 </tr>
 </tbody>
 </table>
@@ -717,7 +751,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、维度灾难"><span class="toc-number">1.</span> <span class="toc-text">一、维度灾难</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、主成分分析-PCA"><span class="toc-number">2.</span> <span class="toc-text">二、主成分分析 PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-坐标变换"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 坐标变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-重构误差"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 重构误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-PCA-算法"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 PCA 算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-PCA、SVD、LDA的区别与联系"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 PCA、SVD、LDA的区别与联系</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、维度灾难"><span class="toc-number">1.</span> <span class="toc-text">一、维度灾难</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、主成分分析-PCA"><span class="toc-number">2.</span> <span class="toc-text">二、主成分分析 PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-坐标变换"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 坐标变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-重构误差"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 重构误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-PCA-算法"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 PCA 算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、线性判别分析-LDA"><span class="toc-number">3.</span> <span class="toc-text">三、线性判别分析 LDA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、局部线性嵌入LLE"><span class="toc-number">4.</span> <span class="toc-text">四、局部线性嵌入LLE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、-PCA、SVD、LDA的区别与联系"><span class="toc-number">5.</span> <span class="toc-text">五、 PCA、SVD、LDA的区别与联系</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -730,8 +764,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
     
     
     
@@ -1531,11 +1563,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
+        <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
+    
         <span class="sidebar-tag-name" data-tags="推荐系统"><span class="iconfont-archer">&#xe606;</span>推荐系统</span>
     
         <span class="sidebar-tag-name" data-tags="机器学习实战"><span class="iconfont-archer">&#xe606;</span>机器学习实战</span>
-    
-        <span class="sidebar-tag-name" data-tags="优化"><span class="iconfont-archer">&#xe606;</span>优化</span>
     
         <span class="sidebar-tag-name" data-tags="Python系列问题"><span class="iconfont-archer">&#xe606;</span>Python系列问题</span>
     
