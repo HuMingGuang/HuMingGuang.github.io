@@ -418,246 +418,255 @@ height:50vh;
     <article class="article-entry">
         <h2 id="一、马尔可夫链"><a href="#一、马尔可夫链" class="headerlink" title="一、马尔可夫链"></a><font color="bule">一、马尔可夫链</font></h2><p><strong>马尔可夫链(Markov Chain)</strong>是关于随机变量序列之间的状态、状态转移概率以及每个状态取值的模型。马尔可夫链做出了一个非常<strong>强的假设</strong>，即如果我们想要<strong>预测序列中的未来，那么重要的是当前状态</strong>。 除当前状态外，当前状态之前的状态对未来没有影响。 就像预测明天的天气，你可以查看今天的天气，但你不能看到昨天的天气。</p>
 <div align="center"><img src="/2019/04/27/Hidden-Markov-Models/1.png" width="100%" height="100%">图1</div>
+**图1(a)**描述的是关于不同天气的状态转移的马尔可夫链，比如：从状态(HOT)到状态(COLD)的状态转移概率为$0.1$,同时我们给出了初始的状态分布为$\Pi=[0.1,0.7,0.2]$，即有$70\%$的概率初始状态为COLD.
 
-<p><strong>图1(a)</strong>描述的是关于不同天气的状态转移的马尔可夫链，比如：从状态(HOT)到状态(COLD)的状态转移概率为$0.1$,同时我们给出了初始的状态分布为$\Pi=[0.1,0.7,0.2]$，即有$70\%$的概率初始状态为COLD.</p>
-<p><strong>图1(b)</strong>描述的是不同单词之间的转换的马尔可夫链。</p>
-<p>现在我们形式化的定义一下，马尔可夫性以及马尔可夫链。</p>
-<p><strong>马尔可夫性：</strong>假设状态序列为<script type="math/tex">\left\{ q_1,q_2,…,q_i\right\}</script>，则<script type="math/tex">P(q_i=a|q_1…q_{i-1})=P(q_i=a|q_{i-1})</script></p>
-<p><strong>马尔可夫链的基本属性</strong></p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>符合</th>
-<th>定义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>$Q=q_1q_2…q_N$</td>
-<td>状态集合</td>
-</tr>
-<tr>
-<td><script type="math/tex">A=a_{11}a_{12}…a_{n1}…a_{NN}</script></td>
-<td>状态转移概率矩阵<script type="math/tex">A</script>，其中<script type="math/tex">a_{ij}</script>表示从状态<script type="math/tex">i</script>转移到状态<script type="math/tex">j</script>的概率,同时<script type="math/tex">\sum_{j=1}^{N} a_{ij}=1,\mathbf{for }\   \forall   i</script></td>
-</tr>
-<tr>
-<td><script type="math/tex">\Pi={\pi_1,\pi_2,…,\pi_N}</script></td>
-<td>状态上的初始化概率分布，<script type="math/tex">\pi_i</script>表示马尔可夫链从状态<script type="math/tex">i</script>开始的概率，若<script type="math/tex">\pi_j=0</script>，则状态<script type="math/tex">j</script>不能作为初始化状态，同时<script type="math/tex">\sum_{i=1}^{n} \pi_i=1</script>.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="二、隐马尔可夫模型"><a href="#二、隐马尔可夫模型" class="headerlink" title="二、隐马尔可夫模型"></a><font color="bule">二、隐马尔可夫模型</font></h2><p>当我们需要计算一系列可观察事件的概率时，马尔可夫链很有用。 然而，在许多情况下，我们感兴趣的事件是隐藏的：我们不直接观察它们。 例如，我们通常不会在文本中观察隐藏的词性标签。 相反，我们看到单词，并且必须从单词序列中推断出标签。 我们将标签称为隐藏，因为它们未被观察到。</p>
-<p><strong>隐马尔可夫模型（Hidden Markov Model:HMM）</strong>允许我们讨论观测数据（如我们在输入中看到的单词）和隐藏状态（如词性标签），这是我们的概率中的因果关系模型。</p>
-<p><strong>一个隐马尔可夫模型描述如下</strong></p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>符号</th>
-<th>定义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><script type="math/tex">Q=q_1q_2…q_N</script></td>
-<td>状态集合</td>
-</tr>
-<tr>
-<td><script type="math/tex">A=a_{11}a_{12}…a_{n1}…a_{NN}</script></td>
-<td>状态转移概率矩阵<script type="math/tex">A</script>，其中<script type="math/tex">a_{ij}</script>表示从状态<script type="math/tex">i</script>转移到状态<script type="math/tex">j</script>的概率,同时<script type="math/tex">\sum_{j=1}^{N} a_{ij}=1,\mathbf{for }\   \forall   i</script></td>
-</tr>
-<tr>
-<td><script type="math/tex">O=o_1 o_2 …o_T</script></td>
-<td>观测序列</td>
-</tr>
-<tr>
-<td><script type="math/tex">B=b_i(o_t)</script></td>
-<td>一系列观测的似然概率，也称为释放概率，表示从状态$i$出发到达观测$o_t$的概率</td>
-</tr>
-<tr>
-<td><script type="math/tex">\Pi={\pi_1,\pi_2,…,\pi_N}</script></td>
-<td>状态上的初始化概率分布，<script type="math/tex">\pi_i</script>表示马尔可夫链从状态<script type="math/tex">i</script>开始的概率，若<script type="math/tex">\pi_j=0</script>，则状态<script type="math/tex">j</script>不能作为初始化状态，同时<script type="math/tex">\sum_{i=1}^{n} \pi_i=1</script>.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><strong>一阶隐马尔可夫模型满足一下两个假设：</strong></p>
-<ul>
-<li><strong>马尔可夫性假设</strong></li>
-</ul>
-<script type="math/tex; mode=display">P(q_i|q_1…q_{i-1})=P(q_i|q_{i-1})</script><ul>
-<li><p><strong>观测独立性假设</strong></p>
-<script type="math/tex; mode=display">P(o_i|q_1…q_i,o_1…,o_i,…,o_T)=P(o_i|q_i)</script></li>
-</ul>
-<p>我们现在继续讨论天气情况与吃冰淇淋的例子，给定一系列观察结果O（每个整数表示在给定日食用的冰淇淋数量）找到天气状态（H或C）的“隐藏”序列Q。</p>
+**图1(b)**描述的是不同单词之间的转换的马尔可夫链。
+
+现在我们形式化的定义一下，马尔可夫性以及马尔可夫链。
+
+**马尔可夫性：**假设状态序列为$$\left\{ q_1,q_2,…,q_i\right\}$$，则$$P(q_i=a|q_1…q_{i-1})=P(q_i=a|q_{i-1})$$
+
+**马尔可夫链的基本属性**
+
+| 符合                             | 定义                                                         |
+| -------------------------------- | ------------------------------------------------------------ |
+| $Q=q_1q_2…q_N$                   | 状态集合                                                     |
+| $$A=a_{11}a_{12}…a_{n1}…a_{NN}$$ | 状态转移概率矩阵$$A$$，其中$$a_{ij}$$表示从状态$$i$$转移到状态$$j$$的概率,同时$$\sum_{j=1}^{N} a_{ij}=1,\mathbf{for }\   \forall   i $$ |
+| $$\Pi={\pi_1,\pi_2,…,\pi_N}$$    | 状态上的初始化概率分布，$$\pi_i$$表示马尔可夫链从状态$$i$$开始的概率，若$$\pi_j=0$$，则状态$$j$$不能作为初始化状态，同时$$\sum_{i=1}^{n} \pi_i=1$$. |
+
+## <font color="bule">二、隐马尔可夫模型</font>
+
+当我们需要计算一系列可观察事件的概率时，马尔可夫链很有用。 然而，在许多情况下，我们感兴趣的事件是隐藏的：我们不直接观察它们。 例如，我们通常不会在文本中观察隐藏的词性标签。 相反，我们看到单词，并且必须从单词序列中推断出标签。 我们将标签称为隐藏，因为它们未被观察到。
+
+**隐马尔可夫模型（Hidden Markov Model:HMM）**允许我们讨论观测数据（如我们在输入中看到的单词）和隐藏状态（如词性标签），这是我们的概率中的因果关系模型。
+
+**一个隐马尔可夫模型描述如下**
+
+| 符号                             | 定义                                                         |
+| -------------------------------- | ------------------------------------------------------------ |
+| $$Q=q_1q_2…q_N$$                 | 状态集合                                                     |
+| $$A=a_{11}a_{12}…a_{n1}…a_{NN}$$ | 状态转移概率矩阵$$A$$，其中$$a_{ij}$$表示从状态$$i$$转移到状态$$j$$的概率,同时$$\sum_{j=1}^{N} a_{ij}=1,\mathbf{for }\   \forall   i $$ |
+| $$O=o_1 o_2 …o_T$$               | 观测序列                                                     |
+| $$B=b_i(o_t)$$                   | 一系列观测的似然概率，也称为释放概率，表示从状态$i$出发到达观测$o_t$的概率 |
+| $$\Pi={\pi_1,\pi_2,…,\pi_N}$$    | 状态上的初始化概率分布，$$\pi_i$$表示马尔可夫链从状态$$i$$开始的概率，若$$\pi_j=0$$，则状态$$j$$不能作为初始化状态，同时$$\sum_{i=1}^{n} \pi_i=1$$. |
+
+**一阶隐马尔可夫模型满足一下两个假设：**
+
+- **马尔可夫性假设**
+
+$$P(q_i|q_1…q_{i-1})=P(q_i|q_{i-1})$$
+
+- **观测独立性假设**
+
+  $$P(o_i|q_1…q_i,o_1…,o_i,…,o_T)=P(o_i|q_i)$$
+
+我们现在继续讨论天气情况与吃冰淇淋的例子，给定一系列观察结果O（每个整数表示在给定日食用的冰淇淋数量）找到天气状态（H或C）的“隐藏”序列Q。
+
 <div align="center"><img src="/2019/04/27/Hidden-Markov-Models/2.png" width="100%" height="100%">图2</div>
+**图2**描述了一个关于冰淇淋任务的隐马尔可夫模型，其中有两个隐藏的状态$HOT$和$COLD$分别对应着热的天气和冷的天气，观测数据为$$O=\left\{1,2,3\right\}$$分别表示一天内吃的冰淇淋的数量。
 
-<p><strong>图2</strong>描述了一个关于冰淇淋任务的隐马尔可夫模型，其中有两个隐藏的状态$HOT$和$COLD$分别对应着热的天气和冷的天气，观测数据为<script type="math/tex">O=\left\{1,2,3\right\}</script>分别表示一天内吃的冰淇淋的数量。</p>
-<p><strong>我们发现隐马尔可夫模型存在三个基本问题：</strong></p>
-<ul>
-<li><p><strong>似然概率的计算——基于动态规划的前向算法</strong></p>
-<p>给定一个隐马尔可夫模型参数<script type="math/tex">\lambda=(A,B,\Pi)</script>和观测序列<script type="math/tex">O=(o_1,o_2,…,o_T)</script>的情况下，计算似然概率<script type="math/tex">P(O|\lambda)</script></p>
-</li>
-<li><p><strong>预测问题(解码)——基于动态规划的维特比算法</strong></p>
-<p>给定一个隐马尔可夫模型参数<script type="math/tex">\lambda=(A,B,\Pi)</script>和观测序列的<script type="math/tex">O=(o_1,o_2,…,o_T)</script>情况下，求对给定观测序列的条件概率<script type="math/tex">P(Q|O)</script>最大的状态序列<script type="math/tex">Q=(q_1,q_2,…,q_T)</script></p>
-</li>
-<li><p><strong>学习问题——基于EM算法的鲍姆-韦尔奇算法</strong></p>
-<p>给定观测序列的<script type="math/tex">O=(o_1,o_2,…,o_T)</script>和状态集合<script type="math/tex">Q=q_1q_2…q_N</script>的情况下，学习模型的参数<script type="math/tex">A</script>和<script type="math/tex">B</script></p>
-</li>
-</ul>
-<h2 id="三、似然概率计算：前向算法"><a href="#三、似然概率计算：前向算法" class="headerlink" title="三、似然概率计算：前向算法"></a><font color="bule">三、似然概率计算：前向算法</font></h2><h3 id="1-直接计算法"><a href="#1-直接计算法" class="headerlink" title="1.直接计算法"></a>1.直接计算法</h3><p>我们现在的问题是给定隐马尔可夫模型参数<script type="math/tex">\lambda=(A,B,\Pi)</script>下计算特定的观测序列<script type="math/tex">O=(o_1,o_2,…,o_T)</script>的似然概率<script type="math/tex">P(O|\lambda)</script>.</p>
-<p>首先我们给出一个例子：</p>
+**我们发现隐马尔可夫模型存在三个基本问题：**
+
+- **似然概率的计算——基于动态规划的前向算法**
+
+  给定一个隐马尔可夫模型参数$$\lambda=(A,B,\Pi)$$和观测序列$$O=(o_1,o_2,…,o_T)$$的情况下，计算似然概率$$P(O|\lambda)$$
+
+- **预测问题(解码)——基于动态规划的维特比算法**
+
+  给定一个隐马尔可夫模型参数$$\lambda=(A,B,\Pi)$$和观测序列的$$O=(o_1,o_2,…,o_T)$$情况下，求对给定观测序列的条件概率$$P(Q|O)$$最大的状态序列$$Q=(q_1,q_2,…,q_T)$$
+
+- **学习问题——基于EM算法的鲍姆-韦尔奇算法**
+
+  给定观测序列的$$O=(o_1,o_2,…,o_T)$$和状态集合$$Q=q_1q_2…q_N$$的情况下，学习模型的参数$$A$$和$$B$$
+
+## <font color="bule">三、似然概率计算：前向算法</font>
+
+### 1.直接计算法
+
+我们现在的问题是给定隐马尔可夫模型参数$$\lambda=(A,B,\Pi)$$下计算特定的观测序列$$O=(o_1,o_2,…,o_T)$$的似然概率$$P(O|\lambda)$$.
+
+首先我们给出一个例子：
+
 <div align="center"><img src="/2019/04/27/Hidden-Markov-Models/example1.png" width="100%" height="100%">图3：天气不同吃冰淇淋数量不同的隐马尔可夫模型</div>
+**图3**，描述的是在天气为$HOT $和$COLD$的情况下，所吃的冰淇淋的数量是不同的，$\Pi$表示出现$HOT$和出现$COLD$的初始化概率，以及在$HOT $和$COLD$之间也存在状态转移概率。矩阵$B$表示的是在给定状态下，吃冰淇淋数量的概率。比如：$P(1|HOT)=0.2$表示在热天气的情况下，吃一根冰淇淋的概率是$0.2$.
 
-<p><strong>图3</strong>，描述的是在天气为$HOT $和$COLD$的情况下，所吃的冰淇淋的数量是不同的，$\Pi$表示出现$HOT$和出现$COLD$的初始化概率，以及在$HOT $和$COLD$之间也存在状态转移概率。矩阵$B$表示的是在给定状态下，吃冰淇淋数量的概率。比如：$P(1|HOT)=0.2$表示在热天气的情况下，吃一根冰淇淋的概率是$0.2$.</p>
-<p>现在，我们的目的是去计算观察到的特定序列的似然概率。比如，给定吃冰淇凌的隐马尔可夫模型参数，去计算观察序列（吃冰淇淋数量）为<script type="math/tex">\left\{3,1,3\right\}</script>的概率。</p>
-<p>假设隐藏状态和观测值的一一对应以及马尔可夫性，隐状态序列<script type="math/tex">Q=(q_1,q_2,…,q_T)</script>和观测序列<script type="math/tex">O=(o_1,o_2,…,o_T)</script>，则<strong>似然概率的计算</strong>为</p>
-<script type="math/tex; mode=display">P(O|Q)=\prod_{i=1}^{T} P(o_i|q_i)</script><p>我们举例说明，比如在给定的隐状态序列<script type="math/tex">\left\{hot , hot, cold\right\}</script>下，计算出出现观测序列为<script type="math/tex">\left\{3,1,3\right\}</script>的概率为</p>
-<script type="math/tex; mode=display">P(3,1,3|hot,hot,cold)=P(3|hot)\times P(1|hot) \times P(3|cold)</script><div align="center"><img src="/2019/04/27/Hidden-Markov-Models/example2.png" width="100%" height="100%">图4：给定状态序列下，计算似然函数</div>
+现在，我们的目的是去计算观察到的特定序列的似然概率。比如，给定吃冰淇凌的隐马尔可夫模型参数，去计算观察序列（吃冰淇淋数量）为$$\left\{3,1,3\right\}$$的概率。
 
-<p>然而，我们<strong>并不知道隐藏的状态序列</strong>，即天气情况。所以，不能根据上述公式求解。</p>
-<p>我们现在想去计算<strong>给定特定的隐藏状态序列和观察序列下的联合概率</strong>。</p>
-<script type="math/tex; mode=display">P(O,Q)=P(O|Q)\times P(Q)=\prod_{i=1}^{T} P(o_i|q_i)\times \prod_{i=1}^{T}P(q_i|q_{i-1})</script><p>所以，观测序列<script type="math/tex">\left\{3,1,3\right\}</script>和一个可能的隐藏状态序列<script type="math/tex">\left\{hot , hot, cold\right\}</script>的联合概率为：</p>
-<script type="math/tex; mode=display">\begin{align} & P(3,1,3,hot,hot,cold)\\ &=P(hot|start)\times P(hot|hot) \times P(cold|hot) \times P(3|hot) \times P(1|hot) \times P(3|cold)\end{align}</script><div align="center"><img src="/2019/04/27/Hidden-Markov-Models/3.png" width="100%" height="100%">图5：计算观测序列{3,1,3}和隐藏状态序列{hot,hot,cold}下的联合概率</div>
+假设隐藏状态和观测值的一一对应以及马尔可夫性，隐状态序列$$Q=(q_1,q_2,…,q_T)$$和观测序列$$O=(o_1,o_2,…,o_T)$$，则**似然概率的计算**为
 
-<p>现在，我们知道了怎样计算具有隐状态序列和观测序列的联合分布，通过对所有的隐状态序列求和，就可以得到观测序列的概率。</p>
-<script type="math/tex; mode=display">P(O|\lambda)=\sum_{Q} P(O,Q|\lambda)=\sum_{Q} P(O|Q,\lambda)P(Q|\lambda)</script><p>每观测到序列的一部分<script type="math/tex">O_1=(o_1,o_2,…,o_t)</script>，就要在所有状态序列<script type="math/tex">Q=(q_1,q_2,…,q_T)</script>下所有的组合的状态序列方式的<script type="math/tex">\sum_{Q} P(O_1,Q|\lambda</script>的概率，每个观测子序列都要考虑所有状态的序列组合。</p>
-<p>对于上述例子，我们有</p>
-<script type="math/tex; mode=display">P(3,1,3)=P(3,1,3,cold,cold,cold)+P(3,1,3,cold,cold,hot)+...</script><p>综上，如果我们有一个含<script type="math/tex">N</script>个隐状态和<script type="math/tex">T</script>个观测值的隐马尔可夫模型，则存在<script type="math/tex">N^T</script>个可能的隐状态序列，在现实的情况下，这样的计算时间复杂度为<script type="math/tex">O(TN^T)</script>.</p>
-<h3 id="2-前向算法"><a href="#2-前向算法" class="headerlink" title="2.前向算法"></a>2.前向算法</h3><p>我们使用称为前向算法，其复杂度为<script type="math/tex">O(N^2T)</script>，而不是使用上述直接计算法。 前向算法是一种动态规划算法的前向算法，即在建立观测序列概率时使用表来存储中间值的算法。 <strong>前向算法通过对可能产生观测序列的所有可能的隐藏状态路径的概率求和来计算观测概率，</strong>但是它通过将这些路径中的每一个隐式地折叠成单个前向格子来有效地实现。</p>
+$$P(O|Q)=\prod_{i=1}^{T} P(o_i|q_i)$$
+
+我们举例说明，比如在给定的隐状态序列$$\left\{hot , hot, cold\right\}$$下，计算出出现观测序列为$$\left\{3,1,3\right\}$$的概率为
+
+$$P(3,1,3|hot,hot,cold)=P(3|hot)\times P(1|hot) \times P(3|cold)$$
+
+<div align="center"><img src="/2019/04/27/Hidden-Markov-Models/example2.png" width="100%" height="100%">图4：给定状态序列下，计算似然函数</div>
+然而，我们**并不知道隐藏的状态序列**，即天气情况。所以，不能根据上述公式求解。
+
+我们现在想去计算**给定特定的隐藏状态序列和观察序列下的联合概率**。
+
+$$P(O,Q)=P(O|Q)\times P(Q)=\prod_{i=1}^{T} P(o_i|q_i)\times \prod_{i=1}^{T}P(q_i|q_{i-1})$$
+
+所以，观测序列$$\left\{3,1,3\right\}$$和一个可能的隐藏状态序列$$\left\{hot , hot, cold\right\}$$的联合概率为：
+
+$$\begin{align} & P(3,1,3,hot,hot,cold)\\ &=P(hot|start)\times P(hot|hot) \times P(cold|hot) \times P(3|hot) \times P(1|hot) \times P(3|cold)\end{align}$$
+
+<div align="center"><img src="/2019/04/27/Hidden-Markov-Models/3.png" width="100%" height="100%">图5：计算观测序列{3,1,3}和隐藏状态序列{hot,hot,cold}下的联合概率</div>
+现在，我们知道了怎样计算具有隐状态序列和观测序列的联合分布，通过对所有的隐状态序列求和，就可以得到观测序列的概率。
+
+$$P(O|\lambda)=\sum_{Q} P(O,Q|\lambda)=\sum_{Q} P(O|Q,\lambda)P(Q|\lambda)$$
+
+每观测到序列的一部分$$O_1=(o_1,o_2,…,o_t)$$，就要在所有状态序列$$Q=(q_1,q_2,…,q_T)$$下所有的组合的状态序列方式的$$\sum_{Q} P(O_1,Q|\lambda$$的概率，每个观测子序列都要考虑所有状态的序列组合。
+
+对于上述例子，我们有
+
+$$P(3,1,3)=P(3,1,3,cold,cold,cold)+P(3,1,3,cold,cold,hot)+...$$
+
+综上，如果我们有一个含$$N$$个隐状态和$$T$$个观测值的隐马尔可夫模型，则存在$$N^T$$个可能的隐状态序列，在现实的情况下，这样的计算时间复杂度为$$O(TN^T)$$.
+
+### 2.前向算法
+
+我们使用称为前向算法，其复杂度为$$O(N^2T)$$，而不是使用上述直接计算法。 前向算法是一种动态规划算法的前向算法，即在建立观测序列概率时使用表来存储中间值的算法。 **前向算法通过对可能产生观测序列的所有可能的隐藏状态路径的概率求和来计算观测概率，**但是它通过将这些路径中的每一个隐式地折叠成单个前向格子来有效地实现。
+
 <div align="center"><img src="/2019/04/27/Hidden-Markov-Models/4.png" width="100%" height="100%">图6：前向算法(一)</div>
+**图6**描述了用于在给定隐藏状态序列$$\left\{hot , hot, cold\right\}$$的情况下计算观测序列$$\left\{3,1,3\right\}$$的可能性的前向算法。
 
-<p><strong>图6</strong>描述了用于在给定隐藏状态序列<script type="math/tex">\left\{hot , hot, cold\right\}</script>的情况下计算观测序列<script type="math/tex">\left\{3,1,3\right\}</script>的可能性的前向算法。</p>
-<p>我们知道<script type="math/tex">\alpha_t(j)</script>表示在给定的模型参数<script type="math/tex">\lambda</script>下，看到前<script type="math/tex">t</script>个观测<script type="math/tex">O=(o_1,o_2,…,o_t)</script>且<script type="math/tex">t</script>时刻隐状态为<script type="math/tex">j</script>的前向概率<script type="math/tex">\begin{align} \alpha_t(j)=P(o_1,o_2,..o_t,q_t=j|\lambda) \tag{1} \end{align}</script></p>
-<p>其中<script type="math/tex">q_t=j</script>表示在状态序列的第<script type="math/tex">t</script>个状态为状态<script type="math/tex">j</script>.</p>
-<p>所以，</p>
-<script type="math/tex; mode=display">\begin{align} \alpha_t(j)=\left[ \sum_{i=1}^{N} \alpha_{t-1}(i)a_{ij} \right] b_j(o_t) \tag{2} \end{align}</script><p>表示从<script type="math/tex">t-1</script>时刻开始，所有可能达到状态<script type="math/tex">j</script>的状态转移概率和观测的条件概率的乘积和。</p>
-<p><strong>符号解释</strong></p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>符号</th>
-<th>定义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><script type="math/tex">\alpha_{t-1}(i)</script></td>
-<td>前<script type="math/tex">t-1</script>时间的前向路径概率</td>
-</tr>
-<tr>
-<td><script type="math/tex">a_{ij}</script></td>
-<td>从前一个状态<script type="math/tex">q_i</script>到现在状态<script type="math/tex">q_j</script>的迁移概率</td>
-</tr>
-<tr>
-<td><script type="math/tex">b_j(o_t)</script></td>
-<td>给定现在的状态<script type="math/tex">q_j</script>观察到的<script type="math/tex">o_t</script>的似然概率（条件概率）</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>现在，我们解释$\alpha_2(2)$的前向概率计算，即在$t=2$时刻达到状态$2$观测$O=(3,1)$的概率。通过<strong>图6</strong>可知，</p>
-<script type="math/tex; mode=display">\begin{align} \alpha_2(2) = \alpha_1(1)\times P(H|C)\times P(1|H)+\alpha_1(2)\times P(H|H)\times P(1|H)\end{align}</script><p><strong>图6</strong>给出了另一种解释方式，用于计算网格的一个新单元格中的值。</p>
+我们知道$$\alpha_t(j)$$表示在给定的模型参数$$\lambda$$下，看到前$$t$$个观测$$O=(o_1,o_2,…,o_t)$$且$$t$$时刻隐状态为$$j$$的前向概率$$\begin{align} \alpha_t(j)=P(o_1,o_2,..o_t,q_t=j|\lambda) \tag{1} \end{align}$$
+
+其中$$q_t=j$$表示在状态序列的第$$t$$个状态为状态$$j$$.
+
+所以，
+
+$$\begin{align} \alpha_t(j)=\left[ \sum_{i=1}^{N} \alpha_{t-1}(i)a_{ij} \right] b_j(o_t) \tag{2} \end{align}$$
+
+表示从$$t-1$$时刻开始，所有可能达到状态$$j$$的状态转移概率和观测的条件概率的乘积和。
+
+**符号解释**
+
+| 符号                | 定义                                                       |
+| ------------------- | ---------------------------------------------------------- |
+| $$\alpha_{t-1}(i)$$ | 前$$t-1$$时间的前向路径概率                                |
+| $$a_{ij}$$          | 从前一个状态$$q_i$$到现在状态$$q_j$$的迁移概率             |
+| $$b_j(o_t)$$        | 给定现在的状态$$q_j$$观察到的$$o_t$$的似然概率（条件概率） |
+
+现在，我们解释$\alpha_2(2)$的前向概率计算，即在$t=2$时刻达到状态$2$观测$O=(3,1)$的概率。通过**图6**可知，
+
+$$\begin{align} \alpha_2(2) = \alpha_1(1)\times P(H|C)\times P(1|H)+\alpha_1(2)\times P(H|H)\times P(1|H)\end{align}$$
+
+**图6**给出了另一种解释方式，用于计算网格的一个新单元格中的值。
+
 <div align="center"><img src="/2019/04/27/Hidden-Markov-Models/5.png" width="100%" height="100%">图7：前向算法(二)</div>
+**图7**中隐藏状态是圆形，观测状态是方形。
 
-<p><strong>图7</strong>中隐藏状态是圆形，观测状态是方形。</p>
 <font color="red">比较直接计算法和前向计算法</font>
 
-<ul>
-<li>直接计算法在计算<script type="math/tex">P(O|\lambda)</script>的时候，没有要把观测序列对应的所有的隐状态的排列方式给出，如果观测序列长度为<script type="math/tex">T</script>，隐状态个数为<script type="math/tex">N</script>，则每次计算都要给出<script type="math/tex">N^T</script>种组合方式；</li>
-<li>前向计算法是在每一次计算<script type="math/tex">\alpha_{t+1}(i)</script>直接引用了上一时刻<script type="math/tex">N</script>个<script type="math/tex">\alpha_t(j)</script>，避免重复计算。</li>
-</ul>
+- 直接计算法在计算$$P(O|\lambda)$$的时候，没有要把观测序列对应的所有的隐状态的排列方式给出，如果观测序列长度为$$T$$，隐状态个数为$$N$$，则每次计算都要给出$$N^T$$种组合方式；
+- 前向计算法是在每一次计算$$\alpha_{t+1}(i)$$直接引用了上一时刻$$N$$个$$\alpha_t(j)$$，避免重复计算。
+
 <font color="blue">观测序列概率的前向算法</font>
 
-<ul>
-<li><strong>输入：</strong>隐马尔可夫模型参数<script type="math/tex">\lambda=(A,B,\Pi)</script>，观测序列长度<script type="math/tex">T</script></li>
-<li><p><strong>输出：</strong>观测序列<script type="math/tex">O=(o_1,o_2,…,o_T)</script></p>
-</li>
-<li><p><strong>初始化：</strong><script type="math/tex">\alpha_1(j)=\pi_j b_j(o_1) \ \  1\leq j\leq N</script></p>
-</li>
-<li><strong>迭代过程：</strong><script type="math/tex">\alpha_t(j)=\left[\sum_{i=1}^{N} \alpha_{t-1}(i) a_{ij}\right] b_j(o_t);\ \ 1\leq j \leq N,1<t\leq T</script></li>
-<li><strong>终止条件：</strong><script type="math/tex">P(O|\lambda)=\sum_{i=1}^{N}\alpha_T(i)</script></li>
-</ul>
-<h2 id="四、预测问题-解码-维特比算法"><a href="#四、预测问题-解码-维特比算法" class="headerlink" title="四、预测问题(解码)-维特比算法"></a><font color="bule">四、预测问题(解码)-维特比算法</font></h2><p>对于包含隐藏变量的任何模型（例如HMM），确定哪个变量序列是某些观察序列的基础源的任务称为解码任务。 在冰淇淋领域，给定冰淇淋观察序列的解码<script type="math/tex">\left\{3,1,3\right\}</script>和HMM，解码器的任务是找到解码器最佳隐藏天气序列<script type="math/tex">(H,H,H)</script>。</p>
-<p><strong>解码</strong>：给定隐马尔可夫模型<script type="math/tex">\lambda=(A,B)</script>和观测序列<script type="math/tex">O_1=(o_1,o_2,…,o_T)</script>，发现最有可能的状态序列，<script type="math/tex">Q=(q_1,q_2,…,q_T)</script>。</p>
-<p>我们可以找到可能的最佳序列如下：对于每个可能的隐藏状态序列（<script type="math/tex">HHH，HHC，HCH</script>等），我们可以运行前向算法并计算观察序列的可能性给定隐藏状态序列。 然后我们可以选择具有最大观测可能性的隐藏状态序列。 从前一节可以清楚地看出，我们不能这样做，因为存在指数级大量的状态序列。</p>
-<p>相反，HMM最常用的解码算法是Viterbi算法。 与前向算法一样，Viterbi是一种动态编程算法。</p>
+- **输入：**隐马尔可夫模型参数$$\lambda=(A,B,\Pi)$$，观测序列长度$$T$$
+- **输出：**观测序列$$O=(o_1,o_2,…,o_T)$$
+
+- **初始化：**$$\alpha_1(j)=\pi_j b_j(o_1) \ \  1\leq j\leq N$$
+- **迭代过程：**$$\alpha_t(j)=\left[\sum_{i=1}^{N} \alpha_{t-1}(i) a_{ij}\right] b_j(o_t);\ \ 1\leq j \leq N,1<t\leq t$$ - **终止条件：**$$p(o|\lambda)="\sum_{i=1}^{N}\alpha_T(i)$$" ## <font color="bule">四、预测问题(解码)-维特比算法
+
+对于包含隐藏变量的任何模型（例如HMM），确定哪个变量序列是某些观察序列的基础源的任务称为解码任务。 在冰淇淋领域，给定冰淇淋观察序列的解码$$\left\{3,1,3\right\}$$和HMM，解码器的任务是找到解码器最佳隐藏天气序列$$(H,H,H)$$。
+
+**解码**：给定隐马尔可夫模型$$\lambda=(A,B)$$和观测序列$$O_1=(o_1,o_2,…,o_T)$$，发现最有可能的状态序列，$$Q=(q_1,q_2,…,q_T)$$。
+
+我们可以找到可能的最佳序列如下：对于每个可能的隐藏状态序列（$$HHH，HHC，HCH$$等），我们可以运行前向算法并计算观察序列的可能性给定隐藏状态序列。 然后我们可以选择具有最大观测可能性的隐藏状态序列。 从前一节可以清楚地看出，我们不能这样做，因为存在指数级大量的状态序列。
+
+相反，HMM最常用的解码算法是Viterbi算法。 与前向算法一样，Viterbi是一种动态编程算法。
+
 <div align="center"><img src="/2019/04/27/Hidden-Markov-Models/6.png" width="100%" height="100%">图8：Viterbi算法</div>
+**图8:**描述通过隐状态空间为吃冰淇淋的数量$$\left\{3,1,3\right\}$$寻找最好的路径，其中圆形表示隐状态，方形表示观测数据，虚线表示非法变迁。
 
-<p><strong>图8:</strong>描述通过隐状态空间为吃冰淇淋的数量<script type="math/tex">\left\{3,1,3\right\}</script>寻找最好的路径，其中圆形表示隐状态，方形表示观测数据，虚线表示非法变迁。</p>
-<script type="math/tex; mode=display">\begin{align}  v_t(j)=\max_{q_1,…,q_{t-1}}P(q_1,…,q_{t-1},o_1,o_2,…,o_t,q_t=j|\lambda)\tag{3} \end{align}</script><p>上述公式表示在观测<script type="math/tex">O=(o_1,o_2,…,o_t)</script>后，现在隐状态为<script type="math/tex">j</script>的最有可能的之前隐状态<script type="math/tex">q_1,q_2,..,q_{t-1}</script>。</p>
-<p>我们使用上述公式，可以递归地去计算。所以，在<script type="math/tex">t</script>时刻给定状态<script type="math/tex">q_j</script>，<script type="math/tex">v_t(j)=\max_{i=1}^{N} v_{t-1}(i) a_{ij} b_j(o_t)</script>，即从当前状态<script type="math/tex">i</script>选取状态<script type="math/tex">j</script>使得到的概率最大。</p>
-<p><strong>我们可以发现，Viterbi算法与前向算法是相似的，只是它在前一个路径概率上取最大值，而前向算法取总和算法。</strong>当然相比于前向算法，Viterbi算法还有一个部分：<strong>回溯指针</strong>，原因是<strong>前向算法只需计算观测的似然概率，但维特比算法必须计算概率以及最可能的状态序列</strong>，我们要通过跟踪导致每个隐藏状态的路径来计算这个最佳状态序列，</p>
+$$\begin{align}  v_t(j)=\max_{q_1,…,q_{t-1}}P(q_1,…,q_{t-1},o_1,o_2,…,o_t,q_t=j|\lambda)\tag{3} \end{align}$$
+
+上述公式表示在观测$$O=(o_1,o_2,…,o_t)$$后，现在隐状态为$$j$$的最有可能的之前隐状态$$q_1,q_2,..,q_{t-1}$$。
+
+我们使用上述公式，可以递归地去计算。所以，在$$t$$时刻给定状态$$q_j$$，$$v_t(j)=\max_{i=1}^{N} v_{t-1}(i) a_{ij} b_j(o_t)$$，即从当前状态$$i$$选取状态$$j$$使得到的概率最大。
+
+**我们可以发现，Viterbi算法与前向算法是相似的，只是它在前一个路径概率上取最大值，而前向算法取总和算法。**当然相比于前向算法，Viterbi算法还有一个部分：**回溯指针**，原因是**前向算法只需计算观测的似然概率，但维特比算法必须计算概率以及最可能的状态序列**，我们要通过跟踪导致每个隐藏状态的路径来计算这个最佳状态序列，
+
 <div align="center"><img src="/2019/04/27/Hidden-Markov-Models/7.png" width="100%" height="100%">图9：Viterbi回溯</div>
+**图9:**描述当我们为了得到下一个观测数据，将每个路径扩展到新的状态上时，我们就建立一个回溯指针（用虚线显示），用来记录到达现在状态的最好的路径。
 
-<p><strong>图9:</strong>描述当我们为了得到下一个观测数据，将每个路径扩展到新的状态上时，我们就建立一个回溯指针（用虚线显示），用来记录到达现在状态的最好的路径。</p>
 <font color="blue">维特比算法</font>
 
-<ul>
-<li><p><strong>输入：</strong>隐马尔科夫模型参数<script type="math/tex">\lambda=(A,B,\Pi)</script>和观测序列<script type="math/tex">O=(o_1,o_2,…,o_T)</script></p>
-</li>
-<li><p><strong>输出：</strong>最优隐状态序列<script type="math/tex">Q=(q_1,q_2,…,q_T)</script></p>
-</li>
-<li><p><strong>初始化</strong></p>
-<script type="math/tex; mode=display">v_1(j)=\pi_j b_j(o_1)\ \ 1 \leq j \leq N</script><script type="math/tex; mode=display">b_{t_1}(j)=0\ \ 1\leq j \leq N</script></li>
-<li><p><strong>迭代过程</strong></p>
-<script type="math/tex; mode=display">v_t(j)=\max_{i=1}^{N} v_{t-1}(i) a_{ij} b_j(o_t);\ \ 1\leq j \leq N, 1<t \leq T</script><script type="math/tex; mode=display">b_{t_t}(j)=\arg \max_{i=1}^{N} v_{t-1} (i)a_{ij}b_j(o_t); \ \ 1\leq j \leq N,1<t \leq T</script><p>其中<script type="math/tex">b_{t_t}(j)</script>用来记录最优状态的回溯指针</p>
-</li>
-<li><p><strong>终止条件</strong></p>
-<p>最大的概率：<script type="math/tex">P^{\ast}=\max_{i=1}^{N} v_T(i)</script></p>
-<p>回溯的开始点：<script type="math/tex">q_T^{\ast}=\arg \max_{i=1}^{N} v_T(i)</script></p>
-</li>
-</ul>
-<h2 id="五、HMM训练：Baum-Welch算法"><a href="#五、HMM训练：Baum-Welch算法" class="headerlink" title="五、HMM训练：Baum-Welch算法"></a><font color="bule">五、HMM训练：Baum-Welch算法</font></h2><p>我们现在的问题转为在给定观察序列<script type="math/tex">O</script>和HMM中的可能状态集合，学习HMM参数<script type="math/tex">A</script>和<script type="math/tex">B</script>.</p>
-<p>这种学习算法的输入是未标记的观察序列<script type="math/tex">O</script>和隐藏状态Q。因此，对于冰淇淋任务，我们将从一系列观察<script type="math/tex">O = \left\{1,3,2… \right\}</script>以及隐状态<script type="math/tex">H</script>、<script type="math/tex">C</script>开始。</p>
-<p> <strong>HMM训练的算法是Baum-Welch算法（也称为前向-后向算法）， 该算法将让我们训练HMM的转移概率A和释放概率B。</strong> EM是一种迭代算法，计算概率的初始估计，然后使用这些估计来计算更好的估计，迭代地提高它学习的概率。</p>
-<p>让我们首先考虑更简单的训练完全可见马尔可夫模型的情况，我们知道每天的温度和冰淇淋数。 也就是说，想象一下，我们看到以下一组输入观察结果并神奇地知道对齐的隐藏状态序列</p>
-<div align="center"><img src="/2019/04/27/Hidden-Markov-Models/9.png" width="90%" height="90%">图10：冰淇淋例子</div>
+- **输入：**隐马尔科夫模型参数$$\lambda=(A,B,\Pi)$$和观测序列$$O=(o_1,o_2,…,o_T)$$
 
-<p>这将我们很容易仅通过训练数据的最大似然估计来计算HMM参数。 首先，我们可以从3个初始隐藏状态序列的计数中计算初始化状态分布<script type="math/tex">\pi_h=1/3 ,\ \ \pi_c =1/3</script>.</p>
-<p>接下来，我们直接计算状态变迁概率矩阵<script type="math/tex">A</script>：</p>
-<script type="math/tex; mode=display">p(hot|hot)=2/3 \quad p(cold|hot)=1/3 \\ p(cold|cold)=1/2 \quad p(hot|cold)=1/2</script><p>观测矩阵<script type="math/tex">B</script>：</p>
-<script type="math/tex; mode=display">p(1|hot)=0/4=0 \quad  p(1|cold)=3/5 \\ p(2|hot)=1/4 \quad p(2|cold)=2/5 \\p(3|hot)=3/4 \quad p(3|cold)=0</script><p><strong>对于真正的HMM，我们不可能直接从观察序列中计算出这些结果，因为我们不知道机器获取的哪个状态路径。</strong> 例如，假设我没有告诉你第2天的温度，你必须猜测它，但你（神奇地）有上述概率，以及其他日子的温度。 您可以使用所有其他概率进行一些贝叶斯算法来估算缺失日的可能温度，并使用这些算法获得第2天温度的预期计数。</p>
-<p>但真正的问题更难：<strong>我们不知道任何隐藏状态的上述结果</strong>，而Baum-Welch算法可以通过迭代估计来解决这个问题。 我们将从变迁和观测概率的估计开始，然后使用这些估计的概率来推导更好的概率。</p>
-<p>为了更好地理解这个算法，我们首先定义一个与前向算法相关的算法：<strong>后向算法</strong>。</p>
-<p>后向概率<script type="math/tex">\beta</script>是在给定当前<script type="math/tex">t</script>时刻、当前状态为<script type="math/tex">i</script>，从时刻<script type="math/tex">t+1</script>到最终时刻所观测到的序列的概率。</p>
-<script type="math/tex; mode=display">\begin{align}\beta_t (i)=P(o_{t+1},o_{t+2},…o_T|q_t=i,\lambda)\tag{4} \end{align}</script><p>它与前向算法类似的方式被计算。</p>
+- **输出：**最优隐状态序列$$Q=(q_1,q_2,…,q_T)$$
+
+- **初始化**
+
+  $$v_1(j)=\pi_j b_j(o_1)\ \ 1 \leq j \leq N$$
+
+  $$b_{t_1}(j)=0\ \ 1\leq j \leq N$$
+
+- **迭代过程**
+
+  $$v_t(j)=\max_{i=1}^{N} v_{t-1}(i) a_{ij} b_j(o_t);\ \ 1\leq j \leq N, 1<t \leq t$$ $$b_{t_t}(j)="\arg" \max_{i="1}^{N}" v_{t-1} (i)a_{ij}b_j(o_t); \ 1\leq j n,1<t t $$ 其中$$b_{t_t}(j)$$用来记录最优状态的回溯指针 - **终止条件** 最大的概率：$$p^{\ast}="\max_{i=1}^{N}" v_t(i)$$ 回溯的开始点：$$q_t^{\ast}="\arg" ## <font color="bule">五、HMM训练：Baum-Welch算法
+
+我们现在的问题转为在给定观察序列$$O$$和HMM中的可能状态集合，学习HMM参数$$A$$和$$B$$.
+
+这种学习算法的输入是未标记的观察序列$$O$$和隐藏状态Q。因此，对于冰淇淋任务，我们将从一系列观察$$O = \left\{1,3,2… \right\}$$以及隐状态$$H$$、$$C$$开始。
+
+ **HMM训练的算法是Baum-Welch算法（也称为前向-后向算法）， 该算法将让我们训练HMM的转移概率A和释放概率B。** EM是一种迭代算法，计算概率的初始估计，然后使用这些估计来计算更好的估计，迭代地提高它学习的概率。
+
+让我们首先考虑更简单的训练完全可见马尔可夫模型的情况，我们知道每天的温度和冰淇淋数。 也就是说，想象一下，我们看到以下一组输入观察结果并神奇地知道对齐的隐藏状态序列
+
+<div align="center"><img src="/2019/04/27/Hidden-Markov-Models/9.png" width="90%" height="90%">图10：冰淇淋例子</div>
+这将我们很容易仅通过训练数据的最大似然估计来计算HMM参数。 首先，我们可以从3个初始隐藏状态序列的计数中计算初始化状态分布$$\pi_h=1/3 ,\ \ \pi_c =1/3 $$.
+
+接下来，我们直接计算状态变迁概率矩阵$$A$$：
+
+$$p(hot|hot)=2/3 \quad p(cold|hot)=1/3 \\ p(cold|cold)=1/2 \quad p(hot|cold)=1/2 $$
+
+观测矩阵$$B$$：
+
+$$p(1|hot)=0/4=0 \quad  p(1|cold)=3/5 \\ p(2|hot)=1/4 \quad p(2|cold)=2/5 \\p(3|hot)=3/4 \quad p(3|cold)=0$$
+
+**对于真正的HMM，我们不可能直接从观察序列中计算出这些结果，因为我们不知道机器获取的哪个状态路径。** 例如，假设我没有告诉你第2天的温度，你必须猜测它，但你（神奇地）有上述概率，以及其他日子的温度。 您可以使用所有其他概率进行一些贝叶斯算法来估算缺失日的可能温度，并使用这些算法获得第2天温度的预期计数。
+
+但真正的问题更难：**我们不知道任何隐藏状态的上述结果**，而Baum-Welch算法可以通过迭代估计来解决这个问题。 我们将从变迁和观测概率的估计开始，然后使用这些估计的概率来推导更好的概率。
+
+为了更好地理解这个算法，我们首先定义一个与前向算法相关的算法：**后向算法**。
+
+后向概率$$\beta$$是在给定当前$$t$$时刻、当前状态为$$i$$，从时刻$$t+1$$到最终时刻所观测到的序列的概率。
+
+$$\begin{align}\beta_t (i)=P(o_{t+1},o_{t+2},…o_T|q_t=i,\lambda)\tag{4} \end{align}$$
+
+它与前向算法类似的方式被计算。
+
 <font color="blue">后向算法</font>
 
-<ul>
-<li><p><strong>输入：</strong>隐马尔可夫模型参数<script type="math/tex">\lambda=(A,B,\Pi)</script>，观测序列长度<script type="math/tex">T</script></p>
-</li>
-<li><p><strong>输出：</strong>观测序列<script type="math/tex">O=(o_1,o_2,…,o_T)</script></p>
-</li>
-<li><p><strong>初始化</strong></p>
-<script type="math/tex; mode=display">\beta_T(i)=1,\ \ 1\leq i \leq N</script></li>
-<li><p><strong>迭代过程</strong></p>
-<script type="math/tex; mode=display">\beta_t(i)=\sum_{j=1}^{N}a_{ij}b_j(o_{t+1})\beta_{t+1}(j),\ \ 1\leq i \leq N,1\leq t <T</script></li>
-<li><p><strong>终止条件</strong></p>
-<script type="math/tex; mode=display">P(O|\lambda)=\sum_{j=1}^{N} \pi_j b_j(o_1)\beta_1(j)</script><div align="center"><img src="/2019/04/27/Hidden-Markov-Models/8.png" width="90%" height="90%">图11：后向算法</div>
+- **输入：**隐马尔可夫模型参数$$\lambda=(A,B,\Pi)$$，观测序列长度$$T$$
 
-</li>
-</ul>
+- **输出：**观测序列$$O=(o_1,o_2,…,o_T)$$
+
+- **初始化**
+
+  $$\beta_T(i)=1,\ \ 1\leq i \leq N$$
+
+- **迭代过程**
+
+  $$\beta_t(i)=\sum_{j=1}^{N}a_{ij}b_j(o_{t+1})\beta_{t+1}(j),\ \ 1\leq i \leq N,1\leq t <t$$ - **终止条件** $$p(o|\lambda)="\sum_{j=1}^{N}" \pi_j b_j(o_1)\beta_1(j)$$ <div align="center"><img src="/2019/04/27/Hidden-Markov-Models/8.png" width="90%" height="90%">图11：后向算法
+
 <p>我们已经了解了前向和后向概率，现在我们用它们来帮助计算观测序列的状态变迁概率<script type="math/tex">a_{ij}</script>和观测概率<script type="math/tex">b_i(o_t)</script>，以及整个模型中实际的隐藏的路径。</p>
 <p>首先我们使用最大似然估计来估计变量<script type="math/tex">\hat{a}_{ij}</script>：</p>
 <script type="math/tex; mode=display">\begin{align}\hat{a}_{ij}=\dfrac{\mbox{expected number of transitions from state i to state j}}{\mbox{exptected number of transitions from state i}}\tag{5} \end{align}</script><p>我们如何计算分子？ 假设我们已经对观察序列中特定时间<script type="math/tex">t</script>的给定变迁<script type="math/tex">i→j</script>的概率进行了一些估计。 如果我们知道对于每个特定时间<script type="math/tex">t</script>的变迁概率，我们就能就可以把它们求和，对整体进行<script type="math/tex">i\rightarrow j</script>的估计。</p>
 <p>形式化的，我们定义<script type="math/tex">\xi_t</script>为在给定观测序列下，<script type="math/tex">t</script>时刻在状态<script type="math/tex">i</script>以及<script type="math/tex">t+1</script>时刻在状态<script type="math/tex">j</script>的概率。</p>
 <script type="math/tex; mode=display">\begin{align}\xi_t(i,j)=P(q_t=i,q_{t+1}=j|O,\lambda)\tag{6} \end{align}</script><p>为了计算<script type="math/tex">\xi_t</script>，我们需要先计算另一个概率（与上述公式不同的是包含观测序列的概率）：</p>
-<script type="math/tex; mode=display">\begin{align}\mbox{not-quite-}\xi_t(i,j)=P(q_t=i,q_{t+1}=j,O|\lambda)\tag{7} \end{align}</script><div align="center"><img src="/2019/04/27/Hidden-Markov-Models/10.png" width="90%" height="90%">图12：计算在t时刻状态i和t+1时刻状态j的联合概率</div>
-
-<p><strong>图12</strong>显示了计算的<script type="math/tex">\mbox{not-quite-}\xi_t(i,j)</script>的各种概率：中间部分的弧的转移概率，前半部分弧前的<script type="math/tex">\alpha</script>概率，后半部分弧后的<script type="math/tex">β</script>概率，以及释放概率。 将这四个相乘以产生<script type="math/tex">\mbox{not-quite-}\xi_t(i,j)</script>:</p>
+<script type="math/tex; mode=display">\begin{align}\mbox{not-quite-}\xi_t(i,j)=P(q_t=i,q_{t+1}=j,O|\lambda)\tag{7} \end{align}</script><p><div align="center"><img src="/2019/04/27/Hidden-Markov-Models/10.png" width="90%" height="90%">图12：计算在t时刻状态i和t+1时刻状态j的联合概率</div><br><strong>图12</strong>显示了计算的<script type="math/tex">\mbox{not-quite-}\xi_t(i,j)</script>的各种概率：中间部分的弧的转移概率，前半部分弧前的<script type="math/tex">\alpha</script>概率，后半部分弧后的<script type="math/tex">β</script>概率，以及释放概率。 将这四个相乘以产生<script type="math/tex">\mbox{not-quite-}\xi_t(i,j)</script>:</p>
 <script type="math/tex; mode=display">\begin{align}\mbox{not-quite-}\xi_t(i,j)=\alpha_t(i)a_{ij}b_j(o_{t+1})\beta_{t+1}(j)\tag{8} \end{align}</script><p>根据<strong>图12</strong>结合前向算法和后向算法的公式，我们得到给定模型下，观测序列的概率为</p>
 <script type="math/tex; mode=display">P(O|\lambda)=\sum_{j=1}^{N}\alpha_t(j)\beta_{t}(j)</script><p>根据<script type="math/tex">P(X|Y,Z)=\dfrac{P(X,Y|Z)}{P(Y|Z)}</script>,我们可以计算出</p>
 <script type="math/tex; mode=display">\begin{align}\xi_t(i,j)=P(q_t=i,q_{t+1}=j|O,\lambda)=\dfrac{P(q_t=i,q_{t+1}=j,O|\lambda)}{P(O|\lambda)}=\dfrac{\alpha_t(i)a_{ij}b_j(o_{t+1})\beta_{t+1}(j)}{\sum_{j=1}^{N}\alpha_t(j)\beta_{t}(j)}\tag{9} \end{align}</script><p>从状态<script type="math/tex">i</script>到状态<script type="math/tex">j</script>的期望变迁次数，是所有<script type="math/tex">\xi_t</script>的总和。根据公式(5)可知，</p>
 <script type="math/tex; mode=display">\begin{align}\hat{a}_{ij}=\dfrac{\sum_{t=1}^{T-1}\xi_t(i,j)}{\sum_{t=1}^{T-1}\sum_{k=1}^{N}\xi_t(i,k)}\tag{10} \end{align}</script><p>我们同时需要重新计算观测概率：给定状态<script type="math/tex">j</script>下观测到变量<script type="math/tex">v_k</script>的概率：</p>
 <script type="math/tex; mode=display">\begin{align}\hat{b}_{j}(v_k)=\dfrac{\mbox{expected number of times in state j and observing symbol }v_k}{\mbox{exptected number of times in state j}}\tag{11} \end{align}</script><p>对于公式(11)，我们需要知道在时刻<script type="math/tex">t</script>、状态<script type="math/tex">j</script>的概率：</p>
 <script type="math/tex; mode=display">\begin{align}\gamma_t(j)=P(q_t=j|O,\lambda)\tag{12} \end{align}</script><p>再次根据<script type="math/tex">P(X|Y,Z)=\dfrac{P(X,Y|Z)}{P(Y|Z)}</script>，我们可以计算得到：</p>
-<script type="math/tex; mode=display">\begin{align}\gamma_t(j)=\dfrac{P(q_t=j,O|\lambda)}{P(O|\lambda)}\tag{13} \end{align}</script><div align="center"><img src="/2019/04/27/Hidden-Markov-Models/11.png" width="90%" height="90%">图13：计算在t时刻在状态j的概率</div>
-
-<p>根据前向算法<script type="math/tex">\alpha_t(j)=P(o_1,o_2,..o_t,q_t=j|\lambda)</script>和后向算法<script type="math/tex">\beta_t (j)=P(o_{t+1},o_{t+2},…o_T|q_t=j,\lambda)</script>，我们得：</p>
+<script type="math/tex; mode=display">\begin{align}\gamma_t(j)=\dfrac{P(q_t=j,O|\lambda)}{P(O|\lambda)}\tag{13} \end{align}</script><p><div align="center"><img src="/2019/04/27/Hidden-Markov-Models/11.png" width="90%" height="90%">图13：计算在t时刻在状态j的概率</div><br>根据前向算法<script type="math/tex">\alpha_t(j)=P(o_1,o_2,..o_t,q_t=j|\lambda)</script>和后向算法<script type="math/tex">\beta_t (j)=P(o_{t+1},o_{t+2},…o_T|q_t=j,\lambda)</script>，我们得：</p>
 <script type="math/tex; mode=display">\begin{align}P(q_t=j,o_1,o_2,…,o_T|\lambda)=\alpha_t(j) \beta_t (j) \tag{14} \end{align}</script><p>所以公式(13)可以写为：</p>
 <script type="math/tex; mode=display">\begin{align}\gamma_t(j)=\dfrac{P(q_t=j,O|\lambda)}{P(O|\lambda)}=\dfrac{\alpha_t(j) \beta_t (j)}{\sum_{j=1}^{N}\alpha_t(j)\beta_{t}(j)}\tag{14} \end{align}</script><p>则公式(11)可以写为</p>
 <script type="math/tex; mode=display">\begin{align}\hat{b}_{j}(v_k)=\dfrac{\sum_{t=1\mbox{ s.t.}o_t=v_k}^{T}\gamma_t(j)}{\sum_{t=1}^{T}\gamma_t(j)}\tag{15} \end{align}</script><p>其中<script type="math/tex">\sum_{t=1\mbox{ s.t.}o_t=v_k}^{T}</script>表示对所有<script type="math/tex">t</script>求和，而且每个<script type="math/tex">t</script>时刻观察的变量为<script type="math/tex">v_k</script>.</p>
@@ -686,7 +695,7 @@ height:50vh;
 <li><strong>参考资料2</strong>：<a href="https://www.jianshu.com/p/0f175b9781de" target="_blank" rel="noopener">https://www.jianshu.com/p/0f175b9781de</a></li>
 <li>本博文为原创总结，如有转载，请注名出处！</li>
 </ul>
-
+</t$$></t></t\leq>
     </article>
     <!-- license  -->
     
@@ -823,7 +832,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、马尔可夫链"><span class="toc-number">1.</span> <span class="toc-text">一、马尔可夫链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、隐马尔可夫模型"><span class="toc-number">2.</span> <span class="toc-text">二、隐马尔可夫模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、似然概率计算：前向算法"><span class="toc-number">3.</span> <span class="toc-text">三、似然概率计算：前向算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-直接计算法"><span class="toc-number">3.1.</span> <span class="toc-text">1.直接计算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-前向算法"><span class="toc-number">3.2.</span> <span class="toc-text">2.前向算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、预测问题-解码-维特比算法"><span class="toc-number">4.</span> <span class="toc-text">四、预测问题(解码)-维特比算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、HMM训练：Baum-Welch算法"><span class="toc-number">5.</span> <span class="toc-text">五、HMM训练：Baum-Welch算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、代码实现"><span class="toc-number">6.</span> <span class="toc-text">六、代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-维特比算法"><span class="toc-number">6.1.</span> <span class="toc-text">1.维特比算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Baum-Welch算法"><span class="toc-number">6.2.</span> <span class="toc-text">2.Baum-Welch算法</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、马尔可夫链"><span class="toc-number">1.</span> <span class="toc-text">一、马尔可夫链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、代码实现"><span class="toc-number">2.</span> <span class="toc-text">六、代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-维特比算法"><span class="toc-number">2.1.</span> <span class="toc-text">1.维特比算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Baum-Welch算法"><span class="toc-number">2.2.</span> <span class="toc-text">2.Baum-Welch算法</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -836,12 +845,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1445,6 +1448,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/10</span><a class="archive-post-title" href="/2019/07/10/gradient-descent/">梯度下降优化算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">07/08</span><a class="archive-post-title" href="/2019/07/08/feature-selection/">特征选择</a>
         </li>
     
@@ -1580,11 +1588,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span><a class="archive-post-title" href="/2019/04/02/meachine-learning-question/">机器学习问题的梳理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">04/02</span><a class="archive-post-title" href="/2019/04/02/recommend-system-5/">推荐系统（六）</a>
         </li>
     
@@ -1692,11 +1695,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="数据挖掘实践"><span class="iconfont-archer">&#xe60a;</span>数据挖掘实践</span>
     
-        <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
-    
-        <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
-    
         <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
+    
+        <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.3k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">5.3k</span>阅读时长: <span class="post-count reading-time">19 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -429,15 +429,15 @@ Recall = \dfrac{分类正确的正样本个数:TP}{真正的正样本个数:TP+F
 <p><strong>Precision</strong>和<strong>Recall</strong>值是既矛盾又统一的指标，为提高Precision值，分类器需要尽量在<strong>“更有把握”</strong>时才把样本预测为正样本(<strong>TP</strong>)，但此时往往会因为过于保守而漏掉很多<strong>“没有把握”</strong>的正样本(<strong>FN</strong>)，导致Recall值降低。</p>
 <p><strong>总结一：</strong>明确在样本不均衡的时候，直接使用准确率评估指标，对模型结果的影响很大。同时在使用精确率和召回率时，这两个时矛盾体，他们两的分母不同，一个是分类器判定的正样本个数，一个是真正的正样本个数。</p>
 <p><strong>总结二：</strong>在排序问题中，我们通常采用<strong>Top N</strong>返回结果的<strong>Precision</strong>和<strong>Recall</strong>值来衡量排序模型的性能。采用<strong>Precision</strong>返回结果，一般效果很好，但是在实际应用过程中，用户为了找<strong>一些冷门的视频</strong>，往往寻找排在靠后位置的结果，问题在召回率上。此时，应该考虑<strong>使用P-R曲线</strong>，横轴是召回率，纵轴为精确率。</p>
-<p><img src="/2019/07/30/meachine-learning-summary/P-R曲线.png" width="65%" height="65%"></p>
+<p><img src="/2019/07/30/meachine-learning-summary/P-R曲线.png" width="55%" height="55%"></p>
 <p>只用单独某一个点对应的精确率和召回率是不能全面衡量模型的性能，只能通过P-R曲线的整体表现，才能够对模型进行全面的评估。</p>
-<p>如果<strong>一个学习器的P-R曲线被另一个学习器的P-R曲线完全包住，则可断言后者的性能优于前者</strong>，例如上面的A和B优于学习器C，但是A和B的性能无法直接判断，但我们往往仍希望把学习器A和学习器B进行一个比较，我们可以根据<strong>曲线下方的面积大小来进行比较</strong>，但更常用的是<strong>平衡点</strong>或者是F1值。<strong>平衡点（BEP）是查准率=查全率时的取值，如果这个值较大，则说明学习器的性能较好</strong>。而<script type="math/tex">F1=\dfrac{2 \times Precision \times Recall}{Precision + Recall}</script>，同样，F1值越大，我们可以认为该学习器的性能较好。</p>
-<h2 id="4-ROC-曲线"><a href="#4-ROC-曲线" class="headerlink" title="4. ROC 曲线"></a>4. ROC 曲线</h2><script type="math/tex; mode=display">FPR=\dfrac{FP}{N}  $$  $$    其中N = FP+TN</script><script type="math/tex; mode=display">TPR=\dfrac{TP}{P}  $$  $$ 其中 P =TP+FN</script><p><img src="/2019/07/30/meachine-learning-summary/ROC.jpg" width="65%" height="65%"></p>
+<p>如果<strong>一个学习器的P-R曲线被另一个学习器的P-R曲线完全包住，则可断言后者的性能优于前者</strong>，例如上面的A和B优于学习器C，但是A和B的性能无法直接判断，但我们往往仍希望把学习器A和学习器B进行一个比较，我们可以根据<strong>曲线下方的面积大小来进行比较</strong>，但更常用的是<strong>平衡点</strong>或者是F1值。<strong>平衡点（BEP）是查准率=查全率时的取值，如果这个值较大，则说明学习器的性能较好</strong>。而<script type="math/tex">\mbox{F1}=\dfrac{2 \times \mbox{Precision} \times \mbox{Recall}}{\mbox{Precision} + \mbox{Recall}}</script>，同样，F1值越大，我们可以认为该学习器的性能较好。</p>
+<h2 id="4-ROC-曲线"><a href="#4-ROC-曲线" class="headerlink" title="4. ROC 曲线"></a>4. ROC 曲线</h2><script type="math/tex; mode=display">\mbox{FPR}=\dfrac{\mbox{FP}}{\mbox{N}}  $$  $$    其中N = \mbox{FP}+\mbox{TN}</script><script type="math/tex; mode=display">\mbox{TPR}=\dfrac{\mbox{TP}}{\mbox{P}}  $$  $$ 其中 \mbox{P} =\mbox{TP}+\mbox{FN}</script><p><img src="/2019/07/30/meachine-learning-summary/ROC.jpg" width="65%" height="65%"></p>
 <p>纵坐标是正阳率，横坐标是是伪阳率。</p>
 <p><strong>AUC</strong>为<strong>ROC</strong>曲线下的面积大小，该值量化地反映ROC曲线衡量出的模型性能。<br>相比于P-R曲线，AUC曲线对于不同的数据分布，变化更小。当正负样本比例不均衡，使用AUC曲线，比P-R曲线更能反映模型本身的好坏。</p>
 <h2 id="5-平方根误差"><a href="#5-平方根误差" class="headerlink" title="5.平方根误差"></a>5.平方根误差</h2><script type="math/tex; mode=display">RMSE = \sqrt{\dfrac{\sum_{i=1}^n(y_i-\hat{y}_i)^2}{n}}  $$，衡量回归模型的好坏。
 
-如果存在个别偏离程度非常大的离群点(**Outlier**)时，即使离群点数量非常少，也会让$ RMSE $指标变得很差。对于噪声点，我们可以选择直接过滤掉；或者使用更鲁棒性的指标平方绝对百分比误差$$ MAPE= \sum_{i=1}^{n}|\dfrac{y_i-\hat{y_i}}{y_i}|\times \dfrac{100}{n}$$，相当于把每个点的误差进行归一化，将对了个别离群点带来的绝对误差的影响。
+如果存在个别偏离程度非常大的离群点(**Outlier**)时，即使离群点数量非常少，也会让$ RMSE $指标变得很差。对于噪声点，我们可以选择直接过滤掉；或者使用更鲁棒性的指标平方绝对百分比误差$$ \mbox{MAPE}= \sum_{i=1}^{n}|\dfrac{y_i-\hat{y_i}}{y_i}|\times \dfrac{100}{n}$$，相当于把每个点的误差进行归一化，将对了个别离群点带来的绝对误差的影响。
 
 ## 6. A/B测试
 
@@ -455,9 +455,9 @@ Recall = \dfrac{分类正确的正样本个数:TP}{真正的正样本个数:TP+F
 
 **k-fold交叉验证**：将全部数据样本划分为k个大小相等的样本子集，依次遍历这k个子集，每次把当前子集作为验证集，其余所有子集作为训练集；最后把k次评估指标的平均值作为最终的评估指标。
 
-**留一验证：**每次留1个样本作为验证集，其余所有样本作为测试集，样本总数为n,依次对n个样本进行遍历，进行n次验证，再将评估指标求平均值得到最终的评估指标。
+**留一验证：**每次留1个样本作为验证集，其余所有样本作为测试集，样本总数为$n$,依次对$n$个样本进行遍历，进行n次验证，再将评估指标求平均值得到最终的评估指标。
 
-**自助交叉验证**：当数据量比较小的时候，样本进行划分，会让训练集进一步减小，会影响模型训练效果。我们采用自助(Bootstrap)采样，在总数为n的样本中，又放回地进行n次随机抽样，得到大小为n的训练集。在采样中有些样本被重复采样，有些样本没有被抽取过，将这些没有被抽出的样本作为验证集，进行模型的验证。当数据很大时，有大约$$  36.8\% $$的样本从未被选择。
+**自助交叉验证**：当数据量比较小的时候，样本进行划分，会让训练集进一步减小，会影响模型训练效果。我们采用自助(Bootstrap)采样，在总数为$n$的样本中，又放回地进行$n$次随机抽样，得到大小为$n$的训练集。在采样中有些样本被重复采样，有些样本没有被抽取过，将这些没有被抽出的样本作为验证集，进行模型的验证。当数据很大时，有大约$$  36.8\% $$的样本从未被选择。
 
 ## 8. 解决过拟合和欠拟合的方法
 
@@ -507,6 +507,113 @@ Recall = \dfrac{分类正确的正样本个数:TP}{真正的正样本个数:TP+F
 <li>LDA是服务于分类的，因此只要找到一个投影方向$w$，使得投影后的样本尽可能按照原始类别分开</li>
 <li>中心思想：最大化类间距离和最小化类内距离</li>
 <li>目标函数：<script type="math/tex">\max_{w}J(w)=\dfrac{||w^{T}(\mu_1-\mu_2)||_{2}^{2}}{D_1+D_2}</script>，表示为类间距离和类内距离的比值</li>
+</ul>
+<h2 id="13-聚类算法"><a href="#13-聚类算法" class="headerlink" title="13. 聚类算法"></a>13. 聚类算法</h2><p><strong>高斯混合模型和$K$均值算法</strong></p>
+<p><strong>相同点：</strong>都需要制定$K$值，都使用$EM$算法求解，都往往只能收敛于局部最优</p>
+<p><strong>不同点：</strong>相比于$K$均值算法，高斯混合模型可以给出一个样本属于某类的概率是多少，不仅可以用于聚类，还可以用于概率的估计；并且可以用于生成新的样本点。</p>
+<h2 id="14-举例采样在机器学习中的应用"><a href="#14-举例采样在机器学习中的应用" class="headerlink" title="14. 举例采样在机器学习中的应用"></a>14. 举例采样在机器学习中的应用</h2><ul>
+<li><p>采样本质上是对随机现象的模拟，根据给定的概率分布，来模拟产生一个对应的随机事件。</p>
+</li>
+<li><p>采样的目的是用较少量的样本点来近似总体分布，来刻画总体分布的不确定性，相当于信息降维</p>
+</li>
+<li>使用重采样可以帮助解决样本不均衡问题</li>
+<li>当模型结构复杂、含有隐变量，导致求解公式比较复杂时，可以使用采样进行随机模拟，从而对复杂模型进行近似求解。</li>
+</ul>
+<h2 id="15-常见的采样方法"><a href="#15-常见的采样方法" class="headerlink" title="15.常见的采样方法"></a>15.常见的采样方法</h2><p>对于一些简单的分布，可以直接用均匀采样的一些扩展方法（有限离散分布）来产生样本点，然而很多分布一般不好直接进行采样。</p>
+<h3 id="15-1-逆变换采样"><a href="#15-1-逆变换采样" class="headerlink" title="15.1 逆变换采样"></a>15.1 逆变换采样</h3><p>（1） 从均匀分布$U(0,1)$产生一个随机数$u_i$</p>
+<p>（2）计算$x_i=\Phi^{-1}(u_i)$,其中$\Phi^{-1}(\cdot)$是累积分布函数的逆函数</p>
+<p> 上述采样方式，使用了累积分布函数的逆函数，当<strong>逆函数无法求解时或者不容易计算</strong>，则<strong>不适用于逆变换采样法</strong>。此时可以<strong>构造一个容易采样的参考分布</strong>，先对参考分布进行采样，然后对得到的样本进行一定的后处理操作，使得最终的样本服从目标分布。属于这种采样方法的有<strong>拒绝采样(Rejection Sampling)、重要性采样(Importance Sampling).</strong></p>
+<p><img src="/2019/07/30/meachine-learning-summary/InverseTransformSampling.png" width="65%" height="65%"></p>
+<h3 id="15-2-拒绝采样"><a href="#15-2-拒绝采样" class="headerlink" title="15.2 拒绝采样"></a>15.2 拒绝采样</h3><p>对目标分布$p(x)$，选取一个容易采样的参考分布$q(x)$，使得对于任意$x$都有$p(x)\leq M \cdot q(x)$，则可以按如下过程进行采样：</p>
+<p>（1）从参考分布$q(x)$中随机抽取一个样本$x_i$</p>
+<p>（2）从均匀分布$U(0,1)$产生一个随机数$u_i$</p>
+<p>（3）如果$u_i &lt;\dfrac{p(x_i)}{M q(x_i)}$,则接受样本$x_i$；否则拒绝，重新进行步骤（1）-（3），直到新产生的样本$x_i$被接受</p>
+<p><img src="/2019/07/30/meachine-learning-summary/RejectionSampling.png" width="65%" height="65%"></p>
+<p>拒绝采样的关键是选取合适的$M \cdot q(x)$为包络函数，包络函数越紧，每次采样时样本被接受的概率越大。</p>
+<h3 id="15-3-重要性采样"><a href="#15-3-重要性采样" class="headerlink" title="15.3 重要性采样"></a>15.3 重要性采样</h3><p>首先找一个比较简单的抽样分布$q(x)$，并令$w(x)=\dfrac{p(x)}{q(x)}$.则目标从目标你分布$p(x)$进行采样变为先从$q(x)$中抽取$N$个样本${x_i}$，然后按照它们对应的重要性权重${w(x_i)}$对这些样本进行重新采样，最终得到的样本服从目标分布$p(x)$.</p>
+<p><img src="/2019/07/30/meachine-learning-summary/SamplingImportance.png" width="65%" height="65%"></p>
+<h3 id="15-4-马尔可夫蒙特卡洛采样"><a href="#15-4-马尔可夫蒙特卡洛采样" class="headerlink" title="15.4 马尔可夫蒙特卡洛采样"></a>15.4 马尔可夫蒙特卡洛采样</h3><p>在高维空间中，拒绝采样和重要性采样经常难以寻找合适的参考分布，采样效率低下（样本的接受概率小或重要性权重低），此时可以考虑<strong>马尔可夫蒙特卡洛采样(MCMC: Markov Chain Monte Carlo)</strong>.</p>
+<p>MCMC采样的基本思想：针对采样的目标分布，构造一个马尔可夫链，使得该马尔可夫链的平稳分布就是目标分布；然后，从任何一个初始状态出发，沿着马尔可夫链进行状态转移，最终得到状态转移序列会收敛到目标分布，由此可以得到目标分布的一系列样本。</p>
+<p>常见的MCMC采样：Metropolis-Hastings采样、吉布斯采样</p>
+<h3 id="15-5-不均衡样本集的重采样"><a href="#15-5-不均衡样本集的重采样" class="headerlink" title="15. 5 不均衡样本集的重采样"></a>15. 5 不均衡样本集的重采样</h3><p><strong>基于数据的方法</strong></p>
+<ul>
+<li>过采样：从少数样本集中随机重复抽取样本；可能会增加模型训练复杂度，容易造成过拟合</li>
+<li>欠采样：从多数样本集中随机选取较少的样本；会丢弃一些样本，损失部分有用信息</li>
+<li>SMOTE：一种过采样方法，对每个样本$x$，从它的$k$近邻中随机选一个样本$y$,然后在$x,y$连线上，随机选取一点作为新合成的样本</li>
+</ul>
+<p><strong>基于算法的方法</strong></p>
+<ul>
+<li>在样本不均衡时，也可以通过改变模型训练时的目标函数（如代价敏感学习中不同类别有不同的权重）来矫正这种不平衡；当样本数目极不均衡时，也可以将问题转化为单类学习、异常检测。</li>
+</ul>
+<h2 id="16-有监督学习的损失函数"><a href="#16-有监督学习的损失函数" class="headerlink" title="16.有监督学习的损失函数"></a>16.有监督学习的损失函数</h2><h3 id="16-1-二分类问题"><a href="#16-1-二分类问题" class="headerlink" title="16.1 二分类问题"></a>16.1 二分类问题</h3><ul>
+<li><p><strong>0-1损失函数</strong>:非凸非光滑</p>
+<script type="math/tex; mode=display">\begin{align} L(f,y)=\begin{cases}1,&fy\leq 0 \\ 0,&fy>0\end{cases}\end{align}</script></li>
+<li><p><strong>Hinge损失函数(SVM)</strong>：相对紧的凸上界，存在不可导点，用次梯度下降法</p>
+<script type="math/tex; mode=display">\begin{align} L_{\mbox{Hinge}}(f,y)=\begin{cases}1-fy,&fy< 0 \\ 0,&fy\geq 1\end{cases}\end{align}</script></li>
+<li><p><strong>Logistic损失函数</strong>：凸上界，处处光滑，用梯度下降优化，对异常值敏感</p>
+<script type="math/tex; mode=display">\begin{align} L_{\mbox{logistic}}(f,y)=\log(1+e^{-fy})\end{align}</script></li>
+<li><p><strong>Cross Entropy损失函数</strong>：光滑凸上界，预测值$f\in[-1,1]$</p>
+<script type="math/tex; mode=display">\begin{align} L_{\mbox{cross entropy}}(f,y)=-\log_2\left(\dfrac{1+fy}{2}\right)\end{align}</script><p><img src="/2019/07/30/meachine-learning-summary/ClassifyLostFunction.png" width="65%" height="65%"></p>
+</li>
+</ul>
+<h3 id="16-2-回归问题"><a href="#16-2-回归问题" class="headerlink" title="16.2 回归问题"></a>16.2 回归问题</h3><ul>
+<li><p><strong>平方损失函数</strong>:对异常值敏感</p>
+<script type="math/tex; mode=display">L_{\mbox{square}}(f,y)=(f-y)^2</script></li>
+<li><p><strong>绝对损失函数</strong>：对异常值鲁棒</p>
+<script type="math/tex; mode=display">L_{\mbox{absolute}}(f,y)=|f-y|</script></li>
+<li><p><strong>Huber损失函数</strong>：在$|f-y|$较小时为平方损失，在$|f-y|$较大时为线性损失，处处可导，且对异常点鲁棒</p>
+<script type="math/tex; mode=display">\begin{align} L_{\mbox{Huber}}(f,y)=\begin{cases}(f-y)^2,&|f-y|\leq \delta \\ 2\delta|f-y|-\delta^2,&|f-y|> \delta\end{cases}\end{align}</script></li>
+</ul>
+<p><img src="/2019/07/30/meachine-learning-summary/RegressionLostFunction.png" width="65%" height="65%"></p>
+<h2 id="17-无约束优化问题的优化方法"><a href="#17-无约束优化问题的优化方法" class="headerlink" title="17.无约束优化问题的优化方法"></a>17.无约束优化问题的优化方法</h2><ul>
+<li><strong>直接法</strong>：满足两个条件，第一个条件是$L(.)$是凸函数，第二个条件是$L(.)$有闭式解。$\theta^{<em>}$是最优解的充分必要条件是$L(.)$在$\theta^{</em>}$处的梯度为0</li>
+<li><strong>迭代法：</strong>梯度下降法</li>
+</ul>
+<h2 id="18-关于近似误差和估计误差"><a href="#18-关于近似误差和估计误差" class="headerlink" title="18. 关于近似误差和估计误差"></a>18. 关于近似误差和估计误差</h2><p><strong>近似误差：</strong>对现有训练集的训练误差</p>
+<p><strong>估计误差</strong>：对测试集的测试误差</p>
+<p>近似误差关注训练集，如果近似误差小了会出现过拟合的现象，对现有的训练集能有很好的预测，但是对未知的测试样本将会出现较大偏差的预测。模型本身不是最接近最佳模型。估计误差关注测试集，估计误差小了说明对未知数据的预测能力好。模型本身最接近最佳模型。</p>
+<h2 id="19-分类、标注问题的区别"><a href="#19-分类、标注问题的区别" class="headerlink" title="19.分类、标注问题的区别"></a>19.分类、标注问题的区别</h2><p>标注问题的输入是一个观测序列，输出的是一个标记序列或状态序列，其目标在于学习一个模型。而分类问题是从实例的特征向量到类标记的预测问题。</p>
+<h2 id="20-为什么L1正则化可以使模型参数具有稀疏性"><a href="#20-为什么L1正则化可以使模型参数具有稀疏性" class="headerlink" title="20.为什么L1正则化可以使模型参数具有稀疏性"></a>20.为什么L1正则化可以使模型参数具有稀疏性</h2><p><strong>稀疏性：</strong>稀疏性说白了就是模型的很多参数是0，这相当于对模型进行了一次<strong>特征选择</strong>，只留下一些比较重要的特征，<strong>提高模型的泛化能力，降低过拟合的可能</strong>。</p>
+<p><img src="/2019/07/30/meachine-learning-summary/L1L2.png" width="60%" height="60%"></p>
+<p>首先，我们可以把”带正则化项”和”带约束条件”看成等价问题。例如，对于解决带$w$约束的优化问题</p>
+<script type="math/tex; mode=display">\begin{cases} 
+\min\sum_{i=1}^N(y_i-w^Tx_i)^2,  \\
+\mbox{s.t.} ||w||_2^2\leq m.
+\end{cases}</script><p>为了解决带约束的优化问题，写出拉格朗日函数</p>
+<script type="math/tex; mode=display">\sum_{i=1}^N(y_i-w^Tx_i)^2+\lambda(||w||_2^2-m)</script><p>若<script type="math/tex">w^*</script>和<script type="math/tex">\lambda^*</script>分别是原问题和对偶问题的最优解，则根据KKT条件，它满足</p>
+<script type="math/tex; mode=display">\begin{cases} 
+0=\nabla_w \left( \sum_{i=1}^{N}(y_i-w^{*T}x_i)^2+\lambda^*(||w^*||_2^2-m)\right) \\
+0 \leq \lambda^*.
+\end{cases}</script><p>从上面问题可以看出<strong>$L2$正则化相当于为参数定义来了一个圆形的解空间</strong>，因为必须保证$L2$范数不能大于m；同理$L1$正<strong>则化相当于为参数定义了一个菱形的解空间</strong>。如果原问题目标函数的最优解不是恰好落在解空间内，那么约束条件下的最优解一定是在解空间的边界上，<strong>而$L1$棱角分明的解空间显然更容易与目标函数等高线的角点碰撞，从而使得$w$=0产生稀疏解，而$L2$只会使得$w$更接近0</strong>。</p>
+<h2 id="21-随机梯度下降"><a href="#21-随机梯度下降" class="headerlink" title="21. 随机梯度下降"></a>21. 随机梯度下降</h2><h3 id="21-1当训练数据量特别大时，经典的梯度下降法存在什么问题？需要做如何改进？"><a href="#21-1当训练数据量特别大时，经典的梯度下降法存在什么问题？需要做如何改进？" class="headerlink" title="21.1当训练数据量特别大时，经典的梯度下降法存在什么问题？需要做如何改进？"></a>21.1当训练数据量特别大时，经典的梯度下降法存在什么问题？需要做如何改进？</h3><p>（1）在机器学习中优化目标函数为</p>
+<p>​    <script type="math/tex">L(\theta) = E_{(x,y)\sim P_{data}}L(f(x,\theta),y)</script></p>
+<p>​    其中$\theta$是待优化的模型参数，$x$是模型输入，$f(x,\theta)$是模型实际输出，$y$是模型的目标输出，函数$L$刻画了模型在数据$(x,y)$上的损失，$P_{data}$表示数据的分布，$L(\theta)$刻画的是模型在所有数据上的损失期望。</p>
+<p>（2）<strong>经典的梯度下降</strong>采用所有训练数据的平均损失来近似目标函数</p>
+<p>​    <script type="math/tex">L(\theta)=\dfrac{1}{M}\sum_{i=1}^{M}L(f(x_i,\theta),y_i)</script></p>
+<p>​    <script type="math/tex">\nabla L(\theta)=\dfrac{1}{M}\sum_{i=1}^{M}\nabla L(f(x_i,\theta),y_i)</script></p>
+<p>​    其中$M$是训练样本的个数，模型的参数更新公式为$\theta_{t+1}=\theta_t-\alpha \nabla L(\theta_t)$</p>
+<p>​    <strong>缺点：</strong>当$M$很大时，需要很大的计算量，耗时。</p>
+<p>​    <strong>解决方案</strong></p>
+<ul>
+<li><p><strong>随机梯度下降法(SGD):</strong>用单个训练样本的损失来近似平均损失，但是迭代算法不够稳定，收敛不稳定</p>
+</li>
+<li><p><strong>小批量梯度下降法(Mini-Batch Gradient)</strong>：对训练数据进行随机排序，然后根据顺序选$m$个样本，<script type="math/tex">L(\theta)= \dfrac{1}{m}\sum_{j=1}^{m}L(f(x_i,\theta),y_i)</script>.在学习速率$\alpha$选取的时候，为加快收敛速度，可以先取较大的学习速率，当误差曲线进入平台期后，减小学习速率做更精细的调整。</p>
+<p>通常采用<strong>小批量梯度下降法来解决训练数据量过大的问题</strong>。</p>
+</li>
+</ul>
+<h3 id="21-2-随机梯度下降法的加速"><a href="#21-2-随机梯度下降法的加速" class="headerlink" title="21.2 随机梯度下降法的加速"></a>21.2 随机梯度下降法的加速</h3><ul>
+<li><p><strong>动量(Momentum)方法</strong></p>
+<script type="math/tex; mode=display">v_t = \gamma v_{t-1}+\eta g_t</script><script type="math/tex; mode=display">\theta_{t+1} = \theta_{t}-v_t</script><p>其中$\gamma$为衰减系数，$v_{t-1}$为前一时刻的速度，$g_t$为此时刻的加速度，$\eta$表示学习速率，$v_t$表示此时刻的速度（为前一时刻的速度加上此时刻的加速度）</p>
+<p>与随机梯度下降法相比，动量方法的收敛速度更快，收敛曲线更稳定</p>
+</li>
+<li><p><strong>AdaGrad方法</strong></p>
+<p><strong>环境感知：</strong>根据不同参数的一些经验，自适应地确定参数的学习速率，不同参数的更新步幅不同。我们希望更新频率低的参数可以有较大的更新步幅，更新频率高的参数可以有较小更新步幅。</p>
+<script type="math/tex; mode=display">\theta_{t+1,i}=\theta_{t,i}-\dfrac{\eta}{\sqrt{\sum_{k=1^{t}g_{k,i}^2+\epsilon}}}g_{t,i}</script><p><script type="math/tex">\sqrt{\sum_{k=1^{t}g_{k,i}^2+\epsilon}}</script>实现了退火过程，随着时间推移，学习速率越来越小</p>
+</li>
+<li><p><strong>Adam方法</strong>:自适应时刻估计方法（Adaptive Moment Estimation）</p>
+<p>一阶矩和二阶矩采用指数衰退平均</p>
+<script type="math/tex; mode=display">m_t = \beta_1 m_{t-1}+(1-\beta_1)g_t</script><script type="math/tex; mode=display">v_t = \beta_2 v_{t-1}+(1-\beta_2)g_t^2</script><p>其中$\beta_1$和$\beta_2$为衰减系数，$m_t$是一阶矩，$v_t$是二阶矩</p>
+</li>
 </ul>
 
     </article>
@@ -645,7 +752,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-数据的归一化并不是万能的"><span class="toc-number">1.</span> <span class="toc-text">1. 数据的归一化并不是万能的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-准确率"><span class="toc-number">2.</span> <span class="toc-text">2.准确率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-精确率和召回率的权衡"><span class="toc-number">3.</span> <span class="toc-text">3. 精确率和召回率的权衡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-ROC-曲线"><span class="toc-number">4.</span> <span class="toc-text">4. ROC 曲线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-平方根误差"><span class="toc-number">5.</span> <span class="toc-text">5.平方根误差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-PCA-最小平方误差理论"><span class="toc-number">6.</span> <span class="toc-text">11. PCA 最小平方误差理论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-线性判别分析-LDA"><span class="toc-number">7.</span> <span class="toc-text">12. 线性判别分析(LDA)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#12-1对于具有类别标签的数据，应当如何设计目标函数使得降维的过程中不损失类别信息"><span class="toc-number">7.1.</span> <span class="toc-text">12.1对于具有类别标签的数据，应当如何设计目标函数使得降维的过程中不损失类别信息</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-数据的归一化并不是万能的"><span class="toc-number">1.</span> <span class="toc-text">1. 数据的归一化并不是万能的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-准确率"><span class="toc-number">2.</span> <span class="toc-text">2.准确率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-精确率和召回率的权衡"><span class="toc-number">3.</span> <span class="toc-text">3. 精确率和召回率的权衡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-ROC-曲线"><span class="toc-number">4.</span> <span class="toc-text">4. ROC 曲线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-平方根误差"><span class="toc-number">5.</span> <span class="toc-text">5.平方根误差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-PCA-最小平方误差理论"><span class="toc-number">6.</span> <span class="toc-text">11. PCA 最小平方误差理论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-线性判别分析-LDA"><span class="toc-number">7.</span> <span class="toc-text">12. 线性判别分析(LDA)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#12-1对于具有类别标签的数据，应当如何设计目标函数使得降维的过程中不损失类别信息"><span class="toc-number">7.1.</span> <span class="toc-text">12.1对于具有类别标签的数据，应当如何设计目标函数使得降维的过程中不损失类别信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-聚类算法"><span class="toc-number">8.</span> <span class="toc-text">13. 聚类算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-举例采样在机器学习中的应用"><span class="toc-number">9.</span> <span class="toc-text">14. 举例采样在机器学习中的应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-常见的采样方法"><span class="toc-number">10.</span> <span class="toc-text">15.常见的采样方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#15-1-逆变换采样"><span class="toc-number">10.1.</span> <span class="toc-text">15.1 逆变换采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-2-拒绝采样"><span class="toc-number">10.2.</span> <span class="toc-text">15.2 拒绝采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-3-重要性采样"><span class="toc-number">10.3.</span> <span class="toc-text">15.3 重要性采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-4-马尔可夫蒙特卡洛采样"><span class="toc-number">10.4.</span> <span class="toc-text">15.4 马尔可夫蒙特卡洛采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-5-不均衡样本集的重采样"><span class="toc-number">10.5.</span> <span class="toc-text">15. 5 不均衡样本集的重采样</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-有监督学习的损失函数"><span class="toc-number">11.</span> <span class="toc-text">16.有监督学习的损失函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#16-1-二分类问题"><span class="toc-number">11.1.</span> <span class="toc-text">16.1 二分类问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-2-回归问题"><span class="toc-number">11.2.</span> <span class="toc-text">16.2 回归问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-无约束优化问题的优化方法"><span class="toc-number">12.</span> <span class="toc-text">17.无约束优化问题的优化方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-关于近似误差和估计误差"><span class="toc-number">13.</span> <span class="toc-text">18. 关于近似误差和估计误差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19-分类、标注问题的区别"><span class="toc-number">14.</span> <span class="toc-text">19.分类、标注问题的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#20-为什么L1正则化可以使模型参数具有稀疏性"><span class="toc-number">15.</span> <span class="toc-text">20.为什么L1正则化可以使模型参数具有稀疏性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#21-随机梯度下降"><span class="toc-number">16.</span> <span class="toc-text">21. 随机梯度下降</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#21-1当训练数据量特别大时，经典的梯度下降法存在什么问题？需要做如何改进？"><span class="toc-number">16.1.</span> <span class="toc-text">21.1当训练数据量特别大时，经典的梯度下降法存在什么问题？需要做如何改进？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#21-2-随机梯度下降法的加速"><span class="toc-number">16.2.</span> <span class="toc-text">21.2 随机梯度下降法的加速</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -658,12 +765,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1267,6 +1368,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/10</span><a class="archive-post-title" href="/2019/07/10/gradient-descent/">梯度下降优化算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">07/08</span><a class="archive-post-title" href="/2019/07/08/feature-selection/">特征选择</a>
         </li>
     
@@ -1402,11 +1508,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span><a class="archive-post-title" href="/2019/04/02/meachine-learning-question/">机器学习问题的梳理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">04/02</span><a class="archive-post-title" href="/2019/04/02/recommend-system-5/">推荐系统（六）</a>
         </li>
     
@@ -1514,11 +1615,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="数据挖掘实践"><span class="iconfont-archer">&#xe60a;</span>数据挖掘实践</span>
     
-        <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
-    
-        <span class="sidebar-category-name" data-categories="理论"><span class="iconfont-archer">&#xe60a;</span>理论</span>
-    
         <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
+    
+        <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
