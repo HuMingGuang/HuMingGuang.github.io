@@ -10,7 +10,7 @@
 
 
 
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="author" content="MingGuang HU">
@@ -229,14 +229,14 @@
     
     <div class="banner">
             <div class="blog-title">
-                <a href="/">MingGuangHu&#39;s Studio.</a>
+                <a href="/" >MingGuangHu&#39;s Studio.</a>
             </div>
             <div class="post-title">
                 <a href="#" class="post-name">梯度下降优化算法</a>
             </div>
     </div>
     
-    <a class="home-link" href="/">MingGuangHu's Studio.</a>
+    <a class="home-link" href=/>MingGuangHu's Studio.</a>
 </header>
     <div class="wrapper">
         <div class="site-intro" style="
@@ -281,7 +281,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">6.5k</span>阅读时长: <span class="post-count reading-time">24 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">6.4k</span>阅读时长: <span class="post-count reading-time">24 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -418,14 +418,14 @@ height:50vh;
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(nb_epochs):</span><br><span class="line">    params_grad = evaluate_gradient(loss_function, data, params)</span><br><span class="line">    params = params - learning_rate * params_grad</span><br></pre></td></tr></table></figure>
 <p>其中 <code>nb_epochs</code> 是我们预先定义好的迭代次数（epochs），我们首先在整个训练集上计算损失函数关于模型参数 <code>params</code> 的梯度向量 <code>params_grad</code>。其实目前最新的深度学习库都已经提供了关于一些参数的高效自动求导。如果你要自己求导求梯度，那你最好使用梯度检查（gradient checking），在 <a href="http://cs231n.github.io/neural-networks-3/" target="_blank" rel="noopener">这里</a> 查看关于如何进行合适的梯度检查的提示。</p>
 <h2 id="2-2-随机梯度下降-Stochastic-Gradient-Descent"><a href="#2-2-随机梯度下降-Stochastic-Gradient-Descent" class="headerlink" title="2.2 随机梯度下降(Stochastic Gradient Descent)"></a>2.2 随机梯度下降(Stochastic Gradient Descent)</h2><p>随机梯度下降则是每次使用一个训练样本$x^{(i)}$ 和标签$y^{(i)}$ 进行一次参数更新。</p>
-<script type="math/tex; mode=display">\begin{align}\theta = \theta-\nabla_{\theta} J(\theta;x^{(i)},y^{i})\tag{2}\end{align}</script><p><strong>BGD 对于大数据集来说执行了很多冗余的计算</strong>，因为在每一次参数更新前都要计算很多相似样本的梯度。SGD 通过一次执行一次更新解决了这种冗余。因此通常 <strong>SGD 的速度会非常快而且可以被用于在线学习</strong>。<strong>SGD 以高方差的特点进行连续参数更新，导致目标函数严重震荡</strong>，如图 1 所示</p>
+<script type="math/tex; mode=display">\begin{align}\theta = \theta-\eta \cdot\nabla_{\theta} J(\theta;x^{(i)},y^{i})\tag{2}\end{align}</script><p><strong>BGD 对于大数据集来说执行了很多冗余的计算</strong>，因为在每一次参数更新前都要计算很多相似样本的梯度。SGD 通过一次执行一次更新解决了这种冗余。因此通常 <strong>SGD 的速度会非常快而且可以被用于在线学习</strong>。<strong>SGD 以高方差的特点进行连续参数更新，导致目标函数严重震荡</strong>，如图 1 所示</p>
 <div align="center"><img src="/2019/07/10/gradient-descent/SGD.png" width="75%" height="75%">图1:SGD震荡</div>
 
 <p>BGD 能够收敛到（局部）最优点，然而 SGD 的震荡特点导致其可以跳到新的潜在的可能更好的局部最优点。已经有研究显示当我们慢慢的降低学习率时，SGD 拥有和 BGD 一样的收敛性能，对于非凸和凸曲面几乎同样能够达到局部或者全局最优点。</p>
 <p>代码片段如下，只是加了个循环和在每一个训练样本上计算梯度。注意依据 <a href="http://ruder.io/optimizing-gradient-descent/index.html#shufflingandcurriculumlearning" target="_blank" rel="noopener">这里</a> 的解释，我们在每次迭代的时候都打乱训练集。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(nb_epochs):</span><br><span class="line">    np.random.shuffle(data)</span><br><span class="line">    <span class="keyword">for</span> example <span class="keyword">in</span> data:</span><br><span class="line">        params_grad = evaluate_gradient(loss_function, example, params)</span><br><span class="line">        params = params - learning_rate * params_grad</span><br></pre></td></tr></table></figure>
-<h2 id="2-3-小批量梯度下降-Mini-Batch-Gradient-Descent"><a href="#2-3-小批量梯度下降-Mini-Batch-Gradient-Descent" class="headerlink" title="2.3 小批量梯度下降(Mini-Batch Gradient Descent)"></a>2.3 小批量梯度下降(Mini-Batch Gradient Descent)</h2><p>Mini-batch gradient descent（ <em>译者注：以下简称 MBGD</em> ）则是在上面两种方法中采取了一个折中的办法：<strong>每次从训练集中取出 nn 个样本作为一个 mini-batch</strong>，以此来进行一次参数更新。</p>
-<script type="math/tex; mode=display">\begin{align}\theta = \theta-\nabla_{\theta} J(\theta;x^{(i;i+n)},y^{i;i+n})\tag{3}\end{align}</script><p>这样做有两个好处：</p>
+<h2 id="2-3-小批量梯度下降-Mini-Batch-Gradient-Descent"><a href="#2-3-小批量梯度下降-Mini-Batch-Gradient-Descent" class="headerlink" title="2.3 小批量梯度下降(Mini-Batch Gradient Descent)"></a>2.3 小批量梯度下降(Mini-Batch Gradient Descent)</h2><p>Mini-batch gradient descent（ <em>译者注：以下简称 MBGD</em> ）则是在上面两种方法中采取了一个折中的办法：<strong>每次从训练集中取出 n 个样本作为一个 mini-batch</strong>，以此来进行一次参数更新。</p>
+<script type="math/tex; mode=display">\begin{align}\theta = \theta-\eta \cdot\nabla_{\theta} J(\theta;x^{(i;i+n)},y^{i;i+n})\tag{3}\end{align}</script><p>这样做有两个好处：</p>
 <ul>
 <li>减小参数更新的方差，这样可以有<strong>更稳定的收敛</strong>。</li>
 <li>利用现在最先进的深度学习库对矩阵运算进行了高度优化的特点，这样可以使得计算 mini-batch 的梯度更高效。</li>
@@ -459,7 +459,7 @@ height:50vh;
 <p>前面我们在对所有参数 $\theta$ 更新时每个参数$\theta<em>{i}$使用相同的学习率 $\eta$。Adagrad 在每个时间点$t$对每个参数$\theta</em>{i}$使用的学习率都不同，我们首先展现每个参数的更新，然后再向量化。简单起见，我们使用$g<em>{t,i}$来表示目标函数关于参数$\theta</em>{i}$ 在时间点$t$时的梯度：</p>
 <script type="math/tex; mode=display">\begin{align}g_{t,i} = \nabla_{\theta}J(\theta_{i})\tag{6}\end{align}</script><p>SGD在每个时间点$t$对每个参数$\theta_{i}$的更新为:</p>
 <script type="math/tex; mode=display">\begin{align}\theta_{t+1,i} = \theta_{t,i}-\eta\cdot g_{t,i}\tag{7}\end{align}</script><p>在这个更新规则里，Adagrad 在每个时间点$t$对每个参数$\theta_{i}$都会基于过去的梯度修改学习率$\eta$：</p>
-<script type="math/tex; mode=display">\begin{align}\theta_{t+1,i} = \theta_{t,i}-\dfrac{\eta}{\sqrt{G_{t,ii}+\epsilon}}\cdot g_{t,i}\tag{8}\end{align}</script><p>其中$G<em>t\in R^{d\times d}$是一个对角矩阵，对角元素$G</em>{t}[i,i]$是参数$\theta_i$从开始到时间点 $t$为止的梯度平方和，$\epsilon$ 是一个平滑项，用于防止分母为 0 ，通常为$10^{-8}$ 左右。有趣的是，如果去掉开方操作，算法性能会大幅下降。</p>
+<script type="math/tex; mode=display">\begin{align}\theta_{t+1,i} = \theta_{t,i}-\dfrac{\eta}{\sqrt{G_{t,ii}+\epsilon}}\cdot g_{t,i}\tag{8}\end{align}</script><p>其中<script type="math/tex">G_t\in R^{d\times d}</script>是一个对角矩阵，对角元素$G_{t}[i,i]$是参数$\theta_i$从开始到时间点 $t$为止的梯度平方和，$\epsilon$ 是一个平滑项，用于防止分母为 0 ，通常为$10^{-8}$ 左右。有趣的是，如果去掉开方操作，算法性能会大幅下降。</p>
 <p>由于$G_{t}$的对角元素是关于所有参数的过去的梯度的平方和，我们可以将上面的实现向量化，即使用点乘$\bigodot$ ：</p>
 <script type="math/tex; mode=display">\begin{align}\theta_{t+1,i} = \theta_{t,i}-\dfrac{\eta}{\sqrt{G_{t,ii}+\epsilon}}\bigodot g_{t,i}\tag{9}\end{align}</script><p><strong>Adagrad 最大的一个优点是我们可以不用手动的调整学习率</strong>。大多数实现使用一个默认值 0.01 。</p>
 <p><strong>Adagrad 主要的缺点是分母中累积的平方和梯度</strong>：由于每一个新添加的项都是正的，<strong>导致累积和在训练期间不断增大。这反过来导致学习率不断减小，最终变成无限小，这时算法已经不能再继续学习新东西了</strong>。下面的这个算法就解决了这个问题。</p>
@@ -475,8 +475,8 @@ height:50vh;
 <script type="math/tex; mode=display">\begin{align} \Delta \theta_t &= - \dfrac{RMS[\Delta \theta]_{t-1}}{RMS[g]_{t}} g_{t} \\ \theta_{t+1} &= \theta_t + \Delta \theta_t  \tag{17}\end{align}</script><p>使用 Adadelta 时我们甚至不需要指定一个默认的学习率，因为它已经不在更新规则中了。</p>
 <h2 id="3-5-RMSprop"><a href="#3-5-RMSprop" class="headerlink" title="3.5 RMSprop"></a>3.5 RMSprop</h2><p>RMSprop 是一种未发布的自适应学习率的方法，由 Geoff Hinton 在 <a href="http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf" target="_blank" rel="noopener">Lecture 6e of his Coursera Class</a>中提出。</p>
 <p>RMSprop 和 Adadelta 在同一时间被独立地发明出来，都是为了解决 Adagrad 的学习率递减问题。事实上 RMSprop 与我们上面讨论过的 Adadelta 的第一个更新向量一模一样：</p>
-<script type="math/tex; mode=display">\begin{align} E[g^2]_t &= 0.9 E[g^2]_{t-1} + 0.1 g^2_t \\   \theta_{t+1} &= \theta_{t} - \dfrac{\eta}{\sqrt{E[g^2]_t + \epsilon}} g_{t} \tag{18}\end{align}</script><p>RMSprop 也是将学习率除以平方梯度的指数衰减平均值。Hinton 建议将 γγ 设为 0.9 ，默认学习率 ηη设为 0.001 。</p>
-<h2 id="3-6-Adam"><a href="#3-6-Adam" class="headerlink" title="3.6 Adam"></a>3.6 Adam</h2><p>Adaptive Moment Estimation (Adam) 是另一种为每个参数计算自适应学习率的方法。除了像 Adadelta 和 RMSprop 一样存储历史平方梯度$v_t$ 的指数衰减平均值外，Adam 也存储历史梯度$m_t$ 的指数衰减平均值，类似于动量：</p>
+<script type="math/tex; mode=display">\begin{align} E[g^2]_t &= 0.9 E[g^2]_{t-1} + 0.1 g^2_t \\   \theta_{t+1} &= \theta_{t} - \dfrac{\eta}{\sqrt{E[g^2]_t + \epsilon}} g_{t} \tag{18}\end{align}</script><p>RMSprop 也是将学习率除以平方梯度的指数衰减平均值。Hinton 建议将$\gamma $ 设为 0.9 ，默认学习率$\eta$设为 0.001 。</p>
+<h2 id="3-6-Adam"><a href="#3-6-Adam" class="headerlink" title="3.6 Adam"></a>3.6 Adam</h2><p>Adaptive Moment Estimation (Adam) 是另一种为每个参数计算自适应学习率的方法。除了像 Adadelta 和 RMSprop 一样<strong>存储历史平方梯度</strong>$v_t$ 的指数衰减平均值外，Adam 也<strong>存储历史梯度</strong>$m_t$ 的指数衰减平均值，类似于动量：</p>
 <script type="math/tex; mode=display">\begin{align} m_t &= \beta_1 m_{t-1} + (1 - \beta_1) g_t \\   v_t &= \beta_2 v_{t-1} + (1 - \beta_2) g_t^2   \tag{19}\end{align}</script><p>其中$m_t$ 和 $v_t$分别是梯度在第一时刻（平均值，the mean）和第二时刻（未中心化的方差，the uncentered variance）的估计值，也就是这个方法的名称。由于 $m_t$和 $v_t$ 用零向量初始化，Adam 的作者发现他们趋向于 0 ，特别是最开始的时候（<em>the initial time steps</em>）和衰减率很小的时候（即 $\beta_1$和$\beta_2$ 接近于 1）。</p>
 <p>他们通过计算偏差纠正的（bias-corrected）的第一和第二时刻的估计值来抵消这个问题：</p>
 <script type="math/tex; mode=display">\begin{aligned} \hat{m}_t &= \dfrac{m_t}{1 - \beta^t_1} \\ \hat{v}_t &= \dfrac{v_t}{1 - \beta^t_2} \end{aligned}</script><p>然后他们使用这些公式来更新参数，就像 Adadelta 和 RMSprop 一样：</p>
@@ -488,15 +488,15 @@ height:50vh;
 
 <p>图 6 显示了在鞍点处的算法行为，即该点在一个方向斜率为正，其他方向斜率为负，正如我们之前提到的这对于 SGD 是一个难点。注意到 SGD 、动量和 NAG 很难打破对称性，尽管后两者最终逃离的鞍点，但是 Adagrad 、RMSprop 和 Adadelta 很快朝着斜率为负的方向前进了。</p>
 <p>可以看到自适应学习率的方法，例如 Adagrad 、Adadelta 、RMSprop 和 Adam 在这些场景中是最合适的并且提供了最好的收敛。</p>
-<h1 id="5-选用哪种优化方式"><a href="#5-选用哪种优化方式" class="headerlink" title="5.选用哪种优化方式"></a>5.选用哪种优化方式</h1><p>那么，你应该使用哪种优化算法呢？如果你的数据比较稀疏，那么使用自适应学习率的算法很可能会让你得到最好的结果。另外一个好处是你不用去调节学习率，使用默认的设置可能就会让你达到最好的效果。</p>
-<p>总的来说，RMSprop 是 Adagrad 的一种扩展，用来解决后者学习率逐渐递减的问题。它和 Adadelta 非常像，除了 Adadelta 在更新规则的分子上使用参数更新的 RMS （<em>译者注：均方误差</em>）。Adam 最终在 RMSprop 的基础上加了偏差修正和动量。在这方面，RMSprop 、Adadelta 和 Adam 非常相似，在相似的环境下也表现地一样好。Kingma 等人 [15，<em>Adam: a Method for Stochastic Optimization</em>] 表示随着梯度越来越稀疏，Adam 的偏差修正使其略微优于 RMSprop 。在这个方面总体上来说 Adam 可能是最好的选择。</p>
+<h1 id="5-选用哪种优化方式"><a href="#5-选用哪种优化方式" class="headerlink" title="5.选用哪种优化方式"></a>5.选用哪种优化方式</h1><p>那么，你应该使用哪种优化算法呢？<strong>如果你的数据比较稀疏，那么使用自适应学习率的算法很可能会让你得到最好的结果。另外一个好处是你不用去调节学习率，使用默认的设置可能就会让你达到最好的效果。</strong></p>
+<p>总的来说，RMSprop 是 Adagrad 的一种扩展，用来解决后者学习率逐渐递减的问题。<strong>它和 Adadelta 非常像，除了 Adadelta 在更新规则的分子上使用参数更新的 RMS （<em>译者注：均方误差</em>）。Adam 最终在 RMSprop 的基础上加了偏差修正和动量</strong>。在这方面，RMSprop 、Adadelta 和 Adam 非常相似，在相似的环境下也表现地一样好。Kingma 等人表示随着梯度越来越稀疏，Adam 的偏差修正使其略微优于 RMSprop 。在这个方面总体上来说 Adam 可能是最好的选择。</p>
 <p>有趣的是，许多最近的论文仅仅使用普通的不带动量 SGD 和一个简单的学习率退火机制（<em>annealing schedule</em>）。正如我们前面所讨论的，SGD 通常会找到最优点，但是相比其他一些优化算法可能花费的时间比较长，更依赖于一个好的初始化和退火机制，而且也可能陷入鞍点而不是局部最优点。所以，<strong>如果你比较关心收敛速度并且在训练一个深度或者复杂的神经网络，你应该选择一个自适应学习率算法。</strong></p>
 <h1 id="6-并行与分布式SGD"><a href="#6-并行与分布式SGD" class="headerlink" title="6.并行与分布式SGD"></a>6.并行与分布式SGD</h1><p>鉴于大数据解决方案的普及以及低价集群的可用性，使用分布式 SGD 来进一步加速训练是一个很明显的选择。SGD 本质上是按顺序执行的：我们一步一步朝着最优点前进。SGD 提供了较好的收敛但是在大数据集上可能会速度较慢。相反，<strong>异步执行 SGD 比较快，但是 worker 之间不理想的通信可能会造成比较差的收敛</strong>。另外，我们也可以不需要大型计算集群，在一台机器上并行执行 SGD 。下面是目前提出的用于优化并行和分布式 SGD 的算法和架构。</p>
-<h2 id="6-1-Hogwild"><a href="#6-1-Hogwild" class="headerlink" title="6.1 Hogwild!"></a>6.1 Hogwild!</h2><p>Niu 等人 [23，<em>Hogwild! : A Lock-Free Approach to Parallelizing Stochastic Gradient Descent</em>] 引入了一个更新机制称为 Hogwild!，可以在 CPU 上并行执行 SGD 。处理器可以在不锁参数的情况下访问共享内存。由于没次更新只修改一部分参数，所以这种方法只适合于输入数据比较稀疏的情况。他们表明在这种情况下该方法可以达到几乎最优的收敛速度，因为处理器是不太可能覆盖有用信息的。</p>
-<h2 id="6-2-Downpour-SGD"><a href="#6-2-Downpour-SGD" class="headerlink" title="6.2 Downpour SGD"></a>6.2 Downpour SGD</h2><p>Downpour SGD 是一种 SGD 的异步变体，由 Dean 等人 [4，<em>Large Scale Distributed Deep Networks</em>] 在谷歌的 DistBelief 框架（TensorFlow 的前身）中使用。它在训练数据的子集上并行的运行一个模型的多个副本。这些模型将他们的更新发送到一个参数服务器，他们分布在多个机器上。每个机器只负责存储和更新全部模型参数的一部分。然而由于这些机器并不需要相互通信，例如共享权重或者更新，导致他们的参数一直有发散的风险，阻碍收敛。</p>
-<h2 id="6-3-Delay-tolerant-Algorithms-for-SGD"><a href="#6-3-Delay-tolerant-Algorithms-for-SGD" class="headerlink" title="6.3 Delay-tolerant Algorithms for SGD"></a>6.3 Delay-tolerant Algorithms for SGD</h2><p>McMahan 和 Streeter [12，<em>Delay-Tolerant Algorithms for Asynchronous Distributed Online Learning</em>] 通过开发一个延迟容忍（delay-tolerant）算法来扩展 Adagrad 使其并行化，该算法不仅自适应历史梯度，而且也更新延迟（delays）。在实际中也被证明该方法很有效。</p>
-<h2 id="6-4-TensorFlow"><a href="#6-4-TensorFlow" class="headerlink" title="6.4 TensorFlow"></a>6.4 TensorFlow</h2><p>TensorFlow [13，<em>TensorFlow : Large-Scale Machine Learning on Heterogeneous Distributed System</em>] 是 Google 最近开源的用于实现和部署大规模机器学习模型的框架。TensorFlow 基于他们使用 DistBelief 的经验，并且已经在内部使用，用于在大范围的移动设备和大规模分布式系统上执行计算。分布式执行中，一个计算图针对每一个设备被拆分成多个子图，使用发送/接收节点对进行通信。</p>
-<h2 id="6-5-Elastic-Averaging-SGD"><a href="#6-5-Elastic-Averaging-SGD" class="headerlink" title="6.5 Elastic Averaging SGD"></a>6.5 Elastic Averaging SGD</h2><p>Zhang 等人 [14，<em>Deep learning with Elastic Averaging SGD</em>] 提出了 Elastic Averaging SGD（EASGD），将异步 SGD 中每个 worker 参数用一个「弹力」（<em>elastic force</em>）连接起来，即一个由参数服务器保存的中心变量。这允许本地变量在中心变量附近进一步震荡，这理论上可以在更大的参数空间中进行探索。他们以经验证明这种增加的探索能力可以寻找新的局部最优点从而提升性能。</p>
+<h2 id="6-1-Hogwild"><a href="#6-1-Hogwild" class="headerlink" title="6.1 Hogwild!"></a>6.1 Hogwild!</h2><p>Niu 等人引入了一个更新机制称为 Hogwild!，<strong>可以在 CPU 上并行执行 SGD 。处理器可以在不锁参数的情况下访问共享内存。</strong>由于没次更新只修改一部分参数，所以这种方法只适合于输入数据比较稀疏的情况。他们表明在这种情况下该方法可以达到几乎最优的收敛速度，因为处理器是不太可能覆盖有用信息的。</p>
+<h2 id="6-2-Downpour-SGD"><a href="#6-2-Downpour-SGD" class="headerlink" title="6.2 Downpour SGD"></a>6.2 Downpour SGD</h2><p>Downpour SGD 是一种 SGD 的异步变体，由 Dean 等人在谷歌的 DistBelief 框架（TensorFlow 的前身）中使用。它在训练数据的子集上并行的运行一个模型的多个副本。这些模型将他们的更新发送到一个参数服务器，他们分布在多个机器上。每个机器只负责存储和更新全部模型参数的一部分。然而由于这些机器并不需要相互通信，例如共享权重或者更新，导致他们的参数一直有发散的风险，阻碍收敛。</p>
+<h2 id="6-3-Delay-tolerant-Algorithms-for-SGD"><a href="#6-3-Delay-tolerant-Algorithms-for-SGD" class="headerlink" title="6.3 Delay-tolerant Algorithms for SGD"></a>6.3 Delay-tolerant Algorithms for SGD</h2><p>McMahan 和 Streeter 通过开发一个延迟容忍（delay-tolerant）算法来扩展 Adagrad 使其并行化，该算法不仅自适应历史梯度，而且也更新延迟（delays）。在实际中也被证明该方法很有效。</p>
+<h2 id="6-4-TensorFlow"><a href="#6-4-TensorFlow" class="headerlink" title="6.4 TensorFlow"></a>6.4 TensorFlow</h2><p>TensorFlow 是 Google 最近开源的用于实现和部署大规模机器学习模型的框架。TensorFlow 基于他们使用 DistBelief 的经验，并且已经在内部使用，用于在大范围的移动设备和大规模分布式系统上执行计算。分布式执行中，一个计算图针对每一个设备被拆分成多个子图，使用发送/接收节点对进行通信。</p>
+<h2 id="6-5-Elastic-Averaging-SGD"><a href="#6-5-Elastic-Averaging-SGD" class="headerlink" title="6.5 Elastic Averaging SGD"></a>6.5 Elastic Averaging SGD</h2><p>Zhang 等人提出了 Elastic Averaging SGD（EASGD），将异步 SGD 中每个 worker 参数用一个「弹力」（<em>elastic force</em>）连接起来，即一个由参数服务器保存的中心变量。这允许本地变量在中心变量附近进一步震荡，这理论上可以在更大的参数空间中进行探索。他们以经验证明这种增加的探索能力可以寻找新的局部最优点从而提升性能。</p>
 <h1 id="7-优化SGD的额外策略"><a href="#7-优化SGD的额外策略" class="headerlink" title="7. 优化SGD的额外策略"></a>7. 优化SGD的额外策略</h1><p>最后，我们介绍一些可以和前面讨论的算法一起使用的策略，用以进一步提升 SGD 的性能。对于一些其他常用的技巧，可以参见 [22，<em>Efficient BackProp. Neural Networks: Tricks of the Trade</em>] 。</p>
 <h2 id="7-1-Shuffling-and-Curriculum-Learning"><a href="#7-1-Shuffling-and-Curriculum-Learning" class="headerlink" title="7.1 Shuffling and Curriculum Learning"></a>7.1 Shuffling and Curriculum Learning</h2><p>通常，我们想要避免给模型提供的训练数据是有特定顺序的，因为这会使模型带有偏见。因此，<strong>每次迭代完之后打乱训练数据是一个很好地想法</strong>。</p>
 <p>但是另一方面，有些情况下我们想要逐步解决更难的问题，我们将训练数据<strong>以一种有意义的顺序提供给模型，这可能会提升性能和得到更好的收敛</strong>。构建这种有意义的顺序的方法称为课程学习（<em>Curriculum Learning</em>）[16，<em>Curriculum learning</em>] 。</p>
@@ -508,6 +508,8 @@ height:50vh;
 <script type="math/tex; mode=display">g_{t, i} = g_{t, i} + N(0, \sigma^2_t)</script><p>他们依照下面的公式更新（<em>anneal</em>）方差：</p>
 <script type="math/tex; mode=display">\sigma^2_t = \dfrac{\eta}{(1 + t)^\gamma}</script><p>他们表明添加这个噪声使得网络对较差的初始化更具有鲁棒性并且尤其对训练深度和复杂的网络很有帮助。他们怀疑添加的噪声使得模型有更多机会逃离和找到新的局部最优点，这在深度模型中很常见。</p>
 <h1 id="8-Conclusion"><a href="#8-Conclusion" class="headerlink" title="8.Conclusion"></a>8.Conclusion</h1><p>本文中，我们首先看了梯度下降的 3 中变体，其中 mini-batch 梯度下降最流行。我们然后研究了几种最常使用的用于优化 SGD 的算法：动量，Nesterov accelerated gradient，Adagrad，Adadelta，RMSprop，Adam 以及为优化异步 SGD 的不同算法。最后，我们考虑了用于提升 SGD 性能的其他策略，例如 shuffling 与 curriculum learning，batch normalization 以及 early stopping。</p>
+<h1 id="9-梯度下降算法优化脑图"><a href="#9-梯度下降算法优化脑图" class="headerlink" title="9.梯度下降算法优化脑图"></a>9.梯度下降算法优化脑图</h1><div align="center"><img src="/2019/07/10/gradient-descent/gradient_descent_mind.png" width="75%" height="75%">图 7:梯度下降算法优化脑图</div>
+
 <hr>
 <font color="blue">声明</font>
 
@@ -524,7 +526,7 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href="/2019/07/20/data-mining-1/" title="GBM & XGBoost的调参">
+                <a href= "/2019/07/20/data-mining-1/" title= "GBM & XGBoost的调参">
                     <div class="nextTitle">GBM & XGBoost的调参</div>
                 </a>
             
@@ -532,7 +534,7 @@ height:50vh;
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/07/08/feature-selection/" title="特征选择">
+                <a href= "/2019/07/08/feature-selection/" title= "特征选择">
                     <div class="prevTitle">特征选择</div>
                 </a>
             
@@ -564,21 +566,21 @@ height:50vh;
     
         
             
-                <a href="mailto:936068345@qq.com" class="iconfont-archer email" title="email"></a>
+                <a href="mailto:936068345@qq.com" class="iconfont-archer email" title=email ></a>
             
         
     
         
             
-                <a href="https://github.com/HuMingGuang" class="iconfont-archer github" target="_blank" title="github"></a>
+                <a href="https://github.com/HuMingGuang" class="iconfont-archer github" target="_blank" title=github></a>
             
         
     
         
             
-                <span class="iconfont-archer wechat" title="wechat">
+                <span class="iconfont-archer wechat" title=wechat>
                   
-                  <img class="profile-qr" src="/assets/Wechat.jpeg">
+                  <img class="profile-qr" src="/assets/Wechat.jpeg" />
                 </span>
             
         
@@ -652,7 +654,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-概述"><span class="toc-number">1.</span> <span class="toc-text">1. 概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-梯度下降的变体"><span class="toc-number">2.</span> <span class="toc-text">2.梯度下降的变体</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1批量梯度下降-Batch-Gradient-Descent"><span class="toc-number">2.1.</span> <span class="toc-text">2.1批量梯度下降(Batch Gradient Descent)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-随机梯度下降-Stochastic-Gradient-Descent"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 随机梯度下降(Stochastic Gradient Descent)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-小批量梯度下降-Mini-Batch-Gradient-Descent"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 小批量梯度下降(Mini-Batch Gradient Descent)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MBGD面临的问题"><span class="toc-number">2.3.1.</span> <span class="toc-text">MBGD面临的问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-梯度下降优化算法"><span class="toc-number">3.</span> <span class="toc-text">3.梯度下降优化算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1动量算法-Momentum"><span class="toc-number">3.1.</span> <span class="toc-text">3.1动量算法(Momentum)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-Nesterov-accelerated-gradient"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 Nesterov accelerated gradient</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-Adagrad"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 Adagrad</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-Adadelta"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 Adadelta</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-5-RMSprop"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 RMSprop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-6-Adam"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 Adam</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-算法可视化"><span class="toc-number">4.</span> <span class="toc-text">4.算法可视化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-选用哪种优化方式"><span class="toc-number">5.</span> <span class="toc-text">5.选用哪种优化方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-并行与分布式SGD"><span class="toc-number">6.</span> <span class="toc-text">6.并行与分布式SGD</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-Hogwild"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 Hogwild!</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-Downpour-SGD"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 Downpour SGD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-Delay-tolerant-Algorithms-for-SGD"><span class="toc-number">6.3.</span> <span class="toc-text">6.3 Delay-tolerant Algorithms for SGD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-4-TensorFlow"><span class="toc-number">6.4.</span> <span class="toc-text">6.4 TensorFlow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-5-Elastic-Averaging-SGD"><span class="toc-number">6.5.</span> <span class="toc-text">6.5 Elastic Averaging SGD</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-优化SGD的额外策略"><span class="toc-number">7.</span> <span class="toc-text">7. 优化SGD的额外策略</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#7-1-Shuffling-and-Curriculum-Learning"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 Shuffling and Curriculum Learning</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-2-Batch-normalization"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 Batch normalization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-3-Early-stopping"><span class="toc-number">7.3.</span> <span class="toc-text">7.3 Early stopping</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-4-Gradient-noise"><span class="toc-number">7.4.</span> <span class="toc-text">7.4 Gradient noise</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-Conclusion"><span class="toc-number">8.</span> <span class="toc-text">8.Conclusion</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-概述"><span class="toc-number">1.</span> <span class="toc-text">1. 概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-梯度下降的变体"><span class="toc-number">2.</span> <span class="toc-text">2.梯度下降的变体</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1批量梯度下降-Batch-Gradient-Descent"><span class="toc-number">2.1.</span> <span class="toc-text">2.1批量梯度下降(Batch Gradient Descent)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-随机梯度下降-Stochastic-Gradient-Descent"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 随机梯度下降(Stochastic Gradient Descent)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-小批量梯度下降-Mini-Batch-Gradient-Descent"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 小批量梯度下降(Mini-Batch Gradient Descent)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MBGD面临的问题"><span class="toc-number">2.3.1.</span> <span class="toc-text">MBGD面临的问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-梯度下降优化算法"><span class="toc-number">3.</span> <span class="toc-text">3.梯度下降优化算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1动量算法-Momentum"><span class="toc-number">3.1.</span> <span class="toc-text">3.1动量算法(Momentum)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-Nesterov-accelerated-gradient"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 Nesterov accelerated gradient</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-Adagrad"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 Adagrad</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-Adadelta"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 Adadelta</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-5-RMSprop"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 RMSprop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-6-Adam"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 Adam</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-算法可视化"><span class="toc-number">4.</span> <span class="toc-text">4.算法可视化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-选用哪种优化方式"><span class="toc-number">5.</span> <span class="toc-text">5.选用哪种优化方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-并行与分布式SGD"><span class="toc-number">6.</span> <span class="toc-text">6.并行与分布式SGD</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-Hogwild"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 Hogwild!</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-Downpour-SGD"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 Downpour SGD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-Delay-tolerant-Algorithms-for-SGD"><span class="toc-number">6.3.</span> <span class="toc-text">6.3 Delay-tolerant Algorithms for SGD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-4-TensorFlow"><span class="toc-number">6.4.</span> <span class="toc-text">6.4 TensorFlow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-5-Elastic-Averaging-SGD"><span class="toc-number">6.5.</span> <span class="toc-text">6.5 Elastic Averaging SGD</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-优化SGD的额外策略"><span class="toc-number">7.</span> <span class="toc-text">7. 优化SGD的额外策略</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#7-1-Shuffling-and-Curriculum-Learning"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 Shuffling and Curriculum Learning</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-2-Batch-normalization"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 Batch normalization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-3-Early-stopping"><span class="toc-number">7.3.</span> <span class="toc-text">7.3 Early stopping</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-4-Gradient-noise"><span class="toc-number">7.4.</span> <span class="toc-text">7.4 Gradient noise</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-Conclusion"><span class="toc-number">8.</span> <span class="toc-text">8.Conclusion</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9-梯度下降算法优化脑图"><span class="toc-number">9.</span> <span class="toc-text">9.梯度下降算法优化脑图</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -665,6 +667,8 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
     
     
     
@@ -1243,215 +1247,215 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/06</span><a class="archive-post-title" href="/2019/08/06/Sort/">七大排序算法（代码实现）</a>
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2019/08/06/Sort/" >七大排序算法（代码实现）</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/30</span><a class="archive-post-title" href="/2019/07/30/meachine-learning-summary/">百面机器学习笔记</a>
+            <span class="archive-post-date">07/30</span><a class="archive-post-title" href= "/2019/07/30/meachine-learning-summary/" >百面机器学习笔记</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/21</span><a class="archive-post-title" href="/2019/07/21/sample/">解决样本类别分布不均衡问题</a>
+            <span class="archive-post-date">07/21</span><a class="archive-post-title" href= "/2019/07/21/sample/" >解决样本类别分布不均衡问题</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/20</span><a class="archive-post-title" href="/2019/07/20/data-mining-2/">数据分析的常用操作</a>
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href= "/2019/07/20/data-mining-2/" >数据分析的常用操作</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/20</span><a class="archive-post-title" href="/2019/07/20/data-mining-1/">GBM & XGBoost的调参</a>
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href= "/2019/07/20/data-mining-1/" >GBM & XGBoost的调参</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/10</span><a class="archive-post-title" href="/2019/07/10/gradient-descent/">梯度下降优化算法</a>
+            <span class="archive-post-date">07/10</span><a class="archive-post-title" href= "/2019/07/10/gradient-descent/" >梯度下降优化算法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/08</span><a class="archive-post-title" href="/2019/07/08/feature-selection/">特征选择</a>
+            <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2019/07/08/feature-selection/" >特征选择</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/06</span><a class="archive-post-title" href="/2019/06/06/Feature-Engineering/">数据处理</a>
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2019/06/06/Feature-Engineering/" >数据处理</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/08</span><a class="archive-post-title" href="/2019/05/08/rule-study/">规则学习</a>
+            <span class="archive-post-date">05/08</span><a class="archive-post-title" href= "/2019/05/08/rule-study/" >规则学习</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/07</span><a class="archive-post-title" href="/2019/05/07/dimension-reduction/">降维</a>
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href= "/2019/05/07/dimension-reduction/" >降维</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/07</span><a class="archive-post-title" href="/2019/05/07/cluster/">无监督学习-聚类</a>
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href= "/2019/05/07/cluster/" >无监督学习-聚类</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/05</span><a class="archive-post-title" href="/2019/05/05/python-5/">Python编程(五)：Python编程进阶</a>
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2019/05/05/python-5/" >Python编程(五)：Python编程进阶</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/04</span><a class="archive-post-title" href="/2019/05/04/contextor/">Python系列问题（二）：上下文管理器</a>
+            <span class="archive-post-date">05/04</span><a class="archive-post-title" href= "/2019/05/04/contextor/" >Python系列问题（二）：上下文管理器</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/02</span><a class="archive-post-title" href="/2019/05/02/python-4/">Python编程(四)：面向对象编程</a>
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2019/05/02/python-4/" >Python编程(四)：面向对象编程</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/29</span><a class="archive-post-title" href="/2019/04/29/topic-model/">主题模型</a>
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2019/04/29/topic-model/" >主题模型</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/27</span><a class="archive-post-title" href="/2019/04/27/Hidden-Markov-Models/">隐马尔可夫模型</a>
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2019/04/27/Hidden-Markov-Models/" >隐马尔可夫模型</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/26</span><a class="archive-post-title" href="/2019/04/26/python-copy/">Python系列问题（一）：深拷贝、浅拷贝</a>
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2019/04/26/python-copy/" >Python系列问题（一）：深拷贝、浅拷贝</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/26</span><a class="archive-post-title" href="/2019/04/26/python-3/">Python编程(三)：深入理解Python</a>
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2019/04/26/python-3/" >Python编程(三)：深入理解Python</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/23</span><a class="archive-post-title" href="/2019/04/23/python-2/">Python编程(二)：数据的构造和组织</a>
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2019/04/23/python-2/" >Python编程(二)：数据的构造和组织</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/22</span><a class="archive-post-title" href="/2019/04/22/python-1/">Python编程(一)：Python基础</a>
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2019/04/22/python-1/" >Python编程(一)：Python基础</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span><a class="archive-post-title" href="/2019/04/21/Gaussian-Mixture-Model/">高斯混合模型</a>
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2019/04/21/Gaussian-Mixture-Model/" >高斯混合模型</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/20</span><a class="archive-post-title" href="/2019/04/20/EM-algorithm/">EM算法</a>
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2019/04/20/EM-algorithm/" >EM算法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/17</span><a class="archive-post-title" href="/2019/04/17/GPUCB/">高斯过程</a>
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2019/04/17/GPUCB/" >高斯过程</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/16</span><a class="archive-post-title" href="/2019/04/16/genetic-algorithm/">遗传算法</a>
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2019/04/16/genetic-algorithm/" >遗传算法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2019/04/14/support-vector-machine/">支持向量机</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href= "/2019/04/14/support-vector-machine/" >支持向量机</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/14</span><a class="archive-post-title" href="/2019/04/14/Meachine-Learning-Lagrange-duality/">详解拉格朗日及其对偶问题</a>
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href= "/2019/04/14/Meachine-Learning-Lagrange-duality/" >详解拉格朗日及其对偶问题</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href="/2019/04/12/common-parameter-estimation/">常用的参数估计方法</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2019/04/12/common-parameter-estimation/" >常用的参数估计方法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href="/2019/04/12/linear-model-1/">逻辑斯谛回归、岭回归及Lasso回归</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2019/04/12/linear-model-1/" >逻辑斯谛回归、岭回归及Lasso回归</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/11</span><a class="archive-post-title" href="/2019/04/11/Linear-model/">线形模型:最小二乘法</a>
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2019/04/11/Linear-model/" >线形模型:最小二乘法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href="/2019/04/10/esemble-learning/">集成学习</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2019/04/10/esemble-learning/" >集成学习</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/08</span><a class="archive-post-title" href="/2019/04/08/decision-tree/">决策树算法</a>
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2019/04/08/decision-tree/" >决策树算法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/08</span><a class="archive-post-title" href="/2019/04/08/Bayesian/">朴素贝叶斯</a>
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2019/04/08/Bayesian/" >朴素贝叶斯</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/07</span><a class="archive-post-title" href="/2019/04/07/recommend-system-6/">推荐系统（七）</a>
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href= "/2019/04/07/recommend-system-6/" >推荐系统（七）</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span><a class="archive-post-title" href="/2019/04/02/recommend-system-5/">推荐系统（六）</a>
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2019/04/02/recommend-system-5/" >推荐系统（六）</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href="/2019/04/01/KNN/">KNN算法</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2019/04/01/KNN/" >KNN算法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/30</span><a class="archive-post-title" href="/2019/03/30/recommend-system-4/">推荐系统（五）</a>
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2019/03/30/recommend-system-4/" >推荐系统（五）</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/28</span><a class="archive-post-title" href="/2019/03/28/recommend-system-3/">推荐系统（四）</a>
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href= "/2019/03/28/recommend-system-3/" >推荐系统（四）</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/27</span><a class="archive-post-title" href="/2019/03/27/recommend-system-2/">推荐系统（三）</a>
+            <span class="archive-post-date">03/27</span><a class="archive-post-title" href= "/2019/03/27/recommend-system-2/" >推荐系统（三）</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/26</span><a class="archive-post-title" href="/2019/03/26/consistent-hashing/">一致性哈希算法</a>
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2019/03/26/consistent-hashing/" >一致性哈希算法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/26</span><a class="archive-post-title" href="/2019/03/26/recommend-system-1/">推荐系统（二）</a>
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2019/03/26/recommend-system-1/" >推荐系统（二）</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/25</span><a class="archive-post-title" href="/2019/03/25/recommend-system/">推荐系统（一）</a>
+            <span class="archive-post-date">03/25</span><a class="archive-post-title" href= "/2019/03/25/recommend-system/" >推荐系统（一）</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/22</span><a class="archive-post-title" href="/2019/03/22/Coding-1/">C++基础知识梳理</a>
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href= "/2019/03/22/Coding-1/" >C++基础知识梳理</a>
         </li>
     
-    </ul></div>
+    </div>
   </div>
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
@@ -1475,10 +1479,10 @@ top:50vh;
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-    缺失模块。<br>
-    1、请确保node版本大于6.2<br>
-    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
-    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
     3、在根目录_config.yml里添加配置：
     <pre style="color: #787878; font-size: 0.6rem;">
 jsonContent:
@@ -1515,9 +1519,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="数据挖掘实践"><span class="iconfont-archer">&#xe60a;</span>数据挖掘实践</span>
     
-        <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
-    
         <span class="sidebar-category-name" data-categories="进化算法"><span class="iconfont-archer">&#xe60a;</span>进化算法</span>
+    
+        <span class="sidebar-category-name" data-categories="项目"><span class="iconfont-archer">&#xe60a;</span>项目</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
