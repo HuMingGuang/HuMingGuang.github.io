@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.2k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">3.6k</span>阅读时长: <span class="post-count reading-time">15 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -470,8 +470,7 @@ height:50vh;
 <script type="math/tex; mode=display">\begin{align} bias^2(\mathbf{x}) = \left( \overline{f}(\mathbf{x}) - y \right)^2 \tag{3}\\\ \end{align}</script><p>偏差度量了<strong>学习算法的期望预测与真实结果的偏离程序,</strong> 即 <strong>刻画了学习算法本身的拟合能力</strong>。</p>
 <p><img src="/2019/04/10/esemble-learning/biasVariance.png" width="65%" height="65%"></p>
 <p><img src="/2019/04/10/esemble-learning/complexityModel.png" width="65%" height="65%"></p>
-<h2 id="3-AdaBoost算法"><a href="#3-AdaBoost算法" class="headerlink" title="3. AdaBoost算法"></a><font color="bule">3. AdaBoost算法</font></h2><hr>
-<p><strong>输入：</strong>训练数据集<script type="math/tex">T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}</script>，其中<script type="math/tex">x_i \in X \subseteq R^n</script>，<script type="math/tex">y_i \in Y=\left\{ -1,1\right\}</script>；弱学习算法</p>
+<h2 id="3-AdaBoost算法"><a href="#3-AdaBoost算法" class="headerlink" title="3. AdaBoost算法"></a><font color="bule">3. AdaBoost算法</font></h2><p><strong>输入：</strong>训练数据集<script type="math/tex">T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}</script>，其中<script type="math/tex">x_i \in X \subseteq R^n</script>，<script type="math/tex">y_i \in Y=\left\{ -1,1\right\}</script>；弱学习算法</p>
 <p><strong>输出：</strong>最终分类器<script type="math/tex">G(x)</script></p>
 <p><strong>(1) 初始化训练数据的权值分布</strong></p>
 <script type="math/tex; mode=display">\begin{align} D_{1}=\left( w_{11},\ldots ,w_{1i},\ldots ,w_{1N}\right), w_{1i}=\dfrac {1}{N},
@@ -492,8 +491,48 @@ i=1,2,\ldots ,N  \tag{1} \end{align}</script><p><strong>(2) 对轮数</strong><s
 <p>​    <script type="math/tex">\begin{align}  G(x)=\mathbf{sign} ( f\left( x\right)) =\mathbf{sign}\left(\sum ^{M}_{m=1}\alpha _{m}G_{m}\left( x\right)\right)  \tag{9} \end{align}</script></p>
 <p><strong>总结</strong>：数据权重和弱分类器的权重，交替更新。对分类正确的样本降低权重，对分类错误的样本升高或者保持权重不变。在最终模型融合的时候，根据错误率对弱分类器进行加权融合，错误率低的分类器拥有更大的话语权。</p>
 <hr>
-<h2 id="4-梯度提升决策树-GBDT"><a href="#4-梯度提升决策树-GBDT" class="headerlink" title="4. 梯度提升决策树(GBDT)"></a><font color="bule">4. 梯度提升决策树(GBDT)</font></h2><h3 id="4-1-核心思想"><a href="#4-1-核心思想" class="headerlink" title="4.1 核心思想"></a><font color="blue">4.1 核心思想</font></h3><p>根据当前模型损失函数的负梯度信息来训练新加入的弱分类器，然后将训练好的弱分类器以累加的形式结合到现有模型中。</p>
-<h3 id="4-2-GBDT回归算法"><a href="#4-2-GBDT回归算法" class="headerlink" title="4.2 GBDT回归算法"></a><font color="blue">4.2 GBDT回归算法</font></h3><hr>
+<h2 id="4-提升树-Boosting-Tree"><a href="#4-提升树-Boosting-Tree" class="headerlink" title="4. 提升树(Boosting Tree)"></a><font color="bule">4. 提升树(Boosting Tree)</font></h2><h3 id="4-1-定义"><a href="#4-1-定义" class="headerlink" title="4.1 定义"></a><font color="blue">4.1 定义</font></h3><p>提升树(Boosting Tree)是一种以分类树或者回归树作为基分类器的提升方法。实际上，提升树就是一种采用加法模型与前向分布算法，并以决策树为基分类器的提升方法。</p>
+<h3 id="4-2-提升树原理"><a href="#4-2-提升树原理" class="headerlink" title="4.2 提升树原理"></a><font color="blue">4.2 提升树原理</font></h3><h4 id="4-2-1-提升树加法模型"><a href="#4-2-1-提升树加法模型" class="headerlink" title="4.2.1 提升树加法模型"></a>4.2.1 提升树加法模型</h4><p>假设第$k$轮训练得到的基学习器为$T_k{(x;\theta)}$，这里$k=1,2,3,\cdots,K$，则最后的集成决策函数为</p>
+<script type="math/tex; mode=display">\begin{align}  f_K(x) = \sum_{k=1}^{K}T_k(x;\theta_k) \tag{10}\end{align}</script><p>其中,$\theta_k$为第$k$个基学习器CART分类树或者回归树的参数。</p>
+<h4 id="4-2-2-前向分布算法：可知第-k-轮得到的提升树模型为"><a href="#4-2-2-前向分布算法：可知第-k-轮得到的提升树模型为" class="headerlink" title="4.2.2 前向分布算法：可知第$k$轮得到的提升树模型为"></a>4.2.2 前向分布算法：可知第$k$轮得到的提升树模型为</h4><script type="math/tex; mode=display">\begin{align}  f_k(x)=f_{k-1}(x)+T_k(x;\theta_k)\tag{11}\end{align}</script><p>假设提升树模型的整体损失函数为<script type="math/tex">L(y_i,f_k(x_i))</script>，则可通过损失函数最小化的策略来确定下一棵决策树的参数$\theta_k$，即</p>
+<script type="math/tex; mode=display">\begin{align} \theta_k = \arg \min_{\theta_k}\sum_{i=1}^{M}L(y_i,f_k(x_i))\tag{12}\end{align}</script><h4 id="4-2-3-在回归问题上，我们使用平方损失函数"><a href="#4-2-3-在回归问题上，我们使用平方损失函数" class="headerlink" title="4.2.3 在回归问题上，我们使用平方损失函数"></a>4.2.3 在回归问题上，我们使用平方损失函数</h4><script type="math/tex; mode=display">\begin{align} L(y,f_k(x)) = (y-\hat{y})^{2}\tag{13}\end{align}</script><p>其中，$y$表示样本$x$的真实值，$\hat{y}$为集成模型对样本$x$的预测值，有:</p>
+<script type="math/tex; mode=display">\begin{align} \hat{y} = f_k(x)=\sum_{k=1}^{K}\alpha_k T_k(x)\tag{14}\end{align}</script><p>所以公式(13)可以转化为</p>
+<script type="math/tex; mode=display">\begin{align} L(y,f_k(x))=& (y-\hat{y})^{2} \\=&(y-f_k(x))^2\\ =&[y-(f_{k-1}(x)+T_k(x;\theta_k))]^2\\ =& [y-f_{k-1}(x)-T_k(x;\theta_k]^2\tag{15}\end{align}</script><p>令：</p>
+<script type="math/tex; mode=display">\begin{align} R_k = y-f_{k-1}(x)\tag{16}\end{align}</script><p>显然，$R_k$实际上是模型经过$k-1$轮迭代后对实际值$y$进行预测剩下的<strong>残差</strong>。</p>
+<p>所以上述的损失函数可表示为:</p>
+<script type="math/tex; mode=display">\begin{align} L(y,f_k(x)) = (R_k-T_k(x;\theta_k))^{2}\tag{17}\end{align}</script><p><strong>注：</strong>根据上述公式，最小化损失函数，只需要使$T<em>k(x;\theta_k)$尽量接近$R</em>{k}$即可，相当于第$k$轮迭代时，我们的目标是使该轮建立的CART回归树$T<em>k(x;\theta_k)$尽量拟合前面$k-1$轮迭代后剩余的残差$R</em>{k}$。</p>
+<h4 id="4-2-4-回归提升树模型的完整过程"><a href="#4-2-4-回归提升树模型的完整过程" class="headerlink" title="4.2.4 回归提升树模型的完整过程"></a>4.2.4 回归提升树模型的完整过程</h4><p><strong>输入：</strong>训练集<script type="math/tex">T={(x_1,y_1),(x_2,y_2),\cdots,(x_M,y_M)}</script></p>
+<p><strong>输出：</strong>回归提升树<script type="math/tex">f_k(x)=\sum_{k=1}^KT_k(x;\theta_k)</script></p>
+<p>步骤：</p>
+<p>第1步：初始化$f_0(x)=0$</p>
+<p>第2步：对于$k=1,2,\cdots,K$，按照下述步骤进行</p>
+<ul>
+<li><p>计算经过$k-1$轮迭代后样本$x<em>i$的残差：$$R</em>{ki}=y<em>i-f</em>{k-1}(x_i),i=1,2,\cdots,M$$</p>
+</li>
+<li><p>基于各样本的残差学习出第$k$轮的CART回归树$T_k(s;\theta_k)$</p>
+</li>
+<li><p>更新提升树：$f<em>k(x)=f</em>{k-1}+T_k(x;\theta_k)$</p>
+</li>
+<li><p>重复上述过程，直到$k=K$,得到$K$轮迭代的回归提升树模型：</p>
+<script type="math/tex; mode=display">\begin{align}f_k(x)=\sum_{k=1}^{K}T_k(x;\theta_k)\tag{18}\end{align}</script></li>
+</ul>
+<p><strong>从上述过程可以看出，回归问题的提升树其实就是一个不断去逼近上一轮预测后剩余残差的过程。</strong></p>
+<h2 id="5-梯度提升决策树-GBDT"><a href="#5-梯度提升决策树-GBDT" class="headerlink" title="5. 梯度提升决策树(GBDT)"></a><font color="bule">5. 梯度提升决策树(GBDT)</font></h2><h3 id="5-1-问题"><a href="#5-1-问题" class="headerlink" title="5.1 问题"></a><font color="blue">5.1 问题</font></h3><p>上述提升树中，使用的损失函数为平方损失函数，在向量$x$上可微，因此一般可以直接使用梯度下降法进行求解各个基学习器中的参数，但如果损失函数$L(y,f_k(x))$对$x$不可微?</p>
+<p>针对这个问题，Friedman提出用梯度提升的方法解决，即利用<strong>损失函数的负梯度将当前模型的值来作为提升树算法中残差的近似替代</strong>。</p>
+<script type="math/tex; mode=display">R_{ki}=-\left[\dfrac{\partial L(y_,f(x_i))}{\partial f(x_i)}\right]_{f(x_i)=f_{k-1}(x_i)}</script><p><strong>核心思想：</strong></p>
+<p>根据当前<strong>模型损失函数的负梯度信息来训练新加入的弱分类器</strong>，然后将训练好的弱分类器以累加的形式结合到现有模型中。</p>
+<h3 id="5-2-GBDT原理推导"><a href="#5-2-GBDT原理推导" class="headerlink" title="5.2 GBDT原理推导"></a><font color="blue">5.2 GBDT原理推导</font></h3><p><strong>(1)</strong> 根据之前学过的知识，我们知道将函数$f(x)$在$x=x_{k-1}$处进行一阶泰勒展开：</p>
+<script type="math/tex; mode=display">f(x)\approx f(x_{k-1})+f^\prime(x_{k-1})(x-x_{k-1})</script><p>再令$x=x_{k}$,得：</p>
+<script type="math/tex; mode=display">f(x_k)\approx f(x_{k-1})+f^\prime (x_{k-1}(x_k-x_{k-1}))</script><p><strong>(2)</strong> 同比于上述过程，我们可以得到关于提升树模型的损失函数$L(y,f(x))$在$f(x)=f_{k-1}(x)$处的一阶泰勒展开：</p>
+<script type="math/tex; mode=display">L(y,f(x))\approx L(y,f_{k-1}(x))+\left[\dfrac{\partial L(y,f(x))}{\partial f(x)}\right]_{f(x)=f_{k-1}(x)}(f(x)-f_{k-1}(x))</script><p>令$f(x)=f_k(x)$，得</p>
+<script type="math/tex; mode=display">L(y,f(x))\approx L(y,f_{k-1}(x))+\left[\dfrac{\partial L(y,f(x))}{\partial f(x)}\right]_{f(x)=f_{k-1}(x)}(f_k(x)-f_{k-1}(x))</script><p><strong>(3)</strong> 又因为</p>
+<script type="math/tex; mode=display">f_k(x)-f_{k-1}(x)=T_k(x;\theta_k)</script><p>所以：</p>
+<script type="math/tex; mode=display">L(y,f(x))\approx L(y,f_{k-1}(x))+\left[\dfrac{\partial L(y,f(x))}{\partial f(x)}\right]_{f(x)=f_{k-1}(x)}T_k(x;\theta_k)</script><p>推出：</p>
+<script type="math/tex; mode=display">L(y,f(x)- L(y,f_{k-1}(x))=\left[\dfrac{\partial L(y,f(x))}{\partial f(x)}\right]_{f(x)=f_{k-1}(x)}T_k(x;\theta_k)</script><p><strong>(4)</strong> 其中$L(y,f(x))$和$L(y,f_{k-1}(x))$分别代表$k$轮和$k-1$轮迭代后提升树模型的损失，显然我们的是希望每一轮迭代都能在前面一轮的基础上减少损失值，即</p>
+<script type="math/tex; mode=display">L(y,f_{k}(x))\leq L(y,f_{k-1}(x))</script><p>要使<script type="math/tex">L(y,f_{k}(x))-L(y,f_{k-1}(x))\leq 0</script>，显然取</p>
+<script type="math/tex; mode=display">T_{k}(x;\theta_k)=-\left[\dfrac{\partial L(y,f(x))}{\partial f(x)}\right]_{f(x)=f_{k-1}(x)}</script><p>这样就可以保证<script type="math/tex">L(y,f_{k}(x))-L(y,f_{k-1}(x))\leq 0</script>恒成立。</p>
+<p>至此，原来损失函数对$x$不可微得到解决，现在只需损失函数对$f(x)$可微。</p>
+<h3 id="5-3-GBDT回归算法"><a href="#5-3-GBDT回归算法" class="headerlink" title="5.3 GBDT回归算法"></a><font color="blue">5.3 GBDT回归算法</font></h3><hr>
 <p><strong>输入：</strong>训练数据集<script type="math/tex">T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}</script>，<script type="math/tex">x_i \in X \subseteq R^n</script>，<script type="math/tex">y_i\in Y \subseteq R^n</script>;损失函数<script type="math/tex">L(y,f(x))</script>；</p>
 <p><strong>输出：</strong>强学习器<script type="math/tex">\widehat {f}\left( x\right)</script></p>
 <p>(1) 初始化弱分类器，使用CART树</p>
@@ -502,7 +541,7 @@ i=1,2,\ldots ,N  \tag{1} \end{align}</script><p><strong>(2) 对轮数</strong><s
 <p>​    (2.1) 对样本<script type="math/tex">i=1,2,…,N</script>，计算负梯度</p>
 <p>​    <script type="math/tex">\begin{align} r_{mi} = -\bigg[\frac{\partial L(y_i, f(x_i))}{\partial f(x_i)}\bigg]_{f(x) = f_{m-1}(x)}\tag{2} \end{align}</script></p>
 <p>​    (2.2) 利用<script type="math/tex">(x_i,r_{mi})\;\; (i=1,2,..N)</script>拟合一个CART树，得到第<script type="math/tex">m</script> 棵树的叶结点区域<script type="math/tex">R_{mj}</script>，<script type="math/tex">j=1,2,…,J</script>,其中<script type="math/tex">J</script>为CART树<script type="math/tex">m</script>的叶子节点的个数。</p>
-<p>​    (2.3) 对叶子区域<script type="math/tex">j=1,2,…,J</script>，CART树拟合叶子结点最佳的输出值，即使损失函数最小</p>
+<p>​    (2.3) 对叶子区域<script type="math/tex">j=1,2,…,J</script>，CART树拟合叶子结点最佳的输出值，即使损失函数最小，$c_{mj}$表示第$m$轮第$j$个叶子区域的均值</p>
 <p>​    <script type="math/tex">\begin{align} c_{mj} = \arg \min_{c}\sum\limits_{x_i \in R_{mj}} L(y_i,f_{m-1}(x_i) +c)\tag{3} \end{align}</script></p>
 <p>​    (2.4) 更新强学习器</p>
 <script type="math/tex; mode=display">\begin{align} f_m(x)=f_{m-1}(x)+\sum_{j=1}^{J} c_{mj} I(x\in R_{mj})\tag{4} \end{align}</script><p>(3) 得到最终的强学习器</p>
@@ -704,7 +743,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-集成学习基础知识"><span class="toc-number">1.</span> <span class="toc-text">1. 集成学习基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-集成学习的种类"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 集成学习的种类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-集成学习基本步骤"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 集成学习基本步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-最常用的弱分类器：决策树"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 最常用的弱分类器：决策树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-偏差与方差"><span class="toc-number">2.</span> <span class="toc-text">2. 偏差与方差</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-方差"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 方差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-偏差"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 偏差</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-AdaBoost算法"><span class="toc-number">3.</span> <span class="toc-text">3. AdaBoost算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-梯度提升决策树-GBDT"><span class="toc-number">4.</span> <span class="toc-text">4. 梯度提升决策树(GBDT)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-核心思想"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 核心思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-GBDT回归算法"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 GBDT回归算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-GBDT优点和局限性"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 GBDT优点和局限性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-XGBoost"><span class="toc-number">5.</span> <span class="toc-text">5. XGBoost</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-集成学习基础知识"><span class="toc-number">1.</span> <span class="toc-text">1. 集成学习基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-集成学习的种类"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 集成学习的种类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-集成学习基本步骤"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 集成学习基本步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-最常用的弱分类器：决策树"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 最常用的弱分类器：决策树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-偏差与方差"><span class="toc-number">2.</span> <span class="toc-text">2. 偏差与方差</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-方差"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 方差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-偏差"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 偏差</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-AdaBoost算法"><span class="toc-number">3.</span> <span class="toc-text">3. AdaBoost算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-提升树-Boosting-Tree"><span class="toc-number">4.</span> <span class="toc-text">4. 提升树(Boosting Tree)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-定义"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-提升树原理"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 提升树原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-1-提升树加法模型"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 提升树加法模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-2-前向分布算法：可知第-k-轮得到的提升树模型为"><span class="toc-number">4.2.2.</span> <span class="toc-text">4.2.2 前向分布算法：可知第$k$轮得到的提升树模型为</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-3-在回归问题上，我们使用平方损失函数"><span class="toc-number">4.2.3.</span> <span class="toc-text">4.2.3 在回归问题上，我们使用平方损失函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-4-回归提升树模型的完整过程"><span class="toc-number">4.2.4.</span> <span class="toc-text">4.2.4 回归提升树模型的完整过程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-梯度提升决策树-GBDT"><span class="toc-number">5.</span> <span class="toc-text">5. 梯度提升决策树(GBDT)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-问题"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-GBDT原理推导"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 GBDT原理推导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-GBDT回归算法"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 GBDT回归算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-GBDT优点和局限性"><span class="toc-number">5.4.</span> <span class="toc-text">4.3 GBDT优点和局限性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-XGBoost"><span class="toc-number">6.</span> <span class="toc-text">5. XGBoost</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
