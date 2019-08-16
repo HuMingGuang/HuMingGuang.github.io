@@ -287,7 +287,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">3.6k</span>阅读时长: <span class="post-count reading-time">15 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">4.5k</span>阅读时长: <span class="post-count reading-time">18 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -430,13 +430,13 @@ height:50vh;
 <tr>
 <td style="text-align:left"><strong>Bagging</strong></td>
 <td style="text-align:center">各个弱分类器无强依赖，可以<font color="red"><strong>并行训练</strong></font></td>
-<td style="text-align:center"><strong>多个弱分类器有放回地采样</strong>，单独学习。最终做决策的时候，进行集体投票，集体决策。<strong>各个弱分类器权重相同</strong>。采用分而治之的策略，通过训练样本多次采样，并分别训练出多个不同的模型，然后做综合，<font color="red"><strong>来减少弱分类器的方差。</strong></font></td>
+<td style="text-align:center"><strong>多个弱分类器有放回地采样</strong>，<strong>训练集相互独立</strong>，单独学习。最终做决策的时候，进行集体投票，集体决策。<strong>各个弱分类器权重相同</strong>。采用分而治之的策略，通过训练样本多次采样，并分别训练出多个不同的模型，然后做综合<strong>，可并行计算</strong>，<font color="red"><strong>来减少弱分类器的方差。</strong></font></td>
 <td style="text-align:center">Random Forest(Bagging with CARTs)</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>Boosting</strong></td>
 <td style="text-align:center">弱分类器<font color="red"><strong>串行训练</strong></font></td>
-<td style="text-align:center">将弱分类器层层叠加，每一层在训练的时候，对前一层弱分类器分错的<strong>样本，给予更高的权重</strong>，并在本层分类器训练后，计算分类误差，更新本层<strong>分类器的权重</strong>。测试时，根据各层分类器的结果加权得到最终的结果。通过<strong>聚焦弱分类器的分错的样本</strong>，<font color="red"><strong>减小弱分类器的偏差</strong>。</font></td>
+<td style="text-align:center">将弱分类器层层叠加，每一层在训练的时候，对前一层弱分类器分错的<strong>样本，给予更高的权重</strong>，<strong>训练样本不变</strong>，并在本层分类器训练后，计算分类误差，更新本层<strong>分类器的权重</strong>。测试时，根据各层分类器的结果加权得到最终的结果。不可并行计算，通过<strong>聚焦弱分类器的分错的样本</strong>，<font color="red"><strong>减小弱分类器的偏差</strong>。</font></td>
 <td style="text-align:center">Adaboosting、GBDT</td>
 </tr>
 </tbody>
@@ -470,6 +470,9 @@ height:50vh;
 <script type="math/tex; mode=display">\begin{align} bias^2(\mathbf{x}) = \left( \overline{f}(\mathbf{x}) - y \right)^2 \tag{3}\\\ \end{align}</script><p>偏差度量了<strong>学习算法的期望预测与真实结果的偏离程序,</strong> 即 <strong>刻画了学习算法本身的拟合能力</strong>。</p>
 <p><img src="/2019/04/10/esemble-learning/biasVariance.png" width="65%" height="65%"></p>
 <p><img src="/2019/04/10/esemble-learning/complexityModel.png" width="65%" height="65%"></p>
+<h3 id="2-3-为什么说bagging是减少variance，而boosting是较少bias"><a href="#2-3-为什么说bagging是减少variance，而boosting是较少bias" class="headerlink" title=" 2.3 为什么说bagging是减少variance，而boosting是较少bias ?"></a><font color="blue"> 2.3 为什么说bagging是减少variance，而boosting是较少bias ?</font></h3><p>Boosting 是把<strong>许多弱学习器组合成一个强的学习器</strong>，<strong>弱的学习器bias高，而强的分类器bias低</strong>，所以说boosting起到了降低bias作用，Variance不是boosting的主要考虑因素。</p>
+<p>Bagging是对许多强的分类器求平均，在这里每个单独的分类器的bias都是低的，平均之后bias依然过低，而每个单独的分类器都强到<strong>过拟合的程度，也就是variance高，求平均的操作起到降低这个bias的作</strong>用。</p>
+<p><strong>关键点：</strong>弱学习器bias高，强学习器variance高；Boosting 是弱的学习器组合成强的学习器，Bagging是将强的学习器求平均。</p>
 <h2 id="3-AdaBoost算法"><a href="#3-AdaBoost算法" class="headerlink" title="3. AdaBoost算法"></a><font color="bule">3. AdaBoost算法</font></h2><p><strong>输入：</strong>训练数据集<script type="math/tex">T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}</script>，其中<script type="math/tex">x_i \in X \subseteq R^n</script>，<script type="math/tex">y_i \in Y=\left\{ -1,1\right\}</script>；弱学习算法</p>
 <p><strong>输出：</strong>最终分类器<script type="math/tex">G(x)</script></p>
 <p><strong>(1) 初始化训练数据的权值分布</strong></p>
@@ -557,9 +560,39 @@ i=1,2,\ldots ,N  \tag{1} \end{align}</script><p><strong>(2) 对轮数</strong><s
 <ul>
 <li>在高维稀疏数据集上，表现不如支持向量机或者神经网络</li>
 <li>在处理文本分类特征上，相对于其他模型的优势不如在处理树枝特征时明显</li>
-<li>训练过程需要串行训练，只能在决策树内部采用一些局部并行的手段提高训练速度</li>
+<li><p>训练过程需要串行训练，只能在决策树内部采用一些局部并行的手段提高训练速度</p>
+<h2 id="5-随机森林"><a href="#5-随机森林" class="headerlink" title="5.  随机森林"></a><font color="bule">5.  随机森林</font></h2></li>
 </ul>
-<h2 id="5-XGBoost"><a href="#5-XGBoost" class="headerlink" title="5. XGBoost"></a><font color="bule">5. XGBoost</font></h2><p><strong>GBDT与XGBoost的区别与联系</strong></p>
+<p>（1）<strong>Bagging 模型核心思想</strong>是每次同类别、彼此之间<strong>无强关联的基学习器</strong>，以<strong>均等投票机制</strong>进行基学习器的组合；同时注意Bagging模型每次对样本的采样是有放回的。</p>
+<p>（2）Bagging模型的代表是<strong>随机森领(RandomForest,RF)</strong></p>
+<p>​        <strong>RF</strong>默认采用<strong>CART</strong>作为基学习器，而且它在Bagging模型的基础上再进一步，每次训练基学习器时，<strong>除对样本进行采样外，对样本的特征也进行随机采样</strong>。</p>
+<p>（3）<strong>RF的推广——extra trees</strong></p>
+<p>​        对于单个决策树的训练集，<strong>RF采样随机采样</strong>来选择部分样本作为每个决策树的训练集，而<strong>extra trees</strong> 不进行采样，<strong>直接使用整个原始训练集</strong>。</p>
+<p>​        在选择特征划分时，RF中的CART决策树会<strong>基于基尼系数或标准差最小等原则选择最优的一个特征划分</strong>，extra trees是<strong>随机选择一个特征划分点来生成决策树</strong>。有时候，extra trees的泛化能力比RF更好。</p>
+<p>（4）<strong>拓展</strong></p>
+<p>​        RF和GBDT等基于树的集成学习模型除模型本身功能比较强大外，还有一个重要的功能，就是可以<strong>输出训练样本中各个特征的重要程度系数，这可以用来辅助进行特征选择</strong>。</p>
+<p>​        RF和GBDT都可以获取高阶交互特征，但是一般使用GBDT进行高级特征的映射，因为RF模型最后得到的是很多树，进行高阶特征映射会产生大量的高阶特征，从而可能存在维度灾难。</p>
+<p>（5）<strong>考点</strong></p>
+<p>​    <strong>两个随机性：</strong>RF的每个基学习器对样本的选择是随机的，对特征的选择也是随机的。</p>
+<p>​    <strong>好处：</strong>增强模型的泛化能力；各个基学习器的<strong>训练过程相互独立，可以并列进</strong>。</p>
+<p>（6）<strong>优缺点</strong></p>
+<p>​    <strong>优点</strong></p>
+<ul>
+<li><p>由于RF各个基学习器之间没有强关联，学习过程分开，可实现并行</p>
+</li>
+<li><p>RF每次训练时，只是抽取样本的一部分特征，在对于样本特征很高时，仍能高效训练模型</p>
+</li>
+<li><p>RF每个基学习器只是随机抽取部分样本和特征进行训练，因此模型泛化能力较强</p>
+</li>
+<li><p>RF采用的基学习器时CART树，CART对缺失值不敏感，因此RF对部分特征缺失也不敏感</p>
+</li>
+<li><p>RF训练模型可以输出各个特征对预测结果的重要性，可以辅助我们进行特征选择</p>
+<p><strong>缺点</strong></p>
+</li>
+<li><p>因为RF采用决策树模型，而决策树的缺点是对噪声比较敏感，在某些噪声较大时，容易产生过拟合</p>
+</li>
+</ul>
+<h2 id="6-XGBoost"><a href="#6-XGBoost" class="headerlink" title="6. XGBoost"></a><font color="bule">6. XGBoost</font></h2><p><strong>GBDT与XGBoost的区别与联系</strong></p>
 <div class="table-container">
 <table>
 <thead>
@@ -743,7 +776,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-集成学习基础知识"><span class="toc-number">1.</span> <span class="toc-text">1. 集成学习基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-集成学习的种类"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 集成学习的种类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-集成学习基本步骤"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 集成学习基本步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-最常用的弱分类器：决策树"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 最常用的弱分类器：决策树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-偏差与方差"><span class="toc-number">2.</span> <span class="toc-text">2. 偏差与方差</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-方差"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 方差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-偏差"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 偏差</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-AdaBoost算法"><span class="toc-number">3.</span> <span class="toc-text">3. AdaBoost算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-提升树-Boosting-Tree"><span class="toc-number">4.</span> <span class="toc-text">4. 提升树(Boosting Tree)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-定义"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-提升树原理"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 提升树原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-1-提升树加法模型"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 提升树加法模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-2-前向分布算法：可知第-k-轮得到的提升树模型为"><span class="toc-number">4.2.2.</span> <span class="toc-text">4.2.2 前向分布算法：可知第$k$轮得到的提升树模型为</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-3-在回归问题上，我们使用平方损失函数"><span class="toc-number">4.2.3.</span> <span class="toc-text">4.2.3 在回归问题上，我们使用平方损失函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-4-回归提升树模型的完整过程"><span class="toc-number">4.2.4.</span> <span class="toc-text">4.2.4 回归提升树模型的完整过程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-梯度提升决策树-GBDT"><span class="toc-number">5.</span> <span class="toc-text">5. 梯度提升决策树(GBDT)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-问题"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-GBDT原理推导"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 GBDT原理推导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-GBDT回归算法"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 GBDT回归算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-GBDT优点和局限性"><span class="toc-number">5.4.</span> <span class="toc-text">4.3 GBDT优点和局限性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-XGBoost"><span class="toc-number">6.</span> <span class="toc-text">5. XGBoost</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-集成学习基础知识"><span class="toc-number">1.</span> <span class="toc-text">1. 集成学习基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-集成学习的种类"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 集成学习的种类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-集成学习基本步骤"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 集成学习基本步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-最常用的弱分类器：决策树"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 最常用的弱分类器：决策树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-偏差与方差"><span class="toc-number">2.</span> <span class="toc-text">2. 偏差与方差</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-方差"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 方差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-偏差"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 偏差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-为什么说bagging是减少variance，而boosting是较少bias"><span class="toc-number">2.3.</span> <span class="toc-text"> 2.3 为什么说bagging是减少variance，而boosting是较少bias ?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-AdaBoost算法"><span class="toc-number">3.</span> <span class="toc-text">3. AdaBoost算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-提升树-Boosting-Tree"><span class="toc-number">4.</span> <span class="toc-text">4. 提升树(Boosting Tree)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-定义"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-提升树原理"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 提升树原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-1-提升树加法模型"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 提升树加法模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-2-前向分布算法：可知第-k-轮得到的提升树模型为"><span class="toc-number">4.2.2.</span> <span class="toc-text">4.2.2 前向分布算法：可知第$k$轮得到的提升树模型为</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-3-在回归问题上，我们使用平方损失函数"><span class="toc-number">4.2.3.</span> <span class="toc-text">4.2.3 在回归问题上，我们使用平方损失函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-4-回归提升树模型的完整过程"><span class="toc-number">4.2.4.</span> <span class="toc-text">4.2.4 回归提升树模型的完整过程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-梯度提升决策树-GBDT"><span class="toc-number">5.</span> <span class="toc-text">5. 梯度提升决策树(GBDT)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-问题"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-GBDT原理推导"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 GBDT原理推导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-GBDT回归算法"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 GBDT回归算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-GBDT优点和局限性"><span class="toc-number">5.4.</span> <span class="toc-text">4.3 GBDT优点和局限性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-随机森林"><span class="toc-number">6.</span> <span class="toc-text">5.  随机森林</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-XGBoost"><span class="toc-number">7.</span> <span class="toc-text">6. XGBoost</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -756,8 +789,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
     
     
     
